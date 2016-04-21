@@ -1,0 +1,19 @@
+println(10 + 20)
+println(10 + 20 + 30)
+println(10 + 20 + 30 + 40)
+println()
+
+println(20 - 10)
+println(30 - 20 - 10)
+println(30 - 20 - 10 - 40)
+println()
+
+println(10 * 20)
+println(10 * 20 * 30)
+println(10 * 20 * 30 * 40)
+println()
+
+println(20 / 10)
+println(30 / 20 / 10)
+println(30 / 20 / 10 / 40)
+
