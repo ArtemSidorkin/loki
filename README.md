@@ -5,24 +5,25 @@ For now implemented variables, arrays, arithmetic, loop while, conditions, funct
 For now working on tests.
 
 ##Short examples
-HelloWorld.cloki
+ - [HelloWorld.cloki](HelloWorld.cloki)
 
-Function.cloki
+ - [Function.cloki](Function.cloki)
 
-Class.cloki
+ - [Class.cloki](Class.cloki)
 
-LinkedList.cloki
+ - [LinkedList.cloki](LinkedList.cloki)
 
 ##Compilation
- mvn clean compile assembly:single
+
+    mvn clean compile assembly:single
 
 ##Running
-!Important! Pass file without extension.
+**!Important! Pass file without extension!**
 
-java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld
 
-java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Function
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Function
 
-java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Class
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Class
 
-java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar LinkedList
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar LinkedList
