@@ -8,7 +8,7 @@ import cloki.language.generation.bytecode.templates.CTemplateBytecodeContext.CTe
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeModule.CTemplateModule
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.parsing.CLokiParser.ModuleContext
-import cloki.system.CSystemSettings
+import cloki.system.SystemSettings
 
 private[bytecode] object CRuleGenerationBytecodeModule extends CRuleGenerationBytecode[ModuleContext]
 {
@@ -59,7 +59,7 @@ private[bytecode] object CRuleGenerationBytecodeModule extends CRuleGenerationBy
 
 			classLoader.setClassCode(
 				topClassFrame.internalName,
-				topClassFrame toBytecode (if (CSystemSettings.TRACE_BYTECODE) Some(System.out) else None)
+				topClassFrame toBytecode (if (SystemSettings.TRACE_BYTECODE) Some(System.out) else None)
 			)
 
 			popFrame()

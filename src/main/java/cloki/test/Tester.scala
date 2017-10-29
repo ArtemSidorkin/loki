@@ -2,22 +2,22 @@ package cloki.test
 
 import java.io.File
 
-import cloki.execution.CExecution
-import cloki.execution.CExecution.{CExecutionTarget, CExecutionTargetJava, CExecutionTargetBytecode}
-import cloki.system.{CSystemSettings, CSystem}
+import cloki.execution.Execution
+import cloki.execution.Execution.{ExecutionTarget, ExecutionTargetJava, ExecutionTargetBytecode}
+import cloki.system.{SystemSettings, CSystem}
 import cloki.utils.CFile
 
-object CTester
+object Tester
 {
 	def apply()
 	{
 		println("Starting bytecode testing...")
-		CSystemSettings.EXECUTION_TARGET = CExecutionTargetBytecode
+		SystemSettings.EXECUTION_TARGET = ExecutionTargetBytecode
 		val scdToAllBtcdTstCntr = startTesting()
 		println()
 
 		println("Starting java testing...")
-		CSystemSettings.EXECUTION_TARGET = CExecutionTargetJava
+		SystemSettings.EXECUTION_TARGET = ExecutionTargetJava
 		val scdToAllJavaTstCntr = startTesting()
 		println()
 
@@ -46,7 +46,7 @@ object CTester
 		val tstOtptStrm = new CTestOutputStream
 		initTestOutputStream(tstOtptStrm)
 		val startSourceFile = new File(testCase.sourceFilePathnames.head)
-		CExecution.executor.instance.getModuleInstance(startSourceFile.getName)
+		Execution.executor.instance.getModuleInstance(startSourceFile.getName)
 		val expctd = CFile readText (testCase.expectedOutputFilePathname, true)
 
 		testCase.sourceFilePathnames foreach (srcFlPthnm =>
@@ -54,7 +54,7 @@ object CTester
 			val srcFl = new File(srcFlPthnm)
 			new File(s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}").delete()
 
-			if (CSystemSettings.EXECUTION_TARGET == CExecutionTargetJava)
+			if (SystemSettings.EXECUTION_TARGET == ExecutionTargetJava)
 			{
 				val cmpldFldr = new File(srcFl.getName)
 				cmpldFldr.listFiles foreach (_.delete())
@@ -75,7 +75,7 @@ object CTester
 	}
 
 	private def initTestOutputStream(testOutputStream:CTestOutputStream):Unit =
-		CExecution.executor.init(
+		Execution.executor.init(
 			modulePaths = new File(".").getAbsolutePath :: Nil,
 			force = true,
 			outputPrintStream = testOutputStream,

@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.units;
 
-import cloki.execution.CExecution;
+import cloki.execution.Execution;
 import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.constant.LTypes;
 import cloki.runtime.context.LUnitContext;
@@ -31,7 +31,7 @@ public class LInclude extends LUnit
 			return LUndefined.instance;
 		}
 
-		CExecution
+		Execution
 			.executor()
 			.instance()
 			.getModule(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(unitContext))

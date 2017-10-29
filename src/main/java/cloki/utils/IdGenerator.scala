@@ -6,7 +6,7 @@ class IdGenerator
 {
 	private val idCounter = new AtomicLong()
 
-	def apply() = idCounter.incrementAndGet()
+	def apply():Long = idCounter.incrementAndGet()
 }
 
 object IdGenerator extends IdGenerator

@@ -28,7 +28,7 @@
 					<configuration>
 						<archive>
 							<manifest>
-								<mainClass>cloki.CMain</mainClass>
+								<mainClass>cloki.Main</mainClass>
 							</manifest>
 						</archive>
 						<descriptorRefs>

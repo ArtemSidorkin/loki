@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.units;
 
-import cloki.execution.CExecution;
+import cloki.execution.Execution;
 import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.LType;
@@ -31,6 +31,6 @@ public class LPrintln extends LUnit
 
 	private static PrintStream getOutputPrintStream()
 	{
-		return CExecution.executor().instance().outputPrintStream();
+		return Execution.executor().instance().outputPrintStream();
 	}
 }

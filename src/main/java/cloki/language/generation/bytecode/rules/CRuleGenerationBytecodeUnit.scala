@@ -13,7 +13,7 @@ import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
 import cloki.language.parsing.CLokiParser
 import cloki.language.parsing.CLokiParser.UnitContext
 import cloki.runtime.datatype.LUnit
-import cloki.system.CSystemSettings
+import cloki.system.SystemSettings
 
 private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationBytecode[UnitContext]
 {
@@ -199,7 +199,7 @@ private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationByte
 		{
 			classLoader.setClassCode(
 				topClassFrame.internalName,
-				topClassFrame toBytecode (if (CSystemSettings.TRACE_BYTECODE) Some(System.out) else None)
+				topClassFrame toBytecode (if (SystemSettings.TRACE_BYTECODE) Some(System.out) else None)
 			)
 
 			popFrame()

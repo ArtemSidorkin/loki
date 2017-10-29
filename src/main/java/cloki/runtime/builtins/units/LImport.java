@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.units;
 
-import cloki.execution.CExecution;
+import cloki.execution.Execution;
 import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.constant.LTypes;
 import cloki.runtime.context.LUnitContext;
@@ -33,7 +33,7 @@ public class LImport extends LUnit
 
 		host
 			.addParent(
-				CExecution
+				Execution
 					.executor()
 					.instance()
 					.getModuleInstance(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(parameters))

@@ -4,15 +4,15 @@ import java.io.PrintStream
 
 import cloki.language.generation.java.CGeneratorJava
 
-private[execution] class CExecutorJava private
+private[execution] class ExecutorJava private
 (
 	_modulePaths:Seq[String], outputPrintStream:PrintStream, errorPrintStream:PrintStream
-) extends CExecutor(_modulePaths, outputPrintStream, errorPrintStream)
+) extends Executor(_modulePaths, outputPrintStream, errorPrintStream)
 {
 	override protected val generatorCreator = new CGeneratorJava(_)
 }
 
-private[execution] object CExecutorJava extends CExecutor$$[CExecutorJava]
+private[execution] object ExecutorJava extends ExecutorContainer[ExecutorJava]
 {
-	override protected val executorCreator = new CExecutorJava(_, _, _)
+	override protected val executorCreator = new ExecutorJava(_, _, _)
 }

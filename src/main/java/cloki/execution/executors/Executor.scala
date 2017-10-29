@@ -11,11 +11,12 @@ import cloki.language.preprocessing.CPreprocessor
 import cloki.runtime.datatype.LUnit
 import cloki.runtime.context.LUnitContext
 import cloki.utils.CFile
-import cloki.utils.extensions.CConcurrentHashMap.CConcurrentHashMap
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 
-private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
+import collection.JavaConversions._
+
+private[execution] abstract class Executor[GENERATOR <: CGenerator[_]]
 (
 	_modulePaths:Seq[String],
 	val outputPrintStream:PrintStream = System.out,
@@ -24,7 +25,7 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 {
 	protected val generatorCreator:(String=>CGenerator[_])
 
-	private val modules = new ConcurrentHashMap[String, LUnit]()
+	private val modules:collection.mutable.Map[String, LUnit] = new ConcurrentHashMap[String, LUnit]()
 	private val moduleInstances = new ConcurrentHashMap[String, LUnit]()
 	private val modulePaths =
 	(
@@ -117,7 +118,7 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 	}
 }
 
-private[execution] trait CExecutor$$[EXECUTOR <: CExecutor[_]]
+private[execution] trait ExecutorContainer[EXECUTOR <: Executor[_]]
 {
 	protected val executorCreator:(Seq[String], PrintStream, PrintStream)=>EXECUTOR
 

@@ -1,6 +1,6 @@
 package cloki.runtime.utils;
 
-import cloki.execution.CExecution;
+import cloki.execution.Execution;
 import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LUnit;
 
@@ -28,6 +28,6 @@ public class LErrors
 
 	public static void printError(String error)
 	{
-		CExecution.executor().instance().errorPrintStream().println(error);
+		Execution.executor().instance().errorPrintStream().println(error);
 	}
 }
