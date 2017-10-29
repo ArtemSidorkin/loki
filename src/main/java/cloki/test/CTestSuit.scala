@@ -1,12 +1,12 @@
 package cloki.test
 
-import cloki.utils.CFile
+import cloki.util.FileUtil
 
 private[test] object CTestSuit
 {
 	val TEST_CASES =
 	(
-		CFile
+		FileUtil
 		readText ("/test/test.registry", classPath = true)
 		split "\n"
 		map (_ split "," map (_ trim ()))

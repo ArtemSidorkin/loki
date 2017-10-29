@@ -1,4 +1,4 @@
-package cloki.utils
+package cloki.util
 
 import java.util.concurrent.atomic.AtomicLong
 

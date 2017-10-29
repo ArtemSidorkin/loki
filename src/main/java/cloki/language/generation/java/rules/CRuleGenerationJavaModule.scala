@@ -10,8 +10,8 @@ import cloki.runtime.datatype.{LModule, LUnit}
 import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.system.CSystem
 import cloki.system.CSystem.UNIX
-import cloki.utils.CFile
-import cloki.utils.extensions.StringExtensions.StringExtensions
+import cloki.util.FileUtil
+import cloki.util.extensions.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[ModuleContext]
 {
@@ -55,7 +55,7 @@ private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[Modul
 				mdlFldr.mkdir()
 				val mdlFldrPthnm = mdlFldr.getAbsolutePath
 				val mdlFlPthnm = s"$mdlFldrPthnm/$moduleName.java"
-				CFile.writeText(mdlFlPthnm, generationContext.code.toString)
+				FileUtil.writeText(mdlFlPthnm, generationContext.code.toString)
 				Runtime.getRuntime.exec(
 					s"javac $mdlFlPthnm -cp ./target/classes${if (CSystem.OS == UNIX) ":" else ";"}./lib/antlr.jar"
 				).waitFor()
@@ -65,7 +65,7 @@ private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[Modul
 					filter (_ endsWith ".class")
 					foreach (clsFlPthnm =>
 						classLoader.setClassCode(
-							clsFlPthnm replace (".class", ""), CFile readBytes s"$mdlFldrPthnm/$clsFlPthnm"
+							clsFlPthnm replace (".class", ""), FileUtil readBytes s"$mdlFldrPthnm/$clsFlPthnm"
 						)
 					)
 				)

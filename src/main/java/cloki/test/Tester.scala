@@ -5,7 +5,7 @@ import java.io.File
 import cloki.execution.Execution
 import cloki.execution.Execution.{ExecutionTarget, ExecutionTargetJava, ExecutionTargetBytecode}
 import cloki.system.{SystemSettings, CSystem}
-import cloki.utils.CFile
+import cloki.util.FileUtil
 
 object Tester
 {
@@ -37,9 +37,9 @@ object Tester
 		testCase.sourceFilePathnames foreach (srcFlPthnm =>
 		{
 			val srcFl = new File(srcFlPthnm)
-			CFile.writeText(
+			FileUtil.writeText(
 				s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}",
-				CFile readText (s"$srcFlPthnm.${CSystem.SOURCE_FILE_EXTENSION}", true)
+				FileUtil readText (s"$srcFlPthnm.${CSystem.SOURCE_FILE_EXTENSION}", true)
 			)
 		})
 
@@ -47,7 +47,7 @@ object Tester
 		initTestOutputStream(tstOtptStrm)
 		val startSourceFile = new File(testCase.sourceFilePathnames.head)
 		Execution.executor.instance.getModuleInstance(startSourceFile.getName)
-		val expctd = CFile readText (testCase.expectedOutputFilePathname, true)
+		val expctd = FileUtil readText (testCase.expectedOutputFilePathname, true)
 
 		testCase.sourceFilePathnames foreach (srcFlPthnm =>
 		{

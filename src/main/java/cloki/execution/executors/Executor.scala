@@ -10,7 +10,7 @@ import cloki.language.parsing.{CLokiLexer, CLokiParser}
 import cloki.language.preprocessing.CPreprocessor
 import cloki.runtime.datatype.LUnit
 import cloki.runtime.context.LUnitContext
-import cloki.utils.CFile
+import cloki.util.FileUtil
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 
@@ -103,7 +103,7 @@ private[execution] abstract class Executor[GENERATOR <: CGenerator[_]]
 			(
 				CPreprocessor
 				(
-					CFile readText getModuleFilePathname(relativeModulePathnameWithoutExtension)
+					FileUtil readText getModuleFilePathname(relativeModulePathnameWithoutExtension)
 				) getBytes StandardCharsets.UTF_8
 			)
 		)

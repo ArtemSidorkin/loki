@@ -1,4 +1,4 @@
-package cloki.utils
+package cloki.util
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

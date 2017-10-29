@@ -6,7 +6,7 @@ import cloki.execution.Execution
 import cloki.execution.Execution.{ExecutionTargetBytecode, ExecutionTargetJava}
 import cloki.system.SystemSettings
 import cloki.test.Tester
-import cloki.utils.ConsoleCommander
+import cloki.util.ConsoleCommander
 
 object Main extends App
 {

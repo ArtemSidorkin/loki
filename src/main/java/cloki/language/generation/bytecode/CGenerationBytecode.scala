@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode
 
 import cloki.language.generation.bytecode.classes.CClassFrame
 import cloki.language.generation.{CClassLoader, CGeneration}
-import cloki.utils.IdGenerator
+import cloki.util.IdGenerator
 
 private[bytecode] object CGenerationBytecode extends CGeneration
 {

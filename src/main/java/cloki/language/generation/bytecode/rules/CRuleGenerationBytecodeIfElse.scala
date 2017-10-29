@@ -4,7 +4,7 @@ import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTem
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
 import cloki.language.parsing.CLokiParser.IfElseContext
-import cloki.utils.extensions.StringExtensions.StringExtensions
+import cloki.util.extensions.StringExtensions.StringExtensions
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.runtime.datatype.LUnit

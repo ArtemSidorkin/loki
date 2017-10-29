@@ -2,7 +2,7 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.CRuleGeneration
-import cloki.utils.extensions.StringExtensions.StringExtensions
+import cloki.util.extensions.StringExtensions.StringExtensions
 import org.antlr.v4.runtime.RuleContext
 
 private[java] trait CRuleGenerationJava[RULE_CONTEXT <: RuleContext] extends CRuleGeneration[RULE_CONTEXT]

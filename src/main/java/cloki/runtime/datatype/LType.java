@@ -1,7 +1,7 @@
 package cloki.runtime.datatype;
 
 import cloki.runtime.builtins.LBuiltins;
-import cloki.utils.IdGenerator;
+import cloki.util.IdGenerator;
 
 public class LType extends LUnit
 {
