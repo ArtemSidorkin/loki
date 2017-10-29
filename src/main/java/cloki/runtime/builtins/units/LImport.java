@@ -35,7 +35,6 @@ public class LImport extends LUnit
 			.addParent(
 				Execution
 					.executor()
-					.instance()
 					.getModuleInstance(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(parameters))
 			);
 

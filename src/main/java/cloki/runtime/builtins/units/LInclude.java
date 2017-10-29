@@ -33,7 +33,6 @@ public class LInclude extends LUnit
 
 		Execution
 			.executor()
-			.instance()
 			.getModule(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(unitContext))
 			.call(host, parameters, unitContext);
 

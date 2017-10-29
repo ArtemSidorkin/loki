@@ -28,6 +28,6 @@ public class LErrors
 
 	public static void printError(String error)
 	{
-		Execution.executor().instance().errorPrintStream().println(error);
+		Execution.executor().errorPrintStream().println(error);
 	}
 }

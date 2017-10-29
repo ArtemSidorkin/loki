@@ -31,6 +31,6 @@ public class LPrintln extends LUnit
 
 	private static PrintStream getOutputPrintStream()
 	{
-		return Execution.executor().instance().outputPrintStream();
+		return Execution.executor().outputPrintStream();
 	}
 }

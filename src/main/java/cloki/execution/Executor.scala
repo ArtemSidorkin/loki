@@ -1,4 +1,4 @@
-package cloki.execution.executor
+package cloki.execution
 
 import java.io.{ByteArrayInputStream, File, PrintStream}
 import java.nio.charset.StandardCharsets
@@ -8,23 +8,22 @@ import java.util.function.Consumer
 import cloki.language.generation.CGenerator
 import cloki.language.parsing.{CLokiLexer, CLokiParser}
 import cloki.language.preprocessing.CPreprocessor
-import cloki.runtime.datatype.LUnit
 import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.LUnit
 import cloki.util.FileUtil
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 
-import collection.JavaConversions._
+import scala.collection.JavaConversions._
 
-private[execution] abstract class Executor[GENERATOR <: CGenerator[_]]
+private[execution] class Executor
 (
 	_modulePaths:Seq[String],
 	val outputPrintStream:PrintStream = System.out,
-	val errorPrintStream:PrintStream = System.err
+	val errorPrintStream:PrintStream = System.err,
+	protected val generatorCreator:(String=>CGenerator[_])
 )
 {
-	protected val generatorCreator:(String=>CGenerator[_])
-
 	private val modules:collection.mutable.Map[String, LUnit] = new ConcurrentHashMap[String, LUnit]()
 	private val moduleInstances = new ConcurrentHashMap[String, LUnit]()
 	private val modulePaths =
@@ -115,26 +114,5 @@ private[execution] abstract class Executor[GENERATOR <: CGenerator[_]]
 		val prsTreeWlkr = new ParseTreeWalker
 
 		prsTreeWlkr.walk(generator, mdlCntxt)
-	}
-}
-
-private[execution] trait ExecutorContainer[EXECUTOR <: Executor[_]]
-{
-	protected val executorCreator:(Seq[String], PrintStream, PrintStream)=>EXECUTOR
-
-	@volatile
-	private var _instance:EXECUTOR = null.asInstanceOf[EXECUTOR]
-
-	def instance = _instance
-
-	def init
-	(
-		modulePaths:Seq[String],
-		force:Boolean = false,
-		outputPrintStream:PrintStream = System.out,
-		errorPrintStream:PrintStream = System.err
-	):Unit = if (_instance == null || force) this.synchronized
-	{
-		if (_instance == null || force) _instance = executorCreator(modulePaths, outputPrintStream, errorPrintStream)
 	}
 }

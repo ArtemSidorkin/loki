@@ -56,7 +56,7 @@ object Tester
 		val testOutputStream = new TestOutputStream
 		initTestOutputStream(testOutputStream)
 		val startSourceFile = new File(testCase.sourceFilePathnames.head)
-		Execution.executor.instance.getModuleInstance(startSourceFile.getName)
+		Execution.executor.getModuleInstance(startSourceFile.getName)
 		val expected = FileUtil readText (testCase.expectedOutputFilePathname, true)
 
 		(
@@ -93,7 +93,6 @@ object Tester
 
 	private def initTestOutputStream(testOutputStream:TestOutputStream):Unit =
 		Execution
-			.executor
 			.init(
 				modulePaths = new File(".").getAbsolutePath :: Nil,
 				force = true,
