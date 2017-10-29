@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode.templates
 
 import casm.entities.CAMethod
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
-import cloki.runtime.datatypes.CString
+import cloki.runtime.datatype.LString
 
 private[bytecode] object CTemplateBytecodeString
 {
@@ -10,7 +10,7 @@ private[bytecode] object CTemplateBytecodeString
 	{
 		def invokeInitString() = method invokeinit
 		(
-			classOf[CString], CConstBytecodeMethodDescriptors.STRING__METHOD__INIT
+			classOf[LString], CConstBytecodeMethodDescriptors.STRING__METHOD__INIT
 		)
 	}
 }

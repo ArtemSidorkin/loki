@@ -1,20 +1,20 @@
-package cloki.runtime.datatypes;
+package cloki.runtime.datatype;
 
 import cloki.runtime.consts.CConstTypes;
 
-public class CStringPrototype extends CUnit
+public class LStringPrototype extends LUnit
 {
-	public static final CStringPrototype instance = new CStringPrototype();
+	public static final LStringPrototype instance = new LStringPrototype();
 
 	private final String value;
 
-	protected CStringPrototype(String value)
+	protected LStringPrototype(String value)
 	{
 		super(CConstTypes.STRING);
 		this.value = value;
 	}
 
-	private CStringPrototype()
+	private LStringPrototype()
 	{
 		super(CConstTypes.STRING_PROTOTYPE);
 		value = "";
@@ -32,11 +32,10 @@ public class CStringPrototype extends CUnit
 	}
 
 	@Override
-	public boolean _equals(CUnit unit)
+	public boolean _equals(LUnit unit)
 	{
-		CString strng = unit.asType(CConstTypes.STRING);
-
-		return strng != null && getValue().equals(strng.getValue());
+		LString string = unit.asType(CConstTypes.STRING);
+		return string != null && getValue().equals(string.getValue());
 	}
 
 	@Override

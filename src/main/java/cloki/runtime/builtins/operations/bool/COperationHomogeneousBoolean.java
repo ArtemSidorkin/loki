@@ -3,10 +3,9 @@ package cloki.runtime.builtins.operations.bool;
 import cloki.runtime.builtins.operations.COperationHomogeneous;
 import cloki.runtime.consts.CConstOperator;
 import cloki.runtime.consts.CConstTypes;
-import cloki.runtime.datatypes.CBoolean;
-import cloki.runtime.datatypes.CNumber;
+import cloki.runtime.datatype.LBoolean;
 
-public abstract class COperationHomogeneousBoolean extends COperationHomogeneous<CBoolean>
+public abstract class COperationHomogeneousBoolean extends COperationHomogeneous<LBoolean>
 {
 	protected COperationHomogeneousBoolean(CConstOperator operator)
 	{

@@ -3,12 +3,12 @@ package cloki.runtime.builtins.members.type;
 import cloki.runtime.builtins.members.CMember;
 import cloki.runtime.consts.CConstType;
 import cloki.runtime.consts.CConstTypeMember;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUndefined;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.unitcontexts.CUnitContext;
-import cloki.runtime.utils.CErrors;
+import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUndefined;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.context.LUnitContext;
+import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
 public class CGetId extends CMember
@@ -17,15 +17,15 @@ public class CGetId extends CMember
 
 	private CGetId()
 	{
-		super(new CType(CConstTypeMember.GET_ID.name));
+		super(new LType(CConstTypeMember.GET_ID.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		if (host instanceof CType) return new CNumber(((CType)host).id);
+		if (host instanceof LType) return new LNumber(((LType)host).id);
 
-		CErrors.printErrorUnitDoesNotBelongToType(host, CConstType.TYPE.name);
-		return CUndefined.instance;
+		LErrors.printErrorUnitDoesNotBelongToType(host, CConstType.TYPE.name);
+		return LUndefined.instance;
 	}
 }

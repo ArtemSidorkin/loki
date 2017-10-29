@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode
 
 import cloki.language.generation.bytecode.classes.CClassFrame
 import cloki.language.generation.{CClassLoader, CGeneration}
-import cloki.utils.CIdGenerator
+import cloki.utils.IdGenerator
 
 private[bytecode] object CGenerationBytecode extends CGeneration
 {
@@ -11,7 +11,7 @@ private[bytecode] object CGenerationBytecode extends CGeneration
 	type FRAME = CFrameBytecode
 	type ID = Long
 
-	private val frameIdGenerator = new CIdGenerator
+	private val frameIdGenerator = new IdGenerator
 
 	class CGenerationContextBytecode(programName:String, classLoader:CClassLoader)
 		extends CGenerationContext(programName, classLoader)

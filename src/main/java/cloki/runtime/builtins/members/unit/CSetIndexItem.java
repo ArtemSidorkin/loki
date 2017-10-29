@@ -1,10 +1,10 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.CConstUnitMember;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
 public class CSetIndexItem extends CMember
@@ -13,11 +13,11 @@ public class CSetIndexItem extends CMember
 
 	private CSetIndexItem()
 	{
-		super(new CType(CConstUnitMember.SET_INDEX_ITEM.name));
+		super(new LType(LConstUnitMember.SET_INDEX_ITEM.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		return host._setIndexedItem(parameters);
 	}

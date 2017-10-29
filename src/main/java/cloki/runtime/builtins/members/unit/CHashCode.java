@@ -1,11 +1,11 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.CConstUnitMember;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
 public class CHashCode extends CMember
@@ -14,12 +14,12 @@ public class CHashCode extends CMember
 
 	private CHashCode()
 	{
-		super(new CType(CConstUnitMember.HASH_CODE.name));
+		super(new LType(LConstUnitMember.HASH_CODE.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		return new CNumber(host._hashCode());
+		return new LNumber(host._hashCode());
 	}
 }

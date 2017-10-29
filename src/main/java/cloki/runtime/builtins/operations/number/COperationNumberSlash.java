@@ -1,8 +1,8 @@
 package cloki.runtime.builtins.operations.number;
 
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.LUnit;
 
 public class COperationNumberSlash extends COperationHomogeneousNumber
 {
@@ -14,8 +14,8 @@ public class COperationNumberSlash extends COperationHomogeneousNumber
 	}
 
 	@Override
-	protected CUnit operation(CNumber leftOperand, CNumber rightOperand)
+	protected LUnit operation(LNumber leftOperand, LNumber rightOperand)
 	{
-		return new CNumber(leftOperand.getValue() / rightOperand.getValue());
+		return new LNumber(leftOperand.getValue() / rightOperand.getValue());
 	}
 }

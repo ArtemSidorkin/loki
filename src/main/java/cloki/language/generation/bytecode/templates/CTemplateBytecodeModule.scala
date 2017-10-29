@@ -3,8 +3,8 @@ package cloki.language.generation.bytecode.templates
 import casm.entities.CAMethod
 import cloki.language.generation.bytecode.consts.{CConstBytecodeLocalVariablesOrParameters, CConstBytecodeMethodDescriptors}
 import cloki.language.generation.consts.CConstLanguageMembers
-import cloki.runtime.datatypes.{CModule, CUnit}
-import cloki.runtime.unitcontexts.CUnitContext
+import cloki.runtime.datatype.{LModule, LUnit}
+import cloki.runtime.context.LUnitContext
 
 private[bytecode] object CTemplateBytecodeModule
 {
@@ -18,7 +18,7 @@ private[bytecode] object CTemplateBytecodeModule
 
 		def invokeInitModule() = method invokeinit
 		(
-			classOf[CModule], CConstBytecodeMethodDescriptors.MODULE__METHOD__INIT
+			classOf[LModule], CConstBytecodeMethodDescriptors.MODULE__METHOD__INIT
 		)
 	}
 }

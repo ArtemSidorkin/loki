@@ -4,7 +4,7 @@ import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationCall
 import cloki.language.parsing.CLokiParser.CallContext
-import cloki.runtime.datatypes.CUnit
+import cloki.runtime.datatype.LUnit
 
 private[java] object CRuleGenerationJavaCall extends CRuleGenerationJava[CallContext]
 {
@@ -14,7 +14,7 @@ private[java] object CRuleGenerationJavaCall extends CRuleGenerationJava[CallCon
 		override def enter() = generationContext.addPostExitRuleTask(callExpression, () =>
 		{
 			removeLastNewLineIfPresent()
-			addCode(s".$UNIT__METHOD__CALL($UNIT__METHOD__CALL__PARAMETER__HOST, new ${classOf[CUnit].getName}[]{")
+			addCode(s".$UNIT__METHOD__CALL($UNIT__METHOD__CALL__PARAMETER__HOST, new ${classOf[LUnit].getName}[]{")
 
 			if (callParameterCount > 1)
 				for (i <- 1 until callParameterCount)

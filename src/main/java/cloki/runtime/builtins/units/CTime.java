@@ -1,24 +1,24 @@
 package cloki.runtime.builtins.units;
 
 import cloki.runtime.consts.CConstFunctionalUnit;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
-public class CTime extends CUnit
+public class CTime extends LUnit
 {
 	public static final CTime instance = new CTime();
 
 	private CTime()
 	{
-		super(new CType(CConstFunctionalUnit.TIME.name));
+		super(new LType(CConstFunctionalUnit.TIME.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		return new CNumber(System.nanoTime());
+		return new LNumber(System.nanoTime());
 	}
 }

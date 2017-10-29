@@ -1,37 +1,36 @@
 package cloki.runtime.builtins.operations;
 
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUndefined;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUndefined;
+import cloki.runtime.datatype.LUnit;
 
-public abstract class COperationHomogeneous<OPERAND extends CUnit> extends COperation
+public abstract class COperationHomogeneous<OPERAND extends LUnit> extends COperation
 {
-	private CType operandType;
+	private LType operandType;
 
-	protected COperationHomogeneous(CConstOperator operator, CType operandType)
+	protected COperationHomogeneous(CConstOperator operator, LType operandType)
 	{
 		super(operator);
 		this.operandType = operandType;
 	}
 
 	@Override
-	protected CUnit execute(CUnit leftOperand, CUnit rightOperand)
+	protected LUnit execute(LUnit leftOperand, LUnit rightOperand)
 	{
-		CUnit lftOprndAsNmbr = leftOperand.asType(operandType);
-		CUnit rghtOprndAsNmbr = rightOperand.asType(operandType);
+		LUnit lftOprndAsNmbr = leftOperand.asType(operandType);
+		LUnit rghtOprndAsNmbr = rightOperand.asType(operandType);
 
 		if (lftOprndAsNmbr != null && rghtOprndAsNmbr != null)
 			return operation((OPERAND)lftOprndAsNmbr, (OPERAND)rghtOprndAsNmbr);
 
 		printErrorUndefinedOperation(operator, leftOperand, rightOperand);
-		return CUndefined.instance;
+		return LUndefined.instance;
 	}
 
-	protected CUnit operation(OPERAND leftOperand, OPERAND rightOperand)
+	protected LUnit operation(OPERAND leftOperand, OPERAND rightOperand)
 	{
 		printErrorUndefinedOperation(operator, leftOperand, rightOperand);
-		return CUndefined.instance;
+		return LUndefined.instance;
 	}
 }

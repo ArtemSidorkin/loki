@@ -8,8 +8,8 @@ import java.util.function.Consumer
 import cloki.language.generation.CGenerator
 import cloki.language.parsing.{CLokiLexer, CLokiParser}
 import cloki.language.preprocessing.CPreprocessor
-import cloki.runtime.datatypes.CUnit
-import cloki.runtime.unitcontexts.CUnitContext
+import cloki.runtime.datatype.LUnit
+import cloki.runtime.context.LUnitContext
 import cloki.utils.CFile
 import cloki.utils.extensions.CConcurrentHashMap.CConcurrentHashMap
 import org.antlr.v4.runtime.tree.ParseTreeWalker
@@ -24,8 +24,8 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 {
 	protected val generatorCreator:(String=>CGenerator[_])
 
-	private val modules = new ConcurrentHashMap[String, CUnit]()
-	private val moduleInstances = new ConcurrentHashMap[String, CUnit]()
+	private val modules = new ConcurrentHashMap[String, LUnit]()
+	private val moduleInstances = new ConcurrentHashMap[String, LUnit]()
 	private val modulePaths =
 	(
 		_modulePaths.view
@@ -33,7 +33,7 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 		map (mdlPth => if (mdlPth endsWith "/" unary_!) mdlPth + "/" else mdlPth)
 	)
 
-	def getModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[CUnitContext] = None) =
+	def getModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[LUnitContext] = None) =
 	{
 		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
 
@@ -46,7 +46,7 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 		modules(mdlNm)
 	}
 
-	def getModuleInstance(relativeModulePathnameWithoutExtension:String, parameters:Option[Array[CUnit]] = None) =
+	def getModuleInstance(relativeModulePathnameWithoutExtension:String, parameters:Option[Array[LUnit]] = None) =
 	{
 		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
 
@@ -57,11 +57,11 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 				getModule(relativeModulePathnameWithoutExtension).
 				instantiate
 				(
-					parameters getOrElse null.asInstanceOf[Array[CUnit]],
-					null.asInstanceOf[CUnitContext],
-					new Consumer[CUnit]
+					parameters getOrElse null.asInstanceOf[Array[LUnit]],
+					null.asInstanceOf[LUnitContext],
+					new Consumer[LUnit]
 					{
-						override def accept(unit:CUnit) = moduleInstances += mdlNm -> unit
+						override def accept(unit:LUnit) = moduleInstances += mdlNm -> unit
 					}
 				)
 			)
@@ -83,7 +83,7 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 		)
 	) + relativeModulePathnameWithoutExtension + ".cloki"
 
-	private def createModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[CUnitContext]) =
+	private def createModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[LUnitContext]) =
 	{
 		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
 		val gnrtr = generatorCreator(mdlNm)
@@ -91,8 +91,8 @@ private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
 		generate(gnrtr, relativeModulePathnameWithoutExtension)
 
 		(gnrtr.classLoader getClass mdlNm).getConstructors.head.newInstance(
-			unitContext getOrElse null.asInstanceOf[CUnitContext]
-		).asInstanceOf[CUnit]
+			unitContext getOrElse null.asInstanceOf[LUnitContext]
+		).asInstanceOf[LUnit]
 	}
 
 	private def generate(generator:CGenerator[_], relativeModulePathnameWithoutExtension:String)()

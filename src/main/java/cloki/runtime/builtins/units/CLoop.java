@@ -2,36 +2,36 @@ package cloki.runtime.builtins.units;
 
 import cloki.runtime.consts.CConstFunctionalUnit;
 import cloki.runtime.consts.CConstTypes;
-import cloki.runtime.datatypes.*;
-import cloki.runtime.unitcontexts.CUnitContext;
-import cloki.runtime.utils.CErrors;
+import cloki.runtime.datatype.*;
+import cloki.runtime.context.LUnitContext;
+import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
-public class CLoop extends CUnit
+public class CLoop extends LUnit
 {
 	public static final CLoop instance = new CLoop();
 
 	private CLoop()
 	{
-		super(new CType(CConstFunctionalUnit.LOOP.name));
+		super(new LType(CConstFunctionalUnit.LOOP.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		CUnit cntAsUnt = checkCallParameter(parameters, 0);
-		CNumber cntAsNmbr = cntAsUnt.asType(CConstTypes.NUMBER);
+		LUnit cntAsUnt = checkCallParameter(parameters, 0);
+		LNumber cntAsNmbr = cntAsUnt.asType(CConstTypes.NUMBER);
 
 		if (cntAsNmbr == null)
 		{
-			CErrors.printErrorUnitDoesNotBelongToType(cntAsUnt, CConstTypes.NUMBER);
-			return CUndefined.instance;
+			LErrors.printErrorUnitDoesNotBelongToType(cntAsUnt, CConstTypes.NUMBER);
+			return LUndefined.instance;
 		}
 
-		CUnit actn = checkCallParameter(parameters, 1);
+		LUnit actn = checkCallParameter(parameters, 1);
 
 		for (int i = 0; i < cntAsNmbr.getValue(); i++) actn.call(host, null, unitContext);
 
-		return CVoid.instance;
+		return LVoid.instance;
 	}
 }

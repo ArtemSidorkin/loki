@@ -1,33 +1,33 @@
-package cloki.runtime.datatypes;
+package cloki.runtime.datatype;
 
-import cloki.runtime.builtins.CBuiltins;
+import cloki.runtime.builtins.LBuiltins;
 import cloki.runtime.consts.CConstType;
-import cloki.utils.CIdGenerator;
+import cloki.utils.IdGenerator;
 
-public class CType extends CUnit
+public class LType extends LUnit
 {
-	private static volatile CType TYPE;
-	private static final CIdGenerator idGenerator = new CIdGenerator();
+	private static volatile LType TYPE;
+	private static final IdGenerator idGenerator = new IdGenerator();
 
 	public final long id = idGenerator.apply();
 
 	private final String name;
 	private volatile boolean builtinsInitialized = false;
 
-	public CType(CType original)
+	public LType(LType original)
 	{
 		this(original.getName());
 	}
 
-	public CType(String name)
+	public LType(String name)
 	{
-		super((CType) null);
+		super(null);
 		this.name = name;
 	}
 
-	public static CType createAnonymous()
+	public static LType createAnonymous()
 	{
-		return new CType(CConstType.ANONYMOUS.name);
+		return new LType(CConstType.ANONYMOUS.name);
 	}
 
 	public String getName()
@@ -41,39 +41,35 @@ public class CType extends CUnit
 	}
 
 	@Override
-	public CType getType()
+	public LType getType()
 	{
 		if (TYPE == null) synchronized(guard)
 		{
-			TYPE = new CType(CConstType.TYPE.name);
+			TYPE = new LType(CConstType.TYPE.name);
 		}
+
 		return TYPE;
 	}
 
 	@Override
-	public CUnit getMember(String memberName)
+	public LUnit getMember(String memberName)
 	{
 		if (!builtinsInitialized) synchronized(guard)
 		{
 			if (!builtinsInitialized)
 			{
-				CBuiltins.initType(this);
+				LBuiltins.initType(this);
 				builtinsInitialized = true;
 			}
 		}
+
 		return super.getMember(memberName);
 	}
 
 	@Override
-	public boolean _equals(CUnit unit)
+	public boolean _equals(LUnit unit)
 	{
 		return this == unit;
-	}
-
-	@Override
-	public boolean equals(Object object)
-	{
-		return this == object;
 	}
 
 	@Override

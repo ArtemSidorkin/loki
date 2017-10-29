@@ -6,7 +6,7 @@ import cloki.language.generation.rules.mixins.CMixinRuleGenerationOperator
 import cloki.language.parsing.CLokiLexer
 import cloki.language.parsing.CLokiParser
 import cloki.language.parsing.CLokiParser.ExpressionContext
-import cloki.runtime.datatypes.CUnit
+import cloki.runtime.datatype.LUnit
 
 private[java] object CRuleGenerationJavaOperator extends CRuleGenerationJava[ExpressionContext]
 {
@@ -52,7 +52,7 @@ private[java] object CRuleGenerationJavaOperator extends CRuleGenerationJava[Exp
 
 			generationContext.addPostExitRuleTask(
 				leftOperand,
-				() => addCode(s""".$UNIT__METHOD__CALL_MEMBER("$oprtn", new ${classOf[CUnit].getName}[]{""")
+				() => addCode(s""".$UNIT__METHOD__CALL_MEMBER("$oprtn", new ${classOf[LUnit].getName}[]{""")
 			)
 
 			generationContext.addPostExitRuleTask(rightOperand, () =>

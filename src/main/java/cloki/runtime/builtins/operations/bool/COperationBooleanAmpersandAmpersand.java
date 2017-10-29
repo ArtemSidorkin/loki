@@ -1,10 +1,10 @@
 package cloki.runtime.builtins.operations.bool;
 
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CBoolean;
-import cloki.runtime.datatypes.CFalse;
-import cloki.runtime.datatypes.CTrue;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LBoolean;
+import cloki.runtime.datatype.LFalse;
+import cloki.runtime.datatype.LTrue;
+import cloki.runtime.datatype.LUnit;
 
 public class COperationBooleanAmpersandAmpersand extends COperationHomogeneousBoolean
 {
@@ -16,8 +16,8 @@ public class COperationBooleanAmpersandAmpersand extends COperationHomogeneousBo
 	}
 
 	@Override
-	protected CUnit operation(CBoolean leftOperand, CBoolean rightOperand)
+	protected LUnit operation(LBoolean leftOperand, LBoolean rightOperand)
 	{
-		return leftOperand.getValue() && rightOperand.getValue() ? CTrue.instance : CFalse.instance;
+		return leftOperand.getValue() && rightOperand.getValue() ? LTrue.instance : LFalse.instance;
 	}
 }

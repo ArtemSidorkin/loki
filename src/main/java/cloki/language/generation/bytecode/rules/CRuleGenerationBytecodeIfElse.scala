@@ -4,11 +4,11 @@ import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTem
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
 import cloki.language.parsing.CLokiParser.IfElseContext
-import cloki.runtime.datatypes.CUnit
 import cloki.utils.extensions.CString.CString
-import cloki.runtime.unitcontexts.CUnitContext
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
+import cloki.runtime.datatype.LUnit
+import cloki.runtime.context.LUnitContext
 import org.objectweb.asm.tree.LabelNode
 
 private[bytecode] object CRuleGenerationBytecodeIfElse extends CRuleGenerationBytecode[IfElseContext]

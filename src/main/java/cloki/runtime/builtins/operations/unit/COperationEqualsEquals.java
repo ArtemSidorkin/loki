@@ -2,10 +2,10 @@ package cloki.runtime.builtins.operations.unit;
 
 import cloki.runtime.builtins.operations.COperation;
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.consts.CConstUnitMember;
-import cloki.runtime.datatypes.CFalse;
-import cloki.runtime.datatypes.CTrue;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.datatype.LFalse;
+import cloki.runtime.datatype.LTrue;
+import cloki.runtime.datatype.LUnit;
 
 public class COperationEqualsEquals extends COperation
 {
@@ -17,8 +17,8 @@ public class COperationEqualsEquals extends COperation
 	}
 
 	@Override
-	protected CUnit execute(CUnit leftOperand, CUnit rightOperand)
+	protected LUnit execute(LUnit leftOperand, LUnit rightOperand)
 	{
-		return leftOperand.callMember(CConstUnitMember.EQUALS.name, new CUnit[]{rightOperand}, null).toBoolean() ? CTrue.instance : CFalse.instance;
+		return leftOperand.callMember(LConstUnitMember.EQUALS.name, new LUnit[]{rightOperand}, null).toBoolean() ? LTrue.instance : LFalse.instance;
 	}
 }

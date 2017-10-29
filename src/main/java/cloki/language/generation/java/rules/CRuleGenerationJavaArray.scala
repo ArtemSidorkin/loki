@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationArray
 import cloki.language.parsing.CLokiParser.ArrayContext
-import cloki.runtime.datatypes.{CUnit, CArray}
+import cloki.runtime.datatype.{LUnit, LArray}
 
 private[java] object CRuleGenerationJavaArray extends CRuleGenerationJava[ArrayContext]
 {
@@ -13,10 +13,10 @@ private[java] object CRuleGenerationJavaArray extends CRuleGenerationJava[ArrayC
 		override def enter()
 		{
 			(addCode _ compose tabulateIfLastCharacterIsNewLine) (
-				s"new ${classOf[CArray].getName}("
+				s"new ${classOf[LArray].getName}("
 			)
 
-			if (arrayItemCount != 0) addCode(s"new ${classOf[CUnit].getName}[]{")
+			if (arrayItemCount != 0) addCode(s"new ${classOf[LUnit].getName}[]{")
 			else addCode("null")
 
 			for (i <- 0 until arrayItemCount - 1) generationContext.addPostExitRuleTask(getArrayItemExpression(i), () =>

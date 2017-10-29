@@ -11,41 +11,41 @@ import cloki.runtime.builtins.operations.unit.COperationEqualsEquals;
 import cloki.runtime.builtins.unaryoperations.bool.CLogicalNegation;
 import cloki.runtime.builtins.unaryoperations.number.CNumericNegation;
 import cloki.runtime.builtins.units.*;
-import cloki.runtime.consts.CConstDataUnit;
+import cloki.runtime.consts.LConstDataUnit;
 import cloki.runtime.consts.CConstFunctionalUnit;
-import cloki.runtime.datatypes.*;
+import cloki.runtime.datatype.*;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CBuiltins
+public class LBuiltins
 {
-	public static final Map<String, Supplier<CUnit>> defaults = Collections.unmodifiableMap
-	(
-		new HashMap<String, Supplier<CUnit>>()
-		{{
-			put(CConstDataUnit.UNDEFINED.name, () -> CUndefined.instance);
-			put(CConstDataUnit.VOID.name, () -> CVoid.instance);
-			put(CConstDataUnit.NONE.name, () -> CNone.instance);
-			put(CConstDataUnit.BOOLEAN_PROTOTYPE.name, () -> CBooleanPrototype.instance);
-			put(CConstDataUnit.TRUE.name, () -> CTrue.instance);
-			put(CConstDataUnit.FALSE.name, () -> CFalse.instance);
-			put(CConstDataUnit.UNIT_PROTOTYPE.name, CUnit::getUnitPrototype);
-			put(CConstDataUnit.NUMBER_PROTOTYPE.name, () -> CNumberPrototype.instance);
-			put(CConstDataUnit.STRING_PROTOTYPE.name, () -> CStringPrototype.instance);
-			put(CConstDataUnit.ARRAY_PROTOTYPE.name, () -> CArrayPrototype.instance);
+	public static final Map<String, Supplier<LUnit>> defaults =
+		Collections.unmodifiableMap(
+			new HashMap<String, Supplier<LUnit>>()
+			{{
+				put(LConstDataUnit.UNDEFINED.name, () -> LUndefined.instance);
+				put(LConstDataUnit.VOID.name, () -> LVoid.instance);
+				put(LConstDataUnit.NONE.name, () -> LNone.instance);
+				put(LConstDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
+				put(LConstDataUnit.TRUE.name, () -> LTrue.instance);
+				put(LConstDataUnit.FALSE.name, () -> LFalse.instance);
+				put(LConstDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
+				put(LConstDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
+				put(LConstDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
+				put(LConstDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
 
-			put(CConstFunctionalUnit.INCLUDE.name, () -> CInclude.instance);
-			put(CConstFunctionalUnit.IMPORT.name, () -> CImport.instance);
-			put(CConstFunctionalUnit.LOOP.name, () -> CLoop.instance);
-			put(CConstFunctionalUnit.TIME.name, () -> CTime.instance);
-			put(CConstFunctionalUnit.PRINTLN.name, () -> CPrintln.instance);
-		}}
-	);
+				put(CConstFunctionalUnit.INCLUDE.name, () -> CInclude.instance);
+				put(CConstFunctionalUnit.IMPORT.name, () -> CImport.instance);
+				put(CConstFunctionalUnit.LOOP.name, () -> CLoop.instance);
+				put(CConstFunctionalUnit.TIME.name, () -> CTime.instance);
+				put(CConstFunctionalUnit.PRINTLN.name, () -> CPrintln.instance);
+			}}
+		);
 
-	public static void initUnitPrototype(CUnit unitPrototype)
+	public static void initUnitPrototype(LUnit unitPrototype)
 	{
 		CNew.instance.init(unitPrototype);
 		CAddParent.instance.init(unitPrototype);
@@ -60,20 +60,20 @@ public class CBuiltins
 		COperationBangEquals.instance.init(unitPrototype);
 	}
 
-	public static void initType(CType type)
+	public static void initType(LType type)
 	{
 		CGetId.instance.init(type);
 		CGetName.instance.init(type);
 	}
 
-	public static void initBooleanPrototype(CBooleanPrototype booleanPrototype)
+	public static void initBooleanPrototype(LBooleanPrototype booleanPrototype)
 	{
 		CLogicalNegation.instance.init(booleanPrototype);
 		COperationBooleanAmpersandAmpersand.instance.init(booleanPrototype);
 		COperationBooleanPipePipe.instance.init(booleanPrototype);
 	}
 
-	public static void initNumberPrototype(CNumberPrototype numberPrototype)
+	public static void initNumberPrototype(LNumberPrototype numberPrototype)
 	{
 		CNumericNegation.instance.init(numberPrototype);
 		COperationNumberStar.instance.init(numberPrototype);

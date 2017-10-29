@@ -4,7 +4,7 @@ import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationAssignIndex
 import cloki.language.parsing.CLokiParser.AssignIndexContext
-import cloki.runtime.datatypes.{CUnit, CArray}
+import cloki.runtime.datatype.{LUnit, LArray}
 
 private[java] object CRuleGenerationJavaAssignIndex extends CRuleGenerationJava[AssignIndexContext]
 {
@@ -17,7 +17,7 @@ private[java] object CRuleGenerationJavaAssignIndex extends CRuleGenerationJava[
 			{
 				addCode(s".$UNIT__METHOD__SET_INDEXED_ITEM(")
 
-				if (parametersCount > 0) addCode(s"new ${classOf[CUnit].getName}[]{")
+				if (parametersCount > 0) addCode(s"new ${classOf[LUnit].getName}[]{")
 				else addCode("null");
 			})
 

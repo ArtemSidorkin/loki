@@ -1,10 +1,10 @@
 package cloki.runtime.builtins.operations.number;
 
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CFalse;
-import cloki.runtime.datatypes.CNumber;
-import cloki.runtime.datatypes.CTrue;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LFalse;
+import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.LTrue;
+import cloki.runtime.datatype.LUnit;
 
 public class COperationNumberEqualsEquals extends COperationHomogeneousNumber
 {
@@ -16,8 +16,8 @@ public class COperationNumberEqualsEquals extends COperationHomogeneousNumber
 	}
 
 	@Override
-	protected CUnit operation(CNumber leftOperand, CNumber rightOperand)
+	protected LUnit operation(LNumber leftOperand, LNumber rightOperand)
 	{
-		return leftOperand.getValue() == rightOperand.getValue() ? CTrue.instance : CFalse.instance;
+		return leftOperand.getValue() == rightOperand.getValue() ? LTrue.instance : LFalse.instance;
 	}
 }

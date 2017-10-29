@@ -6,8 +6,8 @@ import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationModule
 import cloki.language.parsing.CLokiParser.ModuleContext
-import cloki.runtime.datatypes.{CModule, CUnit}
-import cloki.runtime.unitcontexts.{CModuleContext, CUnitContext}
+import cloki.runtime.datatype.{LModule, LUnit}
+import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.system.CSystem
 import cloki.system.CSystem.UNIX
 import cloki.utils.CFile
@@ -23,16 +23,16 @@ private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[Modul
 			pushFrame()
 			(addCode _ compose removeTabulation) (
 				s"""
-					public class $moduleName extends ${classOf[CModule].getName}
+					public class $moduleName extends ${classOf[LModule].getName}
 					{
-						public $moduleName(${classOf[CUnitContext].getName} $UNIT__METHOD__INIT__CALL_PARAMETER__CONTEXT)
+						public $moduleName(${classOf[LUnitContext].getName} $UNIT__METHOD__INIT__CALL_PARAMETER__CONTEXT)
 						{
 							super("$moduleName", $UNIT__METHOD__INIT__CALL_PARAMETER__CONTEXT);
 						}
 
-						public ${classOf[CUnit].getName} $UNIT__METHOD__CALL(final ${classOf[CUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[CUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[CUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
+						public ${classOf[LUnit].getName} $UNIT__METHOD__CALL(final ${classOf[LUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[LUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[LUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
 						{
-							$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[CModuleContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, this.$UNIT__FIELD__UNIT_CONTEXT);
+							$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[LModuleContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, this.$UNIT__FIELD__UNIT_CONTEXT);
 				""".withoutSideLines
 			)
 		}

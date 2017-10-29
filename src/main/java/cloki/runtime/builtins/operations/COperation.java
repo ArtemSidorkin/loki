@@ -1,38 +1,38 @@
 package cloki.runtime.builtins.operations;
 
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.unitcontexts.CUnitContext;
-import cloki.runtime.utils.CErrors;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.context.LUnitContext;
+import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
-public abstract class COperation extends CUnit
+public abstract class COperation extends LUnit
 {
 	protected final CConstOperator operator;
 
 	protected COperation(CConstOperator operator)
 	{
-		super(new CType(operator.sign));
+		super(new LType(operator.sign));
 		this.operator = operator;
 	}
 
-	public void init(CUnit unit) //add generic here
+	public void init(LUnit unit) //add generic here
 	{
 		unit.setMember(operator.sign, this);
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		return execute(host, checkCallParameter(parameters, 0));
 	}
 
-	protected abstract CUnit execute(CUnit leftOperand, CUnit rightOperand);
+	protected abstract LUnit execute(LUnit leftOperand, LUnit rightOperand);
 
 	//operator in parameters? We have it in fealds!!!
-	protected void printErrorUndefinedOperation(CConstOperator operator, CUnit leftOperand, CUnit rightOperand)
+	protected void printErrorUndefinedOperation(CConstOperator operator, LUnit leftOperand, LUnit rightOperand)
 	{
-		CErrors.printErrorOperatorIsNotDefinedForUnits(operator, leftOperand, rightOperand); //refactoring is needed
+		LErrors.printErrorOperatorIsNotDefinedForUnits(operator, leftOperand, rightOperand); //refactoring is needed
 	}
 }

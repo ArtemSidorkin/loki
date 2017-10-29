@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationString
 import cloki.language.parsing.CLokiParser
-import cloki.runtime.datatypes.CString
+import cloki.runtime.datatype.LString
 
 object CRuleGenerationJavaString extends CRuleGenerationJava[CLokiParser.StringContext]
 {
@@ -13,7 +13,7 @@ object CRuleGenerationJavaString extends CRuleGenerationJava[CLokiParser.StringC
 		override def enter() =
 		{
 			val prprdStr = string split "\n" map (str => s""""${str.init}"""") mkString """ + "\n" + """
-			(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[CString].getName}($prprdStr)")
+			(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LString].getName}($prprdStr)")
 		}
 	}
 

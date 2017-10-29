@@ -2,31 +2,31 @@ package cloki.runtime.builtins.units;
 
 import cloki.execution.CExecution;
 import cloki.runtime.consts.CConstFunctionalUnit;
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.datatypes.CVoid;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.datatype.LVoid;
+import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
 import java.io.PrintStream;
 
-public class CPrintln extends CUnit
+public class CPrintln extends LUnit
 {
 	public static final CPrintln instance = new CPrintln();
 
 	private CPrintln()
 	{
-		super(new CType(CConstFunctionalUnit.PRINTLN.name));
+		super(new LType(CConstFunctionalUnit.PRINTLN.name));
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		if (parameters.length > 0)
-			for (CUnit prmtr : parameters) getOutputPrintStream().println(prmtr);
+			for (LUnit prmtr : parameters) getOutputPrintStream().println(prmtr);
 		else getOutputPrintStream().println();
 
-		return CVoid.instance;
+		return LVoid.instance;
 	}
 
 	private static PrintStream getOutputPrintStream()

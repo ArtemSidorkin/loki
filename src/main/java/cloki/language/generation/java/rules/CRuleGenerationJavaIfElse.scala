@@ -4,9 +4,9 @@ import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
 import cloki.language.parsing.CLokiParser.IfElseContext
-import cloki.runtime.datatypes.CUnit
+import cloki.runtime.datatype.LUnit
+import cloki.runtime.context.LUnitContext
 import cloki.utils.extensions.CString.CString
-import cloki.runtime.unitcontexts.CUnitContext
 
 private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfElseContext]
 {
@@ -29,7 +29,7 @@ private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfEls
 						, this.unitContext, host, parameters, unitContext)
 						{
 							@Override
-							protected ${classOf[CUnit].getName} yes(${classOf[CUnit].getName} host, ${classOf[CUnit].getName}[] parameters, ${classOf[CUnitContext].getName} unitContext)
+							protected ${classOf[LUnit].getName} yes(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)
 							{
 					""".withoutSideLines
 				)
@@ -54,7 +54,7 @@ private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfEls
 							}
 
 							@Override
-							protected ${classOf[CUnit].getName} no(${classOf[CUnit].getName} host, ${classOf[CUnit].getName}[] parameters, ${classOf[CUnitContext].getName} unitContext)
+							protected ${classOf[LUnit].getName} no(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)
 							{
 						""".withoutSideLines
 					)

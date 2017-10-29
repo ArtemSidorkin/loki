@@ -3,11 +3,11 @@ package cloki.runtime.builtins.unaryoperations.bool;
 import cloki.runtime.builtins.unaryoperations.CUnaryOperation;
 import cloki.runtime.consts.CConstTypes;
 import cloki.runtime.consts.CConstUnaryOperator;
-import cloki.runtime.datatypes.*;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.datatype.*;
+import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
-public class CLogicalNegation extends CUnaryOperation<CBooleanPrototype>
+public class CLogicalNegation extends CUnaryOperation<LBooleanPrototype>
 {
 	public static final CLogicalNegation instance = new CLogicalNegation();
 
@@ -17,19 +17,19 @@ public class CLogicalNegation extends CUnaryOperation<CBooleanPrototype>
 	}
 
 	@Override
-	public CUnit call(CUnit host, @Nullable CUnit[] parameters, @Nullable CUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		CBoolean blnAsBln = host.asType(CConstTypes.BOOLEAN);
-		if (blnAsBln != null) return blnAsBln.getValue() ? CFalse.instance : CTrue.instance;
+		LBoolean blnAsBln = host.asType(CConstTypes.BOOLEAN);
+		if (blnAsBln != null) return blnAsBln.getValue() ? LFalse.instance : LTrue.instance;
 		else return
 		(
-			host != CVoid.instance &&
-			host != CNone.instance &&
-			host != CUndefined.instance &&
+			host != LVoid.instance &&
+			host != LNone.instance &&
+			host != LUndefined.instance &&
 			(
 				host.asType(CConstTypes.NUMBER) == null ||
-				((CNumber)host.asType(CConstTypes.NUMBER)).getValue() != 0
+				((LNumber)host.asType(CConstTypes.NUMBER)).getValue() != 0
 			)
-		) ? CFalse.instance : CTrue.instance;
+		) ? LFalse.instance : LTrue.instance;
 	}
 }

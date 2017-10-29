@@ -12,7 +12,7 @@ import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTempl
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
 import cloki.language.parsing.CLokiParser
 import cloki.language.parsing.CLokiParser.UnitContext
-import cloki.runtime.datatypes.CUnit
+import cloki.runtime.datatype.LUnit
 import cloki.system.CSystemSettings
 
 private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationBytecode[UnitContext]
@@ -69,13 +69,13 @@ private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationByte
 			{
 				if (isPreTopFrameUnit)
 				{
-					topClassFrame.addField(FINAL & SYNTHETIC, topParametersFieldName, classOf[Array[CUnit]])
+					topClassFrame.addField(FINAL & SYNTHETIC, topParametersFieldName, classOf[Array[LUnit]])
 
 					(
 						methodInit
 						aloadthis ()
 						aloadUnitHeirMethodInitParameterParameters ()
-						putfield (topClassFrame.internalName, topParametersFieldName, classOf[Array[CUnit]])
+						putfield (topClassFrame.internalName, topParametersFieldName, classOf[Array[LUnit]])
 					)
 				}
 				methodInit

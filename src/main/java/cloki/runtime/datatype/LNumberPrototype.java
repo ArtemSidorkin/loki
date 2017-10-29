@@ -1,24 +1,24 @@
-package cloki.runtime.datatypes;
+package cloki.runtime.datatype;
 
-import cloki.runtime.builtins.CBuiltins;
+import cloki.runtime.builtins.LBuiltins;
 import cloki.runtime.consts.CConstTypes;
 
-public class CNumberPrototype extends CUnit
+public class LNumberPrototype extends LUnit
 {
-	public static final CNumberPrototype instance = new CNumberPrototype();
+	public static final LNumberPrototype instance = new LNumberPrototype();
 
 	private final double value;
 
-	protected CNumberPrototype(double value)
+	protected LNumberPrototype(double value)
 	{
 		super(CConstTypes.NUMBER);
 		this.value = value;
 	}
 
-	private CNumberPrototype()
+	private LNumberPrototype()
 	{
 		super(CConstTypes.NUMBER_PROTOTYPE);
-		CBuiltins.initNumberPrototype(this);
+		LBuiltins.initNumberPrototype(this);
 		value = 0;
 	}
 
@@ -34,11 +34,10 @@ public class CNumberPrototype extends CUnit
 	}
 
 	@Override
-	public boolean _equals(CUnit unit)
+	public boolean _equals(LUnit unit)
 	{
-		CNumber nmbr = unit.asType(CConstTypes.NUMBER);
-
-		return nmbr != null && getValue() == nmbr.getValue();
+		LNumber number = unit.asType(CConstTypes.NUMBER);
+		return number != null && getValue() == number.getValue();
 	}
 
 	@Override

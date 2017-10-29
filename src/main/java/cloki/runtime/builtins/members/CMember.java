@@ -1,19 +1,19 @@
 package cloki.runtime.builtins.members;
 
-import cloki.runtime.datatypes.CType;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LType;
+import cloki.runtime.datatype.LUnit;
 
-public class CMember extends CUnit
+public class CMember extends LUnit
 {
 	private String name;
 
-	protected CMember(CType type)
+	protected CMember(LType type)
 	{
 		super(type);
 		name = type.getName();
 	}
 
-	public void init(CUnit unit)
+	public void init(LUnit unit)
 	{
 		unit.setMember(name, this);
 	}

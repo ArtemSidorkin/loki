@@ -2,21 +2,21 @@ package cloki.runtime.utils;
 
 import cloki.execution.CExecution;
 import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.datatypes.CUnit;
+import cloki.runtime.datatype.LUnit;
 
-public class CErrors
+public class LErrors
 {
 	public static void printErrorUnitDoesNotBelongToType(Object unit, Object type)
 	{
 		printError(String.format("\"%s\" is not \"%s\"", unit, type));
 	}
 
-	public static void printErrorOperatorIsNotDefinedForUnits(CConstOperator operator, CUnit unit1, CUnit unit2)
+	public static void printErrorOperatorIsNotDefinedForUnits(CConstOperator operator, LUnit unit1, LUnit unit2)
 	{
 		printError(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));
 	}
 
-	public static void printErrorParameterIsMissedForUnit(int parameterIndex, CUnit unit)
+	public static void printErrorParameterIsMissedForUnit(int parameterIndex, LUnit unit)
 	{
 		printError(String.format("Parameter \"%s\" is missed for \"%s\"", parameterIndex, unit));
 	}

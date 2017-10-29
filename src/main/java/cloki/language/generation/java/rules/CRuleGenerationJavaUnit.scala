@@ -4,8 +4,8 @@ import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
 import cloki.language.parsing.CLokiParser.{InstructionContext, UnitContext}
-import cloki.runtime.datatypes.{CType, CUnit}
-import cloki.runtime.unitcontexts.CUnitContext
+import cloki.runtime.datatype.{LType, LUnit}
+import cloki.runtime.context.LUnitContext
 import cloki.utils.extensions.CString.CString
 
 private[java] object CRuleGenerationJavaUnit extends CRuleGenerationJava[UnitContext]
@@ -26,19 +26,19 @@ private[java] object CRuleGenerationJavaUnit extends CRuleGenerationJava[UnitCon
 				(
 					(if (unitName.nonEmpty)
 						s"""
-							$generateUnitSaving("${unitName.get}", new ${classOf[CUnit].getName}(new ${classOf[CType].getName}("${unitName.get}"), ${if (isPreTopFrameModule) UNIT__METHOD__CALL__PARAMETER__CONTEXT else UNIT__METHOD__CALL__PARAMETER__CONTEXT})
+							$generateUnitSaving("${unitName.get}", new ${classOf[LUnit].getName}(new ${classOf[LType].getName}("${unitName.get}"), ${if (isPreTopFrameModule) UNIT__METHOD__CALL__PARAMETER__CONTEXT else UNIT__METHOD__CALL__PARAMETER__CONTEXT})
 							{
-								public ${classOf[CUnit].getName} $UNIT__METHOD__CALL(final ${classOf[CUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[CUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[CUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
+								public ${classOf[LUnit].getName} $UNIT__METHOD__CALL(final ${classOf[LUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[LUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[LUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
 								{
-									$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[CUnitContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, this.$UNIT__FIELD__UNIT_CONTEXT, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS);
+									$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[LUnitContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, this.$UNIT__FIELD__UNIT_CONTEXT, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS);
 						"""
 					else
 						s"""
-							new ${classOf[CUnit].getName}(${classOf[CType].getName}.$TYPE__METHOD__CREATE_ANONYMOUS(), ${if (isPreTopFrameModule) UNIT__METHOD__CALL__PARAMETER__CONTEXT else UNIT__METHOD__CALL__PARAMETER__CONTEXT})
+							new ${classOf[LUnit].getName}(${classOf[LType].getName}.$TYPE__METHOD__CREATE_ANONYMOUS(), ${if (isPreTopFrameModule) UNIT__METHOD__CALL__PARAMETER__CONTEXT else UNIT__METHOD__CALL__PARAMETER__CONTEXT})
 							{
-								public ${classOf[CUnit].getName} $UNIT__METHOD__CALL(final ${classOf[CUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[CUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[CUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
+								public ${classOf[LUnit].getName} $UNIT__METHOD__CALL(final ${classOf[LUnit].getName} $UNIT__METHOD__CALL__PARAMETER__HOST, final ${classOf[LUnit].getName}[] $UNIT__METHOD__CALL__PARAMETER__PARAMETERS, ${classOf[LUnitContext].getName} $UNIT__METHOD__CALL__PARAMETER__CONTEXT)
 								{
-									$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[CUnitContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, this.$UNIT__FIELD__UNIT_CONTEXT, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS);
+									$UNIT__METHOD__CALL__PARAMETER__CONTEXT = new ${classOf[LUnitContext].getName}(this, $UNIT__METHOD__CALL__PARAMETER__HOST, this.$UNIT__FIELD__UNIT_CONTEXT, $UNIT__METHOD__CALL__PARAMETER__PARAMETERS);
 						"""
 					).withoutSideLines
 				)

@@ -1,19 +1,18 @@
 package cloki.runtime.helpers;
 
-import cloki.runtime.datatypes.CUndefined;
-import cloki.runtime.datatypes.CUnit;
-import cloki.runtime.datatypes.CVoid;
-import cloki.runtime.unitcontexts.CUnitContext;
+import cloki.runtime.datatype.LUnit;
+import cloki.runtime.datatype.LVoid;
+import cloki.runtime.context.LUnitContext;
 
 public abstract class CHelperIfElse
 {
-	protected CUnit condition;
-	protected CUnitContext unitContext;
-	protected CUnit callHost;
-	protected CUnit[] callParameters;
-	protected CUnitContext callUnitContext;
+	protected LUnit condition;
+	protected LUnitContext unitContext;
+	protected LUnit callHost;
+	protected LUnit[] callParameters;
+	protected LUnitContext callUnitContext;
 
-	public CHelperIfElse(CUnit condition, CUnitContext unitContext, CUnit callHost, CUnit[] callParameters, CUnitContext callUnitContext)
+	public CHelperIfElse(LUnit condition, LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
 	{
 		this.condition = condition;
 		this.unitContext = unitContext;
@@ -22,7 +21,7 @@ public abstract class CHelperIfElse
 		this.callUnitContext = callUnitContext;
 	}
 
-	public CUnit call()
+	public LUnit call()
 	{
 		return
 			condition.toBoolean() ?
@@ -30,10 +29,10 @@ public abstract class CHelperIfElse
 			no(callHost, callParameters, callUnitContext);
 	}
 
-	protected abstract CUnit yes(CUnit host, CUnit[] parameters, CUnitContext unitContext);
+	protected abstract LUnit yes(LUnit host, LUnit[] parameters, LUnitContext unitContext);
 
-	protected CUnit no(CUnit host, CUnit[] parameters, CUnitContext unitContext)
+	protected LUnit no(LUnit host, LUnit[] parameters, LUnitContext unitContext)
 	{
-		return CVoid.instance;
+		return LVoid.instance;
 	}
 }

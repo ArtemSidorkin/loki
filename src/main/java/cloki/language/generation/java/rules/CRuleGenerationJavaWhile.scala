@@ -3,8 +3,8 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationWhile
 import cloki.language.parsing.CLokiParser.WhileContext
-import cloki.runtime.datatypes.CUnit
-import cloki.runtime.unitcontexts.CUnitContext
+import cloki.runtime.datatype.LUnit
+import cloki.runtime.context.LUnitContext
 import cloki.utils.extensions.CString.CString
 
 private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileContext]
@@ -24,7 +24,7 @@ private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileC
 					new cloki.runtime.helpers.CHelperWhile(this.unitContext, host, parameters, unitContext)
 					{
 						@Override
-						protected ${classOf[CUnit].getName} condition(${classOf[CUnit].getName} host, ${classOf[CUnit].getName}[] parameters, ${classOf[CUnitContext].getName} unitContext)
+						protected ${classOf[LUnit].getName} condition(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)
 						{
 				""".withoutSideLines
 			)
@@ -39,7 +39,7 @@ private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileC
 						}
 
 						@Override
-						protected ${classOf[CUnit].getName} action(${classOf[CUnit].getName} host, ${classOf[CUnit].getName}[] parameters, ${classOf[CUnitContext].getName} unitContext)
+						protected ${classOf[LUnit].getName} action(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)
 						{
 					""".withoutSideLines
 				)
