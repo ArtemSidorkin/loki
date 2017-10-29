@@ -6,6 +6,11 @@ import scala.annotation.tailrec
 
 object FileUtil
 {
+	def getFilePathnameWithoutExtension(filePathname:String) = (
+		filePathname
+			substring (0, {val index = filePathname lastIndexOf "."; if (index != -1) index else filePathname.length})
+	)
+
 	def writeText(filePathname:String, text:String)
 	{
 		val bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathname)))

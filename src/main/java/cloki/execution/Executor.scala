@@ -9,110 +9,113 @@ import cloki.language.generation.CGenerator
 import cloki.language.parsing.{CLokiLexer, CLokiParser}
 import cloki.language.preprocessing.CPreprocessor
 import cloki.runtime.context.LUnitContext
-import cloki.runtime.datatype.LUnit
+import cloki.runtime.datatype.{LModule, LUnit}
 import cloki.util.FileUtil
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 
 import scala.collection.JavaConversions._
 
-private[execution] class Executor
-(
+private[execution] class Executor(
 	_modulePaths:Seq[String],
 	val outputPrintStream:PrintStream = System.out,
 	val errorPrintStream:PrintStream = System.err,
-	protected val generatorCreator:(String=>CGenerator[_])
+	protected val generatorFactory:(String=>CGenerator[_])
 )
 {
-	private val modules:collection.mutable.Map[String, LUnit] = new ConcurrentHashMap[String, LUnit]()
-	private val moduleInstances = new ConcurrentHashMap[String, LUnit]()
-	private val modulePaths =
-	(
+	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
+	private val moduleInstances:collection.mutable.Map[String, LUnit] = new ConcurrentHashMap[String, LUnit]()
+	private val modulePaths = (
 		_modulePaths.view
 		map (_ replace ('\\' , '/'))
-		map (mdlPth => if (mdlPth endsWith "/" unary_!) mdlPth + "/" else mdlPth)
+		map (modulePath => if (modulePath endsWith "/" unary_!) modulePath + "/" else modulePath)
 	)
 
-	def getModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[LUnitContext] = None) =
+	def getModule(relativeModulePathname:String, unitContext:Option[LUnitContext] = None):LModule =
 	{
-		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
+		val moduleName = getModuleName(relativeModulePathname)
 
-		if (modules containsKey mdlNm unary_!) modules.synchronized
+		if (modules containsKey moduleName unary_!) modules.synchronized
 		{
-			if (modules containsKey mdlNm unary_!)
-				modules += mdlNm -> createModule(relativeModulePathnameWithoutExtension, unitContext)
+			if (modules containsKey moduleName unary_!)
+				modules += moduleName -> createModule(relativeModulePathname, unitContext)
 		}
 
-		modules(mdlNm)
+		modules(moduleName)
 	}
 
-	def getModuleInstance(relativeModulePathnameWithoutExtension:String, parameters:Option[Array[LUnit]] = None) =
+	def getModuleInstance(relativeModulePathname:String, parameters:Option[Array[LUnit]] = None):LUnit =
 	{
-		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
+		val moduleName = getModuleName(relativeModulePathname)
 
-		if (moduleInstances containsKey mdlNm unary_!) moduleInstances.synchronized
+		if (moduleInstances containsKey moduleName unary_!) moduleInstances.synchronized
 		{
-			if (moduleInstances containsKey mdlNm unary_!)
-			(
-				getModule(relativeModulePathnameWithoutExtension).
-				instantiate
-				(
-					parameters getOrElse null.asInstanceOf[Array[LUnit]],
-					null.asInstanceOf[LUnitContext],
-					new Consumer[LUnit]
-					{
-						override def accept(unit:LUnit) = moduleInstances += mdlNm -> unit
-					}
-				)
+			if (moduleInstances containsKey moduleName unary_!) (
+				getModule(relativeModulePathname)
+					instantiate(
+						parameters getOrElse null.asInstanceOf[Array[LUnit]],
+						null.asInstanceOf[LUnitContext],
+						new Consumer[LUnit]
+						{
+							override def accept(unit:LUnit):Unit =
+								moduleInstances += moduleName -> unit
+						}
+					)
 			)
 		}
 
-		moduleInstances(mdlNm)
+		moduleInstances(moduleName)
 	}
-
-	private def getModuleName(relativeModulePathnameWithoutExtension:String) =
-		relativeModulePathnameWithoutExtension replace ("/", "$")
-
-	private def getModuleFilePathname(relativeModulePathnameWithoutExtension:String) =
-	(
-		modulePaths
-		find (mdlPth => new File(s"$mdlPth$relativeModulePathnameWithoutExtension.cloki").exists())
-		getOrElse
-		(
-			throw new IllegalArgumentException(s"""Module "$relativeModulePathnameWithoutExtension" not found""")
-		)
-	) + relativeModulePathnameWithoutExtension + ".cloki"
 
 	private def createModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[LUnitContext]) =
 	{
-		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
-		val gnrtr = generatorCreator(mdlNm)
+		val moduleName = getModuleName(relativeModulePathnameWithoutExtension)
+		val generator = generatorFactory(moduleName)
 
-		generate(gnrtr, relativeModulePathnameWithoutExtension)
+		generate(generator, relativeModulePathnameWithoutExtension)
 
-		(gnrtr.classLoader getClass mdlNm).getConstructors.head.newInstance(
-			unitContext getOrElse null.asInstanceOf[LUnitContext]
-		).asInstanceOf[LUnit]
+		(generator.classLoader getClass moduleName)
+			.getConstructors
+			.head
+			.newInstance(unitContext getOrElse null)
+			.asInstanceOf[LModule]
 	}
 
-	private def generate(generator:CGenerator[_], relativeModulePathnameWithoutExtension:String)()
+	private def generate(generator:CGenerator[_], relativeModulePathname:String)()
 	{
-		val antlrInptStrm = new ANTLRInputStream(
-			new ByteArrayInputStream
-			(
-				CPreprocessor
-				(
-					FileUtil readText getModuleFilePathname(relativeModulePathnameWithoutExtension)
-				) getBytes StandardCharsets.UTF_8
+		val antlrModuleInputStream =
+			new ANTLRInputStream(
+				new ByteArrayInputStream(
+					CPreprocessor(
+						FileUtil readText getModuleFilePathname(relativeModulePathname)
+					)
+						getBytes StandardCharsets.UTF_8
+				)
+			)
+
+		val lexer = new CLokiLexer(antlrModuleInputStream)
+		val commonTokenStream = new CommonTokenStream(lexer)
+		val parser = new CLokiParser(commonTokenStream)
+		val moduleContext = parser.module()
+		val parseTreeWalker = new ParseTreeWalker
+
+		parseTreeWalker.walk(generator, moduleContext)
+	}
+
+	private def getModuleName(relativeModulePathname:String) = (
+		FileUtil
+			getFilePathnameWithoutExtension relativeModulePathname
+			replace ("/", "$")
+	)
+
+	private def getModuleFilePathname(relativeModulePathname:String):String = (
+		(
+			modulePaths
+			find (modulePath => new File(s"$modulePath$relativeModulePathname").exists)
+			getOrElse(
+				throw new IllegalArgumentException(s"""Module file "$relativeModulePathname" not found""")
 			)
 		)
-
-		val lxr = new CLokiLexer(antlrInptStrm)
-		val cmnTknStrm = new CommonTokenStream(lxr)
-		val prsr = new CLokiParser(cmnTknStrm)
-		val mdlCntxt = prsr.module()
-		val prsTreeWlkr = new ParseTreeWalker
-
-		prsTreeWlkr.walk(generator, mdlCntxt)
-	}
+			concat relativeModulePathname
+	)
 }

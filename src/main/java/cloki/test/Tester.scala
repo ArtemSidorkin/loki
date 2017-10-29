@@ -43,13 +43,7 @@ object Tester
 				foreach (sourceFilePathname =>
 				{
 					val sourceFile = new File(sourceFilePathname)
-
-					FileUtil
-						.writeText(
-							s"${sourceFile.getName}.${SystemConfiguration.SOURCE_FILE_EXTENSION}",
-							FileUtil
-								readText (s"$sourceFilePathname.${SystemConfiguration.SOURCE_FILE_EXTENSION}", true)
-						)
+					FileUtil.writeText(sourceFile.getName,	FileUtil readText (sourceFilePathname, true))
 				})
 		)
 
@@ -61,16 +55,16 @@ object Tester
 
 		(
 			testCase.sourceFilePathnames
-				foreach (srcFlPthnm =>
+				foreach (sourceFilePathname =>
 				{
-					val srcFl = new File(srcFlPthnm)
-					new File(s"${srcFl.getName}.${SystemConfiguration.SOURCE_FILE_EXTENSION}").delete()
+					val sourceFile = new File(sourceFilePathname)
+					new File(sourceFile.getName).delete()
 
 					if (SystemSettings.EXECUTION_TARGET == ExecutionTargetJava)
 					{
-						val cmpldFldr = new File(srcFl.getName)
-						cmpldFldr.listFiles foreach (_.delete())
-						cmpldFldr.delete()
+						val compilerFolderFile = new File(FileUtil getFilePathnameWithoutExtension sourceFile.getName)
+						compilerFolderFile.listFiles foreach (_.delete())
+						compilerFolderFile.delete()
 					}
 				})
 		)
