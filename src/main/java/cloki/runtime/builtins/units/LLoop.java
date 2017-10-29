@@ -7,11 +7,11 @@ import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
-public class CLoop extends LUnit
+public class LLoop extends LUnit
 {
-	public static final CLoop instance = new CLoop();
+	public static final LLoop instance = new LLoop();
 
-	private CLoop()
+	private LLoop()
 	{
 		super(new LType(LFunctionalUnit.LOOP.name));
 	}
@@ -19,18 +19,18 @@ public class CLoop extends LUnit
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		LUnit cntAsUnt = checkCallParameter(parameters, 0);
-		LNumber cntAsNmbr = cntAsUnt.asType(LTypes.NUMBER);
+		LUnit countAsUnit = checkCallParameter(parameters, 0);
+		LNumber countAsNumber = countAsUnit.asType(LTypes.NUMBER);
 
-		if (cntAsNmbr == null)
+		if (countAsNumber == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(cntAsUnt, LTypes.NUMBER);
+			LErrors.printErrorUnitDoesNotBelongToType(countAsUnit, LTypes.NUMBER);
 			return LUndefined.instance;
 		}
 
-		LUnit actn = checkCallParameter(parameters, 1);
+		LUnit actions = checkCallParameter(parameters, 1);
 
-		for (int i = 0; i < cntAsNmbr.getValue(); i++) actn.call(host, null, unitContext);
+		for (int i = 0; i < countAsNumber.getValue(); i++) actions.call(host, emptyUnitArray, unitContext);
 
 		return LVoid.instance;
 	}

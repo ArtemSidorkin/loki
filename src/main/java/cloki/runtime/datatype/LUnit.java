@@ -19,6 +19,8 @@ import java.util.function.Consumer;
 
 abstract public class LUnit
 {
+	public static final LUnit[] emptyUnitArray = {};
+
 	private static volatile LUnit prototype;
 
 	@Nullable protected volatile LUnitContext unitContext;

@@ -5,16 +5,16 @@ public enum LUnaryOperator
 	BANG("!_"),
 	MINUS("-_");
 
-	public String sign;
+	public String symbol;
 
-	LUnaryOperator(String sign)
+	LUnaryOperator(String symbol)
 	{
-		this.sign = sign;
+		this.symbol = symbol;
 	}
 
 	@Override
 	public String toString()
 	{
-		return sign;
+		return symbol;
 	}
 }

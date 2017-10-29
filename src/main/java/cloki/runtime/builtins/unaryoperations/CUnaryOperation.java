@@ -10,12 +10,12 @@ public abstract class CUnaryOperation<HOST extends LUnit> extends LUnit
 
 	protected CUnaryOperation(LUnaryOperator operator)
 	{
-		super(new LType(operator.sign));
+		super(new LType(operator.symbol));
 		this.operator = operator;
 	}
 
 	public void init(HOST unit)
 	{
-		unit.setMember(operator.sign, this);
+		unit.setMember(operator.symbol, this);
 	}
 }

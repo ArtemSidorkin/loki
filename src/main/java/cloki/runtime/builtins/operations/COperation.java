@@ -13,13 +13,13 @@ public abstract class COperation extends LUnit
 
 	protected COperation(LBinaryOperator operator)
 	{
-		super(new LType(operator.sign));
+		super(new LType(operator.symbol));
 		this.operator = operator;
 	}
 
 	public void init(LUnit unit) //add generic here
 	{
-		unit.setMember(operator.sign, this);
+		unit.setMember(operator.symbol, this);
 	}
 
 	@Override

@@ -23,27 +23,28 @@ import java.util.function.Supplier;
 public class LBuiltins
 {
 	public static final Map<String, Supplier<LUnit>> defaults =
-		Collections.unmodifiableMap(
-			new HashMap<String, Supplier<LUnit>>()
-			{{
-				put(LDataUnit.UNDEFINED.name, () -> LUndefined.instance);
-				put(LDataUnit.VOID.name, () -> LVoid.instance);
-				put(LDataUnit.NONE.name, () -> LNone.instance);
-				put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
-				put(LDataUnit.TRUE.name, () -> LTrue.instance);
-				put(LDataUnit.FALSE.name, () -> LFalse.instance);
-				put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
-				put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
-				put(LDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
-				put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
+		Collections
+			.unmodifiableMap(
+				new HashMap<String, Supplier<LUnit>>()
+				{{
+					put(LDataUnit.UNDEFINED.name, () -> LUndefined.instance);
+					put(LDataUnit.VOID.name, () -> LVoid.instance);
+					put(LDataUnit.NONE.name, () -> LNone.instance);
+					put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
+					put(LDataUnit.TRUE.name, () -> LTrue.instance);
+					put(LDataUnit.FALSE.name, () -> LFalse.instance);
+					put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
+					put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
+					put(LDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
+					put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
 
-				put(LFunctionalUnit.INCLUDE.name, () -> CInclude.instance);
-				put(LFunctionalUnit.IMPORT.name, () -> CImport.instance);
-				put(LFunctionalUnit.LOOP.name, () -> CLoop.instance);
-				put(LFunctionalUnit.TIME.name, () -> CTime.instance);
-				put(LFunctionalUnit.PRINTLN.name, () -> CPrintln.instance);
-			}}
-		);
+					put(LFunctionalUnit.INCLUDE.name, () -> LInclude.instance);
+					put(LFunctionalUnit.IMPORT.name, () -> LImport.instance);
+					put(LFunctionalUnit.LOOP.name, () -> LLoop.instance);
+					put(LFunctionalUnit.TIME.name, () -> LTime.instance);
+					put(LFunctionalUnit.PRINTLN.name, () -> LPrintln.instance);
+				}}
+			);
 
 	public static void initUnitPrototype(LUnit unitPrototype)
 	{

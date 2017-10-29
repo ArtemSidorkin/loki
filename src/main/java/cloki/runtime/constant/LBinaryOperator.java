@@ -15,16 +15,16 @@ public enum LBinaryOperator
 	AMPERSAND_AMPERSAND("&&"),
 	PIPE_PIPE("||");
 
-	public String sign;
+	public String symbol;
 
-	LBinaryOperator(String sign)
+	LBinaryOperator(String symbol)
 	{
-		this.sign = sign;
+		this.symbol = symbol;
 	}
 
 	@Override
 	public String toString()
 	{
-		return sign;
+		return symbol;
 	}
 }

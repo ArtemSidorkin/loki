@@ -7,11 +7,11 @@ import cloki.runtime.datatype.LUnit;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.Nullable;
 
-public class CTime extends LUnit
+public class LTime extends LUnit
 {
-	public static final CTime instance = new CTime();
+	public static final LTime instance = new LTime();
 
-	private CTime()
+	private LTime()
 	{
 		super(new LType(LFunctionalUnit.TIME.name));
 	}

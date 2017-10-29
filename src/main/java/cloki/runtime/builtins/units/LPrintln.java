@@ -10,11 +10,11 @@ import cloki.runtime.utils.Nullable;
 
 import java.io.PrintStream;
 
-public class CPrintln extends LUnit
+public class LPrintln extends LUnit
 {
-	public static final CPrintln instance = new CPrintln();
+	public static final LPrintln instance = new LPrintln();
 
-	private CPrintln()
+	private LPrintln()
 	{
 		super(new LType(LFunctionalUnit.PRINTLN.name));
 	}
@@ -23,7 +23,7 @@ public class CPrintln extends LUnit
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		if (parameters.length > 0)
-			for (LUnit prmtr : parameters) getOutputPrintStream().println(prmtr);
+			for (LUnit parameter : parameters) getOutputPrintStream().println(parameter);
 		else getOutputPrintStream().println();
 
 		return LVoid.instance;
