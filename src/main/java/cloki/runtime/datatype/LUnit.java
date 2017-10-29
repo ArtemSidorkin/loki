@@ -2,8 +2,8 @@ package cloki.runtime.datatype;
 
 import cloki.runtime.LSettings;
 import cloki.runtime.builtins.LBuiltins;
-import cloki.runtime.constant.LTypes;
 import cloki.runtime.constant.LDataUnit;
+import cloki.runtime.constant.LTypes;
 import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;

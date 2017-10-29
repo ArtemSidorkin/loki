@@ -5,7 +5,7 @@ import cloki.utils.IdGenerator;
 
 public class LType extends LUnit
 {
-	private static volatile LType TYPE;
+	private static volatile LType type;
 	private static final IdGenerator idGenerator = new IdGenerator();
 
 	public final long id = idGenerator.apply();
@@ -42,12 +42,12 @@ public class LType extends LUnit
 	@Override
 	public LType getType()
 	{
-		if (TYPE == null) synchronized(guard)
+		if (type == null) synchronized(guard)
 		{
-			TYPE = new LType(cloki.runtime.constant.LType.TYPE.name);
+			type = new LType(cloki.runtime.constant.LType.TYPE.name);
 		}
 
-		return TYPE;
+		return type;
 	}
 
 	@Override

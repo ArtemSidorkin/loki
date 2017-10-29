@@ -1,15 +1,15 @@
 package cloki.runtime.builtins;
 
-import cloki.runtime.builtins.members.type.CGetId;
-import cloki.runtime.builtins.members.type.CGetName;
+import cloki.runtime.builtins.members.type.LGetId;
+import cloki.runtime.builtins.members.type.LGetName;
 import cloki.runtime.builtins.members.unit.*;
-import cloki.runtime.builtins.operations.bool.COperationBooleanAmpersandAmpersand;
-import cloki.runtime.builtins.operations.bool.COperationBooleanPipePipe;
-import cloki.runtime.builtins.operations.number.*;
-import cloki.runtime.builtins.operations.unit.COperationBangEquals;
-import cloki.runtime.builtins.operations.unit.COperationEqualsEquals;
-import cloki.runtime.builtins.unaryoperations.bool.CLogicalNegation;
-import cloki.runtime.builtins.unaryoperations.number.CNumericNegation;
+import cloki.runtime.builtins.operations.binary.bool.LOperationBooleanAmpersandAmpersand;
+import cloki.runtime.builtins.operations.binary.bool.LOperationBooleanPipePipe;
+import cloki.runtime.builtins.operations.binary.number.*;
+import cloki.runtime.builtins.operations.binary.unit.LOperationBangEquals;
+import cloki.runtime.builtins.operations.binary.unit.LOperationEqualsEquals;
+import cloki.runtime.builtins.operations.unary.bool.LLogicalNegation;
+import cloki.runtime.builtins.operations.unary.number.LNumericNegation;
 import cloki.runtime.builtins.units.*;
 import cloki.runtime.constant.LDataUnit;
 import cloki.runtime.constant.LFunctionalUnit;
@@ -48,44 +48,44 @@ public class LBuiltins
 
 	public static void initUnitPrototype(LUnit unitPrototype)
 	{
-		CNew.instance.init(unitPrototype);
-		CAddParent.instance.init(unitPrototype);
-		CGetSuperMember.instance.init(unitPrototype);
-		CGetIndexItem.instance.init(unitPrototype);
-		CSetIndexItem.instance.init(unitPrototype);
-		CGetType.instance.init(unitPrototype);
-		CToString.instance.init(unitPrototype);
-		CHashCode.instance.init(unitPrototype);
-		CEquals.instance.init(unitPrototype);
-		COperationEqualsEquals.instance.init(unitPrototype);
-		COperationBangEquals.instance.init(unitPrototype);
+		LNew.instance.init(unitPrototype);
+		LAddParent.instance.init(unitPrototype);
+		LGetSuperMember.instance.init(unitPrototype);
+		LGetIndexItem.instance.init(unitPrototype);
+		LSetIndexItem.instance.init(unitPrototype);
+		LGetType.instance.init(unitPrototype);
+		LToString.instance.init(unitPrototype);
+		LHashCode.instance.init(unitPrototype);
+		LEquals.instance.init(unitPrototype);
+		LOperationEqualsEquals.instance.init(unitPrototype);
+		LOperationBangEquals.instance.init(unitPrototype);
 	}
 
 	public static void initType(LType type)
 	{
-		CGetId.instance.init(type);
-		CGetName.instance.init(type);
+		LGetId.instance.init(type);
+		LGetName.instance.init(type);
 	}
 
 	public static void initBooleanPrototype(LBooleanPrototype booleanPrototype)
 	{
-		CLogicalNegation.instance.init(booleanPrototype);
-		COperationBooleanAmpersandAmpersand.instance.init(booleanPrototype);
-		COperationBooleanPipePipe.instance.init(booleanPrototype);
+		LLogicalNegation.instance.init(booleanPrototype);
+		LOperationBooleanAmpersandAmpersand.instance.init(booleanPrototype);
+		LOperationBooleanPipePipe.instance.init(booleanPrototype);
 	}
 
 	public static void initNumberPrototype(LNumberPrototype numberPrototype)
 	{
-		CNumericNegation.instance.init(numberPrototype);
-		COperationNumberStar.instance.init(numberPrototype);
-		COperationNumberSlash.instance.init(numberPrototype);
-		COperationNumberPlus.instance.init(numberPrototype);
-		COperationNumberMinus.instance.init(numberPrototype);
-		COperationNumberEqualsEquals.instance.init(numberPrototype);
-		COperationNumberBangEquals.instance.init(numberPrototype);
-		COperationNumberGreaterThanEquals.instance.init(numberPrototype);
-		COperationNumberLessThanEquals.instance.init(numberPrototype);
-		COperationNumberGreaterThan.instance.init(numberPrototype);
-		COperationNumberLessThan.instance.init(numberPrototype);
+		LNumericNegation.instance.init(numberPrototype);
+		LOperationNumberStar.instance.init(numberPrototype);
+		LOperationNumberSlash.instance.init(numberPrototype);
+		LOperationNumberPlus.instance.init(numberPrototype);
+		LOperationNumberMinus.instance.init(numberPrototype);
+		LOperationNumberEqualsEquals.instance.init(numberPrototype);
+		LOperationNumberBangEquals.instance.init(numberPrototype);
+		LOperationNumberGreaterThanEquals.instance.init(numberPrototype);
+		LOperationNumberLessThanEquals.instance.init(numberPrototype);
+		LOperationNumberGreaterThan.instance.init(numberPrototype);
+		LOperationNumberLessThan.instance.init(numberPrototype);
 	}
 }
