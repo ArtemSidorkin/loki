@@ -3,8 +3,8 @@ package cloki.test
 import java.io.File
 
 import cloki.execution.Execution
-import cloki.execution.Execution.{ExecutionTarget, ExecutionTargetJava, ExecutionTargetBytecode}
-import cloki.system.{SystemSettings, CSystem}
+import cloki.execution.Execution.{ExecutionTargetBytecode, ExecutionTargetJava}
+import cloki.system.{CSystem, SystemSettings}
 import cloki.util.FileUtil
 
 object Tester
@@ -13,72 +13,86 @@ object Tester
 	{
 		println("Starting bytecode testing...")
 		SystemSettings.EXECUTION_TARGET = ExecutionTargetBytecode
-		val scdToAllBtcdTstCntr = startTesting()
+		val succeededToAllByteCodeCounter = startTesting()
 		println()
 
 		println("Starting java testing...")
 		SystemSettings.EXECUTION_TARGET = ExecutionTargetJava
-		val scdToAllJavaTstCntr = startTesting()
+		val succeededToAllJavaCodeCounter = startTesting()
 		println()
 
-		println(s"${scdToAllBtcdTstCntr._1} of ${scdToAllBtcdTstCntr._2} bytecode tests succeed.")
-		println(s"${scdToAllJavaTstCntr._1} of ${scdToAllJavaTstCntr._2} java tests succeed.")
+		println(s"${succeededToAllByteCodeCounter._1} of ${succeededToAllByteCodeCounter._2} bytecode tests succeed.")
+		println(s"${succeededToAllJavaCodeCounter._1} of ${succeededToAllJavaCodeCounter._2} java tests succeed.")
 
 	}
 
-	private def startTesting():(Int, Int) = CTestSuit.TEST_CASES.foldLeft((0, 0))((scdToAllTstCntrClctr, tstCs) =>
-	{
-		if (executeTestCase(tstCs)) (scdToAllTstCntrClctr._1 + 1, scdToAllTstCntrClctr._2 + 1)
-		else (scdToAllTstCntrClctr._1 + 1, scdToAllTstCntrClctr._2 + 1)
-	})
+	private def startTesting():(Int, Int) =
+		TestSuit
+			.testCases
+			.foldLeft((0, 0))((succeededToAllTestCounterCollector, testCase) =>
+			{
+				if (executeTestCase(testCase))
+					(succeededToAllTestCounterCollector._1 + 1, succeededToAllTestCounterCollector._2 + 1)
+				else (succeededToAllTestCounterCollector._1 + 1, succeededToAllTestCounterCollector._2 + 1)
+			})
 
-	private def executeTestCase(testCase:CTestCase):Boolean =
+	private def executeTestCase(testCase:TestCase):Boolean =
 	{
-		testCase.sourceFilePathnames foreach (srcFlPthnm =>
-		{
-			val srcFl = new File(srcFlPthnm)
-			FileUtil.writeText(
-				s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}",
-				FileUtil readText (s"$srcFlPthnm.${CSystem.SOURCE_FILE_EXTENSION}", true)
-			)
-		})
+		(
+			testCase.sourceFilePathnames
+				foreach (sourceFilePathname =>
+				{
+					val sourceFile = new File(sourceFilePathname)
 
-		val tstOtptStrm = new CTestOutputStream
-		initTestOutputStream(tstOtptStrm)
+					FileUtil
+						.writeText(
+							s"${sourceFile.getName}.${CSystem.SOURCE_FILE_EXTENSION}",
+							FileUtil readText (s"$sourceFilePathname.${CSystem.SOURCE_FILE_EXTENSION}", true)
+						)
+				})
+		)
+
+		val testOutputStream = new TestOutputStream
+		initTestOutputStream(testOutputStream)
 		val startSourceFile = new File(testCase.sourceFilePathnames.head)
 		Execution.executor.instance.getModuleInstance(startSourceFile.getName)
-		val expctd = FileUtil readText (testCase.expectedOutputFilePathname, true)
+		val expected = FileUtil readText (testCase.expectedOutputFilePathname, true)
 
-		testCase.sourceFilePathnames foreach (srcFlPthnm =>
+		(
+			testCase.sourceFilePathnames
+				foreach (srcFlPthnm =>
+				{
+					val srcFl = new File(srcFlPthnm)
+					new File(s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}").delete()
+
+					if (SystemSettings.EXECUTION_TARGET == ExecutionTargetJava)
+					{
+						val cmpldFldr = new File(srcFl.getName)
+						cmpldFldr.listFiles foreach (_.delete())
+						cmpldFldr.delete()
+					}
+				})
+		)
+
+		if (testOutputStream.content == expected)
 		{
-			val srcFl = new File(srcFlPthnm)
-			new File(s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}").delete()
-
-			if (SystemSettings.EXECUTION_TARGET == ExecutionTargetJava)
-			{
-				val cmpldFldr = new File(srcFl.getName)
-				cmpldFldr.listFiles foreach (_.delete())
-				cmpldFldr.delete()
-			}
-		})
-
-		if (tstOtptStrm.content == expctd)
-		{
-			println(s"""Test case "${testCase.name}" succeed.""")
+			println(s"""Test case "${testCase.name}" succeeded.""")
 			true
 		}
 		else
 		{
-			println(s"""Test case "${testCase.name}" failed. Got: \n"${tstOtptStrm.content}", expected: \n"$expctd" """)
+			println(s"""Test case "${testCase.name}" failed. Got: \n"${testOutputStream.content}", expected: \n"$expected" """)
 			false
 		}
 	}
 
-	private def initTestOutputStream(testOutputStream:CTestOutputStream):Unit =
-		Execution.executor.init(
-			modulePaths = new File(".").getAbsolutePath :: Nil,
-			force = true,
-			outputPrintStream = testOutputStream,
-			errorPrintStream = testOutputStream
-		)
+	private def initTestOutputStream(testOutputStream:TestOutputStream):Unit =
+		Execution
+			.executor
+			.init(
+				modulePaths = new File(".").getAbsolutePath :: Nil,
+				force = true,
+				outputPrintStream = testOutputStream,
+				errorPrintStream = testOutputStream
+			)
 }
