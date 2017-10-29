@@ -1,6 +1,6 @@
 package cloki.system
 
-object CSystem
+object SystemConfiguration
 {
 	sealed class OS
 	object WINDOWS extends OS

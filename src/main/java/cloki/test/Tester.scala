@@ -4,7 +4,7 @@ import java.io.File
 
 import cloki.execution.Execution
 import cloki.execution.Execution.{ExecutionTargetBytecode, ExecutionTargetJava}
-import cloki.system.{CSystem, SystemSettings}
+import cloki.system.{SystemConfiguration, SystemSettings}
 import cloki.util.FileUtil
 
 object Tester
@@ -46,8 +46,9 @@ object Tester
 
 					FileUtil
 						.writeText(
-							s"${sourceFile.getName}.${CSystem.SOURCE_FILE_EXTENSION}",
-							FileUtil readText (s"$sourceFilePathname.${CSystem.SOURCE_FILE_EXTENSION}", true)
+							s"${sourceFile.getName}.${SystemConfiguration.SOURCE_FILE_EXTENSION}",
+							FileUtil
+								readText (s"$sourceFilePathname.${SystemConfiguration.SOURCE_FILE_EXTENSION}", true)
 						)
 				})
 		)
@@ -63,7 +64,7 @@ object Tester
 				foreach (srcFlPthnm =>
 				{
 					val srcFl = new File(srcFlPthnm)
-					new File(s"${srcFl.getName}.${CSystem.SOURCE_FILE_EXTENSION}").delete()
+					new File(s"${srcFl.getName}.${SystemConfiguration.SOURCE_FILE_EXTENSION}").delete()
 
 					if (SystemSettings.EXECUTION_TARGET == ExecutionTargetJava)
 					{
@@ -81,7 +82,11 @@ object Tester
 		}
 		else
 		{
-			println(s"""Test case "${testCase.name}" failed. Got: \n"${testOutputStream.content}", expected: \n"$expected" """)
+			println(
+				s"""Test case "${testCase.name}" failed.
+				   | Got: \n"${testOutputStream.content}", expected: \n"$expected" """
+					.stripMargin
+			)
 			false
 		}
 	}

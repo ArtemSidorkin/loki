@@ -8,8 +8,8 @@ import cloki.language.generation.rules.mixins.CMixinRuleGenerationModule
 import cloki.language.parsing.CLokiParser.ModuleContext
 import cloki.runtime.datatype.{LModule, LUnit}
 import cloki.runtime.context.{LModuleContext, LUnitContext}
-import cloki.system.CSystem
-import cloki.system.CSystem.UNIX
+import cloki.system.SystemConfiguration
+import cloki.system.SystemConfiguration.UNIX
 import cloki.util.FileUtil
 import cloki.util.extensions.StringExtensions.StringExtensions
 
@@ -57,7 +57,7 @@ private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[Modul
 				val mdlFlPthnm = s"$mdlFldrPthnm/$moduleName.java"
 				FileUtil.writeText(mdlFlPthnm, generationContext.code.toString)
 				Runtime.getRuntime.exec(
-					s"javac $mdlFlPthnm -cp ./target/classes${if (CSystem.OS == UNIX) ":" else ";"}./lib/antlr.jar"
+					s"javac $mdlFlPthnm -cp ./target/classes${if (SystemConfiguration.OS == UNIX) ":" else ";"}./lib/antlr.jar"
 				).waitFor()
 
 				(
