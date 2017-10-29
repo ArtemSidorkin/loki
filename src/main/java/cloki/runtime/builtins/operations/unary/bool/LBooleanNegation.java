@@ -7,11 +7,11 @@ import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.*;
 import cloki.runtime.utils.Nullable;
 
-public class LLogicalNegation extends LUnaryOperation<LBooleanPrototype>
+public class LBooleanNegation extends LUnaryOperation<LBooleanPrototype>
 {
-	public static final LLogicalNegation instance = new LLogicalNegation();
+	public static final LBooleanNegation instance = new LBooleanNegation();
 
-	private LLogicalNegation()
+	private LBooleanNegation()
 	{
 		super(LUnaryOperator.BANG);
 	}

@@ -20,7 +20,7 @@ private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfEls
 			(
 				addCode _ compose
 				(if (isLastCharacterNewLine) tabulateLessOneLevel else tabulateLessOneLevelContinueLastCode)
-			) ("new cloki.runtime.helpers.LHelperIfElse(")
+			) ("new cloki.runtime.helpers.LIfElseHelper(")
 
 			generationContext.addPostExitRuleTask(logicalExpression, () =>
 			{

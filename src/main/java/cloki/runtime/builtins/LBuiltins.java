@@ -3,12 +3,12 @@ package cloki.runtime.builtins;
 import cloki.runtime.builtins.members.type.LGetId;
 import cloki.runtime.builtins.members.type.LGetName;
 import cloki.runtime.builtins.members.unit.*;
-import cloki.runtime.builtins.operations.binary.bool.LOperationBooleanAmpersandAmpersand;
-import cloki.runtime.builtins.operations.binary.bool.LOperationBooleanPipePipe;
+import cloki.runtime.builtins.operations.binary.bool.LBooleanAmpersandAmpersand;
+import cloki.runtime.builtins.operations.binary.bool.LBooleanPipePipe;
 import cloki.runtime.builtins.operations.binary.number.*;
-import cloki.runtime.builtins.operations.binary.unit.LOperationBangEquals;
-import cloki.runtime.builtins.operations.binary.unit.LOperationEqualsEquals;
-import cloki.runtime.builtins.operations.unary.bool.LLogicalNegation;
+import cloki.runtime.builtins.operations.binary.unit.LUnitBangEquals;
+import cloki.runtime.builtins.operations.binary.unit.LUnitEqualsEquals;
+import cloki.runtime.builtins.operations.unary.bool.LBooleanNegation;
 import cloki.runtime.builtins.operations.unary.number.LNumericNegation;
 import cloki.runtime.builtins.units.*;
 import cloki.runtime.constant.LDataUnit;
@@ -57,8 +57,8 @@ public class LBuiltins
 		LToString.instance.init(unitPrototype);
 		LHashCode.instance.init(unitPrototype);
 		LEquals.instance.init(unitPrototype);
-		LOperationEqualsEquals.instance.init(unitPrototype);
-		LOperationBangEquals.instance.init(unitPrototype);
+		LUnitEqualsEquals.instance.init(unitPrototype);
+		LUnitBangEquals.instance.init(unitPrototype);
 	}
 
 	public static void initType(LType type)
@@ -69,23 +69,23 @@ public class LBuiltins
 
 	public static void initBooleanPrototype(LBooleanPrototype booleanPrototype)
 	{
-		LLogicalNegation.instance.init(booleanPrototype);
-		LOperationBooleanAmpersandAmpersand.instance.init(booleanPrototype);
-		LOperationBooleanPipePipe.instance.init(booleanPrototype);
+		LBooleanNegation.instance.init(booleanPrototype);
+		LBooleanAmpersandAmpersand.instance.init(booleanPrototype);
+		LBooleanPipePipe.instance.init(booleanPrototype);
 	}
 
 	public static void initNumberPrototype(LNumberPrototype numberPrototype)
 	{
 		LNumericNegation.instance.init(numberPrototype);
-		LOperationNumberStar.instance.init(numberPrototype);
-		LOperationNumberSlash.instance.init(numberPrototype);
-		LOperationNumberPlus.instance.init(numberPrototype);
-		LOperationNumberMinus.instance.init(numberPrototype);
-		LOperationNumberEqualsEquals.instance.init(numberPrototype);
-		LOperationNumberBangEquals.instance.init(numberPrototype);
-		LOperationNumberGreaterThanEquals.instance.init(numberPrototype);
-		LOperationNumberLessThanEquals.instance.init(numberPrototype);
-		LOperationNumberGreaterThan.instance.init(numberPrototype);
-		LOperationNumberLessThan.instance.init(numberPrototype);
+		LNumberStar.instance.init(numberPrototype);
+		LNumberSlash.instance.init(numberPrototype);
+		LNumberPlus.instance.init(numberPrototype);
+		LNumberMinus.instance.init(numberPrototype);
+		LNumberEqualsEquals.instance.init(numberPrototype);
+		LNumberBangEquals.instance.init(numberPrototype);
+		LNumberGreaterThanEquals.instance.init(numberPrototype);
+		LNumberLessThanEquals.instance.init(numberPrototype);
+		LNumberGreaterThan.instance.init(numberPrototype);
+		LNumberLessThan.instance.init(numberPrototype);
 	}
 }

@@ -6,17 +6,17 @@ import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LTrue;
 import cloki.runtime.datatype.LUnit;
 
-public class LOperationBooleanPipePipe extends LOperationHomogeneousBoolean
+public class LBooleanPipePipe extends LBooleanOperation
 {
-	public static final LOperationBooleanPipePipe instance = new LOperationBooleanPipePipe();
+	public static final LBooleanPipePipe instance = new LBooleanPipePipe();
 
-	private LOperationBooleanPipePipe()
+	private LBooleanPipePipe()
 	{
 		super(LBinaryOperator.PIPE_PIPE);
 	}
 
 	@Override
-	LUnit _operation(LBoolean leftOperand, LBoolean rightOperand)
+	protected LUnit __execute(LBoolean leftOperand, LBoolean rightOperand)
 	{
 		return leftOperand.getValue() || rightOperand.getValue() ? LTrue.instance : LFalse.instance;
 	}

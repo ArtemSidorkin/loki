@@ -7,11 +7,11 @@ import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LTrue;
 import cloki.runtime.datatype.LUnit;
 
-public class LOperationBangEquals extends LBinaryOperation<LUnit>
+public class LUnitBangEquals extends LBinaryOperation<LUnit, LUnit, LUnit>
 {
-	public static final LOperationBangEquals instance = new LOperationBangEquals();
+	public static final LUnitBangEquals instance = new LUnitBangEquals();
 
-	private LOperationBangEquals()
+	private LUnitBangEquals()
 	{
 		super(LBinaryOperator.BANG_EQUALS);
 	}

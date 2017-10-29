@@ -21,7 +21,7 @@ private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileC
 				(if (isLastCharacterNewLine) tabulateLessOneLevel else tabulateLessOneLevelContinueLastCode)
 			) (
 				s"""
-					new cloki.runtime.helpers.LHelperWhile(this.unitContext, host, parameters, unitContext)
+					new cloki.runtime.helpers.LWhileHelper(this.unitContext, host, parameters, unitContext)
 					{
 						@Override
 						protected ${classOf[LUnit].getName} condition(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)

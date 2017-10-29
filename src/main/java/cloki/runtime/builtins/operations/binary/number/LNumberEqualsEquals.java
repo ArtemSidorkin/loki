@@ -6,17 +6,17 @@ import cloki.runtime.datatype.LNumber;
 import cloki.runtime.datatype.LTrue;
 import cloki.runtime.datatype.LUnit;
 
-public class LOperationNumberEqualsEquals extends LOperationHomogeneousNumber
+public class LNumberEqualsEquals extends LNumberOperation
 {
-	public static final LOperationNumberEqualsEquals instance = new LOperationNumberEqualsEquals();
+	public static final LNumberEqualsEquals instance = new LNumberEqualsEquals();
 
-	private LOperationNumberEqualsEquals()
+	private LNumberEqualsEquals()
 	{
 		super(LBinaryOperator.EQUALS_EQUALS);
 	}
 
 	@Override
-	protected LUnit _operation(LNumber leftOperand, LNumber rightOperand)
+	protected LUnit __execute(LNumber leftOperand, LNumber rightOperand)
 	{
 		return leftOperand.getValue() == rightOperand.getValue() ? LTrue.instance : LFalse.instance;
 	}

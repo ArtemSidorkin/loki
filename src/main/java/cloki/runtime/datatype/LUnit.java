@@ -316,8 +316,7 @@ abstract public class LUnit
 		{
 			if (members == null)
 			{
-				members = new ConcurrentHashMap<>
-				(
+				members = new ConcurrentHashMap<>(
 					LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
 					LSettings.UNIT_MEMBERS_LOAD_FACTOR,
 					LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL

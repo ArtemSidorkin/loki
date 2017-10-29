@@ -1,10 +1,11 @@
 package cloki.runtime.builtins.operations.unary;
 
+import cloki.runtime.builtins.operations.LOperation;
 import cloki.runtime.constant.LUnaryOperator;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
 
-public abstract class LUnaryOperation<OPERAND extends LUnit> extends LUnit
+public abstract class LUnaryOperation<HOST_OPERAND extends LUnit> extends LOperation<HOST_OPERAND>
 {
 	protected final LUnaryOperator operator;
 
@@ -14,8 +15,14 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LUnit
 		this.operator = operator;
 	}
 
-	public void init(OPERAND operand)
+	public void init(HOST_OPERAND hostOperand)
 	{
-		operand.setMember(operator.symbol, this);
+		hostOperand.setMember(operator.symbol, this);
+	}
+
+	@Override
+	protected String getSymbol()
+	{
+		return operator.symbol;
 	}
 }

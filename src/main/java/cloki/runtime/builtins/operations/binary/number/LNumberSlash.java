@@ -4,17 +4,17 @@ import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LNumber;
 import cloki.runtime.datatype.LUnit;
 
-public class LOperationNumberSlash extends LOperationHomogeneousNumber
+public class LNumberSlash extends LNumberOperation
 {
-	public static final LOperationNumberSlash instance = new LOperationNumberSlash();
+	public static final LNumberSlash instance = new LNumberSlash();
 
-	private LOperationNumberSlash()
+	private LNumberSlash()
 	{
 		super(LBinaryOperator.SLASH);
 	}
 
 	@Override
-	protected LUnit _operation(LNumber leftOperand, LNumber rightOperand)
+	protected LUnit __execute(LNumber leftOperand, LNumber rightOperand)
 	{
 		return new LNumber(leftOperand.getValue() / rightOperand.getValue());
 	}

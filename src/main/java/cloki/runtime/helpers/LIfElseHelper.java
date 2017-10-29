@@ -4,7 +4,7 @@ import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.datatype.LVoid;
 
-public abstract class LHelperIfElse
+public abstract class LIfElseHelper
 {
 	protected LUnit condition;
 	protected LUnitContext unitContext;
@@ -12,7 +12,7 @@ public abstract class LHelperIfElse
 	protected LUnit[] callParameters;
 	protected LUnitContext callUnitContext;
 
-	public LHelperIfElse(
+	public LIfElseHelper(
 		LUnit condition, LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext
 	)
 	{

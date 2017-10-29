@@ -4,14 +4,14 @@ import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.datatype.LVoid;
 
-public abstract class LHelperWhile
+public abstract class LWhileHelper
 {
 	protected LUnitContext unitContext;
 	protected LUnit callHost;
 	protected LUnit[] callParameters;
 	protected LUnitContext callUnitContext;
 
-	public LHelperWhile(LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
+	public LWhileHelper(LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
 	{
 		this.unitContext = unitContext;
 		this.callHost = callHost;

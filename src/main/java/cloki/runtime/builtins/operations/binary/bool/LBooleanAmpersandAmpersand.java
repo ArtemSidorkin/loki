@@ -6,17 +6,17 @@ import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LTrue;
 import cloki.runtime.datatype.LUnit;
 
-public class LOperationBooleanAmpersandAmpersand extends LOperationHomogeneousBoolean
+public class LBooleanAmpersandAmpersand extends LBooleanOperation
 {
-	public static final LOperationBooleanAmpersandAmpersand instance = new LOperationBooleanAmpersandAmpersand();
+	public static final LBooleanAmpersandAmpersand instance = new LBooleanAmpersandAmpersand();
 
-	private LOperationBooleanAmpersandAmpersand()
+	private LBooleanAmpersandAmpersand()
 	{
 		super(LBinaryOperator.AMPERSAND_AMPERSAND);
 	}
 
 	@Override
-	LUnit _operation(LBoolean leftOperand, LBoolean rightOperand)
+	protected LUnit __execute(LBoolean leftOperand, LBoolean rightOperand)
 	{
 		return leftOperand.getValue() && rightOperand.getValue() ? LTrue.instance : LFalse.instance;
 	}
