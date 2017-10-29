@@ -1,0 +1,8 @@
+Point a b :
+	$a = a
+	$b = b
+
+	$sum : $a + $b
+
+
+println(Point.new(10, 20).sum())

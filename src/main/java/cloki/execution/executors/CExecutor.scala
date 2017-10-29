@@ -1,0 +1,139 @@
+package cloki.execution.executors
+
+import java.io.{ByteArrayInputStream, File, PrintStream}
+import java.nio.charset.StandardCharsets
+import java.util.concurrent.ConcurrentHashMap
+import java.util.function.Consumer
+
+import cloki.language.generation.CGenerator
+import cloki.language.parsing.{CLokiLexer, CLokiParser}
+import cloki.language.preprocessing.CPreprocessor
+import cloki.runtime.datatypes.CUnit
+import cloki.runtime.unitcontexts.CUnitContext
+import cloki.utils.CFile
+import cloki.utils.extensions.CConcurrentHashMap.CConcurrentHashMap
+import org.antlr.v4.runtime.tree.ParseTreeWalker
+import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
+
+private[execution] abstract class CExecutor[GENERATOR <: CGenerator[_]]
+(
+	_modulePaths:Seq[String],
+	val outputPrintStream:PrintStream = System.out,
+	val errorPrintStream:PrintStream = System.err
+)
+{
+	protected val generatorCreator:(String=>CGenerator[_])
+
+	private val modules = new ConcurrentHashMap[String, CUnit]()
+	private val moduleInstances = new ConcurrentHashMap[String, CUnit]()
+	private val modulePaths =
+	(
+		_modulePaths.view
+		map (_ replace ('\\' , '/'))
+		map (mdlPth => if (mdlPth endsWith "/" unary_!) mdlPth + "/" else mdlPth)
+	)
+
+	def getModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[CUnitContext] = None) =
+	{
+		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
+
+		if (modules containsKey mdlNm unary_!) modules.synchronized
+		{
+			if (modules containsKey mdlNm unary_!)
+				modules += mdlNm -> createModule(relativeModulePathnameWithoutExtension, unitContext)
+		}
+
+		modules(mdlNm)
+	}
+
+	def getModuleInstance(relativeModulePathnameWithoutExtension:String, parameters:Option[Array[CUnit]] = None) =
+	{
+		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
+
+		if (moduleInstances containsKey mdlNm unary_!) moduleInstances.synchronized
+		{
+			if (moduleInstances containsKey mdlNm unary_!)
+			(
+				getModule(relativeModulePathnameWithoutExtension).
+				instantiate
+				(
+					parameters getOrElse null.asInstanceOf[Array[CUnit]],
+					null.asInstanceOf[CUnitContext],
+					new Consumer[CUnit]
+					{
+						override def accept(unit:CUnit) = moduleInstances += mdlNm -> unit
+					}
+				)
+			)
+		}
+
+		moduleInstances(mdlNm)
+	}
+
+	private def getModuleName(relativeModulePathnameWithoutExtension:String) =
+		relativeModulePathnameWithoutExtension replace ("/", "$")
+
+	private def getModuleFilePathname(relativeModulePathnameWithoutExtension:String) =
+	(
+		modulePaths
+		find (mdlPth => new File(s"$mdlPth$relativeModulePathnameWithoutExtension.cloki").exists())
+		getOrElse
+		(
+			throw new IllegalArgumentException(s"""Module "$relativeModulePathnameWithoutExtension" not found""")
+		)
+	) + relativeModulePathnameWithoutExtension + ".cloki"
+
+	private def createModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[CUnitContext]) =
+	{
+		val mdlNm = getModuleName(relativeModulePathnameWithoutExtension)
+		val gnrtr = generatorCreator(mdlNm)
+
+		generate(gnrtr, relativeModulePathnameWithoutExtension)
+
+		(gnrtr.classLoader getClass mdlNm).getConstructors.head.newInstance(
+			unitContext getOrElse null.asInstanceOf[CUnitContext]
+		).asInstanceOf[CUnit]
+	}
+
+	private def generate(generator:CGenerator[_], relativeModulePathnameWithoutExtension:String)()
+	{
+		val antlrInptStrm = new ANTLRInputStream(
+			new ByteArrayInputStream
+			(
+				CPreprocessor
+				(
+					CFile readText getModuleFilePathname(relativeModulePathnameWithoutExtension)
+				) getBytes StandardCharsets.UTF_8
+			)
+		)
+
+		val lxr = new CLokiLexer(antlrInptStrm)
+		val cmnTknStrm = new CommonTokenStream(lxr)
+		val prsr = new CLokiParser(cmnTknStrm)
+		val mdlCntxt = prsr.module()
+		val prsTreeWlkr = new ParseTreeWalker
+
+		prsTreeWlkr.walk(generator, mdlCntxt)
+	}
+}
+
+private[execution] trait CExecutor$$[EXECUTOR <: CExecutor[_]]
+{
+	protected val executorCreator:(Seq[String], PrintStream, PrintStream)=>EXECUTOR
+
+	@volatile
+	private var _instance:EXECUTOR = null.asInstanceOf[EXECUTOR]
+
+	def instance = _instance
+
+	def init
+	(
+		modulePaths:Seq[String],
+		force:Boolean = false,
+		outputPrintStream:PrintStream = System.out,
+		errorPrintStream:PrintStream = System.err
+	):Unit = if (_instance == null || force) this.synchronized
+	{
+		if (_instance == null || force) _instance = executorCreator(modulePaths, outputPrintStream, errorPrintStream)
+	}
+}
