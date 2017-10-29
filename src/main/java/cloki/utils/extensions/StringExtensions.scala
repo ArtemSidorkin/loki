@@ -1,6 +1,6 @@
 package cloki.utils.extensions
 
-object CString
+object StringExtensions
 {
 	implicit class CString(string:String)
 	{

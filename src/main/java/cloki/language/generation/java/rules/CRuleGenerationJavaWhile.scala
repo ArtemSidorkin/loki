@@ -5,7 +5,7 @@ import cloki.language.generation.rules.mixins.CMixinRuleGenerationWhile
 import cloki.language.parsing.CLokiParser.WhileContext
 import cloki.runtime.datatype.LUnit
 import cloki.runtime.context.LUnitContext
-import cloki.utils.extensions.CString.CString
+import cloki.utils.extensions.StringExtensions.CString
 
 private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileContext]
 {
