@@ -1,8 +1,8 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.CConstTypes;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LTypes;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.datatype.LString;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
@@ -15,14 +15,14 @@ public class CGetSuperMember extends CMember
 
 	private CGetSuperMember()
 	{
-		super(new LType(LConstUnitMember.GET_SUPER_MEMBER.name));
+		super(new LType(LUnitMember.GET_SUPER_MEMBER.name));
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		LUnit sprMmbrNmAsUnt = checkCallParameter(parameters, 0);
-		LString sprMmbrNmAsStr = sprMmbrNmAsUnt.asType(CConstTypes.STRING);
+		LString sprMmbrNmAsStr = sprMmbrNmAsUnt.asType(LTypes.STRING);
 		if (sprMmbrNmAsStr != null) host.getSuperMember(sprMmbrNmAsStr.getValue());
 		return host.getSuperMember(sprMmbrNmAsUnt.toString());
 	}

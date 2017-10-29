@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LTypes;
 
 public class LStringPrototype extends LUnit
 {
@@ -10,13 +10,13 @@ public class LStringPrototype extends LUnit
 
 	protected LStringPrototype(String value)
 	{
-		super(CConstTypes.STRING);
+		super(LTypes.STRING);
 		this.value = value;
 	}
 
 	private LStringPrototype()
 	{
-		super(CConstTypes.STRING_PROTOTYPE);
+		super(LTypes.STRING_PROTOTYPE);
 		value = "";
 	}
 
@@ -34,7 +34,7 @@ public class LStringPrototype extends LUnit
 	@Override
 	public boolean _equals(LUnit unit)
 	{
-		LString string = unit.asType(CConstTypes.STRING);
+		LString string = unit.asType(LTypes.STRING);
 		return string != null && getValue().equals(string.getValue());
 	}
 

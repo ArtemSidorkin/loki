@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LTypes;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
@@ -16,13 +16,13 @@ public class LArrayPrototype extends LUnit
 
 	public LArrayPrototype(LUnit[] items)
 	{
-		super(CConstTypes.ARRAY);
+		super(LTypes.ARRAY);
 		this.items = items != null ? new ArrayList<>(Arrays.asList(items)) : null;
 	}
 
 	private LArrayPrototype()
 	{
-		super(CConstTypes.ARRAY_PROTOTYPE);
+		super(LTypes.ARRAY_PROTOTYPE);
 		items = null;
 	}
 
@@ -30,11 +30,11 @@ public class LArrayPrototype extends LUnit
 	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
 	{
 		LUnit indexAsUnit = checkCallParameter(parameters, 0);
-		LNumber indexAsNumber = indexAsUnit.asType(CConstTypes.NUMBER);
+		LNumber indexAsNumber = indexAsUnit.asType(LTypes.NUMBER);
 
 		if (indexAsNumber == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, CConstTypes.NUMBER.getName());
+			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.getName());
 			return LUndefined.instance;
 		}
 
@@ -50,11 +50,11 @@ public class LArrayPrototype extends LUnit
 	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
 	{
 		LUnit indexAsUnit = checkCallParameter(parameters, 0);
-		LNumber indexAsNumber = indexAsUnit.asType(CConstTypes.NUMBER);
+		LNumber indexAsNumber = indexAsUnit.asType(LTypes.NUMBER);
 
 		if (indexAsNumber == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, CConstTypes.NUMBER.getName());
+			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.getName());
 			return LUndefined.instance;
 		}
 

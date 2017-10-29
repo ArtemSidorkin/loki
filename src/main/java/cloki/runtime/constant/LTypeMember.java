@@ -1,13 +1,13 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum CConstTypeMember
+public enum LTypeMember
 {
 	GET_NAME("getName"),
 	GET_ID("getId");
 
 	public String name;
 
-	CConstTypeMember(String name)
+	LTypeMember(String name)
 	{
 		this.name = name;
 	}

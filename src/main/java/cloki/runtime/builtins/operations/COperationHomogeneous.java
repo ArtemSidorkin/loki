@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.operations;
 
-import cloki.runtime.consts.CConstOperator;
+import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUndefined;
 import cloki.runtime.datatype.LUnit;
@@ -9,7 +9,7 @@ public abstract class COperationHomogeneous<OPERAND extends LUnit> extends COper
 {
 	private LType operandType;
 
-	protected COperationHomogeneous(CConstOperator operator, LType operandType)
+	protected COperationHomogeneous(LBinaryOperator operator, LType operandType)
 	{
 		super(operator);
 		this.operandType = operandType;

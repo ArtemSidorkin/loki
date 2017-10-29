@@ -1,6 +1,6 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum LConstUnitMember
+public enum LUnitMember
 {
 	NEW("new"),
 	ADD_PARENT("addParent"),
@@ -14,7 +14,7 @@ public enum LConstUnitMember
 
 	public String name;
 
-	LConstUnitMember(String name)
+	LUnitMember(String name)
 	{
 		this.name = name;
 	}

@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.operations.bool;
 
-import cloki.runtime.consts.CConstOperator;
+import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LBoolean;
 import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LTrue;
@@ -12,7 +12,7 @@ public class COperationBooleanAmpersandAmpersand extends COperationHomogeneousBo
 
 	private COperationBooleanAmpersandAmpersand()
 	{
-		super(CConstOperator.AMPERSAND_AMPERSAND);
+		super(LBinaryOperator.AMPERSAND_AMPERSAND);
 	}
 
 	@Override

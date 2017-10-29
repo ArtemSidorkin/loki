@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.operations.number;
 
-import cloki.runtime.consts.CConstOperator;
+import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LNumber;
 import cloki.runtime.datatype.LUnit;
 
@@ -10,7 +10,7 @@ public class COperationNumberSlash extends COperationHomogeneousNumber
 
 	private COperationNumberSlash()
 	{
-		super(CConstOperator.SLASH);
+		super(LBinaryOperator.SLASH);
 	}
 
 	@Override

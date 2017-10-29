@@ -11,8 +11,8 @@ import cloki.runtime.builtins.operations.unit.COperationEqualsEquals;
 import cloki.runtime.builtins.unaryoperations.bool.CLogicalNegation;
 import cloki.runtime.builtins.unaryoperations.number.CNumericNegation;
 import cloki.runtime.builtins.units.*;
-import cloki.runtime.consts.LConstDataUnit;
-import cloki.runtime.consts.CConstFunctionalUnit;
+import cloki.runtime.constant.LDataUnit;
+import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.datatype.*;
 
 import java.util.Collections;
@@ -26,22 +26,22 @@ public class LBuiltins
 		Collections.unmodifiableMap(
 			new HashMap<String, Supplier<LUnit>>()
 			{{
-				put(LConstDataUnit.UNDEFINED.name, () -> LUndefined.instance);
-				put(LConstDataUnit.VOID.name, () -> LVoid.instance);
-				put(LConstDataUnit.NONE.name, () -> LNone.instance);
-				put(LConstDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
-				put(LConstDataUnit.TRUE.name, () -> LTrue.instance);
-				put(LConstDataUnit.FALSE.name, () -> LFalse.instance);
-				put(LConstDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
-				put(LConstDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
-				put(LConstDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
-				put(LConstDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
+				put(LDataUnit.UNDEFINED.name, () -> LUndefined.instance);
+				put(LDataUnit.VOID.name, () -> LVoid.instance);
+				put(LDataUnit.NONE.name, () -> LNone.instance);
+				put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
+				put(LDataUnit.TRUE.name, () -> LTrue.instance);
+				put(LDataUnit.FALSE.name, () -> LFalse.instance);
+				put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
+				put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
+				put(LDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
+				put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
 
-				put(CConstFunctionalUnit.INCLUDE.name, () -> CInclude.instance);
-				put(CConstFunctionalUnit.IMPORT.name, () -> CImport.instance);
-				put(CConstFunctionalUnit.LOOP.name, () -> CLoop.instance);
-				put(CConstFunctionalUnit.TIME.name, () -> CTime.instance);
-				put(CConstFunctionalUnit.PRINTLN.name, () -> CPrintln.instance);
+				put(LFunctionalUnit.INCLUDE.name, () -> CInclude.instance);
+				put(LFunctionalUnit.IMPORT.name, () -> CImport.instance);
+				put(LFunctionalUnit.LOOP.name, () -> CLoop.instance);
+				put(LFunctionalUnit.TIME.name, () -> CTime.instance);
+				put(LFunctionalUnit.PRINTLN.name, () -> CPrintln.instance);
 			}}
 		);
 

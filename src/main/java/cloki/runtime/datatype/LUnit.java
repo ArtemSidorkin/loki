@@ -1,10 +1,10 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.CSettings;
+import cloki.runtime.LSettings;
 import cloki.runtime.builtins.LBuiltins;
-import cloki.runtime.consts.CConstTypes;
-import cloki.runtime.consts.LConstDataUnit;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LTypes;
+import cloki.runtime.constant.LDataUnit;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
@@ -52,7 +52,7 @@ abstract public class LUnit
 		if (prototype == null) synchronized(LUnit.class)
 		{
 			if (prototype == null)
-				prototype = new LUnit(new LType(LConstDataUnit.UNIT_PROTOTYPE.name))
+				prototype = new LUnit(new LType(LDataUnit.UNIT_PROTOTYPE.name))
 				{
 					{
 						LBuiltins.initUnitPrototype(this);
@@ -134,7 +134,7 @@ abstract public class LUnit
 
 	public LUnit getIndexedItem(@Nullable LUnit[] parameters)
 	{
-		return callMember(LConstUnitMember.GET_INDEX_ITEM.name, parameters, null);
+		return callMember(LUnitMember.GET_INDEX_ITEM.name, parameters, null);
 	}
 
 	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
@@ -144,7 +144,7 @@ abstract public class LUnit
 
 	public LUnit setIndexedItem(@Nullable LUnit[] parameters)
 	{
-		return callMember(LConstUnitMember.SET_INDEX_ITEM.name, parameters, null);
+		return callMember(LUnitMember.SET_INDEX_ITEM.name, parameters, null);
 	}
 
 	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
@@ -155,7 +155,7 @@ abstract public class LUnit
 	public LUnit setParameterNames(@Nullable String[] parameterNames)
 	{
 		HashMap<String, Integer> parameterIndexes = new HashMap<>(
-			CSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, CSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR
+			LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR
 		);
 
 		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
@@ -222,7 +222,7 @@ abstract public class LUnit
 
 	public LBoolean _toBoolean()
 	{
-		LBoolean thisAsBoolean = asType(CConstTypes.BOOLEAN);
+		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
 
 		if (thisAsBoolean != null) return thisAsBoolean.getValue() ? LTrue.instance : LFalse.instance;
 		else
@@ -232,7 +232,7 @@ abstract public class LUnit
 				this != LNone.instance &&
 				this != LUndefined.instance &&
 				(
-					asType(CConstTypes.NUMBER) == null || ((LNumber)asType(CConstTypes.NUMBER)).getValue() != 0
+					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).getValue() != 0
 				)
 			);
 
@@ -244,8 +244,8 @@ abstract public class LUnit
 	@Override
 	public String toString()
 	{
-		LUnit stringAsUnit = callMember(LConstUnitMember.TO_STRING.name, null, null);
-		LString string = stringAsUnit.asType(CConstTypes.STRING);
+		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null, null);
+		LString string = stringAsUnit.asType(LTypes.STRING);
 
 		if (string != null) return string.getValue();
 
@@ -260,8 +260,8 @@ abstract public class LUnit
 	@Override
 	public int hashCode()
 	{
-		LUnit hashCodeAsUnit = callMember(LConstUnitMember.HASH_CODE.name, null, null);
-		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(CConstTypes.NUMBER);
+		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null, null);
+		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
 
 		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.getValue());
 
@@ -278,7 +278,7 @@ abstract public class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return callMember(LConstUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}, null).toBoolean();
+		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}, null).toBoolean();
 	}
 
 	public boolean _equals(LUnit unit)
@@ -316,9 +316,9 @@ abstract public class LUnit
 			{
 				members = new ConcurrentHashMap<>
 				(
-					CSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
-					CSettings.UNIT_MEMBERS_LOAD_FACTOR,
-					CSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
+					LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
+					LSettings.UNIT_MEMBERS_LOAD_FACTOR,
+					LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
 				);
 			}
 		}

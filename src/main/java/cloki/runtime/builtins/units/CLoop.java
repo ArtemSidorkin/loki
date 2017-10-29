@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.units;
 
-import cloki.runtime.consts.CConstFunctionalUnit;
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LFunctionalUnit;
+import cloki.runtime.constant.LTypes;
 import cloki.runtime.datatype.*;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
@@ -13,18 +13,18 @@ public class CLoop extends LUnit
 
 	private CLoop()
 	{
-		super(new LType(CConstFunctionalUnit.LOOP.name));
+		super(new LType(LFunctionalUnit.LOOP.name));
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		LUnit cntAsUnt = checkCallParameter(parameters, 0);
-		LNumber cntAsNmbr = cntAsUnt.asType(CConstTypes.NUMBER);
+		LNumber cntAsNmbr = cntAsUnt.asType(LTypes.NUMBER);
 
 		if (cntAsNmbr == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(cntAsUnt, CConstTypes.NUMBER);
+			LErrors.printErrorUnitDoesNotBelongToType(cntAsUnt, LTypes.NUMBER);
 			return LUndefined.instance;
 		}
 

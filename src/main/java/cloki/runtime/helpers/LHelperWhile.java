@@ -4,14 +4,14 @@ import cloki.runtime.datatype.LUnit;
 import cloki.runtime.datatype.LVoid;
 import cloki.runtime.context.LUnitContext;
 
-public abstract class CHelperWhile
+public abstract class LHelperWhile
 {
 	protected LUnitContext unitContext;
 	protected LUnit callHost;
 	protected LUnit[] callParameters;
 	protected LUnitContext callUnitContext;
 
-	public CHelperWhile(LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
+	public LHelperWhile(LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
 	{
 		this.unitContext = unitContext;
 		this.callHost = callHost;
@@ -23,6 +23,7 @@ public abstract class CHelperWhile
 	{
 		while (condition(callHost, callParameters, callUnitContext).toBoolean())
 			action(callHost, callParameters, callUnitContext);
+
 		return LVoid.instance;
 	}
 

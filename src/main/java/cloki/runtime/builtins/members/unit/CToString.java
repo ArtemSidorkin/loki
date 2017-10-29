@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.datatype.LString;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
@@ -14,7 +14,7 @@ public class CToString extends CMember
 
 	private CToString()
 	{
-		super(new LType(LConstUnitMember.TO_STRING.name));
+		super(new LType(LUnitMember.TO_STRING.name));
 	}
 
 	@Override

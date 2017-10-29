@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.LConstDataUnit;
+import cloki.runtime.constant.LDataUnit;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
@@ -13,7 +13,7 @@ public class LUndefined extends LUnit
 
 	private LUndefined()
 	{
-		super(new LType(LConstDataUnit.UNDEFINED.name));
+		super(new LType(LDataUnit.UNDEFINED.name));
 	}
 
 	@Override

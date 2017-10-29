@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.LConstDataUnit;
+import cloki.runtime.constant.LDataUnit;
 
 public class LVoid extends LUnit
 {
@@ -8,6 +8,6 @@ public class LVoid extends LUnit
 
 	private LVoid()
 	{
-		super(new LType(LConstDataUnit.VOID.name));
+		super(new LType(LDataUnit.VOID.name));
 	}
 }

@@ -1,6 +1,6 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum CConstOperator
+public enum LBinaryOperator
 {
 	STAR("*"),
 	SLASH("/"),
@@ -17,7 +17,7 @@ public enum CConstOperator
 
 	public String sign;
 
-	CConstOperator(String sign)
+	LBinaryOperator(String sign)
 	{
 		this.sign = sign;
 	}

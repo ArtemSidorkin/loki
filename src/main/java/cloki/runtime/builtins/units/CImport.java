@@ -1,8 +1,8 @@
 package cloki.runtime.builtins.units;
 
 import cloki.execution.CExecution;
-import cloki.runtime.consts.CConstFunctionalUnit;
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LFunctionalUnit;
+import cloki.runtime.constant.LTypes;
 import cloki.runtime.datatype.*;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
@@ -15,18 +15,18 @@ public class CImport extends LUnit
 
 	private CImport()
 	{
-		super(new LType(CConstFunctionalUnit.IMPORT.name));
+		super(new LType(LFunctionalUnit.IMPORT.name));
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
 		LUnit rltvFlPthNmWthtExtnsnAsUnt = checkCallParameter(parameters, 0);
-		LString rltvFlPthNmWthtExtnsnAsStr = rltvFlPthNmWthtExtnsnAsUnt.asType(CConstTypes.STRING);
+		LString rltvFlPthNmWthtExtnsnAsStr = rltvFlPthNmWthtExtnsnAsUnt.asType(LTypes.STRING);
 
 		if (rltvFlPthNmWthtExtnsnAsStr == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(rltvFlPthNmWthtExtnsnAsUnt, CConstTypes.STRING);
+			LErrors.printErrorUnitDoesNotBelongToType(rltvFlPthNmWthtExtnsnAsUnt, LTypes.STRING);
 			return LUndefined.instance;
 		}
 

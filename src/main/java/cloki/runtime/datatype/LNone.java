@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.LConstDataUnit;
+import cloki.runtime.constant.LDataUnit;
 
 public class LNone extends LUnit
 {
@@ -8,6 +8,6 @@ public class LNone extends LUnit
 
 	private LNone()
 	{
-		super(new LType(LConstDataUnit.NONE.name));
+		super(new LType(LDataUnit.NONE.name));
 	}
 }

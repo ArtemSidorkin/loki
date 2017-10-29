@@ -1,7 +1,6 @@
 package cloki.runtime.datatype;
 
 import cloki.runtime.builtins.LBuiltins;
-import cloki.runtime.consts.CConstType;
 import cloki.utils.IdGenerator;
 
 public class LType extends LUnit
@@ -27,7 +26,7 @@ public class LType extends LUnit
 
 	public static LType createAnonymous()
 	{
-		return new LType(CConstType.ANONYMOUS.name);
+		return new LType(cloki.runtime.constant.LType.ANONYMOUS.name);
 	}
 
 	public String getName()
@@ -45,7 +44,7 @@ public class LType extends LUnit
 	{
 		if (TYPE == null) synchronized(guard)
 		{
-			TYPE = new LType(CConstType.TYPE.name);
+			TYPE = new LType(cloki.runtime.constant.LType.TYPE.name);
 		}
 
 		return TYPE;

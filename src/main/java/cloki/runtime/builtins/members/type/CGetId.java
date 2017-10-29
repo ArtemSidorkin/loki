@@ -1,10 +1,9 @@
 package cloki.runtime.builtins.members.type;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.CConstType;
-import cloki.runtime.consts.CConstTypeMember;
+import cloki.runtime.constant.LType;
+import cloki.runtime.constant.LTypeMember;
 import cloki.runtime.datatype.LNumber;
-import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUndefined;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.context.LUnitContext;
@@ -17,15 +16,15 @@ public class CGetId extends CMember
 
 	private CGetId()
 	{
-		super(new LType(CConstTypeMember.GET_ID.name));
+		super(new cloki.runtime.datatype.LType(LTypeMember.GET_ID.name));
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		if (host instanceof LType) return new LNumber(((LType)host).id);
+		if (host instanceof cloki.runtime.datatype.LType) return new LNumber(((cloki.runtime.datatype.LType)host).id);
 
-		LErrors.printErrorUnitDoesNotBelongToType(host, CConstType.TYPE.name);
+		LErrors.printErrorUnitDoesNotBelongToType(host, LType.TYPE.name);
 		return LUndefined.instance;
 	}
 }

@@ -1,6 +1,6 @@
 package cloki.runtime.context;
 
-import cloki.runtime.CSettings;
+import cloki.runtime.LSettings;
 import cloki.runtime.builtins.LBuiltins;
 import cloki.runtime.datatype.LUndefined;
 import cloki.runtime.datatype.LUnit;
@@ -105,9 +105,9 @@ public class LUnitContext
 		{
 			if (variables == null)
 				variables = new ConcurrentHashMap<> (
-					CSettings.CONTEXT_VARIABLES_INITIAL_CAPACITY,
-					CSettings.CONTEXT_VARIABLES_LOAD_FACTOR,
-					CSettings.CONTEXT_VARIABLES_CONCURRENCY_LEVEL
+					LSettings.CONTEXT_VARIABLES_INITIAL_CAPACITY,
+					LSettings.CONTEXT_VARIABLES_LOAD_FACTOR,
+					LSettings.CONTEXT_VARIABLES_CONCURRENCY_LEVEL
 				);
 		}
 	}

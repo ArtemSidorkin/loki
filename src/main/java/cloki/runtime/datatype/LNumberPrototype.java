@@ -1,7 +1,7 @@
 package cloki.runtime.datatype;
 
 import cloki.runtime.builtins.LBuiltins;
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LTypes;
 
 public class LNumberPrototype extends LUnit
 {
@@ -11,13 +11,13 @@ public class LNumberPrototype extends LUnit
 
 	protected LNumberPrototype(double value)
 	{
-		super(CConstTypes.NUMBER);
+		super(LTypes.NUMBER);
 		this.value = value;
 	}
 
 	private LNumberPrototype()
 	{
-		super(CConstTypes.NUMBER_PROTOTYPE);
+		super(LTypes.NUMBER_PROTOTYPE);
 		LBuiltins.initNumberPrototype(this);
 		value = 0;
 	}
@@ -36,7 +36,7 @@ public class LNumberPrototype extends LUnit
 	@Override
 	public boolean _equals(LUnit unit)
 	{
-		LNumber number = unit.asType(CConstTypes.NUMBER);
+		LNumber number = unit.asType(LTypes.NUMBER);
 		return number != null && getValue() == number.getValue();
 	}
 

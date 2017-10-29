@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.operations;
 
-import cloki.runtime.consts.CConstOperator;
+import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.context.LUnitContext;
@@ -9,9 +9,9 @@ import cloki.runtime.utils.Nullable;
 
 public abstract class COperation extends LUnit
 {
-	protected final CConstOperator operator;
+	protected final LBinaryOperator operator;
 
-	protected COperation(CConstOperator operator)
+	protected COperation(LBinaryOperator operator)
 	{
 		super(new LType(operator.sign));
 		this.operator = operator;
@@ -31,7 +31,7 @@ public abstract class COperation extends LUnit
 	protected abstract LUnit execute(LUnit leftOperand, LUnit rightOperand);
 
 	//operator in parameters? We have it in fealds!!!
-	protected void printErrorUndefinedOperation(CConstOperator operator, LUnit leftOperand, LUnit rightOperand)
+	protected void printErrorUndefinedOperation(LBinaryOperator operator, LUnit leftOperand, LUnit rightOperand)
 	{
 		LErrors.printErrorOperatorIsNotDefinedForUnits(operator, leftOperand, rightOperand); //refactoring is needed
 	}

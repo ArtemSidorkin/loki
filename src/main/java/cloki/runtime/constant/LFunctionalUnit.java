@@ -1,18 +1,16 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum CConstFunctionalUnit
+public enum LFunctionalUnit
 {
 	INCLUDE("include"),
 	IMPORT("import"),
 	LOOP("loop"),
 	TIME("time"),
-	NUMERIC_NEGATION("numericNegation"),
-	LOGICAL_NEGATION("logicalNegation"),
 	PRINTLN("println");
 
 	public String name;
 
-	CConstFunctionalUnit(String name)
+	LFunctionalUnit(String name)
 	{
 		this.name = name;
 	}

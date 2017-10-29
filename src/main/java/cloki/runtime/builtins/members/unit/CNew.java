@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.context.LUnitContext;
@@ -13,7 +13,7 @@ public class CNew extends CMember
 
 	private CNew()
 	{
-		super(new LType(LConstUnitMember.NEW.name));
+		super(new LType(LUnitMember.NEW.name));
 	}
 
 	@Override

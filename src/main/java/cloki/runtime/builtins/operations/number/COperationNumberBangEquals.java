@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.operations.number;
 
-import cloki.runtime.consts.CConstOperator;
+import cloki.runtime.constant.LBinaryOperator;
 import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LNumber;
 import cloki.runtime.datatype.LTrue;
@@ -12,7 +12,7 @@ public class COperationNumberBangEquals extends COperationHomogeneousNumber
 
 	private COperationNumberBangEquals()
 	{
-		super(CConstOperator.BANG_EQUALS);
+		super(LBinaryOperator.BANG_EQUALS);
 	}
 
 	@Override

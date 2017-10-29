@@ -1,6 +1,6 @@
 package cloki.runtime.builtins.units;
 
-import cloki.runtime.consts.CConstFunctionalUnit;
+import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.datatype.LNumber;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
@@ -13,7 +13,7 @@ public class CTime extends LUnit
 
 	private CTime()
 	{
-		super(new LType(CConstFunctionalUnit.TIME.name));
+		super(new LType(LFunctionalUnit.TIME.name));
 	}
 
 	@Override

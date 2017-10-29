@@ -4,7 +4,7 @@ import cloki.runtime.datatype.LUnit;
 import cloki.runtime.datatype.LVoid;
 import cloki.runtime.context.LUnitContext;
 
-public abstract class CHelperIfElse
+public abstract class LHelperIfElse
 {
 	protected LUnit condition;
 	protected LUnitContext unitContext;
@@ -12,7 +12,9 @@ public abstract class CHelperIfElse
 	protected LUnit[] callParameters;
 	protected LUnitContext callUnitContext;
 
-	public CHelperIfElse(LUnit condition, LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext)
+	public LHelperIfElse(
+		LUnit condition, LUnitContext unitContext, LUnit callHost, LUnit[] callParameters, LUnitContext callUnitContext
+	)
 	{
 		this.condition = condition;
 		this.unitContext = unitContext;
@@ -24,9 +26,9 @@ public abstract class CHelperIfElse
 	public LUnit call()
 	{
 		return
-			condition.toBoolean() ?
-			yes(callHost, callParameters, callUnitContext) :
-			no(callHost, callParameters, callUnitContext);
+			condition.toBoolean()
+				? yes(callHost, callParameters, callUnitContext)
+				: no(callHost, callParameters, callUnitContext);
 	}
 
 	protected abstract LUnit yes(LUnit host, LUnit[] parameters, LUnitContext unitContext);

@@ -1,6 +1,6 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum CConstType
+public enum LType
 {
 	TYPE("Type"),
 	ANONYMOUS("\\"),
@@ -11,7 +11,7 @@ public enum CConstType
 
 	public String name;
 
-	CConstType(String name)
+	LType(String name)
 	{
 		this.name = name;
 	}

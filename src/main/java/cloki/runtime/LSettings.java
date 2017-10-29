@@ -1,6 +1,6 @@
 package cloki.runtime;
 
-public class CSettings
+public class LSettings
 {
 	public static final int CONTEXT_VARIABLES_INITIAL_CAPACITY = 8;
 	public static final float CONTEXT_VARIABLES_LOAD_FACTOR = 0.75f;

@@ -2,7 +2,7 @@ package cloki.runtime.datatype;
 
 
 import cloki.runtime.builtins.LBuiltins;
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LTypes;
 
 public class LBooleanPrototype extends LUnit
 {
@@ -12,13 +12,13 @@ public class LBooleanPrototype extends LUnit
 
 	protected LBooleanPrototype(boolean value)
 	{
-		super(CConstTypes.BOOLEAN);
+		super(LTypes.BOOLEAN);
 		this.value = value;
 	}
 
 	private LBooleanPrototype()
 	{
-		super(CConstTypes.BOOLEAN_PROTOTYPE);
+		super(LTypes.BOOLEAN_PROTOTYPE);
 		LBuiltins.initBooleanPrototype(this);
 	}
 
@@ -36,7 +36,7 @@ public class LBooleanPrototype extends LUnit
 	@Override
 	public boolean _equals(LUnit unit)
 	{
-		LBoolean boolean_ = unit.asType(CConstTypes.BOOLEAN);
+		LBoolean boolean_ = unit.asType(LTypes.BOOLEAN);
 		return boolean_ != null && getValue() == boolean_.getValue();
 	}
 }

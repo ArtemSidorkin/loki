@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.datatype.LFalse;
 import cloki.runtime.datatype.LTrue;
 import cloki.runtime.datatype.LType;
@@ -15,7 +15,7 @@ public class CEquals extends CMember
 
 	private CEquals()
 	{
-		super(new LType(LConstUnitMember.EQUALS.name));
+		super(new LType(LUnitMember.EQUALS.name));
 	}
 
 	@Override

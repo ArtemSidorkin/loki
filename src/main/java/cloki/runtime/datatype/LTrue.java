@@ -1,6 +1,6 @@
 package cloki.runtime.datatype;
 
-import cloki.runtime.consts.LConstDataUnit;
+import cloki.runtime.constant.LDataUnit;
 
 public class LTrue extends LBoolean
 {
@@ -14,6 +14,6 @@ public class LTrue extends LBoolean
 	@Override
 	public String _toString()
 	{
-		return LConstDataUnit.TRUE.name;
+		return LDataUnit.TRUE.name;
 	}
 }

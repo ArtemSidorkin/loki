@@ -1,8 +1,8 @@
 package cloki.runtime.builtins.unaryoperations.number;
 
 import cloki.runtime.builtins.unaryoperations.CUnaryOperation;
-import cloki.runtime.consts.CConstTypes;
-import cloki.runtime.consts.CConstUnaryOperator;
+import cloki.runtime.constant.LTypes;
+import cloki.runtime.constant.LUnaryOperator;
 import cloki.runtime.datatype.*;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.utils.LErrors;
@@ -14,15 +14,15 @@ public class CNumericNegation extends CUnaryOperation<LNumberPrototype>
 
 	protected CNumericNegation()
 	{
-		super(CConstUnaryOperator.MINUS);
+		super(LUnaryOperator.MINUS);
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
 	{
-		LNumber nmbrAsNmbr = host.asType(CConstTypes.NUMBER);
+		LNumber nmbrAsNmbr = host.asType(LTypes.NUMBER);
 		if (nmbrAsNmbr != null) return new LNumber(-nmbrAsNmbr.getValue());
-		LErrors.printErrorUnitDoesNotBelongToType(host, CConstTypes.NUMBER.getNameWithId());
+		LErrors.printErrorUnitDoesNotBelongToType(host, LTypes.NUMBER.getNameWithId());
 		return LUndefined.instance;
 	}
 }

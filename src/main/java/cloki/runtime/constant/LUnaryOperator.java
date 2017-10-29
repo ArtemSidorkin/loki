@@ -1,13 +1,13 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum CConstUnaryOperator
+public enum LUnaryOperator
 {
 	BANG("!_"),
 	MINUS("-_");
 
 	public String sign;
 
-	CConstUnaryOperator(String sign)
+	LUnaryOperator(String sign)
 	{
 		this.sign = sign;
 	}

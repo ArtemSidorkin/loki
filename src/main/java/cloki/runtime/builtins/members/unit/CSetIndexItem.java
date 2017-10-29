@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.members.unit;
 
 import cloki.runtime.builtins.members.CMember;
-import cloki.runtime.consts.LConstUnitMember;
+import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.context.LUnitContext;
@@ -13,7 +13,7 @@ public class CSetIndexItem extends CMember
 
 	private CSetIndexItem()
 	{
-		super(new LType(LConstUnitMember.SET_INDEX_ITEM.name));
+		super(new LType(LUnitMember.SET_INDEX_ITEM.name));
 	}
 
 	@Override

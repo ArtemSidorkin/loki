@@ -1,7 +1,7 @@
 package cloki.runtime.builtins.units;
 
 import cloki.execution.CExecution;
-import cloki.runtime.consts.CConstFunctionalUnit;
+import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUnit;
 import cloki.runtime.datatype.LVoid;
@@ -16,7 +16,7 @@ public class CPrintln extends LUnit
 
 	private CPrintln()
 	{
-		super(new LType(CConstFunctionalUnit.PRINTLN.name));
+		super(new LType(LFunctionalUnit.PRINTLN.name));
 	}
 
 	@Override

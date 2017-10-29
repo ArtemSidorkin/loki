@@ -1,6 +1,6 @@
-package cloki.runtime.consts;
+package cloki.runtime.constant;
 
-public enum LConstDataUnit
+public enum LDataUnit
 {
 	UNDEFINED("undefined"),
 	VOID("void"),
@@ -15,7 +15,7 @@ public enum LConstDataUnit
 
 	public String name;
 
-	LConstDataUnit(String name)
+	LDataUnit(String name)
 	{
 		this.name = name;
 	}

@@ -1,14 +1,14 @@
 package cloki.runtime.builtins.operations.number;
 
 import cloki.runtime.builtins.operations.COperationHomogeneous;
-import cloki.runtime.consts.CConstOperator;
-import cloki.runtime.consts.CConstTypes;
+import cloki.runtime.constant.LBinaryOperator;
+import cloki.runtime.constant.LTypes;
 import cloki.runtime.datatype.LNumber;
 
 public abstract class COperationHomogeneousNumber extends COperationHomogeneous<LNumber>
 {
-	protected COperationHomogeneousNumber(CConstOperator operator)
+	protected COperationHomogeneousNumber(LBinaryOperator operator)
 	{
-		super(operator, CConstTypes.NUMBER);
+		super(operator, LTypes.NUMBER);
 	}
 }
