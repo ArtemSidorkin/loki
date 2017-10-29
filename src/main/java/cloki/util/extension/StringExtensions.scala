@@ -1,4 +1,4 @@
-package cloki.util.extensions
+package cloki.util.extension
 
 object StringExtensions
 {

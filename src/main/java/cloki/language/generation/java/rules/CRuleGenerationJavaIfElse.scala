@@ -6,7 +6,7 @@ import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
 import cloki.language.parsing.CLokiParser.IfElseContext
 import cloki.runtime.datatype.LUnit
 import cloki.runtime.context.LUnitContext
-import cloki.util.extensions.StringExtensions.StringExtensions
+import cloki.util.extension.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfElseContext]
 {

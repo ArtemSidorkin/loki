@@ -11,7 +11,7 @@ import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.system.SystemConfiguration
 import cloki.system.SystemConfiguration.UNIX
 import cloki.util.FileUtil
-import cloki.util.extensions.StringExtensions.StringExtensions
+import cloki.util.extension.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[ModuleContext]
 {

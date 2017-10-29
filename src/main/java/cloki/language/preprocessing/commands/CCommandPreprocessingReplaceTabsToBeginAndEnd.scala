@@ -1,7 +1,7 @@
 package cloki.language.preprocessing.commands
 
 import cloki.language.preprocessing.consts.CConstCompilerTokens
-import cloki.util.extensions.StringExtensions.StringExtensions
+import cloki.util.extension.StringExtensions.StringExtensions
 
 private[preprocessing] object CCommandPreprocessingReplaceTabsToBeginAndEnd extends CCommandPreprocessing
 {
