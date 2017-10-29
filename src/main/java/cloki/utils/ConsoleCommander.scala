@@ -15,8 +15,8 @@ object ConsoleCommander
 	{
 		val keylessArguments = arguments takeWhile (_ startsWith "-" unary_!)
 		val keysAndParameters = arguments drop keylessArguments.length
-		val parameterlessKeys = keysAndParameters filter (_.startsWith("--"))
-		val keysWithParameters = keysAndParameters filter (!_.startsWith("--"))
+		val parameterlessKeys = keysAndParameters filter (_ startsWith "--")
+		val keysWithParameters = keysAndParameters filter (_ startsWith "--" unary_!)
 
 		val parameterizedKeys =
 			keysWithParameters
