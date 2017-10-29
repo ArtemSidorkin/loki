@@ -57,7 +57,7 @@ private[java] object CRuleGenerationJavaModule extends CRuleGenerationJava[Modul
 				val mdlFlPthnm = s"$mdlFldrPthnm/$moduleName.java"
 				CFile.writeText(mdlFlPthnm, generationContext.code.toString)
 				Runtime.getRuntime.exec(
-					s"javac $mdlFlPthnm -cp ./target/classes${if (CSystem.OS == UNIX) ":" else ";"}./antlr.jar"
+					s"javac $mdlFlPthnm -cp ./target/classes${if (CSystem.OS == UNIX) ":" else ";"}./lib/antlr.jar"
 				).waitFor()
 
 				(
