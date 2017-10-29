@@ -2,32 +2,36 @@ package cloki.utils.extensions
 
 object StringExtensions
 {
-	implicit class CString(string:String)
+	implicit class StringExtensions(string:String)
 	{
-		def withoutSideLines = (string split '\n').init.tail mkString "\n"
+		def withoutSideLines:String = (string split '\n').init.tail mkString "\n"
 
-		def tabulate(tabCount:Int, forward:Boolean = true, firstLineAsContinuation:Boolean = false) =
+		def tabulate(tabCount:Int, forward:Boolean = true, firstLineAsContinuation:Boolean = false):String =
 		{
-			val strngBldr = new StringBuilder
-			val lns = string filter '\r'.!= split '\n'
-			val bsTbCnt = if (forward) string.tabCount else lns.last.tabCount
+			val stringBuilder = new StringBuilder
+			val lines = string filter '\r'.!= split '\n'
+			val baseTabCount = if (forward) string.tabCount else lines.last.tabCount
 
-			lns.foldLeft(0)((i, ln) =>
+			lines.foldLeft(0)((i, line) =>
 			{
-				val nwTbCnt = ln.tabCount - bsTbCnt + tabCount
-				val strngWthtTbs = ln takeRight ln.length - ln.tabCount
-				strngBldr ++=
+				val newTabCount = line.tabCount - baseTabCount + tabCount
+				val stringWithoutTabs = line takeRight line.length - line.tabCount
+				stringBuilder ++=
 				(
-					if (i == 0 && firstLineAsContinuation) strngWthtTbs
-					else "\t" * nwTbCnt + strngWthtTbs
+					if (i == 0 && firstLineAsContinuation) stringWithoutTabs
+					else "\t" * newTabCount + stringWithoutTabs
 				)
-				if (lns.length > 1) strngBldr += '\n'
+				if (lines.length > 1) stringBuilder += '\n'
 				i + 1
 			})
 
-			strngBldr.toString
+			stringBuilder.toString
 		}
 
-		def tabCount:Int = string.foldLeft(0)((cntClctr, chr) => if (chr == '\t') cntClctr + 1 else return cntClctr)
+		def tabCount:Int =
+			string
+				.foldLeft(0)((countCollector, character) =>
+					if (character == '\t') countCollector + 1 else return countCollector
+				)
 	}
 }
