@@ -1,6 +1,6 @@
 package cloki.execution
 
-import cloki.execution.executors.{Executor, ExecutorContainer, ExecutorBytecode, ExecutorJava}
+import cloki.execution.executor.{Executor, ExecutorContainer, ExecutorBytecode, ExecutorJava}
 import cloki.system.SystemSettings
 
 object Execution

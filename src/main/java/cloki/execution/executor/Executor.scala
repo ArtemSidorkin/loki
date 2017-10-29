@@ -1,4 +1,4 @@
-package cloki.execution.executors
+package cloki.execution.executor
 
 import java.io.{ByteArrayInputStream, File, PrintStream}
 import java.nio.charset.StandardCharsets

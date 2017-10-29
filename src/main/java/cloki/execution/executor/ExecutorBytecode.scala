@@ -1,13 +1,13 @@
-package cloki.execution.executors
+package cloki.execution.executor
 
 import java.io.PrintStream
 
 import cloki.language.generation.bytecode.CGeneratorBytecode
 
-private[execution] class ExecutorBytecode private
-(
+private[execution] class ExecutorBytecode private (
 	_modulePaths:Seq[String], outputPrintStream:PrintStream, errorPrintStream:PrintStream
-) extends Executor(_modulePaths, outputPrintStream, errorPrintStream)
+)
+	extends Executor(_modulePaths, outputPrintStream, errorPrintStream)
 {
 	override protected val generatorCreator = new CGeneratorBytecode(_)
 }
