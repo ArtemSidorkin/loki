@@ -14,13 +14,22 @@ private[bytecode] object CRuleGenerationBytecodeInheritance extends CRuleGenerat
 	{
 		override def enter() =
 		{
-			for (i <- 0 until parentCount) generationContext.addPostExitRuleTask(getParentExpression(i), () => (
-				topMethodCall
-				invokeVirtualUnitMethodAddParent ()
-				decrementObjectCounter ()
-			))
+			for (i <- 0 until parentCount)
+			{
+				generationContext.addPreEnterRuleTask(getParentExpression(i), () => topMethodCall.aloadthis())
 
-			generationContext.deferRule(ruleContext)
+				generationContext.addPostExitRuleTask(
+					getParentExpression(i),
+					() => (
+						topMethodCall
+							invokeVirtualUnitMethodAddParent()
+							decrementObjectCounter()
+					)
+				)
+			}
+
+
+//			generationContext.deferRule(ruleContext)
 		}
 	}
 
