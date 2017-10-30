@@ -211,7 +211,11 @@ abstract public class LUnit
 		{
 			LUnit parent = parentIterator.next();
 
-			if (parent != null && parent.asType(type) != null) return (T)parent;
+			if (parent != null)
+			{
+				LUnit parentAsType = parent.asType(type);
+				if (parentAsType != null) return (T)parentAsType;
+			}
 		}
 
 		return null;

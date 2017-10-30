@@ -16,15 +16,20 @@ private[java] object CRuleGenerationJavaInheritance extends CRuleGenerationJava[
 				getParentExpression(i), () => addCode(s").$UNIT__METHOD__ADD_PARENT(")
 			)
 
-			generationContext.addDeferredRuleActions(
-				ruleContext,
-				() =>
-				{
-					removeLastNewLineIfPresent()
-					(addCode _ compose tabulateIfLastCharacterIsNewLine) (s".$UNIT__METHOD__ADD_PARENT(")
-				},
-				addRightParenthesis
-			)
+			generationContext
+				.addPostExitRuleTask(
+					getParentExpression(0),
+					() =>
+					{
+						addRightParenthesis
+						addSemicolon()
+						addNewLine()
+					}
+				)
+
+			removeLastNewLineIfPresent()
+			addNewLine()
+			(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"$UNIT__METHOD__ADD_PARENT(")
 		}
 	}
 

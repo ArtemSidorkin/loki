@@ -78,7 +78,6 @@ private[java] object CRuleGenerationJavaUnit extends CRuleGenerationJava[UnitCon
 			)
 
 			popFrame()
-			handleInheritance()
 		}
 
 	}
