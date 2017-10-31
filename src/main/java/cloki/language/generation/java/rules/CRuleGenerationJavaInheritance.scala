@@ -18,7 +18,7 @@ private[java] object CRuleGenerationJavaInheritance extends CRuleGenerationJava[
 
 			generationContext
 				.addPostExitRuleTask(
-					getParentExpression(0),
+					getParentExpression(parentCount - 1),
 					() =>
 					{
 						addRightParenthesis
