@@ -1,0 +1,6 @@
+A <- 1 : none
+B <- 2 : none
+
+println(A.new() + B.new())
+println(A.new() + 2)
+println(1 + B.new())

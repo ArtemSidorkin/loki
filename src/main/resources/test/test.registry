@@ -1,4 +1,7 @@
 variable_1, /test/variable/variable1.cloki, /test/variable/variable1.expected
 variable_2, /test/variable/variable2.cloki, /test/variable/variable2.expected
 arithmetic_1, /test/arithmetic/arithmetic1.cloki, /test/arithmetic/arithmetic1.expected
+number_inheritance, /test/inheritance/numberInheritance.loki, /test/inheritance/numberInheritance.expected
+single_inheritance, /test/inheritance/singleInheritance.loki, /test/inheritance/singleInheritance.expected
+multiple_inheritance, /test/inheritance/multipleInheritance.loki, /test/inheritance/multipleInheritance.expected
 linked_list, /test/algorithm/linkedList.cloki, /test/algorithm/linkedList.expected
