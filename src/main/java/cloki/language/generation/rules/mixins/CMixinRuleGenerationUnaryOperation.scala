@@ -1,7 +1,7 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser.UnaryOperationContext
 import cloki.language.generation.consts.CConstLanguageMembers._
+import cloki.language.parsing.LokiParser.UnaryOperationContext
 
 private[language] trait CMixinRuleGenerationUnaryOperation extends CMixinRuleGeneration[UnaryOperationContext]
 {

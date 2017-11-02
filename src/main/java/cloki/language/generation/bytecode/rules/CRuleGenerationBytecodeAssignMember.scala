@@ -3,7 +3,7 @@ package cloki.language.generation.bytecode.rules
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationAssignMember
-import cloki.language.parsing.CLokiParser.AssignMemberContext
+import cloki.language.parsing.LokiParser.AssignMemberContext
 
 private[bytecode] object CRuleGenerationBytecodeAssignMember
 	extends CRuleGenerationBytecode[AssignMemberContext]

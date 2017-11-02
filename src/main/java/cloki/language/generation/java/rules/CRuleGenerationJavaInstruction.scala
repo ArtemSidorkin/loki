@@ -1,7 +1,7 @@
 package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.parsing.CLokiParser.InstructionContext
+import cloki.language.parsing.LokiParser.InstructionContext
 
 private[java] object CRuleGenerationJavaInstruction extends CRuleGenerationJava[InstructionContext]
 {

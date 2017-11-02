@@ -1,7 +1,8 @@
 package cloki.language.generation
 
-import collection.JavaConversions._
 import _root_.java.util.concurrent.ConcurrentHashMap
+
+import scala.collection.JavaConversions._
 
 private[generation] class CClassLoader extends ClassLoader
 {

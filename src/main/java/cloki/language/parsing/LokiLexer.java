@@ -1,4 +1,4 @@
-// Generated from CLoki.grammar by ANTLR 4.5
+// Generated from ./src/main/java/cloki/language/parsing/Loki.grammar by ANTLR 4.5
 
 package cloki.language.parsing;
 
@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class CLokiLexer extends Lexer {
+public class LokiLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -89,13 +89,13 @@ public class CLokiLexer extends Lexer {
 	}
 
 
-	public CLokiLexer(CharStream input) {
+	public LokiLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "CLoki.grammar"; }
+	public String getGrammarFileName() { return "Loki.grammar"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

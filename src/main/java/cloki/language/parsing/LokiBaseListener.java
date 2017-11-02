@@ -1,4 +1,4 @@
-// Generated from CLoki.grammar by ANTLR 4.5
+// Generated from ./src/main/java/cloki/language/parsing/Loki.grammar by ANTLR 4.5
 
 package cloki.language.parsing;
 
@@ -9,383 +9,383 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link CLokiListener},
+ * This class provides an empty implementation of {@link LokiListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class CLokiBaseListener implements CLokiListener {
+public class LokiBaseListener implements LokiListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModule(CLokiParser.ModuleContext ctx) { }
+	@Override public void enterModule(LokiParser.ModuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModule(CLokiParser.ModuleContext ctx) { }
+	@Override public void exitModule(LokiParser.ModuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstruction(CLokiParser.InstructionContext ctx) { }
+	@Override public void enterInstruction(LokiParser.InstructionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstruction(CLokiParser.InstructionContext ctx) { }
+	@Override public void exitInstruction(LokiParser.InstructionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryOperation(CLokiParser.UnaryOperationContext ctx) { }
+	@Override public void enterUnaryOperation(LokiParser.UnaryOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUnaryOperation(CLokiParser.UnaryOperationContext ctx) { }
+	@Override public void exitUnaryOperation(LokiParser.UnaryOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMulDiv(CLokiParser.MulDivContext ctx) { }
+	@Override public void enterMulDiv(LokiParser.MulDivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMulDiv(CLokiParser.MulDivContext ctx) { }
+	@Override public void exitMulDiv(LokiParser.MulDivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfElse(CLokiParser.IfElseContext ctx) { }
+	@Override public void enterIfElse(LokiParser.IfElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfElse(CLokiParser.IfElseContext ctx) { }
+	@Override public void exitIfElse(LokiParser.IfElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIndex(CLokiParser.IndexContext ctx) { }
+	@Override public void enterIndex(LokiParser.IndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIndex(CLokiParser.IndexContext ctx) { }
+	@Override public void exitIndex(LokiParser.IndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterString(CLokiParser.StringContext ctx) { }
+	@Override public void enterString(LokiParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitString(CLokiParser.StringContext ctx) { }
+	@Override public void exitString(LokiParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnit(CLokiParser.UnitContext ctx) { }
+	@Override public void enterUnit(LokiParser.UnitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUnit(CLokiParser.UnitContext ctx) { }
+	@Override public void exitUnit(LokiParser.UnitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGteLteGtLt(CLokiParser.GteLteGtLtContext ctx) { }
+	@Override public void enterGteLteGtLt(LokiParser.GteLteGtLtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGteLteGtLt(CLokiParser.GteLteGtLtContext ctx) { }
+	@Override public void exitGteLteGtLt(LokiParser.GteLteGtLtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(CLokiParser.NumberContext ctx) { }
+	@Override public void enterNumber(LokiParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(CLokiParser.NumberContext ctx) { }
+	@Override public void exitNumber(LokiParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAmpersandAmpersand(CLokiParser.AmpersandAmpersandContext ctx) { }
+	@Override public void enterAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAmpersandAmpersand(CLokiParser.AmpersandAmpersandContext ctx) { }
+	@Override public void exitAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariableOrParameter(CLokiParser.VariableOrParameterContext ctx) { }
+	@Override public void enterVariableOrParameter(LokiParser.VariableOrParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariableOrParameter(CLokiParser.VariableOrParameterContext ctx) { }
+	@Override public void exitVariableOrParameter(LokiParser.VariableOrParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterThis(CLokiParser.ThisContext ctx) { }
+	@Override public void enterThis(LokiParser.ThisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitThis(CLokiParser.ThisContext ctx) { }
+	@Override public void exitThis(LokiParser.ThisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssignMember(CLokiParser.AssignMemberContext ctx) { }
+	@Override public void enterAssignMember(LokiParser.AssignMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssignMember(CLokiParser.AssignMemberContext ctx) { }
+	@Override public void exitAssignMember(LokiParser.AssignMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMember(CLokiParser.MemberContext ctx) { }
+	@Override public void enterMember(LokiParser.MemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMember(CLokiParser.MemberContext ctx) { }
+	@Override public void exitMember(LokiParser.MemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMemberCall(CLokiParser.MemberCallContext ctx) { }
+	@Override public void enterMemberCall(LokiParser.MemberCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMemberCall(CLokiParser.MemberCallContext ctx) { }
+	@Override public void exitMemberCall(LokiParser.MemberCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCall(CLokiParser.CallContext ctx) { }
+	@Override public void enterCall(LokiParser.CallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCall(CLokiParser.CallContext ctx) { }
+	@Override public void exitCall(LokiParser.CallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAddSub(CLokiParser.AddSubContext ctx) { }
+	@Override public void enterAddSub(LokiParser.AddSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAddSub(CLokiParser.AddSubContext ctx) { }
+	@Override public void exitAddSub(LokiParser.AddSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionGroup(CLokiParser.ExpressionGroupContext ctx) { }
+	@Override public void enterExpressionGroup(LokiParser.ExpressionGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionGroup(CLokiParser.ExpressionGroupContext ctx) { }
+	@Override public void exitExpressionGroup(LokiParser.ExpressionGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHost(CLokiParser.HostContext ctx) { }
+	@Override public void enterHost(LokiParser.HostContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHost(CLokiParser.HostContext ctx) { }
+	@Override public void exitHost(LokiParser.HostContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSuperHostMember(CLokiParser.SuperHostMemberContext ctx) { }
+	@Override public void enterSuperHostMember(LokiParser.SuperHostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSuperHostMember(CLokiParser.SuperHostMemberContext ctx) { }
+	@Override public void exitSuperHostMember(LokiParser.SuperHostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhile(CLokiParser.WhileContext ctx) { }
+	@Override public void enterWhile(LokiParser.WhileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhile(CLokiParser.WhileContext ctx) { }
+	@Override public void exitWhile(LokiParser.WhileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEqNeq(CLokiParser.EqNeqContext ctx) { }
+	@Override public void enterEqNeq(LokiParser.EqNeqContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEqNeq(CLokiParser.EqNeqContext ctx) { }
+	@Override public void exitEqNeq(LokiParser.EqNeqContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray(CLokiParser.ArrayContext ctx) { }
+	@Override public void enterArray(LokiParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray(CLokiParser.ArrayContext ctx) { }
+	@Override public void exitArray(LokiParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssignVariable(CLokiParser.AssignVariableContext ctx) { }
+	@Override public void enterAssignVariable(LokiParser.AssignVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssignVariable(CLokiParser.AssignVariableContext ctx) { }
+	@Override public void exitAssignVariable(LokiParser.AssignVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssignIndex(CLokiParser.AssignIndexContext ctx) { }
+	@Override public void enterAssignIndex(LokiParser.AssignIndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssignIndex(CLokiParser.AssignIndexContext ctx) { }
+	@Override public void exitAssignIndex(LokiParser.AssignIndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHostMember(CLokiParser.HostMemberContext ctx) { }
+	@Override public void enterHostMember(LokiParser.HostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHostMember(CLokiParser.HostMemberContext ctx) { }
+	@Override public void exitHostMember(LokiParser.HostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssignHostMember(CLokiParser.AssignHostMemberContext ctx) { }
+	@Override public void enterAssignHostMember(LokiParser.AssignHostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssignHostMember(CLokiParser.AssignHostMemberContext ctx) { }
+	@Override public void exitAssignHostMember(LokiParser.AssignHostMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPipePipe(CLokiParser.PipePipeContext ctx) { }
+	@Override public void enterPipePipe(LokiParser.PipePipeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPipePipe(CLokiParser.PipePipeContext ctx) { }
+	@Override public void exitPipePipe(LokiParser.PipePipeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInheritance(CLokiParser.InheritanceContext ctx) { }
+	@Override public void enterInheritance(LokiParser.InheritanceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInheritance(CLokiParser.InheritanceContext ctx) { }
+	@Override public void exitInheritance(LokiParser.InheritanceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElse_(CLokiParser.Else_Context ctx) { }
+	@Override public void enterElse_(LokiParser.Else_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElse_(CLokiParser.Else_Context ctx) { }
+	@Override public void exitElse_(LokiParser.Else_Context ctx) { }
 
 	/**
 	 * {@inheritDoc}

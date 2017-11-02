@@ -4,7 +4,7 @@ import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContext
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationWhile
-import cloki.language.parsing.CLokiParser.WhileContext
+import cloki.language.parsing.LokiParser.WhileContext
 import org.objectweb.asm.tree.LabelNode
 
 private[bytecode] object CRuleGenerationBytecodeWhile extends CRuleGenerationBytecode[WhileContext]

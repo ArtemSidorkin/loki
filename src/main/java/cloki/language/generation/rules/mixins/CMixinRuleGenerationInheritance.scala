@@ -1,6 +1,6 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser.InheritanceContext
+import cloki.language.parsing.LokiParser.InheritanceContext
 
 private[language] trait CMixinRuleGenerationInheritance extends CMixinRuleGeneration[InheritanceContext]
 {

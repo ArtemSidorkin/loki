@@ -2,12 +2,12 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationString
-import cloki.language.parsing.CLokiParser
+import cloki.language.parsing.LokiParser
 import cloki.runtime.datatype.LString
 
-object CRuleGenerationJavaString extends CRuleGenerationJava[CLokiParser.StringContext]
+object CRuleGenerationJavaString extends CRuleGenerationJava[LokiParser.StringContext]
 {
-	protected class CCoreJavaString(generationContext:CGenerationContextJava, ruleContext:CLokiParser.StringContext)
+	protected class CCoreJavaString(generationContext:CGenerationContextJava, ruleContext:LokiParser.StringContext)
 		extends CCoreJava(generationContext, ruleContext) with CMixinRuleGenerationString
 	{
 		override def enter() =
@@ -17,6 +17,6 @@ object CRuleGenerationJavaString extends CRuleGenerationJava[CLokiParser.StringC
 		}
 	}
 
-	override def getCore(generationContext:CGenerationContextJava, ruleContext:CLokiParser.StringContext) =
+	override def getCore(generationContext:CGenerationContextJava, ruleContext:LokiParser.StringContext) =
 		new CCoreJavaString(generationContext, ruleContext)
 }

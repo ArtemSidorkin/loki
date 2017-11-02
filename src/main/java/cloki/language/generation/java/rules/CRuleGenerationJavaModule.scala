@@ -5,9 +5,9 @@ import java.io.File
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationModule
-import cloki.language.parsing.CLokiParser.ModuleContext
-import cloki.runtime.datatype.{LModule, LUnit}
+import cloki.language.parsing.LokiParser.ModuleContext
 import cloki.runtime.context.{LModuleContext, LUnitContext}
+import cloki.runtime.datatype.{LModule, LUnit}
 import cloki.system.SystemConfiguration
 import cloki.system.SystemConfiguration.UNIX
 import cloki.util.FileUtil

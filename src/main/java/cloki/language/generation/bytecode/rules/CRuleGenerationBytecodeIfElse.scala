@@ -1,14 +1,10 @@
 package cloki.language.generation.bytecode.rules
 
-import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
-import cloki.language.generation.consts.CConstLanguageMembers._
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
-import cloki.language.parsing.CLokiParser.IfElseContext
-import cloki.util.extension.StringExtensions.StringExtensions
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
+import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.runtime.datatype.LUnit
-import cloki.runtime.context.LUnitContext
+import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
+import cloki.language.parsing.LokiParser.IfElseContext
 import org.objectweb.asm.tree.LabelNode
 
 private[bytecode] object CRuleGenerationBytecodeIfElse extends CRuleGenerationBytecode[IfElseContext]

@@ -2,8 +2,8 @@ package cloki.language.generation.bytecode.consts
 
 import casm.consts.CAConstInternalDescriptors
 import casm.methoddescriptors.{CAMethodDescriptorMixed, CAMethodDescriptorTyped}
-import cloki.runtime.datatype.{LType, LUnit}
 import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.{LType, LUnit}
 
 //Split to different files
 private[bytecode] object CConstBytecodeMethodDescriptors

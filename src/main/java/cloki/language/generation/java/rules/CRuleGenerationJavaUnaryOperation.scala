@@ -2,9 +2,8 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.{CMixinRuleGenerationMemberCall, CMixinRuleGenerationUnaryOperation}
-import cloki.language.parsing.CLokiParser.UnaryOperationContext
-import cloki.runtime.datatype.LUnit
+import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnaryOperation
+import cloki.language.parsing.LokiParser.UnaryOperationContext
 
 private[java] object CRuleGenerationJavaUnaryOperation extends CRuleGenerationJava[UnaryOperationContext]
 {

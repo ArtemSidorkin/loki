@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode.templates
 
 import casm.entities.CAMethod
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
-import cloki.runtime.datatype.{LArray, LString}
+import cloki.runtime.datatype.LArray
 
 private[bytecode] object CTemplateBytecodeArray
 {

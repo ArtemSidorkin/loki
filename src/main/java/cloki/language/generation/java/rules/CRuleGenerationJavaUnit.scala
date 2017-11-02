@@ -3,9 +3,9 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
-import cloki.language.parsing.CLokiParser.{InstructionContext, UnitContext}
-import cloki.runtime.datatype.{LType, LUnit}
+import cloki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.{LType, LUnit}
 import cloki.util.extension.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaUnit extends CRuleGenerationJava[UnitContext]

@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode.rules
 
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.parsing.CLokiParser.HostContext
+import cloki.language.parsing.LokiParser.HostContext
 
 private[bytecode] object CRuleGenerationBytecodeHost extends CRuleGenerationBytecode[HostContext]
 {

@@ -2,9 +2,9 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationWhile
-import cloki.language.parsing.CLokiParser.WhileContext
-import cloki.runtime.datatype.LUnit
+import cloki.language.parsing.LokiParser.WhileContext
 import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.LUnit
 import cloki.util.extension.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaWhile extends CRuleGenerationJava[WhileContext]

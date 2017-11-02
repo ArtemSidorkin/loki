@@ -1,6 +1,6 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser.VariableOrParameterContext
+import cloki.language.parsing.LokiParser.VariableOrParameterContext
 
 
 private[language] trait CMixinRuleGenerationVariableOrParameter extends CMixinRuleGeneration[VariableOrParameterContext]

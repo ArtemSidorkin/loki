@@ -2,7 +2,7 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.parsing.CLokiParser.HostContext
+import cloki.language.parsing.LokiParser.HostContext
 
 private[java] object CRuleGenerationJavaHost extends CRuleGenerationJava[HostContext]
 {

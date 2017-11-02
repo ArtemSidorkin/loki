@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationVariableOrParameter
-import cloki.language.parsing.CLokiParser.VariableOrParameterContext
+import cloki.language.parsing.LokiParser.VariableOrParameterContext
 
 private[java] object CRuleGenerationJavaVariableOrParameter
 	extends CRuleGenerationJava[VariableOrParameterContext]

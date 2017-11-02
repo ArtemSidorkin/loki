@@ -1,8 +1,8 @@
 package cloki.language.generation
 
-import cloki.language.parsing.CLokiBaseListener
+import cloki.language.parsing.LokiBaseListener
 
-abstract class CGenerator[GENERATION_CONTEXT <: CGeneration#CGenerationContext] extends CLokiBaseListener
+abstract class CGenerator[GENERATION_CONTEXT <: CGeneration#CGenerationContext] extends LokiBaseListener
 {
 	val classLoader = new CClassLoader
 

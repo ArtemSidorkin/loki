@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationCall
-import cloki.language.parsing.CLokiParser.CallContext
+import cloki.language.parsing.LokiParser.CallContext
 import cloki.runtime.datatype.LUnit
 
 private[java] object CRuleGenerationJavaCall extends CRuleGenerationJava[CallContext]

@@ -1,7 +1,7 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiLexer
-import cloki.language.parsing.CLokiParser.UnitContext
+import cloki.language.parsing.LokiLexer
+import cloki.language.parsing.LokiParser.UnitContext
 
 private[language] trait CMixinRuleGenerationUnit extends CMixinRuleGeneration[UnitContext]
 {
@@ -9,8 +9,8 @@ private[language] trait CMixinRuleGenerationUnit extends CMixinRuleGeneration[Un
 
 	protected val unitName = ruleContext.head.getType match
 	{
-		case CLokiLexer.IDENTIFIER => Some(getUnitParameterIdentifier(0).getText)
-		case CLokiLexer.BACKSLASH => None
+		case LokiLexer.IDENTIFIER => Some(getUnitParameterIdentifier(0).getText)
+		case LokiLexer.BACKSLASH => None
 	}
 
 	protected val unitParameterNames:Seq[String] =

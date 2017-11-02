@@ -1,11 +1,10 @@
 package cloki.language.generation.java.rules
 
-import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
-import cloki.language.parsing.CLokiParser.IfElseContext
-import cloki.runtime.datatype.LUnit
+import cloki.language.parsing.LokiParser.IfElseContext
 import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.LUnit
 import cloki.util.extension.StringExtensions.StringExtensions
 
 private[java] object CRuleGenerationJavaIfElse extends CRuleGenerationJava[IfElseContext]

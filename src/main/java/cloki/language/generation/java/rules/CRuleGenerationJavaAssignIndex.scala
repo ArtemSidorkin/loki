@@ -3,8 +3,8 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationAssignIndex
-import cloki.language.parsing.CLokiParser.AssignIndexContext
-import cloki.runtime.datatype.{LUnit, LArray}
+import cloki.language.parsing.LokiParser.AssignIndexContext
+import cloki.runtime.datatype.LUnit
 
 private[java] object CRuleGenerationJavaAssignIndex extends CRuleGenerationJava[AssignIndexContext]
 {

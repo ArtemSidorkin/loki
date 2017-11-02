@@ -1,4 +1,4 @@
-grammar CLoki;
+grammar Loki;
 
 
 @header

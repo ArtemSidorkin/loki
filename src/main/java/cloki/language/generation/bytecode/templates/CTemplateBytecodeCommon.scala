@@ -1,8 +1,8 @@
 package cloki.language.generation.bytecode.templates
 
 import casm.entities.CAMethod
-import cloki.runtime.datatype._
 import cloki.runtime.context.{LModuleContext, LUnitContext}
+import cloki.runtime.datatype._
 
 private[bytecode] object CTemplateBytecodeCommon
 {

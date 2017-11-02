@@ -1,6 +1,6 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser.IfElseContext
+import cloki.language.parsing.LokiParser.IfElseContext
 
 private[language] trait CMixinRuleGenerationIfElse extends CMixinRuleGeneration[IfElseContext]
 {

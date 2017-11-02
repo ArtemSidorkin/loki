@@ -1,6 +1,6 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser._
+import cloki.language.parsing.LokiParser._
 import org.antlr.v4.runtime.RuleContext
 
 private[language] trait CMixinRuleGenerationOperator extends CMixinRuleGeneration[ExpressionContext]

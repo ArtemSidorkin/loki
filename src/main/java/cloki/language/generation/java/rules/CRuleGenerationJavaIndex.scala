@@ -2,9 +2,9 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.{CMixinRuleGenerationIndex, CMixinRuleGenerationArray}
-import cloki.language.parsing.CLokiParser.IndexContext
-import cloki.runtime.datatype.{LUnit, LArray}
+import cloki.language.generation.rules.mixins.CMixinRuleGenerationIndex
+import cloki.language.parsing.LokiParser.IndexContext
+import cloki.runtime.datatype.LUnit
 
 private[java] object CRuleGenerationJavaIndex extends CRuleGenerationJava[IndexContext]
 {

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
 import cloki.language.generation.CGenerator
-import cloki.language.parsing.{CLokiLexer, CLokiParser}
+import cloki.language.parsing.{LokiLexer, LokiParser}
 import cloki.language.preprocessing.Preprocessor
 import cloki.runtime.context.LUnitContext
 import cloki.runtime.datatype.{LModule, LUnit}
@@ -93,9 +93,9 @@ private[execution] class Executor(
 				)
 			)
 
-		val lexer = new CLokiLexer(antlrModuleInputStream)
+		val lexer = new LokiLexer(antlrModuleInputStream)
 		val commonTokenStream = new CommonTokenStream(lexer)
-		val parser = new CLokiParser(commonTokenStream)
+		val parser = new LokiParser(commonTokenStream)
 		val moduleContext = parser.module()
 		val parseTreeWalker = new ParseTreeWalker
 

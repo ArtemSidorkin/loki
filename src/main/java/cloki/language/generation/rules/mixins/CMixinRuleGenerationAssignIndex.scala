@@ -1,6 +1,6 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.parsing.CLokiParser.AssignIndexContext
+import cloki.language.parsing.LokiParser.AssignIndexContext
 
 private[language] trait CMixinRuleGenerationAssignIndex extends CMixinRuleGeneration[AssignIndexContext]
 {

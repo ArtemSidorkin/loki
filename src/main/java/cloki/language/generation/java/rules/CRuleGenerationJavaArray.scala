@@ -2,8 +2,8 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationArray
-import cloki.language.parsing.CLokiParser.ArrayContext
-import cloki.runtime.datatype.{LUnit, LArray}
+import cloki.language.parsing.LokiParser.ArrayContext
+import cloki.runtime.datatype.{LArray, LUnit}
 
 private[java] object CRuleGenerationJavaArray extends CRuleGenerationJava[ArrayContext]
 {

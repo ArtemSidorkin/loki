@@ -2,12 +2,12 @@ package cloki.language.generation.bytecode.rules
 
 import casm.consts.PUBLIC
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
-import cloki.language.generation.bytecode.consts.{CConstBytecodeLocalVariablesOrParameters, CConstBytecodeMethodDescriptors}
+import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeContext.CTemplateContext
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeModule.CTemplateModule
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.parsing.CLokiParser.ModuleContext
+import cloki.language.parsing.LokiParser.ModuleContext
 import cloki.system.SystemSettings
 
 private[bytecode] object CRuleGenerationBytecodeModule extends CRuleGenerationBytecode[ModuleContext]

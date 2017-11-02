@@ -2,9 +2,7 @@ package cloki.language.generation.bytecode.templates
 
 import casm.entities.CAMethod
 import cloki.language.generation.bytecode.consts.{CConstBytecodeLocalVariablesOrParameters, CConstBytecodeMethodDescriptors}
-import cloki.language.generation.consts.CConstLanguageMembers
-import cloki.runtime.datatype.{LModule, LUnit}
-import cloki.runtime.context.LUnitContext
+import cloki.runtime.datatype.LModule
 
 private[bytecode] object CTemplateBytecodeModule
 {

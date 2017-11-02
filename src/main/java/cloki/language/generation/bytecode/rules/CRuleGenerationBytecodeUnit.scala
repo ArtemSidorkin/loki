@@ -10,8 +10,8 @@ import cloki.language.generation.bytecode.templates.CTemplateBytecodeContext.CTe
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeType.CTemplateType
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
-import cloki.language.parsing.CLokiParser
-import cloki.language.parsing.CLokiParser.UnitContext
+import cloki.language.parsing.LokiParser
+import cloki.language.parsing.LokiParser.UnitContext
 import cloki.runtime.datatype.LUnit
 import cloki.system.SystemSettings
 
@@ -190,7 +190,7 @@ private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationByte
 			}
 
 			def addReturnToUnitMethodCall(
-				generationContext:CGenerationContextBytecode, ruleContext:CLokiParser.InstructionContext
+				generationContext:CGenerationContextBytecode, ruleContext:LokiParser.InstructionContext
 			):Unit = if (ruleContext.expression != null)
 				generationContext.addPostExitRuleTask(ruleContext.expression, () => topMethodCall aReturn ())
 		}

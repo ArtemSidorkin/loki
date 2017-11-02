@@ -2,7 +2,7 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationNumber
-import cloki.language.parsing.CLokiParser.NumberContext
+import cloki.language.parsing.LokiParser.NumberContext
 import cloki.runtime.datatype.LNumber
 
 private[java] object CRuleGenerationJavaNumber extends CRuleGenerationJava[NumberContext]

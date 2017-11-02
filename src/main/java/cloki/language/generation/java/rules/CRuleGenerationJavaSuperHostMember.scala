@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationSuperHostMember
-import cloki.language.parsing.CLokiParser.SuperHostMemberContext
+import cloki.language.parsing.LokiParser.SuperHostMemberContext
 
 private[java] object CRuleGenerationJavaSuperHostMember
 	extends CRuleGenerationJava[SuperHostMemberContext]

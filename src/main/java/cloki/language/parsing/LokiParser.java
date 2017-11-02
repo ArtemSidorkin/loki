@@ -1,4 +1,4 @@
-// Generated from CLoki.grammar by ANTLR 4.5
+// Generated from ./src/main/java/cloki/language/parsing/Loki.grammar by ANTLR 4.5
 
 package cloki.language.parsing;
 
@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class CLokiParser extends Parser {
+public class LokiParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -82,7 +82,7 @@ public class CLokiParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "CLoki.grammar"; }
+	public String getGrammarFileName() { return "Loki.grammar"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -93,7 +93,7 @@ public class CLokiParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public CLokiParser(TokenStream input) {
+	public LokiParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -104,9 +104,9 @@ public class CLokiParser extends Parser {
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
 		public ModuleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -114,11 +114,11 @@ public class CLokiParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_module; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterModule(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterModule(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitModule(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitModule(this);
 		}
 	}
 
@@ -168,11 +168,11 @@ public class CLokiParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_instruction; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterInstruction(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterInstruction(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitInstruction(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitInstruction(this);
 		}
 	}
 
@@ -209,19 +209,19 @@ public class CLokiParser extends Parser {
 		}
 	}
 	public static class UnaryOperationContext extends ExpressionContext {
-		public TerminalNode MINUS() { return getToken(CLokiParser.MINUS, 0); }
+		public TerminalNode MINUS() { return getToken(LokiParser.MINUS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode BANG() { return getToken(CLokiParser.BANG, 0); }
+		public TerminalNode BANG() { return getToken(LokiParser.BANG, 0); }
 		public UnaryOperationContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterUnaryOperation(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterUnaryOperation(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitUnaryOperation(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitUnaryOperation(this);
 		}
 	}
 	public static class MulDivContext extends ExpressionContext {
@@ -232,42 +232,42 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode STAR() { return getToken(CLokiParser.STAR, 0); }
-		public TerminalNode SLASH() { return getToken(CLokiParser.SLASH, 0); }
+		public TerminalNode STAR() { return getToken(LokiParser.STAR, 0); }
+		public TerminalNode SLASH() { return getToken(LokiParser.SLASH, 0); }
 		public MulDivContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterMulDiv(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterMulDiv(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitMulDiv(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitMulDiv(this);
 		}
 	}
 	public static class IfElseContext extends ExpressionContext {
-		public TerminalNode IF() { return getToken(CLokiParser.IF, 0); }
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
+		public TerminalNode IF() { return getToken(LokiParser.IF, 0); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
 		public List<InstructionContext> instruction() {
 			return getRuleContexts(InstructionContext.class);
 		}
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public List<TerminalNode> BEGIN() { return getTokens(CLokiParser.BEGIN); }
+		public List<TerminalNode> BEGIN() { return getTokens(LokiParser.BEGIN); }
 		public TerminalNode BEGIN(int i) {
-			return getToken(CLokiParser.BEGIN, i);
+			return getToken(LokiParser.BEGIN, i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
-		public List<TerminalNode> END() { return getTokens(CLokiParser.END); }
+		public List<TerminalNode> END() { return getTokens(LokiParser.END); }
 		public TerminalNode END(int i) {
-			return getToken(CLokiParser.END, i);
+			return getToken(LokiParser.END, i);
 		}
 		public Else_Context else_() {
 			return getRuleContext(Else_Context.class,0);
@@ -275,11 +275,11 @@ public class CLokiParser extends Parser {
 		public IfElseContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterIfElse(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterIfElse(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitIfElse(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitIfElse(this);
 		}
 	}
 	public static class IndexContext extends ExpressionContext {
@@ -289,69 +289,69 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode LEFT_BRACKET() { return getToken(CLokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(CLokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
 		public IndexContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterIndex(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterIndex(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitIndex(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitIndex(this);
 		}
 	}
 	public static class StringContext extends ExpressionContext {
-		public TerminalNode CHARACTERS() { return getToken(CLokiParser.CHARACTERS, 0); }
+		public TerminalNode CHARACTERS() { return getToken(LokiParser.CHARACTERS, 0); }
 		public StringContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterString(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitString(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitString(this);
 		}
 	}
 	public static class UnitContext extends ExpressionContext {
 		public Token head;
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
-		public List<TerminalNode> IDENTIFIER() { return getTokens(CLokiParser.IDENTIFIER); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(LokiParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
-			return getToken(CLokiParser.IDENTIFIER, i);
+			return getToken(LokiParser.IDENTIFIER, i);
 		}
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
-		public TerminalNode COLON() { return getToken(CLokiParser.COLON, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode COLON() { return getToken(LokiParser.COLON, 0); }
 		public List<InstructionContext> instruction() {
 			return getRuleContexts(InstructionContext.class);
 		}
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public TerminalNode BACKSLASH() { return getToken(CLokiParser.BACKSLASH, 0); }
-		public TerminalNode DOLLAR() { return getToken(CLokiParser.DOLLAR, 0); }
-		public List<TerminalNode> BEGIN() { return getTokens(CLokiParser.BEGIN); }
+		public TerminalNode BACKSLASH() { return getToken(LokiParser.BACKSLASH, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public List<TerminalNode> BEGIN() { return getTokens(LokiParser.BEGIN); }
 		public TerminalNode BEGIN(int i) {
-			return getToken(CLokiParser.BEGIN, i);
+			return getToken(LokiParser.BEGIN, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
-		public List<TerminalNode> END() { return getTokens(CLokiParser.END); }
+		public List<TerminalNode> END() { return getTokens(LokiParser.END); }
 		public TerminalNode END(int i) {
-			return getToken(CLokiParser.END, i);
+			return getToken(LokiParser.END, i);
 		}
 		public InheritanceContext inheritance() {
 			return getRuleContext(InheritanceContext.class,0);
@@ -359,11 +359,11 @@ public class CLokiParser extends Parser {
 		public UnitContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterUnit(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterUnit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitUnit(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitUnit(this);
 		}
 	}
 	public static class GteLteGtLtContext extends ExpressionContext {
@@ -374,31 +374,31 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode GREATER_THAN_EQUALS() { return getToken(CLokiParser.GREATER_THAN_EQUALS, 0); }
-		public TerminalNode LESS_THAN_EQUALS() { return getToken(CLokiParser.LESS_THAN_EQUALS, 0); }
-		public TerminalNode GREATER_THAN() { return getToken(CLokiParser.GREATER_THAN, 0); }
-		public TerminalNode LESS_THAN() { return getToken(CLokiParser.LESS_THAN, 0); }
+		public TerminalNode GREATER_THAN_EQUALS() { return getToken(LokiParser.GREATER_THAN_EQUALS, 0); }
+		public TerminalNode LESS_THAN_EQUALS() { return getToken(LokiParser.LESS_THAN_EQUALS, 0); }
+		public TerminalNode GREATER_THAN() { return getToken(LokiParser.GREATER_THAN, 0); }
+		public TerminalNode LESS_THAN() { return getToken(LokiParser.LESS_THAN, 0); }
 		public GteLteGtLtContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterGteLteGtLt(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterGteLteGtLt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitGteLteGtLt(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitGteLteGtLt(this);
 		}
 	}
 	public static class NumberContext extends ExpressionContext {
-		public TerminalNode FLOAT() { return getToken(CLokiParser.FLOAT, 0); }
-		public TerminalNode INT() { return getToken(CLokiParser.INT, 0); }
+		public TerminalNode FLOAT() { return getToken(LokiParser.FLOAT, 0); }
+		public TerminalNode INT() { return getToken(LokiParser.INT, 0); }
 		public NumberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterNumber(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterNumber(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitNumber(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitNumber(this);
 		}
 	}
 	public static class AmpersandAmpersandContext extends ExpressionContext {
@@ -409,42 +409,42 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> AMPERSAND_AMPERSAND() { return getTokens(CLokiParser.AMPERSAND_AMPERSAND); }
+		public List<TerminalNode> AMPERSAND_AMPERSAND() { return getTokens(LokiParser.AMPERSAND_AMPERSAND); }
 		public TerminalNode AMPERSAND_AMPERSAND(int i) {
-			return getToken(CLokiParser.AMPERSAND_AMPERSAND, i);
+			return getToken(LokiParser.AMPERSAND_AMPERSAND, i);
 		}
 		public AmpersandAmpersandContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAmpersandAmpersand(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAmpersandAmpersand(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAmpersandAmpersand(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAmpersandAmpersand(this);
 		}
 	}
 	public static class VariableOrParameterContext extends ExpressionContext {
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
 		public VariableOrParameterContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterVariableOrParameter(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterVariableOrParameter(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitVariableOrParameter(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitVariableOrParameter(this);
 		}
 	}
 	public static class ThisContext extends ExpressionContext {
-		public TerminalNode AT() { return getToken(CLokiParser.AT, 0); }
+		public TerminalNode AT() { return getToken(LokiParser.AT, 0); }
 		public ThisContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterThis(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterThis(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitThis(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitThis(this);
 		}
 	}
 	public static class AssignMemberContext extends ExpressionContext {
@@ -454,36 +454,36 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode DOT() { return getToken(CLokiParser.DOT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
-		public TerminalNode EQUALS() { return getToken(CLokiParser.EQUALS, 0); }
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode DOT() { return getToken(LokiParser.DOT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public AssignMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAssignMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAssignMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignMember(this);
 		}
 	}
 	public static class MemberContext extends ExpressionContext {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode DOT() { return getToken(CLokiParser.DOT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
+		public TerminalNode DOT() { return getToken(LokiParser.DOT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
 		public MemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitMember(this);
 		}
 	}
 	public static class MemberCallContext extends ExpressionContext {
@@ -493,25 +493,25 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode DOT() { return getToken(CLokiParser.DOT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public TerminalNode DOT() { return getToken(LokiParser.DOT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public MemberCallContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterMemberCall(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterMemberCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitMemberCall(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitMemberCall(this);
 		}
 	}
 	public static class CallContext extends ExpressionContext {
@@ -521,23 +521,23 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public CallContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterCall(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitCall(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitCall(this);
 		}
 	}
 	public static class AddSubContext extends ExpressionContext {
@@ -548,98 +548,98 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode PLUS() { return getToken(CLokiParser.PLUS, 0); }
-		public TerminalNode MINUS() { return getToken(CLokiParser.MINUS, 0); }
+		public TerminalNode PLUS() { return getToken(LokiParser.PLUS, 0); }
+		public TerminalNode MINUS() { return getToken(LokiParser.MINUS, 0); }
 		public AddSubContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAddSub(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAddSub(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAddSub(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAddSub(this);
 		}
 	}
 	public static class ExpressionGroupContext extends ExpressionContext {
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public ExpressionGroupContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterExpressionGroup(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterExpressionGroup(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitExpressionGroup(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitExpressionGroup(this);
 		}
 	}
 	public static class HostContext extends ExpressionContext {
-		public TerminalNode DOLLAR() { return getToken(CLokiParser.DOLLAR, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
 		public HostContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterHost(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterHost(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitHost(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitHost(this);
 		}
 	}
 	public static class SuperHostMemberContext extends ExpressionContext {
-		public List<TerminalNode> DOLLAR() { return getTokens(CLokiParser.DOLLAR); }
+		public List<TerminalNode> DOLLAR() { return getTokens(LokiParser.DOLLAR); }
 		public TerminalNode DOLLAR(int i) {
-			return getToken(CLokiParser.DOLLAR, i);
+			return getToken(LokiParser.DOLLAR, i);
 		}
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
 		public SuperHostMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterSuperHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterSuperHostMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitSuperHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitSuperHostMember(this);
 		}
 	}
 	public static class WhileContext extends ExpressionContext {
-		public TerminalNode WHILE() { return getToken(CLokiParser.WHILE, 0); }
-		public TerminalNode LEFT_PARENTHESIS() { return getToken(CLokiParser.LEFT_PARENTHESIS, 0); }
+		public TerminalNode WHILE() { return getToken(LokiParser.WHILE, 0); }
+		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode RIGHT_PARENTHESIS() { return getToken(CLokiParser.RIGHT_PARENTHESIS, 0); }
+		public TerminalNode RIGHT_PARENTHESIS() { return getToken(LokiParser.RIGHT_PARENTHESIS, 0); }
 		public List<InstructionContext> instruction() {
 			return getRuleContexts(InstructionContext.class);
 		}
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public List<TerminalNode> BEGIN() { return getTokens(CLokiParser.BEGIN); }
+		public List<TerminalNode> BEGIN() { return getTokens(LokiParser.BEGIN); }
 		public TerminalNode BEGIN(int i) {
-			return getToken(CLokiParser.BEGIN, i);
+			return getToken(LokiParser.BEGIN, i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
-		public List<TerminalNode> END() { return getTokens(CLokiParser.END); }
+		public List<TerminalNode> END() { return getTokens(LokiParser.END); }
 		public TerminalNode END(int i) {
-			return getToken(CLokiParser.END, i);
+			return getToken(LokiParser.END, i);
 		}
 		public WhileContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterWhile(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterWhile(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitWhile(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitWhile(this);
 		}
 	}
 	public static class EqNeqContext extends ExpressionContext {
@@ -650,61 +650,61 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode EQUALS_EQUALS() { return getToken(CLokiParser.EQUALS_EQUALS, 0); }
-		public TerminalNode BANG_EQUALS() { return getToken(CLokiParser.BANG_EQUALS, 0); }
+		public TerminalNode EQUALS_EQUALS() { return getToken(LokiParser.EQUALS_EQUALS, 0); }
+		public TerminalNode BANG_EQUALS() { return getToken(LokiParser.BANG_EQUALS, 0); }
 		public EqNeqContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterEqNeq(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterEqNeq(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitEqNeq(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitEqNeq(this);
 		}
 	}
 	public static class ArrayContext extends ExpressionContext {
-		public TerminalNode LEFT_BRACKET() { return getToken(CLokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(CLokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
 		public ArrayContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterArray(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterArray(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitArray(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitArray(this);
 		}
 	}
 	public static class AssignVariableContext extends ExpressionContext {
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
-		public TerminalNode EQUALS() { return getToken(CLokiParser.EQUALS, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public AssignVariableContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAssignVariable(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignVariable(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAssignVariable(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignVariable(this);
 		}
 	}
 	public static class AssignIndexContext extends ExpressionContext {
@@ -714,66 +714,66 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode LEFT_BRACKET() { return getToken(CLokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(CLokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode EQUALS() { return getToken(CLokiParser.EQUALS, 0); }
-		public List<TerminalNode> BEGIN() { return getTokens(CLokiParser.BEGIN); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
+		public List<TerminalNode> BEGIN() { return getTokens(LokiParser.BEGIN); }
 		public TerminalNode BEGIN(int i) {
-			return getToken(CLokiParser.BEGIN, i);
+			return getToken(LokiParser.BEGIN, i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
-		public List<TerminalNode> END() { return getTokens(CLokiParser.END); }
+		public List<TerminalNode> END() { return getTokens(LokiParser.END); }
 		public TerminalNode END(int i) {
-			return getToken(CLokiParser.END, i);
+			return getToken(LokiParser.END, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
 		public AssignIndexContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAssignIndex(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignIndex(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAssignIndex(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignIndex(this);
 		}
 	}
 	public static class HostMemberContext extends ExpressionContext {
-		public TerminalNode DOLLAR() { return getToken(CLokiParser.DOLLAR, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
 		public HostMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterHostMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitHostMember(this);
 		}
 	}
 	public static class AssignHostMemberContext extends ExpressionContext {
-		public TerminalNode DOLLAR() { return getToken(CLokiParser.DOLLAR, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(CLokiParser.IDENTIFIER, 0); }
-		public TerminalNode EQUALS() { return getToken(CLokiParser.EQUALS, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode SEMICOLON() { return getToken(CLokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public AssignHostMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterAssignHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignHostMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitAssignHostMember(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignHostMember(this);
 		}
 	}
 	public static class PipePipeContext extends ExpressionContext {
@@ -784,18 +784,18 @@ public class CLokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> PIPE_PIPE() { return getTokens(CLokiParser.PIPE_PIPE); }
+		public List<TerminalNode> PIPE_PIPE() { return getTokens(LokiParser.PIPE_PIPE); }
 		public TerminalNode PIPE_PIPE(int i) {
-			return getToken(CLokiParser.PIPE_PIPE, i);
+			return getToken(LokiParser.PIPE_PIPE, i);
 		}
 		public PipePipeContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterPipePipe(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterPipePipe(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitPipePipe(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitPipePipe(this);
 		}
 	}
 
@@ -2176,16 +2176,16 @@ public class CLokiParser extends Parser {
 	}
 
 	public static class InheritanceContext extends ParserRuleContext {
-		public TerminalNode LEFT_THIN_ARROW() { return getToken(CLokiParser.LEFT_THIN_ARROW, 0); }
+		public TerminalNode LEFT_THIN_ARROW() { return getToken(LokiParser.LEFT_THIN_ARROW, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(CLokiParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LokiParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(CLokiParser.COMMA, i);
+			return getToken(LokiParser.COMMA, i);
 		}
 		public InheritanceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2193,11 +2193,11 @@ public class CLokiParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_inheritance; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterInheritance(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterInheritance(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitInheritance(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitInheritance(this);
 		}
 	}
 
@@ -2262,18 +2262,18 @@ public class CLokiParser extends Parser {
 	}
 
 	public static class Else_Context extends ParserRuleContext {
-		public TerminalNode ELSE() { return getToken(CLokiParser.ELSE, 0); }
-		public TerminalNode BEGIN() { return getToken(CLokiParser.BEGIN, 0); }
-		public TerminalNode END() { return getToken(CLokiParser.END, 0); }
+		public TerminalNode ELSE() { return getToken(LokiParser.ELSE, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
 		public List<InstructionContext> instruction() {
 			return getRuleContexts(InstructionContext.class);
 		}
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(CLokiParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(CLokiParser.SEMICOLON, i);
+			return getToken(LokiParser.SEMICOLON, i);
 		}
 		public Else_Context(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2281,11 +2281,11 @@ public class CLokiParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_else_; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).enterElse_(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterElse_(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CLokiListener ) ((CLokiListener)listener).exitElse_(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitElse_(this);
 		}
 	}
 

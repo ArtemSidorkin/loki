@@ -1,9 +1,9 @@
 package cloki.language.generation.bytecode.rules
 
+import cloki.language.generation.bytecode.CGenerationBytecode
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.classes.{CClassModule, CClassUnit}
 import cloki.language.generation.bytecode.consts.CConstBytecodeCommon
-import cloki.language.generation.bytecode.CGenerationBytecode
 import cloki.language.generation.rules.CRuleGeneration
 import org.antlr.v4.runtime.RuleContext
 

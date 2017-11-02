@@ -4,7 +4,7 @@ import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContext
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.generation.rules.mixins.CMixinRuleGenerationIndex
-import cloki.language.parsing.CLokiParser.IndexContext
+import cloki.language.parsing.LokiParser.IndexContext
 
 private[bytecode] object CRuleGenerationBytecodeIndex extends CRuleGenerationBytecode[IndexContext]
 {

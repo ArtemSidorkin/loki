@@ -3,8 +3,7 @@ package cloki.language.generation.bytecode
 import cloki.language.generation.CGenerator
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.rules._
-import cloki.language.generation.java.rules.CRuleGenerationJavaOperator
-import cloki.language.parsing.CLokiParser._
+import cloki.language.parsing.LokiParser._
 
 class CGeneratorBytecode(moduleName:String) extends CGenerator[CGenerationContextBytecode]
 {
