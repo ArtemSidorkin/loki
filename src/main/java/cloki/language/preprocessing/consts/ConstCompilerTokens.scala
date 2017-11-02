@@ -1,6 +1,6 @@
 package cloki.language.preprocessing.consts
 
-private[preprocessing] object CConstCompilerTokens
+private[preprocessing] object ConstCompilerTokens
 {
 	val BEGIN = "~{"
 	val END = "~}"
