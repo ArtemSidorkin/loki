@@ -7,6 +7,6 @@ Point3 x y z <- Point2(x, y) :
 
 point3 = Point3.new(1, 2, 3)
 
-println(point3.x)
-println(point3.y)
-println(point3.z)
+assert(point3.x, 1)
+assert(point3.y, 2)
+assert(point3.z, 3)

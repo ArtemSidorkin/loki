@@ -41,20 +41,20 @@ List:
 
 list = List.new()
 
-println(list.size())
+assert(list.size(), 0)
 
 list.add(10)
 list.add(20)
 
-println(list.size())
-println(list.get(0))
-println(list.get(1))
+assert(list.size(), 2)
+assert(list.get(0), 10)
+assert(list.get(1), 20)
 
 list.add(30)
 list.removeByIndex(1)
-println(list.get(1))
+assert(list.get(1), 30)
 
 list.removeByIndex(0)
-println(list.get(0))
+assert(list.get(0), 30)
 
-println(list.size())
+assert(list.size(), 1)

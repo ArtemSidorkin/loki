@@ -2,6 +2,7 @@ package cloki.runtime.constant;
 
 public enum LFunctionalUnit
 {
+	ASSERT("assert"),
 	INCLUDE("include"),
 	IMPORT("import"),
 	LOOP("loop"),

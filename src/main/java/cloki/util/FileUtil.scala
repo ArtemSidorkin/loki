@@ -77,4 +77,20 @@ object FileUtil
 		}
 		finally {bufferedReader.close()}
 	}
+
+	def deleteFolder(folderPathname:String):Unit =
+	{
+		val folderFile = new File(folderPathname)
+		if (!folderFile.exists) return
+
+		(
+			folderFile.listFiles
+				foreach(file =>
+					if (file.isDirectory) deleteFolder(file.getAbsolutePath)
+					else file.delete()
+				)
+		)
+
+		folderFile.delete()
+	}
 }

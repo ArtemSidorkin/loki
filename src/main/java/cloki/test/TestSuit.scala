@@ -9,6 +9,6 @@ private[test] object TestSuit
 		readText ("/test/test.registry", classPath = true)
 		split "\n"
 		map (_ split "," map (_ trim ()))
-		map (testCase => TestCase(testCase(0), testCase(1) split ";" map (_ trim ()), testCase(2)))
+		map (testCase => TestCase(testCase(0), testCase(1) split ";" map (_ trim ())))
 	)
 }

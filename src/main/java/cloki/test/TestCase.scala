@@ -1,3 +1,3 @@
 package cloki.test
 
-private[test] case class TestCase(name:String, sourceFilePathnames:Seq[String], expectedOutputFilePathname:String)
+private[test] case class TestCase(name:String, sourceFilePathnames:Seq[String])

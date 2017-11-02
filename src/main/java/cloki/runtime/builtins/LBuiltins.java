@@ -38,6 +38,7 @@ public class LBuiltins
 					put(LDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
 					put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
 
+					put(LFunctionalUnit.ASSERT.name, () -> LAssert.instance);
 					put(LFunctionalUnit.INCLUDE.name, () -> LInclude.instance);
 					put(LFunctionalUnit.IMPORT.name, () -> LImport.instance);
 					put(LFunctionalUnit.LOOP.name, () -> LLoop.instance);
