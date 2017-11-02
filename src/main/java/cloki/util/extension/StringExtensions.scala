@@ -16,12 +16,15 @@ object StringExtensions
 			{
 				val newTabCount = line.tabCount - baseTabCount + tabCount
 				val stringWithoutTabs = line takeRight line.length - line.tabCount
+
 				stringBuilder ++=
 				(
 					if (i == 0 && firstLineAsContinuation) stringWithoutTabs
 					else "\t" * newTabCount + stringWithoutTabs
 				)
+
 				if (lines.length > 1) stringBuilder += '\n'
+
 				i + 1
 			})
 
