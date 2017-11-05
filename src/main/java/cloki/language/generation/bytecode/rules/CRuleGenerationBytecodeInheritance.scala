@@ -27,9 +27,6 @@ private[bytecode] object CRuleGenerationBytecodeInheritance extends CRuleGenerat
 					)
 				)
 			}
-
-
-//			generationContext.deferRule(ruleContext)
 		}
 	}
 

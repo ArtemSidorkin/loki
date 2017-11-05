@@ -4,11 +4,11 @@ import cloki.language.generation.bytecode.CGenerationBytecode
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.classes.{CClassModule, CClassUnit}
 import cloki.language.generation.bytecode.consts.CConstBytecodeCommon
-import cloki.language.generation.rules.CRuleGeneration
+import cloki.language.generation.rules.GGenerationRule
 import org.antlr.v4.runtime.RuleContext
 
 private[bytecode] trait CRuleGenerationBytecode[RULE_CONTEXT <: RuleContext]
-	extends CRuleGeneration[RULE_CONTEXT]
+	extends GGenerationRule[RULE_CONTEXT]
 {
 	type GENERATION_CONTEXT = CGenerationContextBytecode
 

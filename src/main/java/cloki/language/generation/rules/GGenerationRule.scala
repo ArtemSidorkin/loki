@@ -1,12 +1,12 @@
 package cloki.language.generation.rules
 
-import cloki.language.generation.CGeneration
+import cloki.language.generation.Generation
 import cloki.language.generation.rules.mixins.CMixinRuleGeneration
 import org.antlr.v4.runtime.RuleContext
 
-private[generation] trait CRuleGeneration[RULE_CONTEXT <: RuleContext]
+private[generation] trait GGenerationRule[RULE_CONTEXT <: RuleContext]
 {
-	type GENERATION_CONTEXT <: CGeneration#CGenerationContext
+	type GENERATION_CONTEXT <: Generation#GenerationContext
 
 	protected class CCore(protected val generationContext:GENERATION_CONTEXT, protected val ruleContext:RULE_CONTEXT)
 		extends CMixinRuleGeneration[RULE_CONTEXT]
@@ -21,7 +21,7 @@ private[generation] trait CRuleGeneration[RULE_CONTEXT <: RuleContext]
 
 	def enter(ruleContext:RULE_CONTEXT)(implicit generationContext:GENERATION_CONTEXT):Unit =
 		if (generationContext isDeferredRule ruleContext unary_!) _enter(ruleContext)
-		else generationContext.addDeferredRuleActions(
+		else generationContext.setDeferredRuleActions(
 			ruleContext, () => _enter(ruleContext), () => _exit(ruleContext)
 		)
 

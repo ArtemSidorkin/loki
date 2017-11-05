@@ -1,11 +1,11 @@
 package cloki.language.generation.rules.mixins
 
-import cloki.language.generation.CGeneration
+import cloki.language.generation.Generation
 import org.antlr.v4.runtime.RuleContext
 
 private[generation] trait CMixinRuleGeneration[RULE_CONTEXT <: RuleContext]
 {
-	protected val generationContext:CGeneration#CGenerationContext
+	protected val generationContext:Generation#GenerationContext
 	protected val ruleContext:RULE_CONTEXT
 
 	protected def classLoader = generationContext.classLoader
@@ -20,5 +20,5 @@ private[generation] trait CMixinRuleGeneration[RULE_CONTEXT <: RuleContext]
 
 	protected def popFrame() = generationContext.frameStack.pop()
 
-	protected def checkDeferredRules(ruleContext:RuleContext) = generationContext.checkDeferredRules(ruleContext)
+	protected def checkDeferredRules(ruleContext:RuleContext) = generationContext.applyDeferredRules(ruleContext)
 }

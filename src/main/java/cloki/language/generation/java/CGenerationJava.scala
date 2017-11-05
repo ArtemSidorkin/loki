@@ -1,25 +1,25 @@
 package cloki.language.generation.java
 
-import cloki.language.generation.{CClassLoader, CGeneration}
+import cloki.language.generation.{GenerationClassLoader, Generation}
 
-private[generation] object CGenerationJava extends CGeneration
+private[generation] object CGenerationJava extends Generation
 {
 	type GENERATION_CONTEXT = CGenerationContextJava
 	type FRAME_STACK = CFrameStackJava
 	type FRAME = CFrameJava
 
-	class CGenerationContextJava(moduleName:String, classLoader:CClassLoader)
-		extends CGenerationContext(moduleName, classLoader)
+	class CGenerationContextJava(moduleName:String, classLoader:GenerationClassLoader)
+		extends GenerationContext(moduleName, classLoader)
 	{
 		val code:StringBuilder = new StringBuilder
 
 		override def createFrameStack = new CFrameStackJava
 	}
 
-	class CFrameStackJava extends CFrameStack
+	class CFrameStackJava extends FrameStack
 	{
 		def push():Unit = frames.push(new CFrameJava)
 	}
 
-	class CFrameJava extends CFrame
+	class CFrameJava extends Frame
 }

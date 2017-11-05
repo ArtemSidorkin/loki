@@ -1,11 +1,11 @@
 package cloki.language.generation.java
 
-import cloki.language.generation.CGenerator
+import cloki.language.generation.Generator
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.java.rules._
 import cloki.language.parsing.LokiParser._
 
-class CGeneratorJava(moduleName:String) extends CGenerator[CGenerationContextJava]
+class CGeneratorJava(moduleName:String) extends Generator[CGenerationContextJava]
 {
 	protected implicit val generationContext = new CGenerationContextJava(moduleName, classLoader)
 

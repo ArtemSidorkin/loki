@@ -1,11 +1,11 @@
 package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.CRuleGeneration
+import cloki.language.generation.rules.GGenerationRule
 import cloki.util.extension.StringExtensions.StringExtensions
 import org.antlr.v4.runtime.RuleContext
 
-private[java] trait CRuleGenerationJava[RULE_CONTEXT <: RuleContext] extends CRuleGeneration[RULE_CONTEXT]
+private[java] trait CRuleGenerationJava[RULE_CONTEXT <: RuleContext] extends GGenerationRule[RULE_CONTEXT]
 {
 	type GENERATION_CONTEXT = CGenerationContextJava
 

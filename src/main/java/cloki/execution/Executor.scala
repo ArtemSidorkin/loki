@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
-import cloki.language.generation.CGenerator
+import cloki.language.generation.Generator
 import cloki.language.parsing.{LokiLexer, LokiParser}
 import cloki.language.preprocessing.Preprocessor
 import cloki.runtime.context.LUnitContext
@@ -20,7 +20,7 @@ private[execution] class Executor(
 	_modulePaths:Seq[String],
 	val outputPrintStream:PrintStream = System.out,
 	val errorPrintStream:PrintStream = System.err,
-	protected val generatorFactory:(String=>CGenerator[_])
+	protected val generatorFactory:(String=>Generator[_])
 )
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
@@ -81,7 +81,7 @@ private[execution] class Executor(
 			.asInstanceOf[LModule]
 	}
 
-	private def generate(generator:CGenerator[_], relativeModulePathname:String)()
+	private def generate(generator:Generator[_], relativeModulePathname:String)()
 	{
 		val antlrModuleInputStream =
 			new ANTLRInputStream(

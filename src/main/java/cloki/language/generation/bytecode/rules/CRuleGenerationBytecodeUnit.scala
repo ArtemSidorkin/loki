@@ -204,7 +204,7 @@ private[bytecode] object CRuleGenerationBytecodeUnit extends CRuleGenerationByte
 
 			popFrame()
 
-			if (isInheritancePresent) generationContext.checkDeferredRules(ruleContext.inheritance)
+			if (isInheritancePresent) generationContext.applyDeferredRules(ruleContext.inheritance)
 		}
 	}
 

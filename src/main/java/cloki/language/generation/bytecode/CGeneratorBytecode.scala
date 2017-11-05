@@ -1,11 +1,11 @@
 package cloki.language.generation.bytecode
 
-import cloki.language.generation.CGenerator
+import cloki.language.generation.Generator
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.rules._
 import cloki.language.parsing.LokiParser._
 
-class CGeneratorBytecode(moduleName:String) extends CGenerator[CGenerationContextBytecode]
+class CGeneratorBytecode(moduleName:String) extends Generator[CGenerationContextBytecode]
 {
 	protected implicit val generationContext = new CGenerationContextBytecode(moduleName, classLoader)
 
