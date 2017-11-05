@@ -1,6 +1,6 @@
 package cloki.language.generation.java
 
-import cloki.language.generation.{GenerationClassLoader, Generation}
+import cloki.language.generation.{Generation, GenerationClassLoader}
 
 private[generation] object CGenerationJava extends Generation
 {
