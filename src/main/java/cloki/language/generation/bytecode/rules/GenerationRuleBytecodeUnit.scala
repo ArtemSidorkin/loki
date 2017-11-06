@@ -205,3 +205,12 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 		if (isInheritancePresent) generationContext.applyDeferredRules(ruleContext.inheritance)
 	}
 }
+
+object GenerationRuleBytecodeUnit
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:UnitContext):Unit =
+		new GenerationRuleBytecodeUnit(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:UnitContext):Unit =
+		new GenerationRuleBytecodeUnit(generationContext, ruleContext).exit()
+}

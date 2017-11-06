@@ -67,3 +67,12 @@ class GenerationRuleBytecodeOperator(generationContext:CGenerationContextBytecod
 		topMethodCall decrementObjectCounter ()
 	}
 }
+
+object GenerationRuleBytecodeOperator
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:ExpressionContext):Unit =
+		new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:ExpressionContext):Unit =
+		new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+}

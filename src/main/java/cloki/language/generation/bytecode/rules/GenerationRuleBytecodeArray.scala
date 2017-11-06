@@ -44,3 +44,12 @@ class GenerationRuleBytecodeArray(generationContext:CGenerationContextBytecode, 
 
 	override def __exit() = topMethodCall invokeInitArray ()
 }
+
+object GenerationRuleBytecodeArray
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:ArrayContext):Unit =
+		new GenerationRuleBytecodeArray(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:ArrayContext):Unit =
+		new GenerationRuleBytecodeArray(generationContext, ruleContext).exit()
+}

@@ -20,3 +20,12 @@ class GenerationRuleBytecodeVariableOrParameter
 		incrementObjectCounter ()
 	)
 }
+
+object GenerationRuleBytecodeVariableOrParameter
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:VariableOrParameterContext):Unit =
+		new GenerationRuleBytecodeVariableOrParameter(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:VariableOrParameterContext):Unit =
+		new GenerationRuleBytecodeVariableOrParameter(generationContext, ruleContext).exit()
+}

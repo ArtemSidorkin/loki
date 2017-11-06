@@ -70,3 +70,12 @@ class GenerationRuleJavaIfElse(generationContext:CGenerationContextJava, ruleCon
 		popFrame()
 	}
 }
+
+object GenerationRuleJavaIfElse
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:IfElseContext):Unit =
+		new GenerationRuleJavaIfElse(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:IfElseContext):Unit =
+		new GenerationRuleJavaIfElse(generationContext, ruleContext).exit()
+}

@@ -18,3 +18,12 @@ class GenerationRuleJavaAssignMember(generationContext:CGenerationContextJava, r
 		addRightParenthesis()
 	}
 }
+
+object GenerationRuleJavaAssignMember
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:AssignMemberContext):Unit =
+		new GenerationRuleJavaAssignMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:AssignMemberContext):Unit =
+		new GenerationRuleJavaAssignMember(generationContext, ruleContext).exit()
+}

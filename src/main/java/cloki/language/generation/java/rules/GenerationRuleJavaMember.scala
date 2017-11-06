@@ -12,3 +12,12 @@ class GenerationRuleJavaMember(generationContext:CGenerationContextJava, ruleCon
 		ruleContext.expression, () => addCode(s""".$UNIT__METHOD__GET_MEMBER("$memberName")""")
 	)
 }
+
+object GenerationRuleJavaMember
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:MemberContext):Unit =
+		new GenerationRuleJavaMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:MemberContext):Unit =
+		new GenerationRuleJavaMember(generationContext, ruleContext).exit()
+}

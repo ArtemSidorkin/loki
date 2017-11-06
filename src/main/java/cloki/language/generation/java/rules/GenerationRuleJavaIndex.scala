@@ -32,3 +32,12 @@ class GenerationRuleJavaIndex(generationContext:CGenerationContextJava, ruleCont
 		addRightParenthesis()
 	}
 }
+
+object GenerationRuleJavaIndex
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:IndexContext):Unit =
+		new GenerationRuleJavaIndex(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:IndexContext):Unit =
+		new GenerationRuleJavaIndex(generationContext, ruleContext).exit()
+}

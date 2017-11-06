@@ -63,3 +63,12 @@ class GenerationRuleBytecodeModule(generationContext:CGenerationContextBytecode,
 		popFrame()
 	}
 }
+
+object GenerationRuleBytecodeModule
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:ModuleContext):Unit =
+		new GenerationRuleBytecodeModule(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:ModuleContext):Unit =
+		new GenerationRuleBytecodeModule(generationContext, ruleContext).exit()
+}

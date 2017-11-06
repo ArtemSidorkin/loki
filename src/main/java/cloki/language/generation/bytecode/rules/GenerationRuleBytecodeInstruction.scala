@@ -9,3 +9,12 @@ class GenerationRuleBytecodeInstruction(generationContext:CGenerationContextByte
 	override def __enter() = topMethodCall pushFrame ()
 	override def __exit() = topMethodCall popFrame ()
 }
+
+object GenerationRuleBytecodeInstruction
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:InstructionContext):Unit =
+		new GenerationRuleBytecodeInstruction(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:InstructionContext):Unit =
+		new GenerationRuleBytecodeInstruction(generationContext, ruleContext).exit()
+}

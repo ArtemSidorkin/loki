@@ -27,3 +27,12 @@ class GenerationRuleBytecodeInheritance
 		}
 	}
 }
+
+object GenerationRuleBytecodeInheritance
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:InheritanceContext):Unit =
+		new GenerationRuleBytecodeInheritance(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:InheritanceContext):Unit =
+		new GenerationRuleBytecodeInheritance(generationContext, ruleContext).exit()
+}

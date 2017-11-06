@@ -20,3 +20,12 @@ class GenerationRuleBytecodeAssignVariable
 
 	override def __exit() = topMethodCall invokeVirtualUnitContextMethodSetVariable ()
 }
+
+object GenerationRuleBytecodeAssignVariable
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:AssignVariableContext):Unit =
+		new GenerationRuleBytecodeAssignVariable(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:AssignVariableContext):Unit =
+		new GenerationRuleBytecodeAssignVariable(generationContext, ruleContext).exit()
+}

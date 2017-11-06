@@ -12,3 +12,12 @@ class GenerationRuleBytecodeThis(generationContext:CGenerationContextBytecode, r
 		incrementObjectCounter ()
 	)
 }
+
+object GenerationRuleBytecodeThis
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:ThisContext):Unit =
+		new GenerationRuleBytecodeThis(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:ThisContext):Unit =
+		new GenerationRuleBytecodeThis(generationContext, ruleContext).exit()
+}

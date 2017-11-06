@@ -18,3 +18,13 @@ class GenerationRuleBytecodeAssignHostMember
 
 	override def __exit() = topMethodCall invokeVirtualUnitMethodSetMember ()
 }
+
+
+object GenerationRuleBytecodeAssignHostMember
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:AssignHostMemberContext):Unit =
+		new GenerationRuleBytecodeAssignHostMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:AssignHostMemberContext):Unit =
+		new GenerationRuleBytecodeAssignHostMember(generationContext, ruleContext).exit()
+}

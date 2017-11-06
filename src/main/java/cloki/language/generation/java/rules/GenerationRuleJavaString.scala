@@ -14,3 +14,12 @@ class GenerationRuleJavaString(generationContext:CGenerationContextJava, ruleCon
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LString].getName}($prprdStr)")
 	}
 }
+
+object GenerationRuleJavaString
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:LokiParser.StringContext):Unit =
+		new GenerationRuleJavaString(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:LokiParser.StringContext):Unit =
+		new GenerationRuleJavaString(generationContext, ruleContext).exit()
+}

@@ -13,3 +13,12 @@ class GenerationRuleJavaInstruction(generationContext:CGenerationContextJava, ru
 		addNewLine()
 	}
 }
+
+object GenerationRuleJavaInstruction
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:InstructionContext):Unit =
+		new GenerationRuleJavaInstruction(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:InstructionContext):Unit =
+		new GenerationRuleJavaInstruction(generationContext, ruleContext).exit()
+}

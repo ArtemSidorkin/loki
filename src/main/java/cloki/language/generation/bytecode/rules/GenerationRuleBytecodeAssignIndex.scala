@@ -39,3 +39,12 @@ class GenerationRuleBytecodeAssignIndex(generationContext:CGenerationContextByte
 		invokeVirtualUnitMethodSetIndexedItem ()
 	)
 }
+
+object GenerationRuleBytecodeAssignIndex
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:AssignIndexContext):Unit =
+		new GenerationRuleBytecodeAssignIndex(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:AssignIndexContext):Unit =
+		new GenerationRuleBytecodeAssignIndex(generationContext, ruleContext).exit()
+}

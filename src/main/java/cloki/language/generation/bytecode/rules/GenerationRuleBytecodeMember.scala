@@ -15,3 +15,12 @@ class GenerationRuleBytecodeMember(generationContext:CGenerationContextBytecode,
 		invokeVirtualUnitMethodGetMember ()
 	))
 }
+
+object GenerationRuleBytecodeMember
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:MemberContext):Unit =
+		new GenerationRuleBytecodeMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:MemberContext):Unit =
+		new GenerationRuleBytecodeMember(generationContext, ruleContext).exit()
+}

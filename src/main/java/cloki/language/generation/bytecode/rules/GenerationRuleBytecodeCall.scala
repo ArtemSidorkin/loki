@@ -46,3 +46,12 @@ class GenerationRuleBytecodeCall(generationContext:CGenerationContextBytecode, r
 		invokeVirtualUnitMethodCall ()
 	)
 }
+
+object GenerationRuleBytecodeCall
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:CallContext):Unit =
+		new GenerationRuleBytecodeCall(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:CallContext):Unit =
+		new GenerationRuleBytecodeCall(generationContext, ruleContext).exit()
+}

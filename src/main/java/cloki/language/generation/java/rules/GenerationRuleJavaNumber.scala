@@ -11,3 +11,12 @@ class GenerationRuleJavaNumber(generationContext:CGenerationContextJava, ruleCon
 	override def __enter() =
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LNumber].getName}($number)")
 }
+
+object GenerationRuleJavaNumber
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:NumberContext):Unit =
+		new GenerationRuleJavaNumber(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:NumberContext):Unit =
+		new GenerationRuleJavaNumber(generationContext, ruleContext).exit()
+}

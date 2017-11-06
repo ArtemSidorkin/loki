@@ -29,3 +29,12 @@ class GenerationRuleJavaCall(generationContext:CGenerationContextJava, ruleConte
 		addCode(s"}, $UNIT__METHOD__CALL__PARAMETER__CONTEXT)")
 	}
 }
+
+object GenerationRuleJavaCall
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:CallContext):Unit =
+		new GenerationRuleJavaCall(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:CallContext):Unit =
+		new GenerationRuleJavaCall(generationContext, ruleContext).exit()
+}

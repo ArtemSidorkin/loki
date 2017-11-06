@@ -17,3 +17,12 @@ class GenerationRuleBytecodeHostMember(generationContext:CGenerationContextBytec
 		incrementObjectCounter ()
 	)
 }
+
+object GenerationRuleBytecodeHostMember
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:HostMemberContext):Unit =
+		new GenerationRuleBytecodeHostMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:HostMemberContext):Unit =
+		new GenerationRuleBytecodeHostMember(generationContext, ruleContext).exit()
+}

@@ -8,3 +8,12 @@ class GenerationRuleJavaThis(generationContext:CGenerationContextJava, ruleConte
 {
 	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) ("this")
 }
+
+object GenerationRuleJavaThis
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:ThisContext):Unit =
+		new GenerationRuleJavaThis(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:ThisContext):Unit =
+		new GenerationRuleJavaThis(generationContext, ruleContext).exit()
+}

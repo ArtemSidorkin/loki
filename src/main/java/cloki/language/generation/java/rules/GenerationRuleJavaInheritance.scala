@@ -30,3 +30,12 @@ class GenerationRuleJavaInheritance(generationContext:CGenerationContextJava, ru
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"$UNIT__METHOD__ADD_PARENT(")
 	}
 }
+
+object GenerationRuleJavaInheritance
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:InheritanceContext):Unit =
+		new GenerationRuleJavaInheritance(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:InheritanceContext):Unit =
+		new GenerationRuleJavaInheritance(generationContext, ruleContext).exit()
+}

@@ -9,105 +9,105 @@ class CGeneratorJava(moduleName:String) extends Generator[CGenerationContextJava
 {
 	protected implicit val generationContext = new CGenerationContextJava(moduleName, classLoader)
 
-	override def enterModule(ruleContext:ModuleContext) = new GenerationRuleJavaModule(generationContext, ruleContext).enter()
-	override def exitModule(ruleContext:ModuleContext) = new GenerationRuleJavaModule(generationContext, ruleContext).exit()
+	override def enterModule(ruleContext:ModuleContext) = GenerationRuleJavaModule.enter(generationContext, ruleContext)
+	override def exitModule(ruleContext:ModuleContext) = GenerationRuleJavaModule.exit(generationContext, ruleContext)
 
-	override def enterInstruction(ruleContext:InstructionContext) = new GenerationRuleJavaInstruction(generationContext, ruleContext).enter()
-	override def exitInstruction(ruleContext:InstructionContext) = new GenerationRuleJavaInstruction(generationContext, ruleContext).exit()
+	override def enterInstruction(ruleContext:InstructionContext) = GenerationRuleJavaInstruction.enter(generationContext, ruleContext)
+	override def exitInstruction(ruleContext:InstructionContext) = GenerationRuleJavaInstruction.exit(generationContext, ruleContext)
 
 	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = ()
 	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = ()
 
-	override def enterUnit(ruleContext:UnitContext) = new GenerationRuleJavaUnit(generationContext, ruleContext).enter()
-	override def exitUnit(ruleContext:UnitContext) = new GenerationRuleJavaUnit(generationContext, ruleContext).exit()
+	override def enterUnit(ruleContext:UnitContext) = GenerationRuleJavaUnit.enter(generationContext, ruleContext)
+	override def exitUnit(ruleContext:UnitContext) = GenerationRuleJavaUnit.exit(generationContext, ruleContext)
 
-	override def enterArray(ruleContext:ArrayContext) = new GenerationRuleJavaArray(generationContext, ruleContext).enter()
-	override def exitArray(ruleContext:ArrayContext) = new GenerationRuleJavaArray(generationContext, ruleContext).exit()
+	override def enterArray(ruleContext:ArrayContext) = GenerationRuleJavaArray.enter(generationContext, ruleContext)
+	override def exitArray(ruleContext:ArrayContext) = GenerationRuleJavaArray.exit(generationContext, ruleContext)
 
-	override def enterIndex(ruleContext:IndexContext) = new GenerationRuleJavaIndex(generationContext, ruleContext).enter()
-	override def exitIndex(ruleContext:IndexContext) = new GenerationRuleJavaIndex(generationContext, ruleContext).exit()
+	override def enterIndex(ruleContext:IndexContext) = GenerationRuleJavaIndex.enter(generationContext, ruleContext)
+	override def exitIndex(ruleContext:IndexContext) = GenerationRuleJavaIndex.exit(generationContext, ruleContext)
 
-	override def enterAssignIndex(ruleContext:AssignIndexContext) = new GenerationRuleJavaAssignIndex(generationContext, ruleContext).enter()
-	override def exitAssignIndex(ruleContext:AssignIndexContext) = new GenerationRuleJavaAssignIndex(generationContext, ruleContext).exit()
+	override def enterAssignIndex(ruleContext:AssignIndexContext) = GenerationRuleJavaAssignIndex.enter(generationContext, ruleContext)
+	override def exitAssignIndex(ruleContext:AssignIndexContext) = GenerationRuleJavaAssignIndex.exit(generationContext, ruleContext)
 
-	override def enterCall(ruleContext:CallContext) = new GenerationRuleJavaCall(generationContext, ruleContext).enter()
-	override def exitCall(ruleContext:CallContext) = new GenerationRuleJavaCall(generationContext, ruleContext).exit()
+	override def enterCall(ruleContext:CallContext) = GenerationRuleJavaCall.enter(generationContext, ruleContext)
+	override def exitCall(ruleContext:CallContext) = GenerationRuleJavaCall.exit(generationContext, ruleContext)
 
-	override def enterMemberCall(ruleContext:MemberCallContext) = new GenerationRuleJavaMemberCall(generationContext, ruleContext).enter()
-	override def exitMemberCall(ruleContext:MemberCallContext) = new GenerationRuleJavaMemberCall(generationContext, ruleContext).exit()
+	override def enterMemberCall(ruleContext:MemberCallContext) = GenerationRuleJavaMemberCall.enter(generationContext, ruleContext)
+	override def exitMemberCall(ruleContext:MemberCallContext) = GenerationRuleJavaMemberCall.exit(generationContext, ruleContext)
 
 	override def enterVariableOrParameter(ruleContext:VariableOrParameterContext) =
-		new GenerationRuleJavaVariableOrParameter(generationContext, ruleContext).enter()
+		GenerationRuleJavaVariableOrParameter.enter(generationContext, ruleContext)
 
 	override def exitVariableOrParameter(ruleContext:VariableOrParameterContext) =
-		new GenerationRuleJavaVariableOrParameter(generationContext, ruleContext).exit()
+		GenerationRuleJavaVariableOrParameter.exit(generationContext, ruleContext)
 
 	override def enterSuperHostMember(ruleContext:SuperHostMemberContext) =
-		new GenerationRuleJavaSuperHostMember(generationContext, ruleContext).enter()
+		GenerationRuleJavaSuperHostMember.enter(generationContext, ruleContext)
 
 	override def exitSuperHostMember(ruleContext:SuperHostMemberContext) =
-		new GenerationRuleJavaSuperHostMember(generationContext, ruleContext).exit()
+		GenerationRuleJavaSuperHostMember.exit(generationContext, ruleContext)
 
-	override def enterHostMember(ruleContext:HostMemberContext) = new GenerationRuleJavaHostMember(generationContext, ruleContext).enter()
-	override def exitHostMember(ruleContext:HostMemberContext) = new GenerationRuleJavaHostMember(generationContext, ruleContext).exit()
+	override def enterHostMember(ruleContext:HostMemberContext) = GenerationRuleJavaHostMember.enter(generationContext, ruleContext)
+	override def exitHostMember(ruleContext:HostMemberContext) = GenerationRuleJavaHostMember.exit(generationContext, ruleContext)
 
-	override def enterMember(ruleContext:MemberContext) = new GenerationRuleJavaMember(generationContext, ruleContext).enter()
-	override def exitMember(ruleContext:MemberContext) = new GenerationRuleJavaMember(generationContext, ruleContext).exit()
+	override def enterMember(ruleContext:MemberContext) = GenerationRuleJavaMember.enter(generationContext, ruleContext)
+	override def exitMember(ruleContext:MemberContext) = GenerationRuleJavaMember.exit(generationContext, ruleContext)
 
 	override def enterAssignVariable(ruleContext:AssignVariableContext) =
-		new GenerationRuleJavaAssignVariable(generationContext, ruleContext).enter()
+		GenerationRuleJavaAssignVariable.enter(generationContext, ruleContext)
 
 	override def exitAssignVariable(ruleContext:AssignVariableContext) =
-		new GenerationRuleJavaAssignVariable(generationContext, ruleContext).exit()
+		GenerationRuleJavaAssignVariable.exit(generationContext, ruleContext)
 
 	override def enterAssignHostMember(ruleContext:AssignHostMemberContext) =
-		new GenerationRuleJavaAssignHostMember(generationContext, ruleContext).enter()
+		GenerationRuleJavaAssignHostMember.enter(generationContext, ruleContext)
 
 	override def exitAssignHostMember(ruleContext:AssignHostMemberContext) =
-		new GenerationRuleJavaAssignHostMember(generationContext, ruleContext).exit()
+		GenerationRuleJavaAssignHostMember.exit(generationContext, ruleContext)
 
-	override def enterAssignMember(ruleContext:AssignMemberContext) = new GenerationRuleJavaAssignMember(generationContext, ruleContext).enter()
-	override def exitAssignMember(ruleContext:AssignMemberContext) = new GenerationRuleJavaAssignMember(generationContext, ruleContext).exit()
+	override def enterAssignMember(ruleContext:AssignMemberContext) = GenerationRuleJavaAssignMember.enter(generationContext, ruleContext)
+	override def exitAssignMember(ruleContext:AssignMemberContext) = GenerationRuleJavaAssignMember.exit(generationContext, ruleContext)
 
-	override def enterHost(ruleContext:HostContext) = new GenerationRuleJavaHost(generationContext, ruleContext).enter()
-	override def exitHost(ruleContext:HostContext) = new GenerationRuleJavaHost(generationContext, ruleContext).exit()
+	override def enterHost(ruleContext:HostContext) = GenerationRuleJavaHost.enter(generationContext, ruleContext)
+	override def exitHost(ruleContext:HostContext) = GenerationRuleJavaHost.exit(generationContext, ruleContext)
 
-	override def enterThis(ruleContext:ThisContext) = new GenerationRuleJavaThis(generationContext, ruleContext).enter()
-	override def exitThis(ruleContext:ThisContext) = new GenerationRuleJavaThis(generationContext, ruleContext).exit()
+	override def enterThis(ruleContext:ThisContext) = GenerationRuleJavaThis.enter(generationContext, ruleContext)
+	override def exitThis(ruleContext:ThisContext) = GenerationRuleJavaThis.exit(generationContext, ruleContext)
 
-	override def enterString(ruleContext:StringContext) = new GenerationRuleJavaString(generationContext, ruleContext).enter()
-	override def exitString(ruleContext:StringContext) = new GenerationRuleJavaString(generationContext, ruleContext).exit()
+	override def enterString(ruleContext:StringContext) = GenerationRuleJavaString.enter(generationContext, ruleContext)
+	override def exitString(ruleContext:StringContext) = GenerationRuleJavaString.exit(generationContext, ruleContext)
 
-	override def enterNumber(ruleContext:NumberContext) = new GenerationRuleJavaNumber(generationContext, ruleContext).enter()
-	override def exitNumber(ruleContext:NumberContext) = new GenerationRuleJavaNumber(generationContext, ruleContext).exit()
+	override def enterNumber(ruleContext:NumberContext) = GenerationRuleJavaNumber.enter(generationContext, ruleContext)
+	override def exitNumber(ruleContext:NumberContext) = GenerationRuleJavaNumber.exit(generationContext, ruleContext)
 
-	override def enterUnaryOperation(ruleContext:UnaryOperationContext) = new GenerationRuleJavaUnaryOperation(generationContext, ruleContext).enter()
-	override def exitUnaryOperation(ruleContext:UnaryOperationContext) = new GenerationRuleJavaUnaryOperation(generationContext, ruleContext).exit()
+	override def enterUnaryOperation(ruleContext:UnaryOperationContext) = GenerationRuleJavaUnaryOperation.enter(generationContext, ruleContext)
+	override def exitUnaryOperation(ruleContext:UnaryOperationContext) = GenerationRuleJavaUnaryOperation.exit(generationContext, ruleContext)
 
-	override def enterMulDiv(ruleContext:MulDivContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitMulDiv(ruleContext:MulDivContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterMulDiv(ruleContext:MulDivContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitMulDiv(ruleContext:MulDivContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterAddSub(ruleContext:AddSubContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitAddSub(ruleContext:AddSubContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterAddSub(ruleContext:AddSubContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitAddSub(ruleContext:AddSubContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterEqNeq(ruleContext:EqNeqContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitEqNeq(ruleContext:EqNeqContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterEqNeq(ruleContext:EqNeqContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitEqNeq(ruleContext:EqNeqContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterPipePipe(ruleContext:PipePipeContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
-	override def exitPipePipe(ruleContext:PipePipeContext) = new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+	override def enterPipePipe(ruleContext:PipePipeContext) = GenerationRuleJavaOperator.enter(generationContext, ruleContext)
+	override def exitPipePipe(ruleContext:PipePipeContext) = GenerationRuleJavaOperator.exit(generationContext, ruleContext)
 
-	override def enterIfElse(ruleContext:IfElseContext) = new GenerationRuleJavaIfElse(generationContext, ruleContext).enter()
-	override def exitIfElse(ruleContext:IfElseContext) = new GenerationRuleJavaIfElse(generationContext, ruleContext).exit()
+	override def enterIfElse(ruleContext:IfElseContext) = GenerationRuleJavaIfElse.enter(generationContext, ruleContext)
+	override def exitIfElse(ruleContext:IfElseContext) = GenerationRuleJavaIfElse.exit(generationContext, ruleContext)
 
-	override def enterWhile(ruleContext:WhileContext) = new GenerationRuleJavaWhile(generationContext, ruleContext).enter()
-	override def exitWhile(ruleContext:WhileContext) = new GenerationRuleJavaWhile(generationContext, ruleContext).exit()
+	override def enterWhile(ruleContext:WhileContext) = GenerationRuleJavaWhile.enter(generationContext, ruleContext)
+	override def exitWhile(ruleContext:WhileContext) = GenerationRuleJavaWhile.exit(generationContext, ruleContext)
 
-	override def enterInheritance(ruleContext:InheritanceContext) = new GenerationRuleJavaInheritance(generationContext, ruleContext).enter()
-	override def exitInheritance(ruleContext:InheritanceContext) = new GenerationRuleJavaInheritance(generationContext, ruleContext).exit()
+	override def enterInheritance(ruleContext:InheritanceContext) = GenerationRuleJavaInheritance.enter(generationContext, ruleContext)
+	override def exitInheritance(ruleContext:InheritanceContext) = GenerationRuleJavaInheritance.exit(generationContext, ruleContext)
 }

@@ -65,3 +65,12 @@ class GenerationRuleJavaWhile(generationContext:CGenerationContextJava, ruleCont
 		popFrame()
 	}
 }
+
+object GenerationRuleJavaWhile
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:WhileContext):Unit =
+		new GenerationRuleJavaWhile(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:WhileContext):Unit =
+		new GenerationRuleJavaWhile(generationContext, ruleContext).exit()
+}

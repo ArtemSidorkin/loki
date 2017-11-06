@@ -11,3 +11,12 @@ class GenerationRuleJavaHost(generationContext:CGenerationContextJava, ruleConte
 		s"$UNIT__METHOD__CALL__PARAMETER__HOST"
 	)
 }
+
+object GenerationRuleJavaHost
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:HostContext):Unit =
+		new GenerationRuleJavaHost(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:HostContext):Unit =
+		new GenerationRuleJavaHost(generationContext, ruleContext).exit()
+}

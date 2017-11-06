@@ -9,113 +9,113 @@ class CGeneratorBytecode(moduleName:String) extends Generator[CGenerationContext
 {
 	protected implicit val generationContext = new CGenerationContextBytecode(moduleName, classLoader)
 
-	override def enterModule(ruleContext:ModuleContext) = new GenerationRuleBytecodeModule(generationContext, ruleContext).enter()
-	override def exitModule(ruleContext:ModuleContext) = new GenerationRuleBytecodeModule(generationContext, ruleContext).exit()
+	override def enterModule(ruleContext:ModuleContext) = GenerationRuleBytecodeModule.enter(generationContext, ruleContext)
+	override def exitModule(ruleContext:ModuleContext) = GenerationRuleBytecodeModule.exit(generationContext, ruleContext)
 
-	override def enterInstruction(ruleContext:InstructionContext) = new GenerationRuleBytecodeInstruction(generationContext, ruleContext).enter()
-	override def exitInstruction(ruleContext:InstructionContext) = new GenerationRuleBytecodeInstruction(generationContext, ruleContext).exit()
+	override def enterInstruction(ruleContext:InstructionContext) = GenerationRuleBytecodeInstruction.enter(generationContext, ruleContext)
+	override def exitInstruction(ruleContext:InstructionContext) = GenerationRuleBytecodeInstruction.exit(generationContext, ruleContext)
 
 	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = ()
 	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = ()
 
-	override def enterUnit(ruleContext:UnitContext) = new GenerationRuleBytecodeUnit(generationContext, ruleContext).enter()
-	override def exitUnit(ruleContext:UnitContext) = new GenerationRuleBytecodeUnit(generationContext, ruleContext).exit()
+	override def enterUnit(ruleContext:UnitContext) = GenerationRuleBytecodeUnit.enter(generationContext, ruleContext)
+	override def exitUnit(ruleContext:UnitContext) = GenerationRuleBytecodeUnit.exit(generationContext, ruleContext)
 
-	override def enterArray(ruleContext:ArrayContext) = new GenerationRuleBytecodeArray(generationContext, ruleContext).enter()
-	override def exitArray(ruleContext:ArrayContext) = new GenerationRuleBytecodeArray(generationContext, ruleContext).exit()
+	override def enterArray(ruleContext:ArrayContext) = GenerationRuleBytecodeArray.enter(generationContext, ruleContext)
+	override def exitArray(ruleContext:ArrayContext) = GenerationRuleBytecodeArray.exit(generationContext, ruleContext)
 
-	override def enterIndex(ruleContext:IndexContext) = new GenerationRuleBytecodeIndex(generationContext, ruleContext).enter()
-	override def exitIndex(ruleContext:IndexContext) = new GenerationRuleBytecodeIndex(generationContext, ruleContext).exit()
+	override def enterIndex(ruleContext:IndexContext) = GenerationRuleBytecodeIndex.enter(generationContext, ruleContext)
+	override def exitIndex(ruleContext:IndexContext) = GenerationRuleBytecodeIndex.exit(generationContext, ruleContext)
 
-	override def enterAssignIndex(ruleContext:AssignIndexContext) = new GenerationRuleBytecodeAssignIndex(generationContext, ruleContext).enter()
-	override def exitAssignIndex(ruleContext:AssignIndexContext) = new GenerationRuleBytecodeAssignIndex(generationContext, ruleContext).exit()
+	override def enterAssignIndex(ruleContext:AssignIndexContext) = GenerationRuleBytecodeAssignIndex.enter(generationContext, ruleContext)
+	override def exitAssignIndex(ruleContext:AssignIndexContext) = GenerationRuleBytecodeAssignIndex.exit(generationContext, ruleContext)
 
-	override def enterCall(ruleContext:CallContext) = new GenerationRuleBytecodeCall(generationContext, ruleContext).enter()
-	override def exitCall(ruleContext:CallContext) = new GenerationRuleBytecodeCall(generationContext, ruleContext).exit()
+	override def enterCall(ruleContext:CallContext) = GenerationRuleBytecodeCall.enter(generationContext, ruleContext)
+	override def exitCall(ruleContext:CallContext) = GenerationRuleBytecodeCall.exit(generationContext, ruleContext)
 
-	override def enterMemberCall(ruleContext:MemberCallContext) = new GenerationRuleBytecodeMemberCall(generationContext, ruleContext).enter()
-	override def exitMemberCall(ruleContext:MemberCallContext) = new GenerationRuleBytecodeMemberCall(generationContext, ruleContext).exit()
+	override def enterMemberCall(ruleContext:MemberCallContext) = GenerationRuleBytecodeMemberCall.enter(generationContext, ruleContext)
+	override def exitMemberCall(ruleContext:MemberCallContext) = GenerationRuleBytecodeMemberCall.exit(generationContext, ruleContext)
 
 	override def enterVariableOrParameter(ruleContext:VariableOrParameterContext) =
-		new GenerationRuleBytecodeVariableOrParameter(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeVariableOrParameter.enter(generationContext, ruleContext)
 
 	override def exitVariableOrParameter(ruleContext:VariableOrParameterContext) =
-		new GenerationRuleBytecodeVariableOrParameter(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeVariableOrParameter.exit(generationContext, ruleContext)
 
 	override def enterSuperHostMember(ruleContext:SuperHostMemberContext) =
-		new GenerationRuleBytecodeSuperHostMember(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeSuperHostMember.enter(generationContext, ruleContext)
 
 	override def exitSuperHostMember(ruleContext:SuperHostMemberContext) =
-		new GenerationRuleBytecodeSuperHostMember(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeSuperHostMember.exit(generationContext, ruleContext)
 
-	override def enterHostMember(ruleContext:HostMemberContext) = new GenerationRuleBytecodeHostMember(generationContext, ruleContext).enter()
-	override def exitHostMember(ruleContext:HostMemberContext) = new GenerationRuleBytecodeHostMember(generationContext, ruleContext).exit()
+	override def enterHostMember(ruleContext:HostMemberContext) = GenerationRuleBytecodeHostMember.enter(generationContext, ruleContext)
+	override def exitHostMember(ruleContext:HostMemberContext) = GenerationRuleBytecodeHostMember.exit(generationContext, ruleContext)
 
-	override def enterMember(ruleContext:MemberContext) = new GenerationRuleBytecodeMember(generationContext, ruleContext).enter()
-	override def exitMember(ruleContext:MemberContext) = new GenerationRuleBytecodeMember(generationContext, ruleContext).exit()
+	override def enterMember(ruleContext:MemberContext) = GenerationRuleBytecodeMember.enter(generationContext, ruleContext)
+	override def exitMember(ruleContext:MemberContext) = GenerationRuleBytecodeMember.exit(generationContext, ruleContext)
 
 	override def enterAssignVariable(ruleContext:AssignVariableContext) =
-		new GenerationRuleBytecodeAssignVariable(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeAssignVariable.enter(generationContext, ruleContext)
 
 	override def exitAssignVariable(ruleContext:AssignVariableContext) =
-		new GenerationRuleBytecodeAssignVariable(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeAssignVariable.exit(generationContext, ruleContext)
 
 	override def enterAssignHostMember(ruleContext:AssignHostMemberContext) =
-		new GenerationRuleBytecodeAssignHostMember(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeAssignHostMember.enter(generationContext, ruleContext)
 
 	override def exitAssignHostMember(ruleContext:AssignHostMemberContext) =
-		new GenerationRuleBytecodeAssignHostMember(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeAssignHostMember.exit(generationContext, ruleContext)
 
 	override def enterAssignMember(ruleContext:AssignMemberContext) =
-		new GenerationRuleBytecodeAssignMember(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeAssignMember.enter(generationContext, ruleContext)
 
 	override def exitAssignMember(ruleContext:AssignMemberContext) =
-		new GenerationRuleBytecodeAssignMember(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeAssignMember.exit(generationContext, ruleContext)
 
-	override def enterHost(ruleContext:HostContext) = new GenerationRuleBytecodeHost(generationContext, ruleContext).enter()
-	override def exitHost(ruleContext:HostContext) = new GenerationRuleBytecodeHost(generationContext, ruleContext).exit()
+	override def enterHost(ruleContext:HostContext) = GenerationRuleBytecodeHost.enter(generationContext, ruleContext)
+	override def exitHost(ruleContext:HostContext) = GenerationRuleBytecodeHost.exit(generationContext, ruleContext)
 
-	override def enterThis(ruleContext:ThisContext) = new GenerationRuleBytecodeThis(generationContext, ruleContext).enter()
-	override def exitThis(ruleContext:ThisContext) = new GenerationRuleBytecodeThis(generationContext, ruleContext).enter()
+	override def enterThis(ruleContext:ThisContext) = GenerationRuleBytecodeThis.enter(generationContext, ruleContext)
+	override def exitThis(ruleContext:ThisContext) = GenerationRuleBytecodeThis.enter(generationContext, ruleContext)
 
-	override def enterString(ruleContext:StringContext) = new GenerationRuleBytecodeString(generationContext, ruleContext).enter()
-	override def exitString(ruleContext:StringContext) = new GenerationRuleBytecodeString(generationContext, ruleContext).exit()
+	override def enterString(ruleContext:StringContext) = GenerationRuleBytecodeString.enter(generationContext, ruleContext)
+	override def exitString(ruleContext:StringContext) = GenerationRuleBytecodeString.exit(generationContext, ruleContext)
 
-	override def enterNumber(ruleContext:NumberContext) = new GenerationRuleBytecodeNumber(generationContext, ruleContext).enter()
-	override def exitNumber(ruleContext:NumberContext) = new GenerationRuleBytecodeNumber(generationContext, ruleContext).exit()
+	override def enterNumber(ruleContext:NumberContext) = GenerationRuleBytecodeNumber.enter(generationContext, ruleContext)
+	override def exitNumber(ruleContext:NumberContext) = GenerationRuleBytecodeNumber.exit(generationContext, ruleContext)
 
 	override def enterUnaryOperation(ruleContext:UnaryOperationContext) =
-		new GenerationRuleBytecodeUnaryOperation(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeUnaryOperation.enter(generationContext, ruleContext)
 
 	override def exitUnaryOperation(ruleContext:UnaryOperationContext) =
-		new GenerationRuleBytecodeUnaryOperation(generationContext, ruleContext).exit()
+		GenerationRuleBytecodeUnaryOperation.exit(generationContext, ruleContext)
 
-	override def enterMulDiv(ruleContext:MulDivContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitMulDiv(ruleContext:MulDivContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterMulDiv(ruleContext:MulDivContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitMulDiv(ruleContext:MulDivContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterAddSub(ruleContext:AddSubContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitAddSub(ruleContext:AddSubContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterAddSub(ruleContext:AddSubContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitAddSub(ruleContext:AddSubContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterEqNeq(ruleContext:EqNeqContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitEqNeq(ruleContext:EqNeqContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterEqNeq(ruleContext:EqNeqContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitEqNeq(ruleContext:EqNeqContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterPipePipe(ruleContext:PipePipeContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).enter()
-	override def exitPipePipe(ruleContext:PipePipeContext) = new GenerationRuleBytecodeOperator(generationContext, ruleContext).exit()
+	override def enterPipePipe(ruleContext:PipePipeContext) = GenerationRuleBytecodeOperator.enter(generationContext, ruleContext)
+	override def exitPipePipe(ruleContext:PipePipeContext) = GenerationRuleBytecodeOperator.exit(generationContext, ruleContext)
 
-	override def enterIfElse(ruleContext:IfElseContext) = new GenerationRuleBytecodeIfElse(generationContext, ruleContext).enter()
-	override def exitIfElse(ruleContext:IfElseContext) = new GenerationRuleBytecodeIfElse(generationContext, ruleContext).exit()
+	override def enterIfElse(ruleContext:IfElseContext) = GenerationRuleBytecodeIfElse.enter(generationContext, ruleContext)
+	override def exitIfElse(ruleContext:IfElseContext) = GenerationRuleBytecodeIfElse.exit(generationContext, ruleContext)
 
-	override def enterWhile(ruleContext:WhileContext) = new GenerationRuleBytecodeWhile(generationContext, ruleContext).enter()
-	override def exitWhile(ruleContext:WhileContext) = new GenerationRuleBytecodeWhile(generationContext, ruleContext).exit()
+	override def enterWhile(ruleContext:WhileContext) = GenerationRuleBytecodeWhile.enter(generationContext, ruleContext)
+	override def exitWhile(ruleContext:WhileContext) = GenerationRuleBytecodeWhile.exit(generationContext, ruleContext)
 
 	override def enterInheritance(ruleContext:InheritanceContext) =
-		new GenerationRuleBytecodeInheritance(generationContext, ruleContext).enter()
+		GenerationRuleBytecodeInheritance.enter(generationContext, ruleContext)
 
-	override def exitInheritance(ruleContext:InheritanceContext) = new GenerationRuleBytecodeInheritance(generationContext, ruleContext).exit()
+	override def exitInheritance(ruleContext:InheritanceContext) = GenerationRuleBytecodeInheritance.exit(generationContext, ruleContext)
 }

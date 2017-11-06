@@ -30,3 +30,12 @@ class GenerationRuleJavaArray(generationContext:CGenerationContextJava, ruleCont
 		addRightParenthesis()
 	}
 }
+
+object GenerationRuleJavaArray
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:ArrayContext):Unit =
+		new GenerationRuleJavaArray(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:ArrayContext):Unit =
+		new GenerationRuleJavaArray(generationContext, ruleContext).exit()
+}

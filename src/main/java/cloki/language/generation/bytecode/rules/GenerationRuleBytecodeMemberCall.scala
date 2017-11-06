@@ -42,3 +42,12 @@ class GenerationRuleBytecodeMemberCall(generationContext:CGenerationContextBytec
 		invokeVirtualUnitMethodCallMember ()
 	)
 }
+
+object GenerationRuleBytecodeMemberCall
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:MemberCallContext):Unit =
+		new GenerationRuleBytecodeMemberCall(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:MemberCallContext):Unit =
+		new GenerationRuleBytecodeMemberCall(generationContext, ruleContext).exit()
+}

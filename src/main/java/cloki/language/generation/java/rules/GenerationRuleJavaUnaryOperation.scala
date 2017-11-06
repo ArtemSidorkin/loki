@@ -14,3 +14,12 @@ class GenerationRuleJavaUnaryOperation(generationContext:CGenerationContextJava,
 		)
 	)
 }
+
+object GenerationRuleJavaUnaryOperation
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:UnaryOperationContext):Unit =
+		new GenerationRuleJavaUnaryOperation(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:UnaryOperationContext):Unit =
+		new GenerationRuleJavaUnaryOperation(generationContext, ruleContext).exit()
+}

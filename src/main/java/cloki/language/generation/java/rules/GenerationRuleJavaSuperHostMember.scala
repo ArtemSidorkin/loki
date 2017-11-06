@@ -14,3 +14,12 @@ class GenerationRuleJavaSuperHostMember
 		s"""$UNIT__METHOD__CALL__PARAMETER__HOST.$UNIT__METHOD__GET_SUPER_MEMBER("$superMemberName")"""
 	)
 }
+
+object GenerationRuleJavaSuperHostMember
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:SuperHostMemberContext):Unit =
+		new GenerationRuleJavaSuperHostMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:SuperHostMemberContext):Unit =
+		new GenerationRuleJavaSuperHostMember(generationContext, ruleContext).exit()
+}

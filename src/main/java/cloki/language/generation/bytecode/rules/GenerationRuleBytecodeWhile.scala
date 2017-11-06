@@ -45,3 +45,12 @@ class GenerationRuleBytecodeWhile(generationContext:CGenerationContextBytecode, 
 
 	}
 }
+
+object GenerationRuleBytecodeWhile
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:WhileContext):Unit =
+		new GenerationRuleBytecodeWhile(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:WhileContext):Unit =
+		new GenerationRuleBytecodeWhile(generationContext, ruleContext).exit()
+}

@@ -26,3 +26,12 @@ class GenerationRuleBytecodeString
 	}
 
 }
+
+object GenerationRuleBytecodeString
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:LokiParser.StringContext):Unit =
+		new GenerationRuleBytecodeString(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:LokiParser.StringContext):Unit =
+		new GenerationRuleBytecodeString(generationContext, ruleContext).exit()
+}

@@ -63,3 +63,12 @@ class GenerationRuleBytecodeIfElse(generationContext:CGenerationContextBytecode,
 		}
 	}
 }
+
+object GenerationRuleBytecodeIfElse
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:IfElseContext):Unit =
+		new GenerationRuleBytecodeIfElse(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:IfElseContext):Unit =
+		new GenerationRuleBytecodeIfElse(generationContext, ruleContext).exit()
+}

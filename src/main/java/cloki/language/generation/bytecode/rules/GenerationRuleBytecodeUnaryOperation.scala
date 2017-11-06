@@ -17,3 +17,12 @@ class GenerationRuleBytecodeUnaryOperation(generationContext:CGenerationContextB
 		invokeVirtualUnitMethodCallMember ()
 	))
 }
+
+object GenerationRuleBytecodeUnaryOperation
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:UnaryOperationContext):Unit =
+		new GenerationRuleBytecodeUnaryOperation(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:UnaryOperationContext):Unit =
+		new GenerationRuleBytecodeUnaryOperation(generationContext, ruleContext).exit()
+}

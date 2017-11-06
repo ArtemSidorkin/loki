@@ -59,3 +59,12 @@ class GenerationRuleJavaOperator(generationContext:CGenerationContextJava, ruleC
 		})
 	}
 }
+
+object GenerationRuleJavaOperator
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:ExpressionContext):Unit =
+		new GenerationRuleJavaOperator(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:ExpressionContext):Unit =
+		new GenerationRuleJavaOperator(generationContext, ruleContext).exit()
+}

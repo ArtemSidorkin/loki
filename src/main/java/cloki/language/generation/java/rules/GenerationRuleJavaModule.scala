@@ -70,3 +70,12 @@ class GenerationRuleJavaModule(generationContext:CGenerationContextJava, ruleCon
 		}
 	}
 }
+
+object GenerationRuleJavaModule
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:ModuleContext):Unit =
+		new GenerationRuleJavaModule(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:ModuleContext):Unit =
+		new GenerationRuleJavaModule(generationContext, ruleContext).exit()
+}

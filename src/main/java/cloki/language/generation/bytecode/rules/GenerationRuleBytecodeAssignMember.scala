@@ -19,3 +19,12 @@ class GenerationRuleBytecodeAssignMember
 		decrementObjectCounter ()
 	)
 }
+
+object GenerationRuleBytecodeAssignMember
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:AssignMemberContext):Unit =
+		new GenerationRuleBytecodeAssignMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:AssignMemberContext):Unit =
+		new GenerationRuleBytecodeAssignMember(generationContext, ruleContext).exit()
+}

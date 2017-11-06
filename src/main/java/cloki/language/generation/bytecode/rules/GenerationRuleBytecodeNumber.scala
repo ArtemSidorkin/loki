@@ -19,3 +19,12 @@ class GenerationRuleBytecodeNumber(generationContext:CGenerationContextBytecode,
 		incrementObjectCounter ()
 	)
 }
+
+object GenerationRuleBytecodeNumber
+{
+	def enter(generationContext:CGenerationContextBytecode, ruleContext:NumberContext):Unit =
+		new GenerationRuleBytecodeNumber(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextBytecode, ruleContext:NumberContext):Unit =
+		new GenerationRuleBytecodeNumber(generationContext, ruleContext).exit()
+}

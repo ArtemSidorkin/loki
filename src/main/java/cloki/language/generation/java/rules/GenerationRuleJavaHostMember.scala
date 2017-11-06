@@ -12,3 +12,12 @@ class GenerationRuleJavaHostMember(generationContext:CGenerationContextJava, rul
 		s"""$UNIT__METHOD__CALL__PARAMETER__HOST.$UNIT__METHOD__GET_MEMBER("$hostMemberName")"""
 	)
 }
+
+object GenerationRuleJavaHostMember
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:HostMemberContext):Unit =
+		new GenerationRuleJavaHostMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:HostMemberContext):Unit =
+		new GenerationRuleJavaHostMember(generationContext, ruleContext).exit()
+}

@@ -16,3 +16,12 @@ class GenerationRuleJavaAssignHostMember
 
 	override def __exit() = addRightParenthesis()
 }
+
+object GenerationRuleJavaAssignHostMember
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:AssignHostMemberContext):Unit =
+		new GenerationRuleJavaAssignHostMember(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:AssignHostMemberContext):Unit =
+		new GenerationRuleJavaAssignHostMember(generationContext, ruleContext).exit()
+}

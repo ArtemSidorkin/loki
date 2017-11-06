@@ -18,3 +18,12 @@ class GenerationRuleJavaAssignVariable(generationContext:CGenerationContextJava,
 		addRightParenthesis()
 	}
 }
+
+object GenerationRuleJavaAssignVariable
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:AssignVariableContext):Unit =
+		new GenerationRuleJavaAssignVariable(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:AssignVariableContext):Unit =
+		new GenerationRuleJavaAssignVariable(generationContext, ruleContext).exit()
+}

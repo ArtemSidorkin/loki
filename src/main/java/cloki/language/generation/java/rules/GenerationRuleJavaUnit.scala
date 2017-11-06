@@ -77,5 +77,13 @@ class GenerationRuleJavaUnit(generationContext:CGenerationContextJava, ruleConte
 
 		popFrame()
 	}
+}
 
+object GenerationRuleJavaUnit
+{
+	def enter(generationContext:CGenerationContextJava, ruleContext:UnitContext):Unit =
+		new GenerationRuleJavaUnit(generationContext, ruleContext).enter()
+
+	def exit(generationContext:CGenerationContextJava, ruleContext:UnitContext):Unit =
+		new GenerationRuleJavaUnit(generationContext, ruleContext).exit()
 }
