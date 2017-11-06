@@ -11,14 +11,14 @@ class GenerationRuleBytecodeAssignVariable
 	generationContext:CGenerationContextBytecode, ruleContext:AssignVariableContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationAssignVariable
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall aloadUnitMethodCallVariableUnitContext ()
 		ldc variableName
 	)
 
 
-	override def __exit() = topMethodCall invokeVirtualUnitContextMethodSetVariable ()
+	override protected def exitAction() = topMethodCall invokeVirtualUnitContextMethodSetVariable ()
 }
 
 object GenerationRuleBytecodeAssignVariable

@@ -8,7 +8,7 @@ import cloki.runtime.datatype.LString
 class GenerationRuleJavaString(generationContext:CGenerationContextJava, ruleContext:LokiParser.StringContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationString
 {
-	override def __enter() =
+	override protected def enterAction() =
 	{
 		val prprdStr = string split "\n" map (str => s""""${str.init}"""") mkString """ + "\n" + """
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LString].getName}($prprdStr)")

@@ -8,7 +8,7 @@ import cloki.language.parsing.LokiParser.UnaryOperationContext
 class GenerationRuleBytecodeUnaryOperation(generationContext:CGenerationContextBytecode, ruleContext:UnaryOperationContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationUnaryOperation
 {
-	override def __enter() = generationContext.addPostExitRuleTask(expression, () =>
+	override protected def enterAction() = generationContext.addPostExitRuleTask(expression, () =>
 	(
 		topMethodCall
 		ldc operator

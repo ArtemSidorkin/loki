@@ -10,13 +10,13 @@ class GenerationRuleBytecodeAssignHostMember
 	generationContext:CGenerationContextBytecode, ruleContext:AssignHostMemberContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationAssignHostMember
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall aloadUnitMethodCallParameterHost ()
 		ldc hostMemberName
 	)
 
-	override def __exit() = topMethodCall invokeVirtualUnitMethodSetMember ()
+	override protected def exitAction() = topMethodCall invokeVirtualUnitMethodSetMember ()
 }
 
 

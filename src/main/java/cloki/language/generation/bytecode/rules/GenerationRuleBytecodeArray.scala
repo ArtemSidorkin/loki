@@ -9,7 +9,7 @@ import cloki.language.parsing.LokiParser.ArrayContext
 class GenerationRuleBytecodeArray(generationContext:CGenerationContextBytecode, ruleContext:ArrayContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationArray
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		generateArray()
 		generateArrayItems()
@@ -42,7 +42,7 @@ class GenerationRuleBytecodeArray(generationContext:CGenerationContextBytecode, 
 		}
 	}
 
-	override def __exit() = topMethodCall invokeInitArray ()
+	override protected def exitAction() = topMethodCall invokeInitArray ()
 }
 
 object GenerationRuleBytecodeArray

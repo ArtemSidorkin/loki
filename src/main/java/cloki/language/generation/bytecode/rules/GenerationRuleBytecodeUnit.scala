@@ -18,7 +18,7 @@ import cloki.system.SystemSettings
 class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, ruleContext:UnitContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationUnit
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		pushUnitFrame()
 
@@ -193,7 +193,7 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 			generationContext.addPostExitRuleTask(ruleContext.expression, () => topMethodCall aReturn ())
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		classLoader.setClassCode(
 			topClassFrame.internalName,

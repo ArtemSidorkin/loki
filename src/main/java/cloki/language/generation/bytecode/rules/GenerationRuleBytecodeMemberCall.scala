@@ -9,7 +9,7 @@ import cloki.language.parsing.LokiParser.MemberCallContext
 class GenerationRuleBytecodeMemberCall(generationContext:CGenerationContextBytecode, ruleContext:MemberCallContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationMemberCall
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		generateCallHostAndCallParameterArray()
 		generateCallParameters()
@@ -35,7 +35,7 @@ class GenerationRuleBytecodeMemberCall(generationContext:CGenerationContextBytec
 		}
 	}
 
-	override def __exit() =
+	override protected def exitAction() =
 	(
 		topMethodCall
 		aloadUnitMethodCallVariableUnitContext ()

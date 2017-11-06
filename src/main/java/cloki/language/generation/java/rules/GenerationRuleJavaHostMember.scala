@@ -8,7 +8,7 @@ import cloki.language.parsing.LokiParser.HostMemberContext
 class GenerationRuleJavaHostMember(generationContext:CGenerationContextJava, ruleContext:HostMemberContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationHostMember
 {
-	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
+	override protected def enterAction() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
 		s"""$UNIT__METHOD__CALL__PARAMETER__HOST.$UNIT__METHOD__GET_MEMBER("$hostMemberName")"""
 	)
 }

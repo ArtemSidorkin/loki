@@ -6,7 +6,7 @@ import cloki.language.parsing.LokiParser.ThisContext
 class GenerationRuleJavaThis(generationContext:CGenerationContextJava, ruleContext:ThisContext)
 	extends GenerationRuleJava(generationContext, ruleContext)
 {
-	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) ("this")
+	override protected def enterAction() = (addCode _ compose tabulateIfLastCharacterIsNewLine) ("this")
 }
 
 object GenerationRuleJavaThis

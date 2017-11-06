@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.LabelNode
 class GenerationRuleBytecodeWhile(generationContext:CGenerationContextBytecode, ruleContext:WhileContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationWhile
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		val lblNdWhlBgn = new LabelNode
 		val lblNdWhlEnd = new LabelNode

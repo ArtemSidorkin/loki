@@ -10,7 +10,7 @@ class GenerationRuleBytecodeSuperHostMember
 	generationContext:CGenerationContextBytecode, ruleContext:SuperHostMemberContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationSuperHostMember
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall
 		aloadUnitMethodCallParameterHost ()

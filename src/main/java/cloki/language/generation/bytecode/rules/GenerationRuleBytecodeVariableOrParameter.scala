@@ -11,7 +11,7 @@ class GenerationRuleBytecodeVariableOrParameter
 	generationContext:CGenerationContextBytecode, ruleContext:VariableOrParameterContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationVariableOrParameter
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall
 		aloadUnitMethodCallVariableUnitContext ()

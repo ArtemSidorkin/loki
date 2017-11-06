@@ -16,7 +16,7 @@ import cloki.util.extension.StringExtensions.StringExtensions
 class GenerationRuleJavaModule(generationContext:CGenerationContextJava, ruleContext:ModuleContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationModule
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		pushFrame()
 		(addCode _ compose removeTabulation) (
@@ -35,7 +35,7 @@ class GenerationRuleJavaModule(generationContext:CGenerationContextJava, ruleCon
 		)
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		(addCode _ compose removeTabulationBackward) (
 			s"""

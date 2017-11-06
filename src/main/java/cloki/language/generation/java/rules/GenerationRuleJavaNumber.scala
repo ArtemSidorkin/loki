@@ -8,7 +8,7 @@ import cloki.runtime.datatype.LNumber
 class GenerationRuleJavaNumber(generationContext:CGenerationContextJava, ruleContext:NumberContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationNumber
 {
-	override def __enter() =
+	override protected def enterAction() =
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LNumber].getName}($number)")
 }
 

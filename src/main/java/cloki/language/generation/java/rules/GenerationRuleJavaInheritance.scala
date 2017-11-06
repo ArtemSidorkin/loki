@@ -8,7 +8,7 @@ import cloki.language.parsing.LokiParser.InheritanceContext
 class GenerationRuleJavaInheritance(generationContext:CGenerationContextJava, ruleContext:InheritanceContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationInheritance
 {
-	override def __enter() =
+	override protected def enterAction() =
 	{
 		for (i <- 0 until parentCount - 1) generationContext.addPostExitRuleTask(
 			getParentExpression(i), () => addCode(s").$UNIT__METHOD__ADD_PARENT(")

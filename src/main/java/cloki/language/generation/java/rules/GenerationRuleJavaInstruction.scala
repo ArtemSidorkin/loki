@@ -6,7 +6,7 @@ import cloki.language.parsing.LokiParser.InstructionContext
 class GenerationRuleJavaInstruction(generationContext:CGenerationContextJava, ruleContext:InstructionContext)
 	extends GenerationRuleJava(generationContext, ruleContext)
 {
-	override def __exit()
+	override protected def exitAction()
 	{
 		removeLastNewLineIfPresent()
 		addSemicolon()

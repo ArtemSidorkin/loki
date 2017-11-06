@@ -9,7 +9,7 @@ import cloki.runtime.datatype.LUnit
 class GenerationRuleJavaMemberCall(generationContext:CGenerationContextJava, ruleContext:MemberCallContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationMemberCall
 {
-	override def __enter() = generationContext.addPostExitRuleTask(memberExpression, () =>
+	override protected def enterAction() = generationContext.addPostExitRuleTask(memberExpression, () =>
 	{
 		addCode(s""".$UNIT__METHOD__CALL_MEMBER("$memberName", new ${classOf[LUnit].getName}[]{""")
 
@@ -22,7 +22,7 @@ class GenerationRuleJavaMemberCall(generationContext:CGenerationContextJava, rul
 				})
 	})
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		removeLastNewLineIfPresent()
 		addCode(s"}, $UNIT__METHOD__CALL__PARAMETER__CONTEXT)")

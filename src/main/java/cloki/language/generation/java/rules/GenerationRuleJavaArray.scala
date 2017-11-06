@@ -8,7 +8,7 @@ import cloki.runtime.datatype.{LArray, LUnit}
 class GenerationRuleJavaArray(generationContext:CGenerationContextJava, ruleContext:ArrayContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationArray
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (
 			s"new ${classOf[LArray].getName}("
@@ -24,7 +24,7 @@ class GenerationRuleJavaArray(generationContext:CGenerationContextJava, ruleCont
 		})
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		if (arrayItemCount != 0) addRightCurlyBrace()
 		addRightParenthesis()

@@ -6,7 +6,7 @@ import cloki.language.parsing.LokiParser.ThisContext
 class GenerationRuleBytecodeThis(generationContext:CGenerationContextBytecode, ruleContext:ThisContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext)
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall aloadthis ()
 		incrementObjectCounter ()

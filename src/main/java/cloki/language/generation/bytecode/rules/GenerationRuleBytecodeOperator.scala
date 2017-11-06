@@ -11,7 +11,7 @@ import cloki.language.parsing.{LokiLexer, LokiParser}
 class GenerationRuleBytecodeOperator(generationContext:CGenerationContextBytecode, ruleContext:ExpressionContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationOperator
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		// -> mixin
 		val oprtn = ruleContext match

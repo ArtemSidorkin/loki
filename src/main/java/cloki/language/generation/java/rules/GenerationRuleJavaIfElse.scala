@@ -10,7 +10,7 @@ import cloki.util.extension.StringExtensions.StringExtensions
 class GenerationRuleJavaIfElse(generationContext:CGenerationContextJava, ruleContext:IfElseContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationIfElse
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		pushFrame()
 
@@ -59,7 +59,7 @@ class GenerationRuleJavaIfElse(generationContext:CGenerationContextJava, ruleCon
 		}
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		(addCode _ compose tabulateLessOneLevelBackward) (
 			"""

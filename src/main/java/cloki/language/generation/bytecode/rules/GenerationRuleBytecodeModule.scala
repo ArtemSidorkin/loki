@@ -13,7 +13,7 @@ import cloki.system.SystemSettings
 class GenerationRuleBytecodeModule(generationContext:CGenerationContextBytecode, ruleContext:ModuleContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext)
 {
-	override def __enter() =
+	override protected def enterAction() =
 	{
 		pushModuleFrame()
 //			val init = addAndGenerateMethodInit()
@@ -47,7 +47,7 @@ class GenerationRuleBytecodeModule(generationContext:CGenerationContextBytecode,
 		)
 	}
 
-	override def __exit() =
+	override protected def exitAction() =
 	{
 		(
 			topMethodCall

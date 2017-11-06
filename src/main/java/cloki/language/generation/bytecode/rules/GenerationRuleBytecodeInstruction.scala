@@ -6,8 +6,8 @@ import cloki.language.parsing.LokiParser.InstructionContext
 class GenerationRuleBytecodeInstruction(generationContext:CGenerationContextBytecode, ruleContext:InstructionContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext)
 {
-	override def __enter() = topMethodCall pushFrame ()
-	override def __exit() = topMethodCall popFrame ()
+	override protected def enterAction() = topMethodCall pushFrame ()
+	override protected def exitAction() = topMethodCall popFrame ()
 }
 
 object GenerationRuleBytecodeInstruction

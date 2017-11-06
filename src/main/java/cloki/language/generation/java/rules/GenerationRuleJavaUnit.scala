@@ -11,7 +11,7 @@ import cloki.util.extension.StringExtensions.StringExtensions
 class GenerationRuleJavaUnit(generationContext:CGenerationContextJava, ruleContext:UnitContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationUnit
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		pushFrame()
 		addReturnToUnitMethodCall(generationContext, unitLastInstruction)
@@ -54,7 +54,7 @@ class GenerationRuleJavaUnit(generationContext:CGenerationContextJava, ruleConte
 		)
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		val parameterNamesSaving =
 			if (unitParameterNames.nonEmpty)

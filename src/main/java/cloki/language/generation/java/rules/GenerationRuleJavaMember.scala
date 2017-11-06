@@ -8,7 +8,7 @@ import cloki.language.parsing.LokiParser.MemberContext
 class GenerationRuleJavaMember(generationContext:CGenerationContextJava, ruleContext:MemberContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationMember
 {
-	override def __enter() = generationContext.addPostExitRuleTask(
+	override protected def enterAction() = generationContext.addPostExitRuleTask(
 		ruleContext.expression, () => addCode(s""".$UNIT__METHOD__GET_MEMBER("$memberName")""")
 	)
 }

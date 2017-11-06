@@ -10,11 +10,11 @@ class GenerationRuleJavaAssignHostMember
 	generationContext:CGenerationContextJava, ruleContext:AssignHostMemberContext
 ) extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationAssignHostMember
 {
-	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
+	override protected def enterAction() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
 		s"""$UNIT__METHOD__CALL__PARAMETER__HOST.$UNIT__METHOD__SET_MEMBER("$hostMemberName", """
 	)
 
-	override def __exit() = addRightParenthesis()
+	override protected def exitAction() = addRightParenthesis()
 }
 
 object GenerationRuleJavaAssignHostMember

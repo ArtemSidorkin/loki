@@ -9,7 +9,7 @@ import cloki.runtime.datatype.LUnit
 class GenerationRuleJavaAssignIndex(generationContext:CGenerationContextJava, ruleContext:AssignIndexContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationAssignIndex
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		generationContext.addPostExitRuleTask(hostExpression, () =>
 		{
@@ -26,7 +26,7 @@ class GenerationRuleJavaAssignIndex(generationContext:CGenerationContextJava, ru
 		})
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		if (parametersCount > 0) addRightCurlyBrace()
 		addRightParenthesis()

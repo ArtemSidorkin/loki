@@ -10,7 +10,7 @@ import cloki.util.extension.StringExtensions.StringExtensions
 class GenerationRuleJavaWhile(generationContext:CGenerationContextJava, ruleContext:WhileContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationWhile
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		pushFrame()
 
@@ -54,7 +54,7 @@ class GenerationRuleJavaWhile(generationContext:CGenerationContextJava, ruleCont
 		})
 	}
 
-	override def __exit()
+	override protected def exitAction()
 	{
 		(addCode _ compose tabulateLessOneLevelBackward) (
 			"""

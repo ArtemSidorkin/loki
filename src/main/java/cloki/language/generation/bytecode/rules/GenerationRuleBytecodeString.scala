@@ -11,7 +11,7 @@ class GenerationRuleBytecodeString
 	generationContext:CGenerationContextBytecode, ruleContext:LokiParser.StringContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationString
 {
-	override def __enter() =
+	override protected def enterAction() =
 	{
 		val prprdStr = string split "\n" map (str => s"""${str.init}""") mkString "\n"
 

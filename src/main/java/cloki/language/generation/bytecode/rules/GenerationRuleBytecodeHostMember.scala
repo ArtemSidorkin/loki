@@ -8,7 +8,7 @@ import cloki.language.parsing.LokiParser.HostMemberContext
 class GenerationRuleBytecodeHostMember(generationContext:CGenerationContextBytecode, ruleContext:HostMemberContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationHostMember
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall
 		aloadUnitMethodCallParameterHost ()

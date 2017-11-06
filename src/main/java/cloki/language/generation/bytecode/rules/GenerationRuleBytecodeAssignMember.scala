@@ -10,10 +10,10 @@ class GenerationRuleBytecodeAssignMember
 	generationContext:CGenerationContextBytecode, ruleContext:AssignMemberContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationAssignMember
 {
-	override def __enter() =
+	override protected def enterAction() =
 		generationContext.addPostExitRuleTask(expressionToAssign, () => topMethodCall ldc memberName)
 
-	override def __exit() =
+	override protected def exitAction() =
 	(
 		topMethodCall invokeVirtualUnitMethodSetMember ()
 		decrementObjectCounter ()

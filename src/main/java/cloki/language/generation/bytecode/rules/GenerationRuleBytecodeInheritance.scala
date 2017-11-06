@@ -10,7 +10,7 @@ class GenerationRuleBytecodeInheritance
 	generationContext:CGenerationContextBytecode, ruleContext:InheritanceContext
 ) extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationInheritance
 {
-	override def __enter() =
+	override protected def enterAction() =
 	{
 		for (i <- 0 until parentCount)
 		{

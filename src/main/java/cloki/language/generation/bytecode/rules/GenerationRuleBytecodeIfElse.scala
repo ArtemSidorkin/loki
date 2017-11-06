@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.LabelNode
 class GenerationRuleBytecodeIfElse(generationContext:CGenerationContextBytecode, ruleContext:IfElseContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationIfElse
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		val ifLblNd = new LabelNode
 		val elsLblNd = new LabelNode

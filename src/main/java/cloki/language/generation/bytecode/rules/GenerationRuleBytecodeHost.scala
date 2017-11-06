@@ -7,7 +7,7 @@ import cloki.language.parsing.LokiParser.HostContext
 class GenerationRuleBytecodeHost(generationContext:CGenerationContextBytecode, ruleContext:HostContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext)
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall aloadUnitMethodCallParameterHost ()
 		incrementObjectCounter ()

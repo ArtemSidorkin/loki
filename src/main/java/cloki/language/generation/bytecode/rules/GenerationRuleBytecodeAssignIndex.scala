@@ -9,7 +9,7 @@ import cloki.language.parsing.LokiParser.AssignIndexContext
 class GenerationRuleBytecodeAssignIndex(generationContext:CGenerationContextBytecode, ruleContext:AssignIndexContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationAssignIndex
 {
-	override def __enter()
+	override protected def enterAction()
 	{
 		generateParameterArray()
 		generateParameters()
@@ -33,7 +33,7 @@ class GenerationRuleBytecodeAssignIndex(generationContext:CGenerationContextByte
 		}
 	}
 
-	override def __exit() =
+	override protected def exitAction() =
 	(
 		topMethodCall
 		invokeVirtualUnitMethodSetIndexedItem ()

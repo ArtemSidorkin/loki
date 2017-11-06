@@ -10,7 +10,7 @@ class GenerationRuleJavaSuperHostMember
 	generationContext:CGenerationContextJava, ruleContext:SuperHostMemberContext
 ) extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationSuperHostMember
 {
-	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
+	override protected def enterAction() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
 		s"""$UNIT__METHOD__CALL__PARAMETER__HOST.$UNIT__METHOD__GET_SUPER_MEMBER("$superMemberName")"""
 	)
 }

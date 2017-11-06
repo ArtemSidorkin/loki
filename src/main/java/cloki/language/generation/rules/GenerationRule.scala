@@ -4,34 +4,35 @@ import cloki.language.generation.Generation
 import cloki.language.generation.rules.mixins.CMixinRuleGeneration
 import org.antlr.v4.runtime.RuleContext
 
-private[generation] class GenerationRule[GENERATION_CONTEXT <: Generation#GenerationContext, RULE_CONTEXT <: RuleContext]
-	(protected val generationContext:GENERATION_CONTEXT, protected val ruleContext:RULE_CONTEXT)
+private[generation] class GenerationRule[
+	GENERATION_CONTEXT <: Generation#GenerationContext, RULE_CONTEXT <: RuleContext
+] (
+	protected val generationContext:GENERATION_CONTEXT, protected val ruleContext:RULE_CONTEXT
+)
 	extends CMixinRuleGeneration[RULE_CONTEXT]
 {
 
 	def enter():Unit =
-		if (generationContext isDeferredRule ruleContext unary_!) _enter()
-		else generationContext.setDeferredRuleActions(
-			ruleContext, () => _enter(), () => _exit()
-		)
+		if (generationContext isDeferredRule ruleContext unary_!) enterAndCheckTasks()
+		else
+			generationContext.setDeferredRuleActions(ruleContext, () => enterAndCheckTasks(), () => exitAndCheckTasks())
 
-	def exit():Unit =
-		if (generationContext isDeferredRule ruleContext unary_!) _exit()
+	def exit():Unit = if (generationContext isDeferredRule ruleContext unary_!) exitAndCheckTasks()
 
-	private def _enter()
+	protected def enterAction():Unit = ()
+	protected def exitAction():Unit = ()
+
+	private def enterAndCheckTasks()
 	{
 		generationContext.checkPreEnterRuleTasks(ruleContext)
-		__enter()
+		enterAction()
 		generationContext.checkPostEnterRuleTasks(ruleContext)
 	}
 
-	private def _exit()
+	private def exitAndCheckTasks()
 	{
 		generationContext.checkPreExitRuleTasks(ruleContext)
-		__exit()
+		exitAction()
 		generationContext.checkPostExitRuleTasks(ruleContext)
 	}
-
-	def __enter():Unit = ()
-	def __exit():Unit = ()
 }

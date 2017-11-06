@@ -9,7 +9,7 @@ import cloki.language.parsing.LokiParser.NumberContext
 class GenerationRuleBytecodeNumber(generationContext:CGenerationContextBytecode, ruleContext:NumberContext)
 	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationNumber
 {
-	override def __enter() =
+	override protected def enterAction() =
 	(
 		topMethodCall
 		newNumber ()

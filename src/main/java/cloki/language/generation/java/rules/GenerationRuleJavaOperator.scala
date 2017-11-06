@@ -11,7 +11,7 @@ class GenerationRuleJavaOperator(generationContext:CGenerationContextJava, ruleC
 	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationOperator
 {
 	// -> mixin
-	override def __enter()
+	override protected def enterAction()
 	{
 		val oprtn = ruleContext match
 		{

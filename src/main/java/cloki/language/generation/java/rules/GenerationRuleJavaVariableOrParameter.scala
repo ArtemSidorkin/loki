@@ -10,7 +10,7 @@ class GenerationRuleJavaVariableOrParameter
 	generationContext:CGenerationContextJava, ruleContext:VariableOrParameterContext
 ) extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationVariableOrParameter
 {
-	override def __enter() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
+	override protected def enterAction() = (addCode _ compose tabulateIfLastCharacterIsNewLine) (
 		s"""$UNIT__METHOD__CALL__PARAMETER__CONTEXT.$UNIT_CONTEXT__METHOD__GET_VARIABLE("$variableOrParameterName")"""
 	)
 }
