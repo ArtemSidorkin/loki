@@ -1,8 +1,8 @@
 package cloki.language.generation.bytecode.rules
 
-import casm._
-import casm.consts.{FINAL, PUBLIC, SYNTHETIC}
-import casm.entities.CAMethod
+import assembler._
+import assembler.const.{FINAL, PUBLIC, SYNTHETIC}
+import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
@@ -47,10 +47,10 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 				PUBLIC, CConstBytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2 preTopClassFrame.descriptor
 			)
 
-		def addAndGenerateUnitFieldOuterClassInMethodInit(methodInit:CAMethod) =
+		def addAndGenerateUnitFieldOuterClassInMethodInit(methodInit:MethodBuilder) =
 		{
 			topClassFrame.addField(
-				FINAL & SYNTHETIC, topOuterClassFieldName, CAUtils getClassDescriptor preTopClassFrame.internalName
+				FINAL & SYNTHETIC, topOuterClassFieldName, Utils getClassDescriptor preTopClassFrame.internalName
 			)
 			(
 				methodInit
@@ -63,7 +63,7 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 			)
 		}
 
-		def addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit(methodInit:CAMethod) =
+		def addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit(methodInit:MethodBuilder) =
 		{
 			if (isPreTopFrameUnit)
 			{
@@ -79,7 +79,7 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 			methodInit
 		}
 
-		def generateUnitMethodInit(methodInit:CAMethod) =
+		def generateUnitMethodInit(methodInit:MethodBuilder) =
 		(
 			methodInit
 			aloadthis ()

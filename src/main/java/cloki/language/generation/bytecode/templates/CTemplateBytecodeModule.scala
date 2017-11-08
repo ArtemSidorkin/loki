@@ -1,12 +1,12 @@
 package cloki.language.generation.bytecode.templates
 
-import casm.entities.CAMethod
+import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.consts.{CConstBytecodeLocalVariablesOrParameters, CConstBytecodeMethodDescriptors}
 import cloki.runtime.datatype.LModule
 
 private[bytecode] object CTemplateBytecodeModule
 {
-	implicit class CTemplateModule(method:CAMethod)
+	implicit class CTemplateModule(method:MethodBuilder)
 	{
 		def aloadModuleHeirMethodInitParameterUnitContext() =
 		(

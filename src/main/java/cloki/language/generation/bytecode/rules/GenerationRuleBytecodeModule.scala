@@ -1,6 +1,6 @@
 package cloki.language.generation.bytecode.rules
 
-import casm.consts.PUBLIC
+import assembler.const.PUBLIC
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon

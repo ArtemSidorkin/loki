@@ -1,6 +1,6 @@
-package casm.consts
+package assembler.const
 
-object CAConstInternalDescriptors
+object InternalDescriptors
 {
 	val VOID = "V"
 	val PRIMITIVE_BOOLEAN = "Z"
@@ -8,5 +8,5 @@ object CAConstInternalDescriptors
 	val PRIMITIVE_LONG = "J"
 	val PRIMITIVE_DOUBLE = "D"
 
-    val METHOD_INIT = "<init>"
+    val INIT_METHOD = "<init>"
 }

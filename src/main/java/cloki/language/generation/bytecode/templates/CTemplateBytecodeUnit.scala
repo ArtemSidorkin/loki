@@ -1,6 +1,6 @@
 package cloki.language.generation.bytecode.templates
 
-import casm.entities.CAMethod
+import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.consts.{CConstBytecodeLocalVariablesOrParameters, CConstBytecodeMethodDescriptors}
 import cloki.language.generation.consts.CConstLanguageMembers
 import cloki.runtime.context.LUnitContext
@@ -8,7 +8,7 @@ import cloki.runtime.datatype.LUnit
 
 private[bytecode] object CTemplateBytecodeUnit
 {
-	implicit class CTemplateUnit(method:CAMethod)
+	implicit class CTemplateUnit(method:MethodBuilder)
 	{
 		def aloadUnitMethodCallParameterHost() =
 			method aload CConstBytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__HOST

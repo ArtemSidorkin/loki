@@ -1,7 +1,7 @@
 package cloki.language.generation.bytecode.consts
 
-import casm.consts.CAConstInternalDescriptors
-import casm.methoddescriptors.{CAMethodDescriptorMixed, CAMethodDescriptorTyped}
+import assembler.const.InternalDescriptors
+import assembler.methoddescriptor.{MixedMethodDescriptor, TypedMethodDescriptor}
 import cloki.runtime.context.LUnitContext
 import cloki.runtime.datatype.{LType, LUnit}
 
@@ -9,35 +9,35 @@ import cloki.runtime.datatype.{LType, LUnit}
 private[bytecode] object CConstBytecodeMethodDescriptors
 {
 	val TYPE__METHOD__INIT = 
-		CAMethodDescriptorTyped((classOf[String] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[String] :: Nil) -> None)
 	val TYPE__METHOD__CREATE_ANONYMOUS = 
-		CAMethodDescriptorTyped(Nil -> Some(classOf[LType]))
+		TypedMethodDescriptor(Nil -> Some(classOf[LType]))
 
 	val UNIT_CONTEXT__METHOD__INIT =
-		CAMethodDescriptorTyped(
+		TypedMethodDescriptor(
 			(classOf[LUnit] :: classOf[LUnit] :: classOf[LUnitContext] :: classOf[Array[LUnit]] :: Nil) -> None
 		)
 	val UNIT_CONTEXT__METHOD__GET_VARIABLE =
-		CAMethodDescriptorTyped((classOf[String] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT_CONTEXT__METHOD__SET_VARIABLE =
-		CAMethodDescriptorTyped((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
 
 	val MODULE_CONTEXT__METHOD__INIT =
-		CAMethodDescriptorTyped(
+		TypedMethodDescriptor(
 			(classOf[LUnit] :: classOf[LUnit] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> None
 		)
 
 	val MODULE__METHOD__INIT =
-		CAMethodDescriptorTyped((classOf[String] :: classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[String] :: classOf[LUnitContext] :: Nil) -> None)
 
 	val MODULE_HEIR__METHOD__INIT =
-		CAMethodDescriptorTyped((classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[LUnitContext] :: Nil) -> None)
 
 	val UNIT__METHOD__INIT =
-		CAMethodDescriptorTyped((classOf[LType] :: classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[LType] :: classOf[LUnitContext] :: Nil) -> None)
 
 	def UNIT_HEIR__METHOD__INIT_1(outerClassDescriptor:String) =
-		CAMethodDescriptorMixed(
+		MixedMethodDescriptor(
 			(
 				Right(outerClassDescriptor) ::
 				Left(classOf[LType]) ::
@@ -46,7 +46,7 @@ private[bytecode] object CConstBytecodeMethodDescriptors
 			) -> None
 		)
 	def UNIT_HEIR__METHOD__INIT_2(outerClassDescriptor:String) =
-		CAMethodDescriptorMixed(
+		MixedMethodDescriptor(
 			(
 				Right(outerClassDescriptor) ::
 				Left(classOf[LType]) ::
@@ -56,40 +56,40 @@ private[bytecode] object CConstBytecodeMethodDescriptors
 			) -> None
 		)
 	val UNIT__METHOD__ADD_PARENT =
-		CAMethodDescriptorTyped((classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_SUPER_MEMBER =
-		CAMethodDescriptorTyped((classOf[String] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_MEMBER =
-		CAMethodDescriptorTyped((classOf[String] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_MEMBER =
-		CAMethodDescriptorTyped((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_INDEXED_ITEM =
-		CAMethodDescriptorTyped((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_INDEXED_ITEM =
-		CAMethodDescriptorTyped((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_PARAMETER_NAMES =
-		CAMethodDescriptorTyped((classOf[Array[String]] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[Array[String]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__CALL =
-		CAMethodDescriptorTyped((classOf[LUnit] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[LUnit] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__CALL_MEMBER =
-		CAMethodDescriptorTyped((classOf[String] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> Some(classOf[LUnit]))
+		TypedMethodDescriptor((classOf[String] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__CHECK_CALL_PARAMETER =
-		CAMethodDescriptorMixed(
+		MixedMethodDescriptor(
 			(
 				Left(classOf[Array[LUnit]]) ::
-				Right(CAConstInternalDescriptors.PRIMITIVE_INT) :: Nil
+				Right(InternalDescriptors.PRIMITIVE_INT) :: Nil
 			) -> Some(Left(classOf[LUnit]))
 		)
 
 	val UNIT__METHOD__TO_BOOLEAN =
-		CAMethodDescriptorMixed(Nil -> Some(Right(CAConstInternalDescriptors.PRIMITIVE_BOOLEAN)))
+		MixedMethodDescriptor(Nil -> Some(Right(InternalDescriptors.PRIMITIVE_BOOLEAN)))
 
 	val NUMBER__METHOD__INIT =
-		CAMethodDescriptorMixed((Right(CAConstInternalDescriptors.PRIMITIVE_DOUBLE) :: Nil) -> None)
+		MixedMethodDescriptor((Right(InternalDescriptors.PRIMITIVE_DOUBLE) :: Nil) -> None)
 
 	val STRING__METHOD__INIT =
-		CAMethodDescriptorTyped((classOf[String] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[String] :: Nil) -> None)
 
 	val ARRAY__METHOD__INIT =
-		CAMethodDescriptorTyped((classOf[Array[LUnit]] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
 }

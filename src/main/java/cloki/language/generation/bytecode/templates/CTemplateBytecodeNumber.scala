@@ -1,12 +1,12 @@
 package cloki.language.generation.bytecode.templates
 
-import casm.entities.CAMethod
+import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.runtime.datatype.LNumber
 
 private[bytecode] object CTemplateBytecodeNumber
 {
-	implicit class CTemplateNumber(method:CAMethod)
+	implicit class CTemplateNumber(method:MethodBuilder)
 	{
 		def invokeInitNumber() = method invokeinit
 		(

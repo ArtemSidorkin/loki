@@ -1,13 +1,13 @@
 package cloki.language.generation.bytecode.templates
 
-import casm.entities.CAMethod
+import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.consts.CConstLanguageMembers
 import cloki.runtime.context.{LModuleContext, LUnitContext}
 
 private[bytecode] object CTemplateBytecodeContext
 {
-	implicit class CTemplateContext(method:CAMethod)
+	implicit class CTemplateContext(method:MethodBuilder)
 	{
 		def invokeVirtualUnitContextMethodGetVariable() = method invokevirtual
 		(

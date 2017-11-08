@@ -1,6 +1,6 @@
 package cloki.language.generation.bytecode.classes
 
-import casm.consts.PUBLIC
+import assembler.const.PUBLIC
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.consts.CConstLanguageMembers
 import cloki.runtime.datatype.LUnit

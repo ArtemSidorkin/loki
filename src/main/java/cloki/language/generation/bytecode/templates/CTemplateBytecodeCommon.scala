@@ -1,12 +1,12 @@
 package cloki.language.generation.bytecode.templates
 
-import casm.entities.CAMethod
+import assembler.builder.MethodBuilder
 import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.runtime.datatype._
 
 private[bytecode] object CTemplateBytecodeCommon
 {
-	implicit class CTemplateCommon(method:CAMethod)
+	implicit class CTemplateCommon(method:MethodBuilder)
 	{
 		def anewarrayJavaString() = method anewarray classOf[String]
 		def newUnitContext() = method `new` classOf[LUnitContext]

@@ -1,6 +1,6 @@
 package cloki.language.generation.bytecode.consts
 
-import casm.consts.JAVA8
+import assembler.const.JAVA8
 
 private[bytecode] object CConstBytecodeCommon
 {
