@@ -4,3 +4,4 @@ number_inheritance, /test/inheritance/numberInheritance.loki
 single_inheritance, /test/inheritance/singleInheritance.loki
 multiple_inheritance, /test/inheritance/multipleInheritance.loki
 linked_list, /test/algorithm/linkedList.loki
+#performance, /test/performance.loki
