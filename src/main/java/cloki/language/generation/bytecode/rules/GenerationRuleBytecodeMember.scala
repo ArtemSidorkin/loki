@@ -2,11 +2,11 @@ package cloki.language.generation.bytecode.rules
 
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationMember
+import cloki.language.generation.rules.mixins.MemberGenerationRuleMixin
 import cloki.language.parsing.LokiParser.MemberContext
 
 class GenerationRuleBytecodeMember(generationContext:CGenerationContextBytecode, ruleContext:MemberContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationMember
+	extends GenerationRuleBytecode(generationContext, ruleContext) with MemberGenerationRuleMixin
 {
 	override protected def enterAction() = generationContext.addPostExitRuleTask(ruleContext.expression, () =>
 	(

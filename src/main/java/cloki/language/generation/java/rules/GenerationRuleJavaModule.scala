@@ -4,7 +4,7 @@ import java.io.File
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationModule
+import cloki.language.generation.rules.mixins.ModuleGenerationRuleMixin
 import cloki.language.parsing.LokiParser.ModuleContext
 import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.runtime.datatype.{LModule, LUnit}
@@ -14,7 +14,7 @@ import cloki.util.FileUtil
 import cloki.util.extension.StringExtensions.StringExtensions
 
 class GenerationRuleJavaModule(generationContext:CGenerationContextJava, ruleContext:ModuleContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationModule
+	extends GenerationRuleJava(generationContext, ruleContext) with ModuleGenerationRuleMixin
 {
 	override protected def enterAction()
 	{

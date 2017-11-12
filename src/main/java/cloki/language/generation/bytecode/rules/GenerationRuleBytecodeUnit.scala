@@ -1,22 +1,22 @@
 package cloki.language.generation.bytecode.rules
 
 import assembler._
-import assembler.const.{FINAL, PUBLIC, SYNTHETIC}
 import assembler.builder.MethodBuilder
+import assembler.const.{FINAL, PUBLIC, SYNTHETIC}
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeContext.CTemplateContext
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeType.CTemplateType
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnit
+import cloki.language.generation.rules.mixins.UnitGenerationRuleMixin
 import cloki.language.parsing.LokiParser
 import cloki.language.parsing.LokiParser.UnitContext
 import cloki.runtime.datatype.LUnit
 import cloki.system.SystemSettings
 
 class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, ruleContext:UnitContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationUnit
+	extends GenerationRuleBytecode(generationContext, ruleContext) with UnitGenerationRuleMixin
 {
 	override protected def enterAction()
 	{
@@ -201,8 +201,6 @@ class GenerationRuleBytecodeUnit(generationContext:CGenerationContextBytecode, r
 		)
 
 		popFrame()
-
-		if (isInheritancePresent) generationContext.applyDeferredRules(ruleContext.inheritance)
 	}
 }
 

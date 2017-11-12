@@ -15,8 +15,8 @@ class CGeneratorBytecode(moduleName:String) extends Generator[CGenerationContext
 	override def enterInstruction(ruleContext:InstructionContext) = GenerationRuleBytecodeInstruction.enter(generationContext, ruleContext)
 	override def exitInstruction(ruleContext:InstructionContext) = GenerationRuleBytecodeInstruction.exit(generationContext, ruleContext)
 
-	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = ()
-	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = ()
+	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = new GenerationRuleBytecode[ExpressionGroupContext](generationContext, ruleContext).enter()
+	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = new GenerationRuleBytecode[ExpressionGroupContext](generationContext, ruleContext).exit()
 
 	override def enterUnit(ruleContext:UnitContext) = GenerationRuleBytecodeUnit.enter(generationContext, ruleContext)
 	override def exitUnit(ruleContext:UnitContext) = GenerationRuleBytecodeUnit.exit(generationContext, ruleContext)

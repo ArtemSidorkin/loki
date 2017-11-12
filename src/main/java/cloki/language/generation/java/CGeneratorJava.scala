@@ -15,8 +15,8 @@ class CGeneratorJava(moduleName:String) extends Generator[CGenerationContextJava
 	override def enterInstruction(ruleContext:InstructionContext) = GenerationRuleJavaInstruction.enter(generationContext, ruleContext)
 	override def exitInstruction(ruleContext:InstructionContext) = GenerationRuleJavaInstruction.exit(generationContext, ruleContext)
 
-	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = ()
-	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = ()
+	override def enterExpressionGroup(ruleContext:ExpressionGroupContext) = new GenerationRuleJava[ExpressionGroupContext](generationContext, ruleContext).enter()
+	override def exitExpressionGroup(ruleContext:ExpressionGroupContext) = new GenerationRuleJava[ExpressionGroupContext](generationContext, ruleContext).exit()
 
 	override def enterUnit(ruleContext:UnitContext) = GenerationRuleJavaUnit.enter(generationContext, ruleContext)
 	override def exitUnit(ruleContext:UnitContext) = GenerationRuleJavaUnit.exit(generationContext, ruleContext)

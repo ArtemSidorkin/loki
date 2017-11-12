@@ -3,12 +3,12 @@ package cloki.language.generation.bytecode.rules
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
+import cloki.language.generation.rules.mixins.IfElseGenerationRuleMixin
 import cloki.language.parsing.LokiParser.IfElseContext
 import org.objectweb.asm.tree.LabelNode
 
 class GenerationRuleBytecodeIfElse(generationContext:CGenerationContextBytecode, ruleContext:IfElseContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationIfElse
+	extends GenerationRuleBytecode(generationContext, ruleContext) with IfElseGenerationRuleMixin
 {
 	override protected def enterAction()
 	{

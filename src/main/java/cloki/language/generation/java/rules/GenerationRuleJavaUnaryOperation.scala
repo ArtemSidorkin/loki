@@ -2,11 +2,11 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationUnaryOperation
+import cloki.language.generation.rules.mixins.UnaryOperationGenerationRuleMixin
 import cloki.language.parsing.LokiParser.UnaryOperationContext
 
 class GenerationRuleJavaUnaryOperation(generationContext:CGenerationContextJava, ruleContext:UnaryOperationContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationUnaryOperation
+	extends GenerationRuleJava(generationContext, ruleContext) with UnaryOperationGenerationRuleMixin
 {
 	override protected def enterAction() = generationContext.addPostExitRuleTask(expression, () =>
 		addCode(

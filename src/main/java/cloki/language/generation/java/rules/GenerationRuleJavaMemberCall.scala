@@ -2,12 +2,12 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationMemberCall
+import cloki.language.generation.rules.mixins.MemberCallGenerationRuleMixin
 import cloki.language.parsing.LokiParser.MemberCallContext
 import cloki.runtime.datatype.LUnit
 
 class GenerationRuleJavaMemberCall(generationContext:CGenerationContextJava, ruleContext:MemberCallContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationMemberCall
+	extends GenerationRuleJava(generationContext, ruleContext) with MemberCallGenerationRuleMixin
 {
 	override protected def enterAction() = generationContext.addPostExitRuleTask(memberExpression, () =>
 	{

@@ -1,12 +1,12 @@
 package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationNumber
+import cloki.language.generation.rules.mixins.NumberGenerationRuleMixin
 import cloki.language.parsing.LokiParser.NumberContext
 import cloki.runtime.datatype.LNumber
 
 class GenerationRuleJavaNumber(generationContext:CGenerationContextJava, ruleContext:NumberContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationNumber
+	extends GenerationRuleJava(generationContext, ruleContext) with NumberGenerationRuleMixin
 {
 	override protected def enterAction() =
 		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LNumber].getName}($number)")

@@ -2,12 +2,12 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationIndex
+import cloki.language.generation.rules.mixins.IndexGenerationRuleMixin
 import cloki.language.parsing.LokiParser.IndexContext
 import cloki.runtime.datatype.LUnit
 
 class GenerationRuleJavaIndex(generationContext:CGenerationContextJava, ruleContext:IndexContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationIndex
+	extends GenerationRuleJava(generationContext, ruleContext) with IndexGenerationRuleMixin
 {
 	override protected def enterAction()
 	{

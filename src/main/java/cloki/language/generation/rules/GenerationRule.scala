@@ -1,7 +1,7 @@
 package cloki.language.generation.rules
 
 import cloki.language.generation.Generation
-import cloki.language.generation.rules.mixins.CMixinRuleGeneration
+import cloki.language.generation.rules.mixins.GenerationRuleMixin
 import org.antlr.v4.runtime.RuleContext
 
 private[generation] class GenerationRule[
@@ -9,7 +9,7 @@ private[generation] class GenerationRule[
 ] (
 	protected val generationContext:GENERATION_CONTEXT, protected val ruleContext:RULE_CONTEXT
 )
-	extends CMixinRuleGeneration[RULE_CONTEXT]
+	extends GenerationRuleMixin[RULE_CONTEXT]
 {
 
 	def enter():Unit =

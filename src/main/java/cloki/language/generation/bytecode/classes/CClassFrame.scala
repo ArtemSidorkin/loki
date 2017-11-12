@@ -1,7 +1,7 @@
 package cloki.language.generation.bytecode.classes
 
-import assembler.const.PUBLIC
 import assembler.builder.{ClassBuilder, MethodBuilder}
+import assembler.const.PUBLIC
 import cloki.language.generation.bytecode.consts.CConstBytecodeCommon
 
 private[bytecode] abstract class CClassFrame(name:String, parentClass:Class[_])

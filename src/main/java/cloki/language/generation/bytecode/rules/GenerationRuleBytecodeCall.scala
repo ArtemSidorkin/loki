@@ -3,11 +3,11 @@ package cloki.language.generation.bytecode.rules
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationCall
+import cloki.language.generation.rules.mixins.CallGenerationRuleMixin
 import cloki.language.parsing.LokiParser.CallContext
 
 class GenerationRuleBytecodeCall(generationContext:CGenerationContextBytecode, ruleContext:CallContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationCall
+	extends GenerationRuleBytecode(generationContext, ruleContext) with CallGenerationRuleMixin
 {
 	override protected def enterAction()
 	{
@@ -25,12 +25,12 @@ class GenerationRuleBytecodeCall(generationContext:CGenerationContextBytecode, r
 
 		def generateCallParameters():Unit = for (i <- 1 to callParameterCount)
 		{
-			generationContext.addPreEnterRuleTask(getCalledParameterExpression(i), () =>
+			generationContext.addPreEnterRuleTask(getCallParameterExpression(i), () =>
 				topMethodCall
 				dup ()
 				ldc i - 1
 			)
-			generationContext.addPostExitRuleTask(getCalledParameterExpression(i), () =>
+			generationContext.addPostExitRuleTask(getCallParameterExpression(i), () =>
 			(
 				topMethodCall
 				aastore ()

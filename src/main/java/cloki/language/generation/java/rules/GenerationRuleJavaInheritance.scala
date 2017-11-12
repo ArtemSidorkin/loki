@@ -2,11 +2,11 @@ package cloki.language.generation.java.rules
 
 import cloki.language.generation.consts.CConstLanguageMembers._
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationInheritance
+import cloki.language.generation.rules.mixins.InheritanceGenerationRuleMixin
 import cloki.language.parsing.LokiParser.InheritanceContext
 
 class GenerationRuleJavaInheritance(generationContext:CGenerationContextJava, ruleContext:InheritanceContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationInheritance
+	extends GenerationRuleJava(generationContext, ruleContext) with InheritanceGenerationRuleMixin
 {
 	override protected def enterAction() =
 	{

@@ -4,45 +4,45 @@ import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContext
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeUnit.CTemplateUnit
 import cloki.language.generation.consts.CConstLanguageMembers._
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationOperator
+import cloki.language.generation.rules.mixins.OperatorGenerationRuleMixin
 import cloki.language.parsing.LokiParser.ExpressionContext
 import cloki.language.parsing.{LokiLexer, LokiParser}
 
 class GenerationRuleBytecodeOperator(generationContext:CGenerationContextBytecode, ruleContext:ExpressionContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationOperator
+	extends GenerationRuleBytecode(generationContext, ruleContext) with OperatorGenerationRuleMixin
 {
 	override protected def enterAction()
 	{
 		// -> mixin
 		val oprtn = ruleContext match
 		{
-			case _ : LokiParser.MulDivContext => ruleContextAsMulDivOperator match
+			case _ : LokiParser.MulDivContext => ruleContextAsMulDivOperatorCode match
 			{
 				case LokiLexer.STAR => OPERATOR_STAR
 				case LokiLexer.SLASH => OPERATOR_SLASH
 			}
-			case _ : LokiParser.AddSubContext => ruleContextAsAddSubOperator match
+			case _ : LokiParser.AddSubContext => ruleContextAsAddSubOperatorCode match
 			{
 				case LokiLexer.PLUS => OPERATOR_PLUS
 				case LokiLexer.MINUS => OPERATOR_MINUS
 			}
-			case _ : LokiParser.EqNeqContext => ruleContextAsEqNeqOperator match
+			case _ : LokiParser.EqNeqContext => ruleContextAsEqNeqOperatorCode match
 			{
 				case LokiLexer.EQUALS_EQUALS => OPERATOR_EQUALS_EQUALS
 				case LokiLexer.BANG_EQUALS => OPERATOR_BANG_EQUALS
 			}
-			case _ : LokiParser.GteLteGtLtContext => ruleContextAsGteLteGtLtOperator match
+			case _ : LokiParser.GteLteGtLtContext => ruleContextAsGteLteGtLtOperatorCode match
 			{
 				case LokiLexer.GREATER_THAN_EQUALS => OPERATOR_GREATER_THAN_EQUALS
 				case LokiLexer.GREATER_THAN => OPERATOR_GREATER_THAN
 				case LokiLexer.LESS_THAN_EQUALS => OPERATOR_LESS_THAN_EQUALS
 				case LokiLexer.LESS_THAN => OPERATOR_LESS_THAN
 			}
-			case _ : LokiParser.AmpersandAmpersandContext => ruleContextAsAmpersandAmpersandOperator match
+			case _ : LokiParser.AmpersandAmpersandContext => ruleContextAsAmpersandAmpersandOperatorCode match
 			{
 				case LokiLexer.AMPERSAND_AMPERSAND => OPERATOR_AMPERSAND_AMPERSAND
 			}
-			case _ : LokiParser.PipePipeContext => ruleContextAsPipePipeOperator match
+			case _ : LokiParser.PipePipeContext => ruleContextAsPipePipeOperatorCode match
 			{
 				case LokiLexer.PIPE_PIPE => OPERATOR_PIPE_PIPE
 			}

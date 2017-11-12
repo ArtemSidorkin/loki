@@ -1,14 +1,14 @@
 package cloki.language.generation.java.rules
 
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationIfElse
+import cloki.language.generation.rules.mixins.IfElseGenerationRuleMixin
 import cloki.language.parsing.LokiParser.IfElseContext
 import cloki.runtime.context.LUnitContext
 import cloki.runtime.datatype.LUnit
 import cloki.util.extension.StringExtensions.StringExtensions
 
 class GenerationRuleJavaIfElse(generationContext:CGenerationContextJava, ruleContext:IfElseContext)
-	extends GenerationRuleJava(generationContext, ruleContext) with CMixinRuleGenerationIfElse
+	extends GenerationRuleJava(generationContext, ruleContext) with IfElseGenerationRuleMixin
 {
 	override protected def enterAction()
 	{

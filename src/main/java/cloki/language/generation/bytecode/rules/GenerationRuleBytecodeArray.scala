@@ -3,11 +3,11 @@ package cloki.language.generation.bytecode.rules
 import cloki.language.generation.bytecode.CGenerationBytecode.CGenerationContextBytecode
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeArray.CTemplateArray
 import cloki.language.generation.bytecode.templates.CTemplateBytecodeCommon.CTemplateCommon
-import cloki.language.generation.rules.mixins.CMixinRuleGenerationArray
+import cloki.language.generation.rules.mixins.ArrayGenerationRuleMixin
 import cloki.language.parsing.LokiParser.ArrayContext
 
 class GenerationRuleBytecodeArray(generationContext:CGenerationContextBytecode, ruleContext:ArrayContext)
-	extends GenerationRuleBytecode(generationContext, ruleContext) with CMixinRuleGenerationArray
+	extends GenerationRuleBytecode(generationContext, ruleContext) with ArrayGenerationRuleMixin
 {
 	override protected def enterAction()
 	{

@@ -6,7 +6,8 @@ import scala.collection.JavaConversions._
 
 private[generation] class GenerationClassLoader extends ClassLoader
 {
-	private val classBytecodes:collection.mutable.Map[String, Array[Byte]] = new ConcurrentHashMap[String, Array[Byte]]()
+	private val classBytecodes:collection.mutable.Map[String, Array[Byte]] =
+		new ConcurrentHashMap[String, Array[Byte]]()
 
 	def getClass(className:String):Class[_] = findClass(className)
 	def setClassCode(className:String, classBytecode:Array[Byte]):Unit = classBytecodes += className -> classBytecode
