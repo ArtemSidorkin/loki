@@ -1,0 +1,36 @@
+map0 = {"f1" : function1 : 1}
+assert(map0["f1"](), 1)
+
+map0 =
+{
+	"f1" : function1 : 1
+}
+assert(map0["f1"](), 1)
+
+map0 =
+{
+	"f1" : function1 :
+	1
+}
+assert(map0["f1"](), 1)
+
+map0 =
+{
+	"f1" : function1 :
+		1
+}
+assert(map0["f1"](), 1)
+
+map1 =
+{
+	"f1" : function1 a b :
+		$a = a
+		$b = b
+		$a + $b
+}
+f1 = map1["f1"]
+r = f1(1, 2)
+assert(r, 3)
+f1 = f1.new()
+assert(f1.a, 1)
+assert(f1.b, 2)

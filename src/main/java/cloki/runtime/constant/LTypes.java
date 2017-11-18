@@ -13,4 +13,7 @@ public class LTypes
 
 	public static final cloki.runtime.datatype.LType ARRAY_PROTOTYPE = new cloki.runtime.datatype.LType(LDataUnit.ARRAY_PROTOTYPE.name);
 	public static final cloki.runtime.datatype.LType ARRAY = new cloki.runtime.datatype.LType(LType.ARRAY.name);
+
+	public static final cloki.runtime.datatype.LType MAP_PROTOTYPE = new cloki.runtime.datatype.LType(LDataUnit.MAP_PROTOTYPE.name);
+	public static final cloki.runtime.datatype.LType MAP = new cloki.runtime.datatype.LType(LType.MAP.name);
 }

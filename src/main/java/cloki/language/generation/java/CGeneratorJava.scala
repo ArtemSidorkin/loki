@@ -24,6 +24,9 @@ class CGeneratorJava(moduleName:String) extends Generator[CGenerationContextJava
 	override def enterArray(ruleContext:ArrayContext) = GenerationRuleJavaArray.enter(generationContext, ruleContext)
 	override def exitArray(ruleContext:ArrayContext) = GenerationRuleJavaArray.exit(generationContext, ruleContext)
 
+	override def enterMap(ruleContext:MapContext) = GenerationRuleJavaMap.enter(generationContext, ruleContext)
+	override def exitMap(ruleContext:MapContext) = GenerationRuleJavaMap.exit(generationContext, ruleContext)
+
 	override def enterIndex(ruleContext:IndexContext) = GenerationRuleJavaIndex.enter(generationContext, ruleContext)
 	override def exitIndex(ruleContext:IndexContext) = GenerationRuleJavaIndex.exit(generationContext, ruleContext)
 

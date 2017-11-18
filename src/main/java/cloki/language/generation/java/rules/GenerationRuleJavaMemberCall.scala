@@ -17,7 +17,7 @@ class GenerationRuleJavaMemberCall(generationContext:CGenerationContextJava, rul
 			for (i <- 1 until callParameterCount)
 				generationContext.addPostExitRuleTask(getCallParameterExpression(i), () =>
 				{
-					addColon()
+					addComa()
 					addSpace()
 				})
 	})

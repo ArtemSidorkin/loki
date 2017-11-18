@@ -24,6 +24,9 @@ class CGeneratorBytecode(moduleName:String) extends Generator[CGenerationContext
 	override def enterArray(ruleContext:ArrayContext) = GenerationRuleBytecodeArray.enter(generationContext, ruleContext)
 	override def exitArray(ruleContext:ArrayContext) = GenerationRuleBytecodeArray.exit(generationContext, ruleContext)
 
+	override def enterMap(ruleContext:MapContext) = GenerationRuleBytecodeMap.enter(generationContext, ruleContext)
+	override def exitMap(ruleContext:MapContext) = GenerationRuleBytecodeMap.exit(generationContext, ruleContext)
+
 	override def enterIndex(ruleContext:IndexContext) = GenerationRuleBytecodeIndex.enter(generationContext, ruleContext)
 	override def exitIndex(ruleContext:IndexContext) = GenerationRuleBytecodeIndex.exit(generationContext, ruleContext)
 

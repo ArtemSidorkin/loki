@@ -16,19 +16,19 @@ class GenerationRuleJavaIndex(generationContext:CGenerationContextJava, ruleCont
 			addCode(s".$UNIT__METHOD__GET_INDEXED_ITEM(")
 
 			if (indexExpressionCount > 0) addCode(s"new ${classOf[LUnit].getName}[]{")
-			else addCode("null");
+			else addCode("null")
 		})
 
 		for (i <- 0 until indexExpressionCount - 1) generationContext.addPostExitRuleTask(getIndexExpression(i), () =>
 		{
-			addColon()
+			addComa()
 			addSpace()
 		})
 	}
 
 	override protected def exitAction()
 	{
-		if (indexExpressionCount > 0) addRightCurlyBrace()
+		if (indexExpressionCount > 0) addRightBrace()
 		addRightParenthesis()
 	}
 }

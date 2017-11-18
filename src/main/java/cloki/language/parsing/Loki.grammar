@@ -1,5 +1,6 @@
 grammar Loki;
 
+//╠ ╣ begin and end for the future
 
 @header
 {
@@ -14,6 +15,7 @@ instruction : expression;
 expression:
 	LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS #ExpressionGroup |
 	LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET #Array |
+	LEFT_BRACE (BEGIN)? (expression COLON expression (COMMA expression COLON expression)*)? (SEMICOLON)? (END)? RIGHT_BRACE (SEMICOLON)? (END)? #Map |
 
 	DOLLAR #Host |
 
@@ -140,5 +142,7 @@ LEFT_PARENTHESIS : '(';
 RIGHT_PARENTHESIS : ')';
 LEFT_BRACKET : '[';
 RIGHT_BRACKET : ']';
+LEFT_BRACE : '{';
+RIGHT_BRACE : '}';
 
 SKIP : [ \t\r\n]+ -> skip;

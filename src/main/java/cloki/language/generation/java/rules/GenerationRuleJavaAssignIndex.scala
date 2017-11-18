@@ -21,14 +21,14 @@ class GenerationRuleJavaAssignIndex(generationContext:CGenerationContextJava, ru
 
 		for (i <- 0 until parametersCount - 1) generationContext.addPostExitRuleTask(getParameterExpression(i), () =>
 		{
-			addColon()
+			addComa()
 			addSpace()
 		})
 	}
 
 	override protected def exitAction()
 	{
-		if (parametersCount > 0) addRightCurlyBrace()
+		if (parametersCount > 0) addRightBrace()
 		addRightParenthesis()
 	}
 }

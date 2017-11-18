@@ -293,6 +293,18 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
+	def increaseObjectCounter(count:Int):this.type =
+	{
+		objectStackCounter.increase(count)
+		this
+	}
+
+	def decreaseObjectCounter(count:Int):this.type =
+	{
+		objectStackCounter.decrease(count)
+		this
+	}
+
 	def pushFrame():this.type =
 	{
 		objectStackCounter.push()
@@ -310,8 +322,10 @@ private class ObjectStackCounter(method:MethodBuilder)
 {
 	private val counters = mutable.Stack[Int](0)
 
-	def increment():Unit = counters(0) += 1
-	def decrement():Unit = counters(0) -= 1
+	def increment():Unit = increase(1)
+	def decrement():Unit = decrease(1)
+	def decrease(count:Int) = counters(0) -= count
+	def increase(count:Int) = counters(0) += count
 
 	def push():Unit = counters.push(0)
 

@@ -19,14 +19,14 @@ class GenerationRuleJavaArray(generationContext:CGenerationContextJava, ruleCont
 
 		for (i <- 0 until arrayItemCount - 1) generationContext.addPostExitRuleTask(getArrayItemExpression(i), () =>
 		{
-			addColon()
+			addComa()
 			addSpace()
 		})
 	}
 
 	override protected def exitAction()
 	{
-		if (arrayItemCount != 0) addRightCurlyBrace()
+		if (arrayItemCount != 0) addRightBrace()
 		addRightParenthesis()
 	}
 }

@@ -20,8 +20,8 @@ private[preprocessing] object ConstCompilerTokens
 	val RIGHT_PARENTHESIS = ')'
 	val LEFT_BRACKET = '['
 	val RIGHT_BRACKET = ']'
-	val LEFT_CURLY_BRACE = '{'
-	val RIGHT_CURLY_BRACE = '}'
+	val LEFT_BRACE = '{'
+	val RIGHT_BRACE = '}'
 	val ELSE = "else"
 
 	val NEW_LINE = '\n'

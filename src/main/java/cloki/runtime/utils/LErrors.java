@@ -23,7 +23,17 @@ public class LErrors
 
 	public static void printErrorItemWithIndexDoesNotExist(Object index)
 	{
-		printError(String.format("Item with getIndexedItem \"%s\" does not exist", index));
+		printError(String.format("Item with index \"%s\" does not exist", index));
+	}
+
+	public static void printErrorIndexIsUndefined()
+	{
+		printError("Index is undefined");
+	}
+
+	public static void printErrorIndexValueIsUndefined()
+	{
+		printError("Index value is undefined");
 	}
 
 	public static void printError(String error)

@@ -355,6 +355,18 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitPipePipe(LokiParser.PipePipeContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Map}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMap(LokiParser.MapContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Map}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMap(LokiParser.MapContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LokiParser#inheritance}.
 	 * @param ctx the parse tree
 	 */

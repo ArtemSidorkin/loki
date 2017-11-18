@@ -30,10 +30,10 @@ class GenerationRuleJava[RULE_CONTEXT <: RuleContext](generationContext:CGenerat
 	def removeTabulation(code:String) = code tabulate 0
 	def removeTabulationBackward(code:String) = code tabulate (0, forward = false)
 
-	def addColon():Unit = addCode(",")
+	def addComa():Unit = addCode(",")
 	def addSemicolon():Unit = addCode(";")
 	def addRightParenthesis():Unit = addCode(")")
-	def addRightCurlyBrace():Unit = addCode("}")
+	def addRightBrace():Unit = addCode("}")
 	def addNewLine():Unit = addCode("\n")
 	def addSpace():Unit = addCode(" ")
 

@@ -7,7 +7,8 @@ public enum LType
 	BOOLEAN("Boolean"),
 	NUMBER("Number"),
 	STRING("String"),
-	ARRAY("Array");
+	ARRAY("Array"),
+	MAP("Map");
 
 	public String name;
 

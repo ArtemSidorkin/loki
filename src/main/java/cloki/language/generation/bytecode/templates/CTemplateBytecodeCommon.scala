@@ -15,6 +15,7 @@ private[bytecode] object CTemplateBytecodeCommon
 		def newNumber() = method `new` classOf[LNumber]
 		def newString() = method `new` classOf[LString]
 		def newArray() = method `new` classOf[LArray]
+		def newMap() = method `new` classOf[LMap]
 		def anewarrayUnit() = method anewarray classOf[LUnit]
 		def void() = method getstatic (classOf[LVoid], "instance", classOf[LVoid])
 	}

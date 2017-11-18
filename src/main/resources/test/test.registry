@@ -1,7 +1,16 @@
 simpleVariable, /test/variable/simpleVariable.loki
+
 simple_arithmetic, /test/arithmetic/simpleArithmetic.loki
+
+creation_map, /test/map/creationMap.loki
+formatting_map, /test/map/formattingMap.loki
+nested_map, /test/map/nestedMap.loki
+function_map, /test/map/functionMap.loki
+
 number_inheritance, /test/inheritance/numberInheritance.loki
 single_inheritance, /test/inheritance/singleInheritance.loki
 multiple_inheritance, /test/inheritance/multipleInheritance.loki
+
 linked_list, /test/algorithm/linkedList.loki
+
 #performance, /test/performance.loki

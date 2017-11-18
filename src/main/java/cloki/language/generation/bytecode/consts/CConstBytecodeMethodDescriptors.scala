@@ -92,4 +92,7 @@ private[bytecode] object CConstBytecodeMethodDescriptors
 
 	val ARRAY__METHOD__INIT =
 		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
+
+	val MAP__METHOD__INIT =
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
 }
