@@ -12,7 +12,7 @@ import cloki.runtime.context.LUnitContext
 import cloki.runtime.datatype.{LModule, LUnit}
 import cloki.util.FileUtil
 import org.antlr.v4.runtime.tree.ParseTreeWalker
-import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
+import org.antlr.v4.runtime._
 
 import scala.collection.JavaConversions._
 
@@ -77,7 +77,7 @@ private[execution] class Executor(
 		(generator.classLoader getClass moduleName)
 			.getConstructors
 			.head
-			.newInstance(unitContext getOrElse null)
+			.newInstance(unitContext.orNull)
 			.asInstanceOf[LModule]
 	}
 
