@@ -3,6 +3,7 @@ package cloki.language.generation.bytecode.templates
 import assembler.builder.MethodBuilder
 import cloki.runtime.context.{LModuleContext, LUnitContext}
 import cloki.runtime.datatype._
+import cloki.runtime.datatype.number.LNumber
 
 private[bytecode] object CTemplateBytecodeCommon
 {
