@@ -42,7 +42,7 @@ public class LType extends LUnit
 	@Override
 	public LType getType()
 	{
-		if (type == null) synchronized(guard)
+		if (type == null) synchronized(this)
 		{
 			type = new LType(cloki.runtime.constant.LType.TYPE.name);
 		}
@@ -53,7 +53,7 @@ public class LType extends LUnit
 	@Override
 	public LUnit getMember(String memberName)
 	{
-		if (!builtinsInitialized) synchronized(guard)
+		if (!builtinsInitialized) synchronized(this)
 		{
 			if (!builtinsInitialized)
 			{

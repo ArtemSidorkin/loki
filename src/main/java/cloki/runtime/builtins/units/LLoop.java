@@ -4,6 +4,7 @@ import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.constant.LTypes;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.*;
+import cloki.runtime.datatype.number.LNumber;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 

@@ -6,6 +6,7 @@ import cloki.runtime.constant.LDataUnit;
 import cloki.runtime.constant.LTypes;
 import cloki.runtime.constant.LUnitMember;
 import cloki.runtime.context.LUnitContext;
+import cloki.runtime.datatype.number.LNumber;
 import cloki.runtime.utils.LErrors;
 import cloki.runtime.utils.Nullable;
 
@@ -25,12 +26,15 @@ abstract public class LUnit
 
 	@Nullable protected volatile LUnitContext unitContext;
 
-	protected final Object guard = new Object();
-
 	private final LType type;
-	@Nullable private volatile ConcurrentLinkedDeque<LUnit> parents;
-	@Nullable private volatile ConcurrentMap<String, LUnit> members;
+	@Nullable protected volatile ConcurrentLinkedDeque<LUnit> parents;
+	@Nullable protected volatile ConcurrentMap<String, LUnit> members;
 	@Nullable private volatile Map<String, Integer> parameterIndexes;
+
+	public LUnit()
+	{
+		type = null;
+	}
 
 	public LUnit(LType type)
 	{
@@ -201,7 +205,7 @@ abstract public class LUnit
 	@Nullable
 	public <T extends LUnit> T asType(LType type)
 	{
-		if (getType()._equals(type)) return (T)this;
+		if (getType()== type) return (T)this;
 
 		initParentsIfNeeded();
 
@@ -260,7 +264,7 @@ abstract public class LUnit
 
 	public String _toString()
 	{
-		return type._toString();
+		return getType()._toString();
 	}
 
 	@Override
@@ -303,7 +307,7 @@ abstract public class LUnit
 
 	protected void initParentsIfNeeded()
 	{
-		if (parents == null) synchronized(guard)
+		if (parents == null) synchronized(this)
 		{
 			if (parents == null)
 			{
@@ -316,7 +320,7 @@ abstract public class LUnit
 
 	private void initMembersIfNeeded()
 	{
-		if (members == null) synchronized(guard)
+		if (members == null) synchronized(this)
 		{
 			if (members == null)
 			{

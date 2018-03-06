@@ -2,7 +2,7 @@ package cloki.language.generation.bytecode.templates
 
 import assembler.builder.MethodBuilder
 import cloki.language.generation.bytecode.consts.CConstBytecodeMethodDescriptors
-import cloki.runtime.datatype.LNumber
+import cloki.runtime.datatype.number.LNumber
 
 private[bytecode] object CTemplateBytecodeNumber
 {

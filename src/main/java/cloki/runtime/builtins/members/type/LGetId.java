@@ -3,7 +3,7 @@ package cloki.runtime.builtins.members.type;
 import cloki.runtime.builtins.members.LMember;
 import cloki.runtime.constant.LTypeMember;
 import cloki.runtime.context.LUnitContext;
-import cloki.runtime.datatype.LNumber;
+import cloki.runtime.datatype.number.LNumber;
 import cloki.runtime.datatype.LType;
 import cloki.runtime.datatype.LUndefined;
 import cloki.runtime.datatype.LUnit;

@@ -5,6 +5,7 @@ import cloki.runtime.constant.LTypes;
 import cloki.runtime.constant.LUnaryOperator;
 import cloki.runtime.context.LUnitContext;
 import cloki.runtime.datatype.*;
+import cloki.runtime.datatype.number.LNumber;
 import cloki.runtime.utils.Nullable;
 
 public class LBooleanNegation extends LUnaryOperation<LBooleanPrototype>

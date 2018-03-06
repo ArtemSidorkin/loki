@@ -5,15 +5,14 @@ import cloki.runtime.builtins.members.type.LGetName;
 import cloki.runtime.builtins.members.unit.*;
 import cloki.runtime.builtins.operations.binary.bool.LBooleanAmpersandAmpersand;
 import cloki.runtime.builtins.operations.binary.bool.LBooleanPipePipe;
-import cloki.runtime.builtins.operations.binary.number.*;
 import cloki.runtime.builtins.operations.binary.unit.LUnitBangEquals;
 import cloki.runtime.builtins.operations.binary.unit.LUnitEqualsEquals;
 import cloki.runtime.builtins.operations.unary.bool.LBooleanNegation;
-import cloki.runtime.builtins.operations.unary.number.LNumericNegation;
 import cloki.runtime.builtins.units.*;
 import cloki.runtime.constant.LDataUnit;
 import cloki.runtime.constant.LFunctionalUnit;
 import cloki.runtime.datatype.*;
+import cloki.runtime.datatype.number.LNumberPrototype;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,20 +72,5 @@ public class LBuiltins
 		LBooleanNegation.instance.init(booleanPrototype);
 		LBooleanAmpersandAmpersand.instance.init(booleanPrototype);
 		LBooleanPipePipe.instance.init(booleanPrototype);
-	}
-
-	public static void initNumberPrototype(LNumberPrototype numberPrototype)
-	{
-		LNumericNegation.instance.init(numberPrototype);
-		LNumberStar.instance.init(numberPrototype);
-		LNumberSlash.instance.init(numberPrototype);
-		LNumberPlus.instance.init(numberPrototype);
-		LNumberMinus.instance.init(numberPrototype);
-		LNumberEqualsEquals.instance.init(numberPrototype);
-		LNumberBangEquals.instance.init(numberPrototype);
-		LNumberGreaterThanEquals.instance.init(numberPrototype);
-		LNumberLessThanEquals.instance.init(numberPrototype);
-		LNumberGreaterThan.instance.init(numberPrototype);
-		LNumberLessThan.instance.init(numberPrototype);
 	}
 }

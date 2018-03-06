@@ -3,7 +3,7 @@ package cloki.language.generation.java.rules
 import cloki.language.generation.java.CGenerationJava.CGenerationContextJava
 import cloki.language.generation.rules.mixins.NumberGenerationRuleMixin
 import cloki.language.parsing.LokiParser.NumberContext
-import cloki.runtime.datatype.LNumber
+import cloki.runtime.datatype.number.LNumber
 
 class GenerationRuleJavaNumber(generationContext:CGenerationContextJava, ruleContext:NumberContext)
 	extends GenerationRuleJava(generationContext, ruleContext) with NumberGenerationRuleMixin
