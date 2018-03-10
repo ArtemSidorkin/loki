@@ -2,7 +2,7 @@ package loki.language.generation.java
 
 import loki.language.generation.Generator
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
-import loki.language.generation.java.rules._
+import loki.language.generation.java.rule._
 import loki.language.parsing.LokiParser._
 
 class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]

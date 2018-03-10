@@ -2,7 +2,7 @@ package loki.language.generation.bytecode
 
 import loki.language.generation.Generator
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
-import loki.language.generation.bytecode.rules._
+import loki.language.generation.bytecode.rule._
 import loki.language.parsing.LokiParser._
 
 class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationContext]

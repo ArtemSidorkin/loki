@@ -1,6 +1,6 @@
 package loki.language.generation.bytecode
 
-import loki.language.generation.bytecode.classes.CClassFrame
+import loki.language.generation.bytecode.classbuilder.FrameClassBuilder
 import loki.language.generation.{Generation, GenerationClassLoader}
 import loki.util.IdGenerator
 
@@ -21,9 +21,9 @@ private[bytecode] object BytecodeGeneration extends Generation
 
 	class BytecodeFrameStack extends FrameStack
 	{
-		def push(classFrame:CClassFrame):Unit = frames.push(new BytecodeFrame(classFrame, frameIdGenerator()))
+		def push(classFrame:FrameClassBuilder):Unit = frames.push(new BytecodeFrame(classFrame, frameIdGenerator()))
 
-		def push(classFrameCreator: (ID => CClassFrame))
+		def push(classFrameCreator: (ID => FrameClassBuilder))
 		{
 			val id = frameIdGenerator()
 
@@ -31,6 +31,6 @@ private[bytecode] object BytecodeGeneration extends Generation
 		}
 	}
 
-	class BytecodeFrame(val classFrame:CClassFrame, val id:ID) extends Frame
+	class BytecodeFrame(val classFrame:FrameClassBuilder, val id:ID) extends Frame
 }
 
