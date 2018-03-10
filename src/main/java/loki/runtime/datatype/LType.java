@@ -1,6 +1,6 @@
 package loki.runtime.datatype;
 
-import loki.runtime.builtins.LBuiltins;
+import loki.runtime.builtin.LBuiltins;
 import loki.util.IdGenerator;
 
 public class LType extends LUnit

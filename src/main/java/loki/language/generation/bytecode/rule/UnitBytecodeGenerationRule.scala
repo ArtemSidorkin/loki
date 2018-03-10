@@ -2,7 +2,7 @@ package loki.language.generation.bytecode.rule
 
 import assembler._
 import assembler.builder.MethodBuilder
-import assembler.const.{FINAL, PUBLIC, SYNTHETIC}
+import assembler.constant.{FINAL, PUBLIC, SYNTHETIC}
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
 import loki.language.generation.bytecode.constant.BytecodeMethodDescriptors
 import loki.language.generation.bytecode.template.CommonBytecodeTemplate.CTemplateCommon

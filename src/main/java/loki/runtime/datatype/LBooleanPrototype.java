@@ -1,7 +1,7 @@
 package loki.runtime.datatype;
 
 
-import loki.runtime.builtins.LBuiltins;
+import loki.runtime.builtin.LBuiltins;
 import loki.runtime.constant.LTypes;
 
 public class LBooleanPrototype extends LUnit

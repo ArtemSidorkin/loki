@@ -1,6 +1,6 @@
 package loki.language.preprocessing
 
-import loki.language.preprocessing.commands._
+import loki.language.preprocessing.command._
 
 private class Preprocessor(code:String)
 {

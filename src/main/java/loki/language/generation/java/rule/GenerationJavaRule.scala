@@ -2,7 +2,7 @@ package loki.language.generation.java.rule
 
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.GenerationRule
-import loki.util.extension.StringExtensions.StringExtensions
+import loki.util.extension.StringExtension.StringExtension
 import org.antlr.v4.runtime.RuleContext
 
 class GenerationJavaRule[RULE_CONTEXT <: RuleContext](generationContext:JavaGenerationContext, ruleContext:RULE_CONTEXT)

@@ -4,7 +4,7 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.datatype.LType;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.LUnit;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.Nullable;
 
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedDeque;

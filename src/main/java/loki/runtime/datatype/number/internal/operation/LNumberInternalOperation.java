@@ -3,7 +3,7 @@ package loki.runtime.datatype.number.internal.operation;
 import loki.runtime.constant.LTypes;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.LNumber;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.Nullable;
 
 import java.util.concurrent.ConcurrentMap;
 

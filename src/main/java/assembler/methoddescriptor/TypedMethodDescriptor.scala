@@ -1,6 +1,6 @@
 package assembler.methoddescriptor
 
-import assembler.const.InternalDescriptors
+import assembler.constant.InternalDescriptors
 import org.objectweb.asm.Type
 
 case class TypedMethodDescriptor(typedDescriptor:(Seq[Class[_]], Option[Class[_]])) extends MethodDescriptor

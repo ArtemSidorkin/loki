@@ -1,6 +1,6 @@
 package loki.language.generation.bytecode.classbuilder
 
-import assembler.const.PUBLIC
+import assembler.constant.PUBLIC
 import loki.language.generation.bytecode.constant.BytecodeMethodDescriptors
 import loki.language.generation.constant.LanguageMembers
 import loki.runtime.datatype.LModule

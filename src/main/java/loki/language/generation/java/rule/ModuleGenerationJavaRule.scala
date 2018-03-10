@@ -11,7 +11,7 @@ import loki.runtime.datatype.{LModule, LUnit}
 import loki.system.SystemConfiguration
 import loki.system.SystemConfiguration.UNIX
 import loki.util.FileUtil
-import loki.util.extension.StringExtensions.StringExtensions
+import loki.util.extension.StringExtension.StringExtension
 
 class ModuleGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:ModuleContext)
 	extends GenerationJavaRule(generationContext, ruleContext) with ModuleGenerationRuleMixin

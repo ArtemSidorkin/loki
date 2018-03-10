@@ -1,6 +1,6 @@
 package assembler.methoddescriptor
 
-import assembler.const.InternalDescriptors
+import assembler.constant.InternalDescriptors
 import org.objectweb.asm.Type
 
 case class MixedMethodDescriptor(mixedDescriptor:(Seq[Either[Class[_], String]], Option[Either[Class[_], String]]))

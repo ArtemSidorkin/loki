@@ -1,14 +1,14 @@
 package loki.runtime.datatype;
 
 import loki.runtime.LSettings;
-import loki.runtime.builtins.LBuiltins;
+import loki.runtime.builtin.LBuiltins;
 import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.number.LNumber;
-import loki.runtime.utils.LErrors;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.LErrors;
+import loki.runtime.util.Nullable;
 
 import java.util.HashMap;
 import java.util.Iterator;

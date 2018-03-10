@@ -1,6 +1,6 @@
 package loki.language.generation.bytecode.constant
 
-import assembler.const.JAVA8
+import assembler.constant.JAVA8
 
 private[bytecode] object BytecodeCommon
 {

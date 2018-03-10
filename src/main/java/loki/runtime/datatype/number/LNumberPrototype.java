@@ -1,14 +1,14 @@
 package loki.runtime.datatype.number;
 
-import loki.runtime.builtins.operations.binary.number.*;
-import loki.runtime.builtins.operations.unary.number.LNumericNegation;
+import loki.runtime.builtin.operation.binary.number.*;
+import loki.runtime.builtin.operation.unary.number.LNumericNegation;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.internal.operation.*;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -3,7 +3,7 @@ package assembler.builder
 import java.io.{BufferedWriter, OutputStream, OutputStreamWriter, PrintWriter}
 
 import assembler.Utils
-import assembler.const.{JavaVersion, Modifier}
+import assembler.constant.{JavaVersion, Modifier}
 import assembler.methoddescriptor.MethodDescriptor
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.tree.{ClassNode, FieldNode, MethodNode}

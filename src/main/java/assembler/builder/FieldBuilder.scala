@@ -1,7 +1,7 @@
 package assembler.builder
 
 import assembler.Utils
-import assembler.const.Modifier
+import assembler.constant.Modifier
 import org.objectweb.asm.tree.FieldNode
 
 class FieldBuilder private[builder] (modifier:Modifier, name:String, descriptor:String)

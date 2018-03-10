@@ -1,6 +1,6 @@
 package loki.language.generation.bytecode.rule
 
-import assembler.const.PUBLIC
+import assembler.constant.PUBLIC
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
 import loki.language.generation.bytecode.constant.BytecodeMethodDescriptors
 import loki.language.generation.bytecode.template.CommonBytecodeTemplate.CTemplateCommon

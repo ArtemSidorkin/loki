@@ -1,7 +1,7 @@
 package assembler.builder
 
 import assembler.Utils
-import assembler.const.{InternalDescriptors, Modifier}
+import assembler.constant.{InternalDescriptors, Modifier}
 import assembler.methoddescriptor.MethodDescriptor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree._

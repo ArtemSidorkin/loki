@@ -5,7 +5,7 @@ import loki.language.generation.rule.mixin.GenerationRuleMixinWhile
 import loki.language.parsing.LokiParser.WhileContext
 import loki.runtime.context.LUnitContext
 import loki.runtime.datatype.LUnit
-import loki.util.extension.StringExtensions.StringExtensions
+import loki.util.extension.StringExtension.StringExtension
 
 class WhileGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:WhileContext)
 	extends GenerationJavaRule(generationContext, ruleContext) with GenerationRuleMixinWhile
@@ -19,7 +19,7 @@ class WhileGenerationJavaRule(generationContext:JavaGenerationContext, ruleConte
 			(if (isLastCharacterNewLine) tabulateLessOneLevel else tabulateLessOneLevelContinueLastCode)
 		) (
 			s"""
-				new loki.runtime.helpers.LWhileHelper(this.unitContext, host, parameters, unitContext)
+				new loki.runtime.helper.LWhileHelper(this.unitContext, host, parameters, unitContext)
 				{
 					@Override
 					protected ${classOf[LUnit].getName} condition(${classOf[LUnit].getName} host, ${classOf[LUnit].getName}[] parameters, ${classOf[LUnitContext].getName} unitContext)

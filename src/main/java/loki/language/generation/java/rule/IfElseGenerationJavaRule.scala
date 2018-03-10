@@ -5,7 +5,7 @@ import loki.language.generation.rule.mixin.IfElseGenerationRuleMixin
 import loki.language.parsing.LokiParser.IfElseContext
 import loki.runtime.context.LUnitContext
 import loki.runtime.datatype.LUnit
-import loki.util.extension.StringExtensions.StringExtensions
+import loki.util.extension.StringExtension.StringExtension
 
 class IfElseGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:IfElseContext)
 	extends GenerationJavaRule(generationContext, ruleContext) with IfElseGenerationRuleMixin
@@ -17,7 +17,7 @@ class IfElseGenerationJavaRule(generationContext:JavaGenerationContext, ruleCont
 		(
 			addCode _ compose
 			(if (isLastCharacterNewLine) tabulateLessOneLevel else tabulateLessOneLevelContinueLastCode)
-		) ("new loki.runtime.helpers.LIfElseHelper(")
+		) ("new loki.runtime.helper.LIfElseHelper(")
 
 		generationContext.addPostExitRuleTask(logicalExpression, () =>
 		{

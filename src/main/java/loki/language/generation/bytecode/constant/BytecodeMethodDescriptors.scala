@@ -1,6 +1,6 @@
 package loki.language.generation.bytecode.constant
 
-import assembler.const.InternalDescriptors
+import assembler.constant.InternalDescriptors
 import assembler.methoddescriptor.{MixedMethodDescriptor, TypedMethodDescriptor}
 import loki.runtime.context.LUnitContext
 import loki.runtime.datatype.{LType, LUnit}

@@ -1,6 +1,6 @@
 package assembler.builder
 
-import assembler.const.{InternalDescriptors, Modifier}
+import assembler.constant.{InternalDescriptors, Modifier}
 import assembler.methoddescriptor.MethodDescriptor
 
 class InitMethodBuilder private[assembler](modifier:Modifier, descriptor:String)

@@ -1,7 +1,7 @@
 package loki.runtime.datatype;
 
 import loki.runtime.context.LUnitContext;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.Nullable;
 
 public class LModule extends LUnit
 {

@@ -1,8 +1,8 @@
 package loki.runtime.datatype;
 
 import loki.runtime.constant.LTypes;
-import loki.runtime.utils.LErrors;
-import loki.runtime.utils.Nullable;
+import loki.runtime.util.LErrors;
+import loki.runtime.util.Nullable;
 
 import java.util.*;
 
