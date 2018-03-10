@@ -2,8 +2,8 @@ package loki.execution
 
 import java.io.PrintStream
 
-import loki.language.generation.bytecode.CGeneratorBytecode
-import loki.language.generation.java.CGeneratorJava
+import loki.language.generation.bytecode.BytecodeGenerator
+import loki.language.generation.java.JavaGenerator
 import loki.system.SystemSettings
 
 object Execution
@@ -32,8 +32,8 @@ object Execution
 					errorPrintStream,
 					SystemSettings.EXECUTION_TARGET match
 					{
-						case _:ExecutionTargetBytecode.type => new CGeneratorBytecode(_)
-						case _:ExecutionTargetJava.type => new CGeneratorJava(_)
+						case _:ExecutionTargetBytecode.type => new BytecodeGenerator(_)
+						case _:ExecutionTargetJava.type => new JavaGenerator(_)
 						case executor => throw new IllegalArgumentException(s"""Unknown executor "$executor"!""")
 					}
 				)

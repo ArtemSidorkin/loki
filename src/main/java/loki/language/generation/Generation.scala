@@ -3,7 +3,6 @@ package loki.language.generation
 import org.antlr.v4.runtime.RuleContext
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 private[generation] trait Generation
 {
