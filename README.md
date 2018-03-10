@@ -1,13 +1,13 @@
 # Loki programming language
 
 ##Short examples
- - [examples/HelloWorld.loki](HelloWorld.loki)
+ - [HelloWorld.loki](examples/HelloWorld.loki)
 
- - [examples/Function.loki](Function.loki)
+ - [Function.loki](examples/Function.loki)
 
- - [examples/Class.loki](Class.loki)
+ - [Class.loki](examples/Class.loki)
 
- - [examples/LinkedList.loki](LinkedList.loki)
+ - [LinkedList.loki](examples/LinkedList.loki)
 
 ##Compilation
 
