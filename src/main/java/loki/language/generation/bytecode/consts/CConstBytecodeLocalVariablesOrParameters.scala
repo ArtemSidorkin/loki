@@ -1,0 +1,14 @@
+package loki.language.generation.bytecode.consts
+
+private[bytecode] object CConstBytecodeLocalVariablesOrParameters
+{
+	val UNIT__METHOD__CALL__PARAMETER__HOST = 1
+	val UNIT__METHOD__CALL__PARAMETER__PARAMETERS = 2
+	val UNIT__METHOD__CALL__VARIABLE__UNIT_CONTEXT = 3
+
+	val UNIT_HEIR__METHOD__INIT__PARAMETER__TYPE = 2
+	val UNIT_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT = 3
+	val UNIT_HEIR__METHOD__INIT__PARAMETER__PARAMETERS = 4
+
+	val MODULE_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT = 1
+}

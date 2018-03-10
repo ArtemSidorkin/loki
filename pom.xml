@@ -6,8 +6,8 @@
 >
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>CLoki</groupId>
-	<artifactId>CLoki</artifactId>
+	<groupId>Loki</groupId>
+	<artifactId>Loki</artifactId>
 	<version>0.0.1</version>
 
 	<properties>
@@ -28,7 +28,7 @@
 					<configuration>
 						<archive>
 							<manifest>
-								<mainClass>cloki.Main</mainClass>
+								<mainClass>loki.Main</mainClass>
 							</manifest>
 						</archive>
 						<descriptorRefs>
