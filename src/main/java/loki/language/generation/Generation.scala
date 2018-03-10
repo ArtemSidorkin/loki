@@ -16,20 +16,12 @@ private[generation] trait Generation
 		private type RULE_TASKS = mutable.Map[RuleContext, mutable.ArrayStack[RULE_TASK]]
 		private type RULE_TASK = ()=>Unit
 
-		private case class DeferredRuleActions(enterAction:()=>Unit, exitAction:()=>Unit)
-
 		val frameStack:FRAME_STACK = createFrameStack
 
 		private val preEnterRuleTasks = createRuleTasks
 		private val postEnterRuleTasks = createRuleTasks
 		private val preExitRuleTasks = createRuleTasks
 		private val postExitRuleTasks = createRuleTasks
-
-		private val deferredRulesActions = mutable.HashMap[RuleContext, Option[DeferredRuleActions]]()
-
-		private val deferredRulesByParentRule =
-			mutable.HashMap[RuleContext, ArrayBuffer[RuleContext]]()
-				.asInstanceOf[mutable.Map[RuleContext, mutable.Buffer[RuleContext]]]
 
 		def createFrameStack:FRAME_STACK
 
@@ -52,31 +44,6 @@ private[generation] trait Generation
 			addRuleTask(postExitRuleTasks, _:RuleContext, _:RULE_TASK)
 
 		def checkPostExitRuleTasks:(RuleContext) => Unit = applyRuleTasks(postExitRuleTasks, _:RuleContext)
-
-		def deferRule(ruleContext:RuleContext)
-		{
-			deferredRulesActions(ruleContext) = None
-			deferredRulesByParentRule.getOrElseUpdate(ruleContext.parent, ArrayBuffer()) += ruleContext
-		}
-
-		def setDeferredRuleActions(ruleContext:RuleContext, enterAction:()=>Unit, exitAction:()=>Unit)
-		{
-			deferredRulesActions(ruleContext) = Some(DeferredRuleActions(enterAction, exitAction))
-			deferredRulesByParentRule.getOrElseUpdate(ruleContext.parent, ArrayBuffer()) += ruleContext
-		}
-
-		def isDeferredRule(ruleContext:RuleContext):Boolean =
-			(deferredRulesActions contains ruleContext) || (deferredRulesActions contains ruleContext.parent)
-
-		def applyDeferredRules(deferredOrParentRuleContext:RuleContext)
-		{
-			deferredRulesActions get deferredOrParentRuleContext foreach (_ foreach (_.enterAction()))
-			deferredRulesByParentRule get deferredOrParentRuleContext foreach (_ foreach applyDeferredRules)
-			deferredRulesActions get deferredOrParentRuleContext foreach (_ foreach (_.exitAction()))
-
-			deferredRulesByParentRule -= deferredOrParentRuleContext
-			deferredRulesActions -= deferredOrParentRuleContext
-		}
 
 		private def addRuleTask(tasks:RULE_TASKS, ruleContext:RuleContext, ruleTask:RULE_TASK):Unit =
 			tasks.getOrElseUpdate(ruleContext, mutable.ArrayStack()) += ruleTask

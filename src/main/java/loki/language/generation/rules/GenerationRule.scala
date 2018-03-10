@@ -11,25 +11,17 @@ private[generation] class GenerationRule[
 )
 	extends GenerationRuleMixin[RULE_CONTEXT]
 {
-
-	def enter():Unit =
-		if (generationContext isDeferredRule ruleContext unary_!) enterAndCheckTasks()
-		else
-			generationContext.setDeferredRuleActions(ruleContext, () => enterAndCheckTasks(), () => exitAndCheckTasks())
-
-	def exit():Unit = if (generationContext isDeferredRule ruleContext unary_!) exitAndCheckTasks()
-
 	protected def enterAction():Unit = ()
 	protected def exitAction():Unit = ()
 
-	private def enterAndCheckTasks()
+	def enter()
 	{
 		generationContext.checkPreEnterRuleTasks(ruleContext)
 		enterAction()
 		generationContext.checkPostEnterRuleTasks(ruleContext)
 	}
 
-	private def exitAndCheckTasks()
+	def exit()
 	{
 		generationContext.checkPreExitRuleTasks(ruleContext)
 		exitAction()

@@ -19,6 +19,4 @@ private[generation] trait GenerationRuleMixin[RULE_CONTEXT <: RuleContext]
 	protected def frameStackSize:Int = generationContext.frameStack.size
 
 	protected def popFrame():Unit = generationContext.frameStack.pop()
-
-	protected def applyDeferredRules(ruleContext:RuleContext):Unit = generationContext.applyDeferredRules(ruleContext)
 }
