@@ -1,29 +1,24 @@
 # Loki programming language
 
-Loki is under development now, in middle stage of version 0.0.1.
-For now implemented variables, arrays, arithmetic, loop while, conditions, functions/lambdas, oop (partially).
-For now working on tests.
-
 ##Short examples
- - [HelloWorld.cloki](HelloWorld.cloki)
+ - [examples/HelloWorld.loki](HelloWorld.loki)
 
- - [Function.cloki](Function.cloki)
+ - [examples/Function.loki](Function.loki)
 
- - [Class.cloki](Class.cloki)
+ - [examples/Class.loki](Class.loki)
 
- - [LinkedList.cloki](LinkedList.cloki)
+ - [examples/LinkedList.loki](LinkedList.loki)
 
 ##Compilation
 
     mvn clean compile assembly:single
 
 ##Running
-**!Important! Pass file without extension!**
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Function
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Function.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Class
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Class.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar LinkedList
+    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar LinkedList.loki
