@@ -1,9 +1,9 @@
-map0 = {}
-map1 = {"a" : 1}
-map2 = {"a" : 1, "b" : 2}
-map3 = {"a" : 1, "b" : 2, "c" : 3}
+map0 = [:]
+map1 = ["a" : 1]
+map2 = ["a" : 1, "b" : 2]
+map3 = ["a" : 1, "b" : 2, "c" : 3]
 
-assert(map0.toString(), "{}")
-assert(map1.toString(), "{a : 1}")
-assert(map2.toString(), "{a : 1, b : 2}")
-assert(map3.toString(), "{a : 1, b : 2, c : 3}")
+assert(map0.toString(), "[:]")
+assert(map1.toString(), "[a : 1]")
+assert(map2.toString(), "[a : 1, b : 2]")
+assert(map3.toString(), "[a : 1, b : 2, c : 3]")

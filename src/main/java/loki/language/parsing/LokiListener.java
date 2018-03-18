@@ -2,7 +2,6 @@
 
 package loki.language.parsing;
 
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -138,6 +137,18 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MemberAccessor}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMemberAccessor(LokiParser.MemberAccessorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MemberAccessor}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMemberAccessor(LokiParser.MemberAccessorContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code VariableOrParameter}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -307,6 +318,18 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitAssignVariable(LokiParser.AssignVariableContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AssignMemberAccessor}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignMemberAccessor}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code AssignIndex}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -330,6 +353,18 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHostMember(LokiParser.HostMemberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Object}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterObject(LokiParser.ObjectContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Object}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitObject(LokiParser.ObjectContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AssignHostMember}
 	 * labeled alternative in {@link LokiParser#expression}.

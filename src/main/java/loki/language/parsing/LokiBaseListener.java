@@ -4,7 +4,6 @@ package loki.language.parsing;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -146,6 +145,18 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMemberAccessor(LokiParser.MemberAccessorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMemberAccessor(LokiParser.MemberAccessorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -319,6 +330,18 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssignIndex(LokiParser.AssignIndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -338,6 +361,18 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitHostMember(LokiParser.HostMemberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObject(LokiParser.ObjectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObject(LokiParser.ObjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

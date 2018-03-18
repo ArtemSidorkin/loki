@@ -6,32 +6,23 @@ import loki.language.generation.bytecode.template.StringBytecodeTemplate.CTempla
 import loki.language.generation.rule.mixin.StringGenerationRuleMixin
 import loki.language.parsing.LokiParser
 
-class StringBytecodeGenerationRule
-(
-	generationContext:BytecodeGenerationContext, ruleContext:LokiParser.StringContext
-) extends BytecodeGenerationRule(generationContext, ruleContext) with StringGenerationRuleMixin
+class StringBytecodeGenerationRule(
+	bytecodeGenerationContext:BytecodeGenerationContext, stringContext:LokiParser.StringContext
+) extends BytecodeGenerationRule(bytecodeGenerationContext, stringContext) with StringGenerationRuleMixin
 {
-	override protected def enterAction() =
+	override protected def enterAction()
 	{
-		val prprdStr = string split "\n" map (str => s"""${str.init}""") mkString "\n"
+		val preparedString =
+			if (isAcuteString) string else string split "\n" map (string => s"""${string.init}""") mkString "\n"
 
 		(
 			topMethodCall
 			newString ()
 			dup ()
-			ldc prprdStr
+			ldc preparedString
 			invokeInitString ()
 			incrementObjectCounter ()
 		)
 	}
 
-}
-
-object StringBytecodeGenerationRule
-{
-	def enter(generationContext:BytecodeGenerationContext, ruleContext:LokiParser.StringContext):Unit =
-		new StringBytecodeGenerationRule(generationContext, ruleContext).enter()
-
-	def exit(generationContext:BytecodeGenerationContext, ruleContext:LokiParser.StringContext):Unit =
-		new StringBytecodeGenerationRule(generationContext, ruleContext).exit()
 }

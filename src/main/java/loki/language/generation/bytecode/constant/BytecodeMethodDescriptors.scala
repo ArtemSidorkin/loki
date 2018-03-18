@@ -81,8 +81,9 @@ private[bytecode] object BytecodeMethodDescriptors
 			) -> Some(Left(classOf[LUnit]))
 		)
 
-	val UNIT__METHOD__TO_BOOLEAN =
-		MixedMethodDescriptor(Nil -> Some(Right(InternalDescriptors.PRIMITIVE_BOOLEAN)))
+	val UNIT__METHOD__TO_BOOLEAN = MixedMethodDescriptor(Nil -> Some(Right(InternalDescriptors.PRIMITIVE_BOOLEAN)))
+
+	val UNIT__METHOD__TO_STRING = TypedMethodDescriptor(Nil -> Some(classOf[String]))
 
 	val NUMBER__METHOD__INIT =
 		MixedMethodDescriptor((Right(InternalDescriptors.PRIMITIVE_DOUBLE) :: Nil) -> None)
@@ -94,5 +95,8 @@ private[bytecode] object BytecodeMethodDescriptors
 		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
 
 	val MAP__METHOD__INIT =
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
+
+	val OBJECT__METHOD__INIT =
 		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
 }

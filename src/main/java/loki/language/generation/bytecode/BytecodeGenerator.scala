@@ -9,11 +9,14 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 {
 	private implicit val bytecodeGenerationContext = new BytecodeGenerationContext(moduleName, classLoader)
 
+
+
 	override def enterModule(ruleContext:ModuleContext):Unit =
 		ModuleBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitModule(ruleContext:ModuleContext):Unit =
 		ModuleBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterInstruction(ruleContext:InstructionContext):Unit =
@@ -23,11 +26,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		InstructionBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterExpressionGroup(ruleContext:ExpressionGroupContext):Unit =
 		new BytecodeGenerationRule[ExpressionGroupContext](bytecodeGenerationContext, ruleContext).enter()
 
 	override def exitExpressionGroup(ruleContext:ExpressionGroupContext):Unit =
 		new BytecodeGenerationRule[ExpressionGroupContext](bytecodeGenerationContext, ruleContext).exit()
+
 
 
 	override def enterUnit(ruleContext:UnitContext):Unit =
@@ -37,11 +42,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		UnitBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterArray(ruleContext:ArrayContext):Unit =
 		ArrayBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitArray(ruleContext:ArrayContext):Unit =
 		ArrayBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterMap(ruleContext:MapContext):Unit =
@@ -51,11 +58,21 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		MapBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
+	override def enterObject(ruleContext:ObjectContext):Unit =
+		new ObjectBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).enter()
+
+	override def exitObject(ruleContext:ObjectContext):Unit =
+		new ObjectBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).exit()
+
+
+
 	override def enterIndex(ruleContext:IndexContext):Unit =
 		IndexBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitIndex(ruleContext:IndexContext):Unit =
 		IndexBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterAssignIndex(ruleContext:AssignIndexContext):Unit =
@@ -65,11 +82,29 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		AssignIndexBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
+	override def enterMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
+		new MemberAccessorBytecodeGenerationRule(bytecodeGenerationContext, memberAccessorContext).enter()
+
+	override def exitMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
+		new MemberAccessorBytecodeGenerationRule(bytecodeGenerationContext, memberAccessorContext).exit()
+
+
+
+	override def enterAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
+		new AssignMemberAccessorBytecodeGenerationRule(bytecodeGenerationContext, assignMemberAccessorContext).enter()
+
+	override def exitAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
+		new AssignMemberAccessorBytecodeGenerationRule(bytecodeGenerationContext, assignMemberAccessorContext).exit()
+
+
+
 	override def enterCall(ruleContext:CallContext):Unit =
 		CallBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitCall(ruleContext:CallContext):Unit =
 		CallBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterMemberCall(ruleContext:MemberCallContext):Unit =
@@ -79,11 +114,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		MemberCallBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterVariableOrParameter(ruleContext:VariableOrParameterContext):Unit =
 		VariableOrParameterBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitVariableOrParameter(ruleContext:VariableOrParameterContext):Unit =
 		VariableOrParameterBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterSuperHostMember(ruleContext:SuperHostMemberContext):Unit =
@@ -93,11 +130,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		SuperHostMemberBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterHostMember(ruleContext:HostMemberContext):Unit =
 		HostMemberBytecodeGenerationRuleHostMember.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitHostMember(ruleContext:HostMemberContext):Unit =
 		HostMemberBytecodeGenerationRuleHostMember.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterMember(ruleContext:MemberContext):Unit =
@@ -107,11 +146,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		MemberBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterAssignVariable(ruleContext:AssignVariableContext):Unit =
 		AssignVariableBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitAssignVariable(ruleContext:AssignVariableContext):Unit =
 		AssignVariableBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterAssignHostMember(ruleContext:AssignHostMemberContext):Unit =
@@ -121,11 +162,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		AssignHostMemberBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterAssignMember(ruleContext:AssignMemberContext):Unit =
 		AssignMemberBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitAssignMember(ruleContext:AssignMemberContext):Unit =
 		AssignMemberBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterHost(ruleContext:HostContext):Unit =
@@ -135,6 +178,7 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		HostBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterThis(ruleContext:ThisContext):Unit =
 		ThisBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
@@ -142,11 +186,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		ThisBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterString(ruleContext:StringContext):Unit =
-		StringBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+		new StringBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).enter()
 
 	override def exitString(ruleContext:StringContext):Unit =
-		StringBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+		new StringBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).exit()
+
 
 
 	override def enterNumber(ruleContext:NumberContext):Unit =
@@ -156,11 +202,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		NumberBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterUnaryOperation(ruleContext:UnaryOperationContext):Unit =
 		UnaryOperationBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 
 	override def exitUnaryOperation(ruleContext:UnaryOperationContext):Unit =
 		UnaryOperationBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterMulDiv(ruleContext:MulDivContext):Unit =
@@ -170,11 +218,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterAddSub(ruleContext:AddSubContext):Unit =
 		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 	
 	override def exitAddSub(ruleContext:AddSubContext):Unit =
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterEqNeq(ruleContext:EqNeqContext):Unit = 
@@ -184,11 +234,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext):Unit = 
 		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 	
 	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext):Unit = 
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit = 
@@ -198,11 +250,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterPipePipe(ruleContext:PipePipeContext):Unit = 
 		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 	
 	override def exitPipePipe(ruleContext:PipePipeContext):Unit = 
 		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterIfElse(ruleContext:IfElseContext):Unit = 
@@ -212,11 +266,13 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 		IfElseBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
 
 
+
 	override def enterWhile(ruleContext:WhileContext):Unit = 
 		WhileBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
 	
 	override def exitWhile(ruleContext:WhileContext):Unit =
 		WhileBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+
 
 
 	override def enterInheritance(ruleContext:InheritanceContext):Unit =

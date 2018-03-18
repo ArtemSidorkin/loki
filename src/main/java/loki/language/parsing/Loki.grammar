@@ -1,6 +1,6 @@
-grammar Loki;
+grammar Loki; //TODO: ╣╠  begin & end for the future
 
-//╠ ╣ begin and end for the future
+
 
 @header
 {
@@ -8,40 +8,65 @@ package loki.language.parsing;
 }
 
 
+
 module : (instruction SEMICOLON)+;
+
+
 
 instruction : expression;
 
+
+
 expression:
+
 	LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS #ExpressionGroup |
+
+
+
 	LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET #Array |
-	LEFT_BRACE (BEGIN)? (expression COLON expression (COMMA expression COLON expression)*)? (SEMICOLON)? (END)? RIGHT_BRACE (SEMICOLON)? (END)? #Map |
+
+
+
+	LEFT_BRACKET
+		(BEGIN)?
+			((expression COLON expression (COMMA expression COLON expression)*) | COLON) (SEMICOLON)?
+		(END)?
+	RIGHT_BRACKET (SEMICOLON)? (END)?
+	#Map |
+
+
+
+	LEFT_BRACE
+		(
+			(
+				BEGIN
+					expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
+				END
+			) |
+			(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?)?
+		)
+	RIGHT_BRACE
+	#Object |
+
+
 
 	DOLLAR #Host |
 
+
+
 	AT #This |
 
+
+
 	CHARACTERS #String |
+	ACUTE IDENTIFIER #String |
+
+
 
 	FLOAT #Number |
 	INT #Number |
 
-	(DOLLAR)? head=(IDENTIFIER | BACKSLASH) LEFT_PARENTHESIS
-		(BEGIN)?
-			(IDENTIFIER COMMA)* IDENTIFIER (SEMICOLON)?
-		(END)?
-	RIGHT_PARENTHESIS (inheritance)? COLON instruction
-	#Unit |
 
-	(DOLLAR)? head=(IDENTIFIER | BACKSLASH) LEFT_PARENTHESIS
-		(BEGIN)?
-			(IDENTIFIER COMMA)* IDENTIFIER (SEMICOLON)?
-		(END)?
-	RIGHT_PARENTHESIS (inheritance)? COLON
-		BEGIN
-			(instruction SEMICOLON)+
-		END
-	#Unit |
 
 	(DOLLAR)? head=(IDENTIFIER | BACKSLASH) (IDENTIFIER)* (inheritance)? COLON instruction  #Unit |
 
@@ -50,6 +75,8 @@ expression:
 			(instruction SEMICOLON)+
 		END
 	#Unit |
+
+
 
 	expression DOT IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS #MemberCall |
 
@@ -60,11 +87,16 @@ expression:
 	RIGHT_PARENTHESIS
 	#MemberCall |
 
+
+
 	DOLLAR DOLLAR IDENTIFIER #SuperHostMember |
 	DOLLAR IDENTIFIER #HostMember |
 	IDENTIFIER #VariableOrParameter |
 	expression DOT IDENTIFIER #Member |
 	expression LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
+	expression LEFT_BRACE ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACE #MemberAccessor |
+
+
 
 	expression LEFT_PARENTHESIS RIGHT_PARENTHESIS #Call |
 
@@ -75,8 +107,12 @@ expression:
 	RIGHT_PARENTHESIS
 	#Call |
 
+
+
 	MINUS expression #UnaryOperation |
 	BANG expression #UnaryOperation |
+
+
 
 	expression operator=(STAR | SLASH) expression #MulDiv |
 	expression operator=(PLUS | MINUS) expression #AddSub |
@@ -85,27 +121,88 @@ expression:
 	expression operator=(AMPERSAND_AMPERSAND | AMPERSAND_AMPERSAND) expression #AmpersandAmpersand |
 	expression operator=(PIPE_PIPE | PIPE_PIPE) expression #PipePipe |
 
+
+
 	DOLLAR IDENTIFIER EQUALS expression #AssignHostMember |
 	DOLLAR IDENTIFIER EQUALS BEGIN expression SEMICOLON END #AssignHostMember |
+
+
+
 	IDENTIFIER EQUALS expression #AssignVariable |
 	IDENTIFIER EQUALS BEGIN expression SEMICOLON END #AssignVariable |
+
+
+
 	expression DOT IDENTIFIER EQUALS expression #AssignMember |
 	expression DOT IDENTIFIER EQUALS SEMICOLON BEGIN expression END #AssignMember |
-	expression LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET EQUALS expression #AssignIndex |
-	expression LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET EQUALS BEGIN expression SEMICOLON END #AssignIndex |
+
+
+
+	expression LEFT_BRACKET
+		(BEGIN)?
+			(expression (COMMA expression)*)? (SEMICOLON)?
+		(END)?
+	RIGHT_BRACKET EQUALS expression
+	#AssignIndex |
+
+	expression LEFT_BRACKET
+		(BEGIN)?
+			(expression (COMMA expression)*)? (SEMICOLON)?
+		(END)?
+	RIGHT_BRACKET EQUALS BEGIN expression SEMICOLON END
+	#AssignIndex |
+
+
+
+	expression LEFT_BRACE
+	 	((BEGIN expression SEMICOLON END) | expression)
+	RIGHT_BRACE EQUALS ((BEGIN expression SEMICOLON END) | expression)?
+	#AssignMemberAccessor |
+
 
 	IF LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS instruction (else_)? #IfElse |
-	IF LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS BEGIN (instruction SEMICOLON)+ END (else_)? #IfElse |
+
+	IF LEFT_PARENTHESIS
+		(BEGIN)?
+			expression (SEMICOLON)?
+		(END)?
+	RIGHT_PARENTHESIS
+		BEGIN
+			(instruction SEMICOLON)+
+		END
+	(else_)?
+	#IfElse |
+
+
 
 	WHILE LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS instruction #While |
-	WHILE LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS BEGIN (instruction SEMICOLON)+ END  #While ;
+
+	WHILE LEFT_PARENTHESIS
+		(BEGIN)?
+			expression (SEMICOLON)?
+		(END)?
+	RIGHT_PARENTHESIS
+		BEGIN
+			(instruction SEMICOLON)+
+		END
+	#While
+
+;
+
+
 
 inheritance : LEFT_THIN_ARROW expression | LEFT_THIN_ARROW (expression COMMA)+ expression;
 
+
+
 else_ : ELSE BEGIN (instruction SEMICOLON)+ END | ELSE instruction;
+
+
 
 BEGIN : '~{';
 END : '~}';
+
+
 
 IF : 'if';
 ELSE : 'else';
@@ -144,5 +241,8 @@ LEFT_BRACKET : '[';
 RIGHT_BRACKET : ']';
 LEFT_BRACE : '{';
 RIGHT_BRACE : '}';
+ACUTE : '`';
+
+
 
 SKIP : [ \t\r\n]+ -> skip;

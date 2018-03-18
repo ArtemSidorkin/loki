@@ -12,7 +12,8 @@ public enum LDataUnit
 	NUMBER_PROTOTYPE("NumberPrototype"),
 	STRING_PROTOTYPE("StringPrototype"),
 	ARRAY_PROTOTYPE("ArrayPrototype"),
-	MAP_PROTOTYPE("MapPrototype");
+	MAP_PROTOTYPE("MapPrototype"),
+	OBJECT_PROTOTYPE("ObjectPrototype");
 
 	public String name;
 

@@ -4,7 +4,9 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class LMapPrototype extends LUnit
 {
@@ -75,9 +77,9 @@ public class LMapPrototype extends LUnit
 	@Override
 	public String _toString()
 	{
-		if (items == null || items.size() == 0) return "{}";
+		if (items == null || items.size() == 0) return "[:]";
 
-		StringJoiner stringJoiner = new StringJoiner(", ", "{", "}");
+		StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
 
 		for (LUnit key : items.keySet()) stringJoiner.add(String.format("%s : %s", key, items.get(key)));
 

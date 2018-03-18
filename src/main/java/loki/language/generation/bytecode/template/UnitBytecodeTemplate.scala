@@ -115,6 +115,13 @@ private[bytecode] object UnitBytecodeTemplate
 			BytecodeMethodDescriptors.UNIT__METHOD__TO_BOOLEAN
 		)
 
+		def invokeVirtualUnitMethodToString() = method invokevirtual
+		(
+			classOf[LUnit],
+			LanguageMembers.UNIT__METHOD__TO_STRING,
+			BytecodeMethodDescriptors.UNIT__METHOD__TO_STRING
+		)
+
 		def invokeInitUnit() = method invokeinit
 		(
 			classOf[LUnit], BytecodeMethodDescriptors.UNIT__METHOD__INIT

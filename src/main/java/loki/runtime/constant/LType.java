@@ -8,7 +8,8 @@ public enum LType
 	NUMBER("Number"),
 	STRING("String"),
 	ARRAY("Array"),
-	MAP("Map");
+	MAP("Map"),
+	OBJECT("Object");
 
 	public String name;
 

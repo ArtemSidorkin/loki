@@ -7,7 +7,8 @@ import loki.language.parsing.LokiParser._
 
 class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 {
-	private implicit val javaGenerationContext = new JavaGenerationContext(moduleName, classLoader)
+	private implicit val javaGenerationContext = new JavaGenerationContext(moduleName, classLoader) //if it is implicit, this should be used
+
 
 
 	override def enterModule(ruleContext:ModuleContext):Unit =
@@ -17,11 +18,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		ModuleGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterInstruction(ruleContext:InstructionContext):Unit =
 		InstructionGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitInstruction(ruleContext:InstructionContext):Unit =
 		InstructionGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterExpressionGroup(ruleContext:ExpressionGroupContext):Unit =
@@ -31,11 +34,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		new GenerationJavaRule[ExpressionGroupContext](javaGenerationContext, ruleContext).exit()
 
 
+
 	override def enterUnit(ruleContext:UnitContext):Unit =
 		UnitGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitUnit(ruleContext:UnitContext):Unit =
 		UnitGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterArray(ruleContext:ArrayContext):Unit =
@@ -45,8 +50,18 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		ArrayGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterMap(ruleContext:MapContext):Unit = MapGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 	override def exitMap(ruleContext:MapContext):Unit = MapGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
+
+
+	override def enterObject(ruleContext:ObjectContext):Unit =
+		new ObjectGenerationJavaRule(javaGenerationContext, ruleContext).enter()
+
+	override def exitObject(ruleContext:ObjectContext):Unit =
+		new ObjectGenerationJavaRule(javaGenerationContext, ruleContext).exit()
+
 
 
 	override def enterIndex(ruleContext:IndexContext):Unit =
@@ -56,11 +71,29 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		IndexGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterAssignIndex(ruleContext:AssignIndexContext):Unit =
 		AssignIndexGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitAssignIndex(ruleContext:AssignIndexContext):Unit =
 		AssignIndexGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
+
+
+	override def enterMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
+		new MemberAccessorGenerationJavaRule(javaGenerationContext, memberAccessorContext).enter()
+
+	override def exitMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
+		new MemberAccessorGenerationJavaRule(javaGenerationContext, memberAccessorContext).exit()
+
+
+
+	override def enterAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
+		new AssignMemberAccessorGenerationJavaRule(javaGenerationContext, assignMemberAccessorContext).enter()
+
+	override def exitAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
+		new AssignMemberAccessorGenerationJavaRule(javaGenerationContext, assignMemberAccessorContext).exit()
+
 
 
 	override def enterCall(ruleContext:CallContext):Unit =
@@ -70,11 +103,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		CallGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterMemberCall(ruleContext:MemberCallContext):Unit =
 		MemberCallGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitMemberCall(ruleContext:MemberCallContext):Unit =
 		MemberCallGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterVariableOrParameter(ruleContext:VariableOrParameterContext):Unit =
@@ -84,11 +119,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		VariableOrParameterGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterSuperHostMember(ruleContext:SuperHostMemberContext):Unit =
 		SuperHostMemberGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitSuperHostMember(ruleContext:SuperHostMemberContext):Unit =
 		SuperHostMemberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterHostMember(ruleContext:HostMemberContext):Unit =
@@ -98,11 +135,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		HostMemberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterMember(ruleContext:MemberContext):Unit =
 		MemberGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitMember(ruleContext:MemberContext):Unit =
 		MemberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterAssignVariable(ruleContext:AssignVariableContext):Unit =
@@ -112,11 +151,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		AssignVariableGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterAssignHostMember(ruleContext:AssignHostMemberContext):Unit =
 		AssignHostMemberGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitAssignHostMember(ruleContext:AssignHostMemberContext):Unit =
 		AssignHostMemberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterAssignMember(ruleContext:AssignMemberContext):Unit =
@@ -126,11 +167,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		AssignMemberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterHost(ruleContext:HostContext):Unit =
 		HostGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitHost(ruleContext:HostContext):Unit =
 		HostGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterThis(ruleContext:ThisContext):Unit =
@@ -140,11 +183,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		ThisGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterString(ruleContext:StringContext):Unit =
-		StringGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+		new StringGenerationJavaRule(javaGenerationContext, ruleContext).enter()
 
 	override def exitString(ruleContext:StringContext):Unit =
-		StringGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+		new StringGenerationJavaRule(javaGenerationContext, ruleContext).exit()
+
 
 
 	override def enterNumber(ruleContext:NumberContext):Unit =
@@ -154,11 +199,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		NumberGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterUnaryOperation(ruleContext:UnaryOperationContext):Unit =
 		UnaryOperationGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitUnaryOperation(ruleContext:UnaryOperationContext):Unit =
 		UnaryOperationGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterMulDiv(ruleContext:MulDivContext):Unit =
@@ -168,11 +215,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterAddSub(ruleContext:AddSubContext):Unit =
 		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitAddSub(ruleContext:AddSubContext):Unit =
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterEqNeq(ruleContext:EqNeqContext):Unit =
@@ -182,11 +231,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext):Unit =
 		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext):Unit =
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit =
@@ -196,11 +247,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterPipePipe(ruleContext:PipePipeContext):Unit =
 		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitPipePipe(ruleContext:PipePipeContext):Unit =
 		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterIfElse(ruleContext:IfElseContext):Unit =
@@ -210,11 +263,13 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 		IfElseGenerationJavaRule.exit(javaGenerationContext, ruleContext)
 
 
+
 	override def enterWhile(ruleContext:WhileContext):Unit =
 		WhileGenerationJavaRule.enter(javaGenerationContext, ruleContext)
 
 	override def exitWhile(ruleContext:WhileContext):Unit =
 		WhileGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+
 
 
 	override def enterInheritance(ruleContext:InheritanceContext):Unit =

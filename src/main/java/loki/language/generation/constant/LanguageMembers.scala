@@ -17,12 +17,13 @@ private[generation] object LanguageMembers
 	val UNIT__METHOD__SET_INDEXED_ITEM = "setIndexedItem"
 	val UNIT__METHOD__SET_PARAMETER_NAMES = "setParameterNames"
 	val UNIT__METHOD__CALL__PARAMETER__HOST = "host"
-	def UNIT__METHOD__CALL__PARAMETER__PARAMETERS = "parameters"
+	def UNIT__METHOD__CALL__PARAMETER__PARAMETERS = "parameters" //why def?
 	val UNIT__METHOD__CALL__PARAMETER__CONTEXT = "unitContext"
 	val UNIT__METHOD__CALL = "call"
 	val UNIT__METHOD__CALL_MEMBER = "callMember"
 	val UNIT__METHOD__CHECK_CALL_PARAMETER = "checkCallParameter"
 	val UNIT__METHOD__TO_BOOLEAN = "toBoolean"
+	val UNIT__METHOD__TO_STRING = "toString"
 
 	val UNARY_OPERATOR_BANG = "!_"
 	val UNARY_OPERATOR_MINUS = "-_"

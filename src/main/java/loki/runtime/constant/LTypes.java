@@ -16,4 +16,7 @@ public class LTypes
 
 	public static final loki.runtime.datatype.LType MAP_PROTOTYPE = new loki.runtime.datatype.LType(LDataUnit.MAP_PROTOTYPE.name);
 	public static final loki.runtime.datatype.LType MAP = new loki.runtime.datatype.LType(LType.MAP.name);
+
+	public static final loki.runtime.datatype.LType OBJECT_PROTOTYPE = new loki.runtime.datatype.LType(LDataUnit.OBJECT_PROTOTYPE.name);
+	public static final loki.runtime.datatype.LType OBJECT = new loki.runtime.datatype.LType(LType.OBJECT.name);
 }

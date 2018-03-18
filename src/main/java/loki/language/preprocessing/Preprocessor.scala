@@ -1,6 +1,7 @@
 package loki.language.preprocessing
 
 import loki.language.preprocessing.command._
+import loki.system.SystemSettings
 
 private class Preprocessor(code:String)
 {
@@ -21,5 +22,10 @@ object Preprocessor
 		InferSemicolonsPreprocessingCommand ::
 		Nil
 
-    def apply(code:String):String = (new Preprocessor(code))()
+    def apply(code:String):String =
+	{
+		val preprocessedCode = (new Preprocessor(code))()
+		if (SystemSettings.TRACE_PREPROCESSED_CODE) println(preprocessedCode)
+		preprocessedCode
+	}
 }

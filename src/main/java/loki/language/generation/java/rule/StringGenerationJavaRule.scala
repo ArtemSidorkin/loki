@@ -5,21 +5,15 @@ import loki.language.generation.rule.mixin.StringGenerationRuleMixin
 import loki.language.parsing.LokiParser
 import loki.runtime.datatype.LString
 
-class StringGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:LokiParser.StringContext)
-	extends GenerationJavaRule(generationContext, ruleContext) with StringGenerationRuleMixin
+class StringGenerationJavaRule(javaGenerationContext:JavaGenerationContext, stringContext:LokiParser.StringContext)
+	extends GenerationJavaRule(javaGenerationContext, stringContext) with StringGenerationRuleMixin
 {
-	override protected def enterAction() =
+	override protected def enterAction()
 	{
-		val prprdStr = string split "\n" map (str => s""""${str.init}"""") mkString """ + "\n" + """
-		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LString].getName}($prprdStr)")
+		val preparedString =
+			if (isAcuteString) s""""$string""""
+			else string split "\n" map (string => s""""${string.init}"""") mkString """ + "\n" + """
+
+		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"new ${classOf[LString].getName}($preparedString)")
 	}
-}
-
-object StringGenerationJavaRule
-{
-	def enter(generationContext:JavaGenerationContext, ruleContext:LokiParser.StringContext):Unit =
-		new StringGenerationJavaRule(generationContext, ruleContext).enter()
-
-	def exit(generationContext:JavaGenerationContext, ruleContext:LokiParser.StringContext):Unit =
-		new StringGenerationJavaRule(generationContext, ruleContext).exit()
 }

@@ -12,6 +12,8 @@ object Main extends App
 {
 	private val JAVA_KEY = "--java"
 	private val TEST_KEY = "--test"
+	private val TRACE_PREPROCESSED_CODE = "--trace-preprocessed-code"
+
 
 	{
 		SystemSettings.EXECUTION_TARGET = ExecutionTargetBytecode
@@ -20,6 +22,9 @@ object Main extends App
 			args,
 			arguments =>
 			{
+				if (arguments.parameterlessKeys contains TRACE_PREPROCESSED_CODE)
+					SystemSettings.TRACE_PREPROCESSED_CODE = true
+
 				if (arguments.parameterlessKeys contains TEST_KEY) Tester()
 
 				if (arguments.parameterlessKeys contains JAVA_KEY) SystemSettings.EXECUTION_TARGET = ExecutionTargetJava
