@@ -1,6 +1,7 @@
 package loki.runtime.datatype;
 
-import loki.runtime.builtin.LBuiltins;
+import loki.runtime.builtin.member.type.LGetId;
+import loki.runtime.builtin.member.type.LGetName;
 import loki.util.IdGenerator;
 
 public class LType extends LUnit
@@ -57,7 +58,7 @@ public class LType extends LUnit
 		{
 			if (!builtinsInitialized)
 			{
-				LBuiltins.initType(this);
+				initializeBuiltins();
 				builtinsInitialized = true;
 			}
 		}
@@ -75,5 +76,11 @@ public class LType extends LUnit
 	public String _toString()
 	{
 		return name;
+	}
+
+	private void initializeBuiltins()
+	{
+		LGetId.instance.init(this);
+		LGetName.instance.init(this);
 	}
 }

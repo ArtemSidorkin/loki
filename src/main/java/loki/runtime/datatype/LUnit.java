@@ -1,7 +1,9 @@
 package loki.runtime.datatype;
 
 import loki.runtime.LSettings;
-import loki.runtime.builtin.LBuiltins;
+import loki.runtime.builtin.member.unit.*;
+import loki.runtime.builtin.operation.binary.unit.LUnitBangEquals;
+import loki.runtime.builtin.operation.binary.unit.LUnitEqualsEquals;
 import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
@@ -61,7 +63,7 @@ public abstract class LUnit
 				prototype = new LUnit(new LType(LDataUnit.UNIT_PROTOTYPE.name))
 				{
 					{
-						LBuiltins.initUnitPrototype(this);
+						initializeBuiltins();
 					}
 
 					@Override
@@ -72,6 +74,21 @@ public abstract class LUnit
 
 					@Override
 					protected void initParentsIfNeeded() {}
+
+					private void initializeBuiltins()
+					{
+						LNew.instance.init(this);
+						LAddParent.instance.init(this);
+						LGetSuperMember.instance.init(this);
+						LGetIndexItem.instance.init(this);
+						LSetIndexItem.instance.init(this);
+						LGetType.instance.init(this);
+						LToString.instance.init(this);
+						LHashCode.instance.init(this);
+						LEquals.instance.init(this);
+						LUnitEqualsEquals.instance.init(this);
+						LUnitBangEquals.instance.init(this);
+					}
 				};
 		}
 	}

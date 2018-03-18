@@ -42,8 +42,8 @@ public class LUnitContext
 	public LUnit getSuperVariable(String superVariableName)
 	{
 		if (parentUnitContext != null) return parentUnitContext.getVariable(superVariableName);
-		else if (LBuiltins.defaults.containsKey(superVariableName))
-			return LBuiltins.defaults.get(superVariableName).get();
+		else if (LBuiltins.container.containsKey(superVariableName))
+			return LBuiltins.container.get(superVariableName).get();
 
 		return LUndefined.instance;
 	}

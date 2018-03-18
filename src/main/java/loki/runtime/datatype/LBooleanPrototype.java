@@ -1,7 +1,9 @@
 package loki.runtime.datatype;
 
 
-import loki.runtime.builtin.LBuiltins;
+import loki.runtime.builtin.operation.binary.bool.LBooleanAmpersandAmpersand;
+import loki.runtime.builtin.operation.binary.bool.LBooleanPipePipe;
+import loki.runtime.builtin.operation.unary.bool.LBooleanNegation;
 import loki.runtime.constant.LTypes;
 
 public class LBooleanPrototype extends LUnit
@@ -19,7 +21,7 @@ public class LBooleanPrototype extends LUnit
 	private LBooleanPrototype()
 	{
 		super(LTypes.BOOLEAN_PROTOTYPE);
-		LBuiltins.initBooleanPrototype(this);
+		initializeBuiltins();
 	}
 
 	public boolean getValue()
@@ -38,5 +40,12 @@ public class LBooleanPrototype extends LUnit
 	{
 		LBoolean boolean_ = unit.asType(LTypes.BOOLEAN);
 		return boolean_ != null && getValue() == boolean_.getValue();
+	}
+
+	private void initializeBuiltins()
+	{
+		LBooleanNegation.instance.init(this);
+		LBooleanAmpersandAmpersand.instance.init(this);
+		LBooleanPipePipe.instance.init(this);
 	}
 }
