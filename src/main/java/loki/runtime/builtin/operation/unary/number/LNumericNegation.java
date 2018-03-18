@@ -4,10 +4,10 @@ import loki.runtime.builtin.operation.unary.LUnaryOperation;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.number.LNumber;
-import loki.runtime.datatype.number.LNumberPrototype;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.number.LNumber;
+import loki.runtime.datatype.number.LNumberPrototype;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 

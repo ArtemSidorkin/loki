@@ -18,9 +18,9 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 
-abstract public class LUnit
+public abstract class LUnit
 {
-	public static final LUnit[] emptyUnitArray = {};
+	public static final LUnit[] EMPTY_UNIT_ARRAY = {};
 
 	private static volatile LUnit prototype;
 

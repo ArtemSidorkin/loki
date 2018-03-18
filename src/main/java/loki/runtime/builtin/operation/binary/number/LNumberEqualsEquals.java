@@ -2,9 +2,9 @@ package loki.runtime.builtin.operation.binary.number;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.datatype.LFalse;
-import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.LTrue;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.number.LNumber;
 
 public class LNumberEqualsEquals extends LNumberOperation
 {

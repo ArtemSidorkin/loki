@@ -3,10 +3,10 @@ package loki.runtime.builtin.member.type;
 import loki.runtime.builtin.member.LMember;
 import loki.runtime.constant.LTypeMember;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.LType;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.number.LNumber;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 

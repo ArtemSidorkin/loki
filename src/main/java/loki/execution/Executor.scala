@@ -11,8 +11,8 @@ import loki.language.preprocessing.Preprocessor
 import loki.runtime.context.LUnitContext
 import loki.runtime.datatype.{LModule, LUnit}
 import loki.util.FileUtil
-import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime._
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 import scala.collection.JavaConversions._
 

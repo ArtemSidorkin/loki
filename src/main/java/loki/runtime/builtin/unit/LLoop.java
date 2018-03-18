@@ -3,7 +3,10 @@ package loki.runtime.builtin.unit;
 import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.*;
+import loki.runtime.datatype.LType;
+import loki.runtime.datatype.LUndefined;
+import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.LVoid;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
@@ -31,7 +34,7 @@ public class LLoop extends LUnit
 
 		LUnit actions = checkCallParameter(parameters, 1);
 
-		for (int i = 0; i < countAsNumber.getValue(); i++) actions.call(host, emptyUnitArray, unitContext);
+		for (int i = 0; i < countAsNumber.getValue(); i++) actions.call(host, EMPTY_UNIT_ARRAY, unitContext);
 
 		return LVoid.instance;
 	}
