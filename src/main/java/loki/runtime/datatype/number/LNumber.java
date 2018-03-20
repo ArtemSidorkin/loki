@@ -24,20 +24,36 @@ public class LNumber extends LNumberPrototype
 	}
 
 	@Override
+	public LType getType()
+	{
+		return LTypes.NUMBER;
+	}
+
+	private ConcurrentLinkedDeque<LUnit> getParents()
+	{
+		if (parents != null) return parents;
+
+		return _parents;
+	}
+
+	@Override
 	public LUnit addParent(LUnit parent)
 	{
 		if (parents == null) synchronized (this)
 		{
 			if (parents == null) parents = new ConcurrentLinkedDeque<>(_parents);
 		}
+
 		parents.add(parent);
+
 		return this;
 	}
 
 	@Nullable
+	@Override
 	public <T extends LUnit> T asType(LType type)
 	{
-		if (getType()._equals(type)) return (T)this;
+		if (getType().equals(type)) return (T)this;
 
 		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
 		{
@@ -46,6 +62,7 @@ public class LNumber extends LNumberPrototype
 			if (parent != null)
 			{
 				LUnit parentAsType = parent.asType(type);
+
 				if (parentAsType != null) return (T)parentAsType;
 			}
 		}
@@ -53,6 +70,7 @@ public class LNumber extends LNumberPrototype
 		return null;
 	}
 
+	@Override
 	public LUnit getSuperMember(String superMemberName)
 	{
 		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
@@ -70,19 +88,7 @@ public class LNumber extends LNumberPrototype
 		return LUndefined.instance;
 	}
 
-	protected void initParentsIfNeeded() {}
-
-	public ConcurrentLinkedDeque<LUnit> getParents()
-	{
-		if (parents != null) return parents;
-
-		return _parents;
-	}
-
 	@Override
-	public LType getType()
-	{
-		return LTypes.NUMBER;
-	}
+	protected void initParentsIfNeeded() {}
 }
 

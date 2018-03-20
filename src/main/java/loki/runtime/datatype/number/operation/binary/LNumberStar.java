@@ -1,4 +1,4 @@
-package loki.runtime.builtin.operation.binary.number;
+package loki.runtime.datatype.number.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.datatype.LUnit;

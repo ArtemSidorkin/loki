@@ -1,39 +1,24 @@
 package loki.runtime.datatype.number;
 
-import loki.runtime.builtin.operation.binary.number.*;
-import loki.runtime.builtin.operation.unary.number.LNumericNegation;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUnit;
-import loki.runtime.datatype.number.internal.operation.*;
+import loki.runtime.datatype.number.operation.binary.*;
+import loki.runtime.datatype.number.operation.internal.*;
+import loki.runtime.datatype.number.operation.unary.LNumericNegation;
 import loki.runtime.util.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class LNumberPrototype extends LUnit
 {
 	public static final LNumberPrototype instance = new LNumberPrototype();
 
-	private static final Map<String, LUnit> builtins = new HashMap<String, LUnit>()
-	{{
-		put(LUnaryOperator.MINUS.symbol, LNumericNegation.instance);
-		put(LBinaryOperator.STAR.symbol, LNumberStar.instance);
-		put(LBinaryOperator.SLASH.symbol, LNumberSlash.instance);
-		put(LBinaryOperator.PLUS.symbol, LNumberPlus.instance);
-		put(LBinaryOperator.MINUS.symbol, LNumberMinus.instance);
-		put(LBinaryOperator.EQUALS_EQUALS.symbol, LNumberEqualsEquals.instance);
-		put(LBinaryOperator.BANG_EQUALS.symbol, LNumberBangEquals.instance);
-		put(LBinaryOperator.GREATER_THAN_EQUALS.symbol, LNumberGreaterThanEquals.instance);
-		put(LBinaryOperator.LESS_THAN_EQUALS.symbol, LNumberLessThanEquals.instance);
-		put(LBinaryOperator.GREATER_THAN.symbol, LNumberGreaterThan.instance);
-		put(LBinaryOperator.LESS_THAN.symbol, LNumberLessThan.instance);
-	}};
-
-	private static final Map<String, LNumberInternalOperation> internalOperations =
-		new HashMap<String, LNumberInternalOperation>()
+	private static final ConcurrentMap<String, LNumberInternalOperation> internalOperations =
+		new ConcurrentHashMap<String, LNumberInternalOperation>()
 		{{
 			put(LUnaryOperator.MINUS.symbol, LUnaryMinusNumberInternalOperation.instance);
 			put(LBinaryOperator.STAR.symbol, LStarNumberInternalOperation.instance);
@@ -59,6 +44,7 @@ public class LNumberPrototype extends LUnit
 	{
 		super(LTypes.NUMBER_PROTOTYPE);
 		value = 0;
+		initBuiltins();
 	}
 
 	protected static LNumber checkRightOperand(@Nullable LUnit[] parameters)
@@ -74,6 +60,24 @@ public class LNumberPrototype extends LUnit
 	}
 
 	@Override
+	public LUnit setMember(String memberName, LUnit member)
+	{
+		if (internalOperations != null) internalOperations.remove(memberName);
+
+		return super.setMember(memberName, member);
+	}
+
+	@Override
+	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
+	{
+		LNumberInternalOperation internalOperation = internalOperations.get(memberName);
+
+		if (internalOperation != null) return internalOperation.apply(value, parameters);
+
+		return super.callMember(memberName, parameters, unitContext);
+	}
+
+	@Override
 	public int _hashCode()
 	{
 		return Double.hashCode(value);
@@ -83,6 +87,7 @@ public class LNumberPrototype extends LUnit
 	public boolean _equals(LUnit unit)
 	{
 		LNumber number = unit.asType(LTypes.NUMBER);
+
 		return number != null && getValue() == number.getValue();
 	}
 
@@ -92,27 +97,18 @@ public class LNumberPrototype extends LUnit
 		return value == Math.floor(value) ? String.valueOf((long)value) : String.valueOf(value);
 	}
 
-	public LUnit getMember(String memberName)
+	private void initBuiltins()
 	{
-		LUnit member = builtins.get(memberName);
-
-		if (member != null) return member;
-
-		return super.getMember(memberName);
-	}
-
-	@Override
-	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
-	{
-		LNumberInternalOperation internalOperation = internalOperations.get(memberName);
-
-		if (internalOperation != null)
-		{
-			LUnit result = internalOperation.apply(members, value, parameters);
-
-			if (result != null) return result;
-		}
-
-		return super.callMember(memberName, parameters, unitContext);
+		LNumericNegation.instance.init(this);
+		LNumberStar.instance.init(this);
+		LNumberSlash.instance.init(this);
+		LNumberPlus.instance.init(this);
+		LNumberMinus.instance.init(this);
+		LNumberEqualsEquals.instance.init(this);
+		LNumberBangEquals.instance.init(this);
+		LNumberGreaterThanEquals.instance.init(this);
+		LNumberLessThanEquals.instance.init(this);
+		LNumberGreaterThan.instance.init(this);
+		LNumberLessThan.instance.init(this);
 	}
 }

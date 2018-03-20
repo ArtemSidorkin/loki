@@ -1,4 +1,4 @@
-package loki.runtime.builtin.operation.unary.number;
+package loki.runtime.datatype.number.operation.unary;
 
 import loki.runtime.builtin.operation.unary.LUnaryOperation;
 import loki.runtime.constant.LTypes;
