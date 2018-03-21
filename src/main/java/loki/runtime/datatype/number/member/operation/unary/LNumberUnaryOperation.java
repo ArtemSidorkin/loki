@@ -1,4 +1,4 @@
-package loki.runtime.datatype.number.operation.unary;
+package loki.runtime.datatype.number.member.operation.unary;
 
 import loki.runtime.builtin.operation.unary.LUnaryOperation;
 import loki.runtime.constant.LTypes;
@@ -11,13 +11,11 @@ import loki.runtime.datatype.number.LNumberPrototype;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
-public class LNumericNegation extends LUnaryOperation<LNumberPrototype>
+public abstract class LNumberUnaryOperation extends LUnaryOperation<LNumberPrototype>
 {
-	public static final LNumericNegation instance = new LNumericNegation();
-
-	private LNumericNegation()
+	public LNumberUnaryOperation(LUnaryOperator unaryOperator)
 	{
-		super(LUnaryOperator.MINUS);
+		super(unaryOperator);
 	}
 
 	@Override
@@ -25,9 +23,11 @@ public class LNumericNegation extends LUnaryOperation<LNumberPrototype>
 	{
 		LNumber hostAsNumber = host.asType(LTypes.NUMBER);
 
-		if (hostAsNumber != null) return new LNumber(-hostAsNumber.getValue());
+		if (hostAsNumber != null) return execute(hostAsNumber);
 
 		LErrors.printErrorUnitDoesNotBelongToType(host, LTypes.NUMBER.getNameWithId());
 		return LUndefined.instance;
 	}
+
+	protected abstract LUnit execute(LNumber operand);
 }

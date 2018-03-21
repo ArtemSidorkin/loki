@@ -11,6 +11,7 @@ class OperatorGenerationJavaRule(generationContext:JavaGenerationContext, ruleCo
 	extends GenerationJavaRule(generationContext, ruleContext) with OperatorGenerationRuleMixin
 {
 	// -> mixin
+	// -> move to separate operator method?
 	override protected def enterAction()
 	{
 		val oprtn = ruleContext match

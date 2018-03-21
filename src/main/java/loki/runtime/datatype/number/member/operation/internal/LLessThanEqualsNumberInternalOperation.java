@@ -1,4 +1,4 @@
-package loki.runtime.datatype.number.operation.internal;
+package loki.runtime.datatype.number.member.operation.internal;
 
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
@@ -10,7 +10,7 @@ public class LLessThanEqualsNumberInternalOperation extends LNumberInternalOpera
 	public static final LLessThanEqualsNumberInternalOperation instance = new LLessThanEqualsNumberInternalOperation();
 
 	@Override
-	public LUnit apply(Double value, LUnit[] parameters)
+	public LUnit apply(double value, LUnit[] parameters)
 	{
 		LNumber parameter = checkRightOperand(parameters);
 

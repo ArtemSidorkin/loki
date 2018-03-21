@@ -110,10 +110,15 @@ public abstract class LUnit
 		return parameterIndexes;
 	}
 
+	@Nullable
+	protected ConcurrentLinkedDeque<LUnit> getParents() {
+		return parents;
+	}
+
 	public LUnit addParent(LUnit parent)
 	{
 		initParentsIfNeeded();
-		parents.add(parent);
+		getParents().add(parent);
 		return this;
 	}
 
@@ -121,7 +126,7 @@ public abstract class LUnit
 	{
 		initParentsIfNeeded();
 
-		for (Iterator<LUnit> parentIterator = parents.descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
 
@@ -220,22 +225,21 @@ public abstract class LUnit
 	}
 
 	@Nullable
-	public <T extends LUnit> T asType(LType type)
+	public <TYPE extends LUnit> TYPE asType(LType type)
 	{
-		if (getType()== type) return (T)this;
+		if (getType() == type) return (TYPE)this;
 
 		initParentsIfNeeded();
 
-		if (parents == null) return null;
-
-		for (Iterator<LUnit> parentIterator = parents.descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
 
 			if (parent != null)
 			{
 				LUnit parentAsType = parent.asType(type);
-				if (parentAsType != null) return (T)parentAsType;
+
+				if (parentAsType != null) return (TYPE)parentAsType;
 			}
 		}
 

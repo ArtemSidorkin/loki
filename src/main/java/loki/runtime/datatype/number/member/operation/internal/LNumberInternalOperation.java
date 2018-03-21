@@ -1,14 +1,13 @@
-package loki.runtime.datatype.number.operation.internal;
+package loki.runtime.datatype.number.member.operation.internal;
 
 import loki.runtime.constant.LTypes;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.LNumber;
+import loki.runtime.datatype.number.member.internal.LNumberInternalMember;
 import loki.runtime.util.Nullable;
 
-public abstract class LNumberInternalOperation
+public abstract class LNumberInternalOperation extends LNumberInternalMember
 {
-	public abstract LUnit apply(Double value, LUnit[] parameters);
-
 	@Nullable
 	protected static LNumber checkRightOperand(LUnit[] parameters)
 	{

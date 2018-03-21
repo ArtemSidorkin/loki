@@ -1,14 +1,14 @@
-package loki.runtime.datatype.number.operation.binary;
+package loki.runtime.datatype.number.member.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
-public class LNumberSlash extends LNumberOperation
+public class LDivisionNumberBinaryOperation extends LNumberBinaryOperation
 {
-	public static final LNumberSlash instance = new LNumberSlash();
+	public static final LDivisionNumberBinaryOperation instance = new LDivisionNumberBinaryOperation();
 
-	private LNumberSlash()
+	private LDivisionNumberBinaryOperation()
 	{
 		super(LBinaryOperator.SLASH);
 	}

@@ -1,4 +1,4 @@
-package loki.runtime.datatype.number.operation.binary;
+package loki.runtime.datatype.number.member.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.datatype.LFalse;
@@ -6,11 +6,11 @@ import loki.runtime.datatype.LTrue;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
-public class LNumberLessThan extends LNumberOperation
+public class LLessThanNumberBinaryOperation extends LNumberBinaryOperation
 {
-	public static final LNumberLessThan instance = new LNumberLessThan();
+	public static final LLessThanNumberBinaryOperation instance = new LLessThanNumberBinaryOperation();
 
-	private LNumberLessThan()
+	private LLessThanNumberBinaryOperation()
 	{
 		super(LBinaryOperator.LESS_THAN);
 	}
