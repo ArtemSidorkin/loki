@@ -1,5 +1,6 @@
 package loki.runtime.datatype.number;
 
+import loki.runtime.LSettings;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnaryOperator;
@@ -22,7 +23,11 @@ public class LNumberPrototype extends LUnit
 	public static final LNumberPrototype instance = new LNumberPrototype();
 
 	private static final ConcurrentMap<String, LNumberInternalMember> internalOperations =
-		new ConcurrentHashMap<String, LNumberInternalMember>()
+		new ConcurrentHashMap<String, LNumberInternalMember>(
+			LSettings.NUMBER_INTERNAL_OPERATIONS_INITIAL_CAPACITY,
+			LSettings.NUMBER_INTERNAL_OPERATIONS_LOAD_FACTOR,
+			LSettings.NUMBER_INTERNAL_OPERATIONS_CONCURRENCY_LEVEL
+		)
 		{{
 			put(LUnitMember.GET_TYPE.name, LGetTypeNumberInternalMember.instance);
 			put(LUnitMember.HASH_CODE.name, LHashCodeNumberInternalMember.instance);
