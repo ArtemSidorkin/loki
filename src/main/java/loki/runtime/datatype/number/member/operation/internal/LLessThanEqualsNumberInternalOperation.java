@@ -1,9 +1,12 @@
 package loki.runtime.datatype.number.member.operation.internal;
 
+import loki.runtime.constant.LType;
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
+import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.LNumber;
+import loki.runtime.util.LErrors;
 
 public class LLessThanEqualsNumberInternalOperation extends LNumberInternalOperation
 {
@@ -14,8 +17,9 @@ public class LLessThanEqualsNumberInternalOperation extends LNumberInternalOpera
 	{
 		LNumber parameter = checkRightOperand(parameters);
 
-		if (parameter != null) return value <= parameter.getValue() ? LTrue.instance : LFalse.instance;
+		if (parameter != null) return value <= parameter.value ? LTrue.instance : LFalse.instance;
 
-		return null;
+		LErrors.printErrorRightOperandDoesNotBelongToTypeOrUndefined(LType.NUMBER.name);
+		return LUndefined.instance;
 	}
 }

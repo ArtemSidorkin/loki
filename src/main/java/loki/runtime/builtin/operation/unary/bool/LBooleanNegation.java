@@ -29,7 +29,7 @@ public class LBooleanNegation extends LUnaryOperation<LBooleanPrototype>
 				host != LNone.instance &&
 				host != LUndefined.instance &&
 				(
-					host.asType(LTypes.NUMBER) == null || ((LNumber) host.asType(LTypes.NUMBER)).getValue() != 0
+					host.asType(LTypes.NUMBER) == null || ((LNumber) host.asType(LTypes.NUMBER)).value != 0
 				)
 			)
 				? LFalse.instance

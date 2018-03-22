@@ -1,0 +1,8 @@
+Point x y :
+    $x = x
+    $y = y
+
+assert(Point.getType().getName(), "Point")
+assert(Point.getType().toString(), "Point")
+assert(Point.getType().getId() >= 0, true)
+assert(Point.getType().hashCode() >= 0, true)

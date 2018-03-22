@@ -16,6 +16,6 @@ public class LMultiplicationNumberBinaryOperation extends LNumberBinaryOperation
 	@Override
 	protected LUnit __execute(LNumber leftOperand, LNumber rightOperand)
 	{
-		return new LNumber(leftOperand.getValue() * rightOperand.getValue());
+		return new LNumber(leftOperand.value * rightOperand.value);
 	}
 }

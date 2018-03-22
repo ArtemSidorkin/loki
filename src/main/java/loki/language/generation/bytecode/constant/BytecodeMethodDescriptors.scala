@@ -3,7 +3,8 @@ package loki.language.generation.bytecode.constant
 import assembler.constant.InternalDescriptors
 import assembler.methoddescriptor.{MixedMethodDescriptor, TypedMethodDescriptor}
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.{LType, LUnit}
+import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.`type`.LType
 
 //Split to different files
 private[bytecode] object BytecodeMethodDescriptors

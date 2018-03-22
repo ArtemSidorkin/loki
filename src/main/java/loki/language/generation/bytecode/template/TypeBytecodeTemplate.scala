@@ -3,7 +3,7 @@ package loki.language.generation.bytecode.template
 import assembler.builder.MethodBuilder
 import loki.language.generation.bytecode.constant.BytecodeMethodDescriptors
 import loki.language.generation.constant.LanguageMembers
-import loki.runtime.datatype.LType
+import loki.runtime.datatype.`type`.LType
 
 private[bytecode] object TypeBytecodeTemplate
 {

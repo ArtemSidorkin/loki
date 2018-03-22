@@ -1,6 +1,7 @@
 package loki.runtime.datatype;
 
 import loki.runtime.constant.LDataUnit;
+import loki.runtime.datatype.type.LType;
 
 public class LNone extends LUnit
 {

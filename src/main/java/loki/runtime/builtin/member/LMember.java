@@ -1,7 +1,7 @@
 package loki.runtime.builtin.member;
 
-import loki.runtime.datatype.LType;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.type.LType;
 
 public class LMember extends LUnit
 {
@@ -10,7 +10,7 @@ public class LMember extends LUnit
 	protected LMember(LType type)
 	{
 		super(type);
-		name = type.getName();
+		name = type.name;
 	}
 
 	public void init(LUnit unit)

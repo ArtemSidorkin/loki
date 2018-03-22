@@ -16,6 +16,6 @@ public class LNumericNegationNumberUnaryOperation extends LNumberUnaryOperation
 	@Override
 	protected LUnit execute(LNumber operand)
 	{
-		return new LNumber(-operand.getValue());
+		return new LNumber(-operand.value);
 	}
 }

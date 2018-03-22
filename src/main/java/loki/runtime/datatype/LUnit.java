@@ -9,6 +9,7 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.number.LNumber;
+import loki.runtime.datatype.type.LType;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
@@ -198,7 +199,7 @@ public abstract class LUnit
 	{
 		LUnit self = this;
 
-		LUnit newUnit = new LUnit(new LType(getType().getName()), getUnitContext())
+		LUnit newUnit = new LUnit(new LType(getType().name), getUnitContext())
 		{
 			@Override
 			public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
@@ -263,7 +264,7 @@ public abstract class LUnit
 				this != LNone.instance &&
 				this != LUndefined.instance &&
 				(
-					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).getValue() != 0
+					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0
 				)
 			);
 
@@ -294,7 +295,7 @@ public abstract class LUnit
 		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null, null);
 		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
 
-		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.getValue());
+		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.value);
 
 		return hashCodeAsUnit.hashCode();
 	}

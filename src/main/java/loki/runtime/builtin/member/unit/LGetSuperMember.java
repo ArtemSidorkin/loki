@@ -5,8 +5,8 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LString;
-import loki.runtime.datatype.LType;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.type.LType;
 import loki.runtime.util.Nullable;
 
 public class LGetSuperMember extends LMember

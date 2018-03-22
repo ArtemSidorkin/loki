@@ -3,6 +3,7 @@ package loki.language.generation.bytecode.template
 import assembler.builder.MethodBuilder
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.datatype._
+import loki.runtime.datatype.`type`.LType
 import loki.runtime.datatype.number.LNumber
 
 private[bytecode] object CommonBytecodeTemplate

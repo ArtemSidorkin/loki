@@ -22,11 +22,11 @@ public class LNumberPrototype extends LUnit
 {
 	public static final LNumberPrototype instance = new LNumberPrototype();
 
-	private static final ConcurrentMap<String, LNumberInternalMember> internalOperations =
+	private static final ConcurrentMap<String, LNumberInternalMember> internalMembers =
 		new ConcurrentHashMap<String, LNumberInternalMember>(
-			LSettings.NUMBER_INTERNAL_OPERATIONS_INITIAL_CAPACITY,
-			LSettings.NUMBER_INTERNAL_OPERATIONS_LOAD_FACTOR,
-			LSettings.NUMBER_INTERNAL_OPERATIONS_CONCURRENCY_LEVEL
+			LSettings.INTERNAL_MEMBERS_INITIAL_CAPACITY,
+			LSettings.INTERNAL_MEMBERS_LOAD_FACTOR,
+			LSettings.INTERNAL_MEMBERS_CONCURRENCY_LEVEL
 		)
 		{{
 			put(LUnitMember.GET_TYPE.name, LGetTypeNumberInternalMember.instance);
@@ -46,7 +46,7 @@ public class LNumberPrototype extends LUnit
 			put(LBinaryOperator.LESS_THAN.symbol, LLessThanNumberInternalOperation.instance);
 		}};
 
-	private final double value;
+	public final double value;
 
 	protected LNumberPrototype(double value)
 	{
@@ -60,15 +60,10 @@ public class LNumberPrototype extends LUnit
 		initBuiltins();
 	}
 
-	public double getValue()
-	{
-		return value;
-	}
-
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		if (internalOperations != null) internalOperations.remove(memberName);
+		if (internalMembers != null) internalMembers.remove(memberName);
 
 		return super.setMember(memberName, member);
 	}
@@ -76,7 +71,7 @@ public class LNumberPrototype extends LUnit
 	@Override
 	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
 	{
-		LNumberInternalMember internalOperation = internalOperations.get(memberName);
+		LNumberInternalMember internalOperation = internalMembers.get(memberName);
 
 		if (internalOperation != null) return internalOperation.apply(value, parameters);
 
@@ -94,7 +89,7 @@ public class LNumberPrototype extends LUnit
 	{
 		LNumber number = unit.asType(LTypes.NUMBER);
 
-		return number != null && getValue() == number.getValue();
+		return number != null && value == number.value;
 	}
 
 	@Override

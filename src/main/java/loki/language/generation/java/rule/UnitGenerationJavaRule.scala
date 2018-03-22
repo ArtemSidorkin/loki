@@ -5,7 +5,8 @@ import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.UnitGenerationRuleMixin
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.{LType, LUnit}
+import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.`type`.LType
 import loki.util.extension.StringExtension.StringExtension
 
 class UnitGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:UnitContext)

@@ -1,8 +1,8 @@
 package loki.runtime.datatype.number;
 
 import loki.runtime.constant.LTypes;
-import loki.runtime.datatype.LType;
 import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.type.LType;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
 
