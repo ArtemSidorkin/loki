@@ -13,7 +13,7 @@ public class LGetNameTypeMember extends LMember
 {
 	public static LGetNameTypeMember instance = new LGetNameTypeMember();
 
-	public LGetNameTypeMember()
+	private LGetNameTypeMember()
 	{
 		super(new LType(LTypeMember.GET_NAME.name));
 	}

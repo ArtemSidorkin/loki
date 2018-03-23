@@ -1,8 +1,6 @@
 package loki.runtime.datatype.type;
 
 import loki.runtime.LSettings;
-import loki.runtime.constant.LTypeMember;
-import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.type.member.LGetIdTypeMember;
@@ -24,11 +22,11 @@ public class LType extends LUnit
 			LSettings.INTERNAL_MEMBERS_CONCURRENCY_LEVEL
 		)
 		{{
-			put(LUnitMember.HASH_CODE.name, LHashCodeTypeInternalMember.instance);
-			put(LUnitMember.TO_STRING.name, LToStringTypeInternalMember.instance);
+			LHashCodeTypeInternalMember.instance.initialize(this);
+			LToStringTypeInternalMember.instance.initialize(this);
 
-			put(LTypeMember.GET_ID.name, LGetIdTypeInternalMember.instance);
-			put(LTypeMember.GET_NAME.name, LGetNameTypeInternalMember.instance);
+			LGetIdTypeInternalMember.instance.initialize(this);
+			LGetNameTypeInternalMember.instance.initialize(this);
 		}};
 
 	private static volatile LType type;
@@ -88,8 +86,7 @@ public class LType extends LUnit
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		if (internalMembers != null) internalMembers.remove(memberName);
-
+		internalMembers.remove(memberName);
 		return super.setMember(memberName, member);
 	}
 

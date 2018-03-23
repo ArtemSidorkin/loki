@@ -8,6 +8,11 @@ import loki.runtime.util.Nullable;
 
 public abstract class LNumberInternalOperation extends LNumberInternalMember
 {
+	protected LNumberInternalOperation(String designation)
+	{
+		super(designation);
+	}
+
 	@Nullable
 	protected static LNumber checkRightOperand(LUnit[] parameters)
 	{

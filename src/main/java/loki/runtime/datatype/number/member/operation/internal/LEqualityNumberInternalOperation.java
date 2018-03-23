@@ -1,5 +1,6 @@
 package loki.runtime.datatype.number.member.operation.internal;
 
+import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LType;
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
@@ -11,6 +12,11 @@ import loki.runtime.util.LErrors;
 public class LEqualityNumberInternalOperation extends LNumberInternalOperation
 {
 	public static final LEqualityNumberInternalOperation instance = new LEqualityNumberInternalOperation();
+
+	private LEqualityNumberInternalOperation()
+	{
+		super(LBinaryOperator.EQUALS_EQUALS.symbol);
+	}
 
 	@Override
 	public LUnit apply(double value, LUnit[] parameters)

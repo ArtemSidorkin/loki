@@ -1,5 +1,6 @@
 package loki.runtime.datatype.number.member.operation.internal;
 
+import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LType;
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
@@ -12,6 +13,11 @@ public class LGreaterThanEqualsNumberInternalOperation extends LNumberInternalOp
 {
 	public static final LGreaterThanEqualsNumberInternalOperation instance =
 		new LGreaterThanEqualsNumberInternalOperation();
+
+	private LGreaterThanEqualsNumberInternalOperation()
+	{
+		super(LBinaryOperator.GREATER_THAN.symbol);
+	}
 
 	@Override
 	public LUnit apply(double value, LUnit[] parameters)

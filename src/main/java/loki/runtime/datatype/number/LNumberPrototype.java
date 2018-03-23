@@ -1,10 +1,7 @@
 package loki.runtime.datatype.number;
 
 import loki.runtime.LSettings;
-import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LTypes;
-import loki.runtime.constant.LUnaryOperator;
-import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUnit;
 import loki.runtime.datatype.number.member.internal.LGetTypeNumberInternalMember;
@@ -29,21 +26,22 @@ public class LNumberPrototype extends LUnit
 			LSettings.INTERNAL_MEMBERS_CONCURRENCY_LEVEL
 		)
 		{{
-			put(LUnitMember.GET_TYPE.name, LGetTypeNumberInternalMember.instance);
-			put(LUnitMember.HASH_CODE.name, LHashCodeNumberInternalMember.instance);
-			put(LUnitMember.TO_STRING.name, LToStringNumberInternalMember.instance);
+			LGetTypeNumberInternalMember.instance.initialize(this);
+			LHashCodeNumberInternalMember.instance.initialize(this);
+			LToStringNumberInternalMember.instance.initialize(this);
 
-			put(LUnaryOperator.MINUS.symbol, LNumericNegationNumberInternalOperation.instance);
-			put(LBinaryOperator.STAR.symbol, LMultiplicationNumberInternalOperation.instance);
-			put(LBinaryOperator.SLASH.symbol, LDivisionNumberInternalOperation.instance);
-			put(LBinaryOperator.PLUS.symbol, LAdditionNumberInternalOperation.instance);
-			put(LBinaryOperator.MINUS.symbol, LSubtractionNumberInternalOperation.instance);
-			put(LBinaryOperator.EQUALS_EQUALS.symbol, LEqualityNumberInternalOperation.instance);
-			put(LBinaryOperator.BANG_EQUALS.symbol, LInequalityNumberInternalOperation.instance);
-			put(LBinaryOperator.GREATER_THAN_EQUALS.symbol, LGreaterThanEqualsNumberInternalOperation.instance);
-			put(LBinaryOperator.LESS_THAN_EQUALS.symbol, LLessThanEqualsNumberInternalOperation.instance);
-			put(LBinaryOperator.GREATER_THAN.symbol, LGreaterThanNumberInternalOperation.instance);
-			put(LBinaryOperator.LESS_THAN.symbol, LLessThanNumberInternalOperation.instance);
+			LNumericNegationNumberInternalOperation.instance.initialize(this);
+			LNumericNegationNumberInternalOperation.instance.initialize(this);
+			LMultiplicationNumberInternalOperation.instance.initialize(this);
+			LDivisionNumberInternalOperation.instance.initialize(this);
+			LAdditionNumberInternalOperation.instance.initialize(this);
+			LSubtractionNumberInternalOperation.instance.initialize(this);
+			LEqualityNumberInternalOperation.instance.initialize(this);
+			LInequalityNumberInternalOperation.instance.initialize(this);
+			LGreaterThanEqualsNumberInternalOperation.instance.initialize(this);
+			LLessThanEqualsNumberInternalOperation.instance.initialize(this);
+			LGreaterThanNumberInternalOperation.instance.initialize(this);
+			LLessThanNumberInternalOperation.instance.initialize(this);
 		}};
 
 	public final double value;

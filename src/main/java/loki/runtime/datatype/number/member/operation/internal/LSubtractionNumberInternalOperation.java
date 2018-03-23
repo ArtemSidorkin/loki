@@ -1,5 +1,6 @@
 package loki.runtime.datatype.number.member.operation.internal;
 
+import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LType;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.LUnit;
@@ -9,6 +10,11 @@ import loki.runtime.util.LErrors;
 public class LSubtractionNumberInternalOperation extends LNumberInternalOperation
 {
 	public static final LSubtractionNumberInternalOperation instance = new LSubtractionNumberInternalOperation();
+
+	private LSubtractionNumberInternalOperation()
+	{
+		super(LBinaryOperator.MINUS.symbol);
+	}
 
 	@Override
 	public LUnit apply(double value, LUnit[] parameters)

@@ -1,12 +1,17 @@
 package loki.runtime.datatype.number.member.internal;
 
+import loki.runtime.constant.LUnitMember;
 import loki.runtime.datatype.LString;
 import loki.runtime.datatype.LUnit;
-import loki.runtime.datatype.number.member.operation.internal.LNumberInternalOperation;
 
-public class LToStringNumberInternalMember extends LNumberInternalOperation
+public class LToStringNumberInternalMember extends LNumberInternalMember
 {
 	public static final LToStringNumberInternalMember instance = new LToStringNumberInternalMember();
+
+	private LToStringNumberInternalMember()
+	{
+		super(LUnitMember.TO_STRING.name);
+	}
 
 	@Override
 	public LUnit apply(double value, LUnit[] parameters)

@@ -13,7 +13,7 @@ import loki.runtime.util.Nullable;
 
 public abstract class LNumberUnaryOperation extends LUnaryOperation<LNumberPrototype>
 {
-	public LNumberUnaryOperation(LUnaryOperator unaryOperator)
+	protected LNumberUnaryOperation(LUnaryOperator unaryOperator)
 	{
 		super(unaryOperator);
 	}
