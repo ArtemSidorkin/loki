@@ -23,28 +23,42 @@ expression:
 
 
 
-	LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET #Array |
-
-
+	LEFT_BRACKET
+	(
+		(
+			BEGIN
+				expression (COMMA expression)* (SEMICOLON)?
+			END
+		) |
+		(expression (COMMA expression)* (SEMICOLON)?)?
+	)
+	RIGHT_BRACKET (SEMICOLON)? (END)?
+	#Array |
 
 	LEFT_BRACKET
-		(BEGIN)?
-			((expression COLON expression (COMMA expression COLON expression)*) | COLON) (SEMICOLON)?
-		(END)?
+	(
+		(
+			BEGIN
+				expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
+			END
+		) |
+		(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?) |
+		(COLON)
+	)
 	RIGHT_BRACKET (SEMICOLON)? (END)?
 	#Map |
 
 
 
 	LEFT_BRACE
+	(
 		(
-			(
-				BEGIN
-					expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
-				END
-			) |
-			(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?)?
-		)
+			BEGIN
+				expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
+			END
+		) |
+		(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?)?
+	)
 	RIGHT_BRACE
 	#Object |
 

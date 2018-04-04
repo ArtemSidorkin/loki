@@ -1,13 +1,15 @@
 package loki.language.generation.rule.mixin
 
+import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import loki.language.parsing.LokiParser.{ExpressionContext, MapContext}
 import loki.runtime.datatype.{LMap, LUnit}
 
 import scala.collection.JavaConverters._
 
-private[generation] trait MapGenerationRuleMixin extends GenerationRuleMixin[MapContext]
+private[generation] trait MapGenerationRuleMixin
+	extends GenerationRuleMixin[MapContext] with ContainerGenerationRuleMixinTemplate
 {
-	protected val mapClass:Class[_ <: LUnit] = classOf[LMap]
-	protected val mapKeyValueItemCount:Int = ruleContext.expression.size
-	protected val mapKeyValueItemExpressionContexts:Seq[ExpressionContext] = ruleContext.expression.asScala
+	override protected val containerClass:Class[_ <: LUnit] = classOf[LMap]
+	override protected val containerItemCount:Int = ruleContext.expression.size
+	override protected val containerItemExpressionContexts:Seq[ExpressionContext] = ruleContext.expression.asScala
 }

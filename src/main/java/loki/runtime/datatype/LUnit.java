@@ -27,7 +27,8 @@ public abstract class LUnit
 
 	private static volatile LUnit prototype;
 
-	@Nullable protected volatile LUnitContext unitContext;//block direct access, move to compiler api, same for others
+	//TODO: block direct access, move to compiler api, same for others
+	@Nullable protected volatile LUnitContext unitContext;
 
 	private final LType type;
 	@Nullable protected volatile ConcurrentLinkedDeque<LUnit> parents;
@@ -350,7 +351,7 @@ return _toBoolean().getValue();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*TODO: Should be moved to members                                                                                */
+	/*TODO: Should be moved to members (Also fix object type)                                                         */
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public LUnit getIndexedItem(@Nullable LUnit[] parameters)

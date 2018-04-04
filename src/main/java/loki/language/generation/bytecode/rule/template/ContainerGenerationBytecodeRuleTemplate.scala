@@ -4,18 +4,15 @@ import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationCo
 import loki.language.generation.bytecode.constant.BytecodeContainerMethodDescriptors
 import loki.language.generation.bytecode.rule.BytecodeGenerationRule
 import loki.language.generation.bytecode.template.CommonBytecodeTemplate.CTemplateCommon
-import loki.language.parsing.LokiParser.ExpressionContext
-import loki.runtime.datatype.LUnit
+import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
-class ContainerGenerationBytecodeRuleTemplate(
-	bytecodeGenerationContext:BytecodeGenerationContext, ruleContext:RuleContext
+abstract class ContainerGenerationBytecodeRuleTemplate[RULE_CONTEXT <: RuleContext](
+	bytecodeGenerationContext:BytecodeGenerationContext, ruleContext:RULE_CONTEXT
 )
-	extends BytecodeGenerationRule(bytecodeGenerationContext, ruleContext)
+	extends BytecodeGenerationRule(bytecodeGenerationContext, ruleContext) with ContainerGenerationRuleMixinTemplate
 {
-	def enter(
-		containerClass:Class[_ <: LUnit], containerItemCount:Int, containerItemExpressionContexts:Seq[ExpressionContext]
-	 )
+	override protected def enterAction()
 	{
 		generateContainer()
 		generateContainerItems()
@@ -54,6 +51,6 @@ class ContainerGenerationBytecodeRuleTemplate(
 			}
 	}
 
-	def exit(containerClass:Class[_ <: LUnit]):Unit =
+	override protected def exitAction():Unit =
 		topMethodCall invokeinit (containerClass, BytecodeContainerMethodDescriptors.INIT)
 }

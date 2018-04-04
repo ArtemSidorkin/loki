@@ -15,9 +15,6 @@ map1 = [
 "a" : 1]
 assert(map1.toString(), "[a : 1]")
 
-map1 = [
-	"a" : 1]
-assert(map1.toString(), "[a : 1]")
 
 map1 = [
 "a" : 1
@@ -40,23 +37,10 @@ map1 =
 	"a" : 1
 ]
 assert(map1.toString(), "[a : 1]")
-
-map2 = [
-"a" : 1, "b" : 2]
-assert(map2.toString(), "[a : 1, b : 2]")
-
-map2 = [
-	"a" : 1, "b" : 2]
-assert(map2.toString(), "[a : 1, b : 2]")
 
 map2 = [
 "a" : 1,
 "b" : 2]
-assert(map2.toString(), "[a : 1, b : 2]")
-
-map2 = [
-	"a" : 1,
-	"b" : 2]
 assert(map2.toString(), "[a : 1, b : 2]")
 
 map2 = [
