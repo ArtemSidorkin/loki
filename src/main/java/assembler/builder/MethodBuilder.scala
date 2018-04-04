@@ -35,6 +35,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
+	/*Push item from run-time constant pool*/
 	def ldc(any:Any):this.type =
 	{
 		methodNode.instructions.add(new LdcInsnNode(any))

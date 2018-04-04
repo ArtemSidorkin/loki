@@ -44,26 +44,26 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 	override def enterArray(ruleContext:ArrayContext):Unit =
-		ArrayBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+		new ArrayGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
 
 	override def exitArray(ruleContext:ArrayContext):Unit =
-		ArrayBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+		new ArrayGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
 
 
 
 	override def enterMap(ruleContext:MapContext):Unit =
-		MapBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+		new MapGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
 
 	override def exitMap(ruleContext:MapContext):Unit =
-		MapBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+		new MapGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
 
 
 
 	override def enterObject(ruleContext:ObjectContext):Unit =
-		new ObjectBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).enter()
+		new ObjectGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
 
 	override def exitObject(ruleContext:ObjectContext):Unit =
-		new ObjectBytecodeGenerationRule(bytecodeGenerationContext, ruleContext).exit()
+		new ObjectGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
 
 
 

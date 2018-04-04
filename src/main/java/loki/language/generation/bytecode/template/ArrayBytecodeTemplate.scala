@@ -8,9 +8,7 @@ private[bytecode] object ArrayBytecodeTemplate
 {
 	implicit class CTemplateArray(method:MethodBuilder)
 	{
-		def invokeInitArray() = method invokeinit
-		(
-			classOf[LArray], BytecodeMethodDescriptors.ARRAY__METHOD__INIT
-		)
+		def invokeInitArray():MethodBuilder =
+			method invokeinit (classOf[LArray], BytecodeMethodDescriptors.ARRAY__METHOD__INIT)
 	}
 }

@@ -43,24 +43,27 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 
-	override def enterArray(ruleContext:ArrayContext):Unit =
-		ArrayGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterArray(arrayContext:ArrayContext):Unit =
+		new ArrayGenerationJavaRule(javaGenerationContext, arrayContext).enter()
 
-	override def exitArray(ruleContext:ArrayContext):Unit =
-		ArrayGenerationJavaRule.exit(javaGenerationContext, ruleContext)
-
-
-
-	override def enterMap(ruleContext:MapContext):Unit = MapGenerationJavaRule.enter(javaGenerationContext, ruleContext)
-	override def exitMap(ruleContext:MapContext):Unit = MapGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitArray(arrayContext:ArrayContext):Unit =
+		new ArrayGenerationJavaRule(javaGenerationContext, arrayContext).exit()
 
 
 
-	override def enterObject(ruleContext:ObjectContext):Unit =
-		new ObjectGenerationJavaRule(javaGenerationContext, ruleContext).enter()
+	override def enterMap(mapContext:MapContext):Unit =
+		new MapGenerationJavaRule(javaGenerationContext, mapContext).enter()
 
-	override def exitObject(ruleContext:ObjectContext):Unit =
-		new ObjectGenerationJavaRule(javaGenerationContext, ruleContext).exit()
+	override def exitMap(mapContext:MapContext):Unit =
+		new MapGenerationJavaRule(javaGenerationContext, mapContext).exit()
+
+
+
+	override def enterObject(objectContext:ObjectContext):Unit =
+		new ObjectGenerationJavaRule(javaGenerationContext, objectContext).enter()
+
+	override def exitObject(objectContext:ObjectContext):Unit =
+		new ObjectGenerationJavaRule(javaGenerationContext, objectContext).exit()
 
 
 
