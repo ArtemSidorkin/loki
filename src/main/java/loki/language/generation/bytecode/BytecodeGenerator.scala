@@ -3,6 +3,8 @@ package loki.language.generation.bytecode
 import loki.language.generation.Generator
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
 import loki.language.generation.bytecode.rule._
+import loki.language.generation.bytecode.rule.template.ContainerGenerationBytecodeRuleTemplate
+import loki.language.generation.rule.mixin.{ArrayGenerationRuleMixin, MapGenerationRuleMixin, ObjectGenerationRuleMixin}
 import loki.language.parsing.LokiParser._
 
 class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationContext]
@@ -43,27 +45,41 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 
-	override def enterArray(ruleContext:ArrayContext):Unit =
-		new ArrayGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
+	override def enterArray(arrayContext:ArrayContext):Unit = (
+		new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, arrayContext)
+			with ArrayGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitArray(ruleContext:ArrayContext):Unit =
-		new ArrayGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
-
-
-
-	override def enterMap(ruleContext:MapContext):Unit =
-		new MapGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
-
-	override def exitMap(ruleContext:MapContext):Unit =
-		new MapGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
+	override def exitArray(arrayContext:ArrayContext):Unit = (
+		new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, arrayContext)
+			with ArrayGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterObject(ruleContext:ObjectContext):Unit =
-		new ObjectGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).enter()
+	override def enterMap(mapContext:MapContext):Unit =
+		(new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, mapContext)	with MapGenerationRuleMixin)
+			.enter()
 
-	override def exitObject(ruleContext:ObjectContext):Unit =
-		new ObjectGenerationBytecodeRule(bytecodeGenerationContext, ruleContext).exit()
+	override def exitMap(mapContext:MapContext):Unit =
+		(new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, mapContext)	with MapGenerationRuleMixin)
+			.exit()
+
+
+
+	override def enterObject(objectContext:ObjectContext):Unit = (
+		new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, objectContext)
+			with ObjectGenerationRuleMixin
+	)
+		.enter()
+
+	override def exitObject(objectContext:ObjectContext):Unit =	(
+		new ContainerGenerationBytecodeRuleTemplate(bytecodeGenerationContext, objectContext)
+			with ObjectGenerationRuleMixin
+	)
+		.exit()
 
 
 

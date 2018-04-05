@@ -3,6 +3,8 @@ package loki.language.generation.java
 import loki.language.generation.Generator
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.java.rule._
+import loki.language.generation.java.rule.template.ContainerGenerationJavaRuleTemplate
+import loki.language.generation.rule.mixin.{ArrayGenerationRuleMixin, MapGenerationRuleMixin, ObjectGenerationRuleMixin}
 import loki.language.parsing.LokiParser._
 
 class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
@@ -44,26 +46,30 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 	override def enterArray(arrayContext:ArrayContext):Unit =
-		new ArrayGenerationJavaRule(javaGenerationContext, arrayContext).enter()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, arrayContext) with ArrayGenerationRuleMixin)
+			.enter()
 
 	override def exitArray(arrayContext:ArrayContext):Unit =
-		new ArrayGenerationJavaRule(javaGenerationContext, arrayContext).exit()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, arrayContext) with ArrayGenerationRuleMixin)
+			.exit()
 
 
 
 	override def enterMap(mapContext:MapContext):Unit =
-		new MapGenerationJavaRule(javaGenerationContext, mapContext).enter()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, mapContext) with MapGenerationRuleMixin).enter()
 
 	override def exitMap(mapContext:MapContext):Unit =
-		new MapGenerationJavaRule(javaGenerationContext, mapContext).exit()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, mapContext) with MapGenerationRuleMixin).exit()
 
 
 
 	override def enterObject(objectContext:ObjectContext):Unit =
-		new ObjectGenerationJavaRule(javaGenerationContext, objectContext).enter()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, objectContext) with ObjectGenerationRuleMixin)
+			.enter()
 
 	override def exitObject(objectContext:ObjectContext):Unit =
-		new ObjectGenerationJavaRule(javaGenerationContext, objectContext).exit()
+		(new ContainerGenerationJavaRuleTemplate(javaGenerationContext, objectContext) with ObjectGenerationRuleMixin)
+			.exit()
 
 
 
