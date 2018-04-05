@@ -1,9 +1,9 @@
 package loki.language.generation.bytecode.rule.template
 
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
-import loki.language.generation.bytecode.constant.BytecodeContainerMethodDescriptors
 import loki.language.generation.bytecode.rule.BytecodeGenerationRule
 import loki.language.generation.bytecode.template.CommonBytecodeTemplate.CTemplateCommon
+import loki.language.generation.bytecode.template.ContainerBytecodeTemplate.Template
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
@@ -51,6 +51,5 @@ abstract class ContainerGenerationBytecodeRuleTemplate[RULE_CONTEXT <: RuleConte
 			}
 	}
 
-	override protected def exitAction():Unit =
-		topMethodCall invokeinit (containerClass, BytecodeContainerMethodDescriptors.INIT)
+	override protected def exitAction():Unit = topMethodCall invokeInitContainer containerClass
 }
