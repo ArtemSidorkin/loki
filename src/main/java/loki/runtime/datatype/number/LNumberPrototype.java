@@ -3,7 +3,7 @@ package loki.runtime.datatype.number;
 import loki.runtime.LSettings;
 import loki.runtime.constant.LTypes;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.member.internal.LGetTypeNumberInternalMember;
 import loki.runtime.datatype.number.member.internal.LHashCodeNumberInternalMember;
 import loki.runtime.datatype.number.member.internal.LNumberInternalMember;

@@ -2,7 +2,8 @@ package loki.language.generation.rule.mixin
 
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import loki.language.parsing.LokiParser.{ArrayContext, ExpressionContext}
-import loki.runtime.datatype.{LArray, LUnit}
+import loki.runtime.datatype.LArray
+import loki.runtime.datatype.unit.LUnit
 
 import scala.collection.JavaConverters._
 

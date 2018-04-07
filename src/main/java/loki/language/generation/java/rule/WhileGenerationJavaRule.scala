@@ -4,7 +4,7 @@ import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.GenerationRuleMixinWhile
 import loki.language.parsing.LokiParser.WhileContext
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 import loki.util.extension.StringExtension.StringExtension
 
 class WhileGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:WhileContext)

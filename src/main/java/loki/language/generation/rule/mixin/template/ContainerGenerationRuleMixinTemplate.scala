@@ -1,7 +1,7 @@
 package loki.language.generation.rule.mixin.template
 
 import loki.language.parsing.LokiParser.ExpressionContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 
 private[generation] trait ContainerGenerationRuleMixinTemplate
 {

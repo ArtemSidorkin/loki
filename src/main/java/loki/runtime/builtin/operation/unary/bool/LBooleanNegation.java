@@ -6,6 +6,7 @@ import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.util.Nullable;
 
 public class LBooleanNegation extends LUnaryOperation<LBooleanPrototype>

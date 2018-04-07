@@ -3,8 +3,8 @@ package loki.language.generation.bytecode.constant
 import assembler.constant.InternalDescriptors
 import assembler.methoddescriptor.{MixedMethodDescriptor, TypedMethodDescriptor}
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.LUnit
 import loki.runtime.datatype.`type`.LType
+import loki.runtime.datatype.unit.LUnit
 
 //Split to different files
 private[bytecode] object BytecodeMethodDescriptors
@@ -64,10 +64,6 @@ private[bytecode] object BytecodeMethodDescriptors
 		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_MEMBER =
 		TypedMethodDescriptor((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
-	val UNIT__METHOD__GET_INDEXED_ITEM =
-		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
-	val UNIT__METHOD__SET_INDEXED_ITEM =
-		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_PARAMETER_NAMES =
 		TypedMethodDescriptor((classOf[Array[String]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__CALL =

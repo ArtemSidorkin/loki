@@ -2,7 +2,7 @@ package loki.runtime.builtin.operation.unary;
 
 import loki.runtime.builtin.operation.LOperation;
 import loki.runtime.constant.LUnaryOperator;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.LType;
 
 public abstract class LUnaryOperation<HOST_OPERAND extends LUnit> extends LOperation<HOST_OPERAND>

@@ -1,6 +1,6 @@
-package loki.runtime.builtin.member;
+package loki.runtime.datatype;
 
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.LType;
 
 public class LMember extends LUnit

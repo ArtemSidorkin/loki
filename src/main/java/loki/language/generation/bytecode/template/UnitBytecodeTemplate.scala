@@ -4,7 +4,7 @@ import assembler.builder.MethodBuilder
 import loki.language.generation.bytecode.constant.{BytecodeLocalVariablesOrParameters, BytecodeMethodDescriptors}
 import loki.language.generation.constant.LanguageMembers
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 
 private[bytecode] object UnitBytecodeTemplate
 {
@@ -64,20 +64,6 @@ private[bytecode] object UnitBytecodeTemplate
 			classOf[LUnit],
 			LanguageMembers.UNIT__METHOD__SET_MEMBER,
 			BytecodeMethodDescriptors.UNIT__METHOD__SET_MEMBER
-		)
-
-		def invokeVirtualUnitMethodGetIndexedItem() = method invokevirtual
-		(
-			classOf[LUnit],
-			LanguageMembers.UNIT__METHOD__GET_INDEXED_ITEM,
-			BytecodeMethodDescriptors.UNIT__METHOD__GET_INDEXED_ITEM
-		)
-
-		def invokeVirtualUnitMethodSetIndexedItem() = method invokevirtual
-		(
-			classOf[LUnit],
-			LanguageMembers.UNIT__METHOD__SET_INDEXED_ITEM,
-			BytecodeMethodDescriptors.UNIT__METHOD__SET_INDEXED_ITEM
 		)
 
 		def invokeVirtualUnitMethodSetParameterNames() = method invokevirtual

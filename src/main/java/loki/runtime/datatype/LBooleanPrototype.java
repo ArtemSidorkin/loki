@@ -5,6 +5,7 @@ import loki.runtime.builtin.operation.binary.bool.LBooleanAmpersandAmpersand;
 import loki.runtime.builtin.operation.binary.bool.LBooleanPipePipe;
 import loki.runtime.builtin.operation.unary.bool.LBooleanNegation;
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.unit.LUnit;
 
 public class LBooleanPrototype extends LUnit
 {

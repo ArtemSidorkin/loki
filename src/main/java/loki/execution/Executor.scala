@@ -9,7 +9,8 @@ import loki.language.generation.Generator
 import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.language.preprocessing.Preprocessor
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.{LModule, LUnit}
+import loki.runtime.datatype.LModule
+import loki.runtime.datatype.unit.LUnit
 import loki.util.FileUtil
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree.ParseTreeWalker

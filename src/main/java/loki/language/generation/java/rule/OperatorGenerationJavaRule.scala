@@ -5,7 +5,7 @@ import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.OperatorGenerationRuleMixin
 import loki.language.parsing.LokiParser.ExpressionContext
 import loki.language.parsing.{LokiLexer, LokiParser}
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 
 class OperatorGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:ExpressionContext)
 	extends GenerationJavaRule(generationContext, ruleContext) with OperatorGenerationRuleMixin

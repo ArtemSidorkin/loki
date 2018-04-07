@@ -3,7 +3,7 @@ package loki.runtime.datatype.number.member.operation.internal;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LType;
 import loki.runtime.datatype.LUndefined;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.util.LErrors;
 

@@ -1,15 +1,16 @@
-package loki.runtime.datatype;
+package loki.runtime.datatype.unit;
 
 import loki.runtime.LSettings;
-import loki.runtime.builtin.member.unit.*;
 import loki.runtime.builtin.operation.binary.unit.LUnitBangEquals;
 import loki.runtime.builtin.operation.binary.unit.LUnitEqualsEquals;
 import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
+import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
+import loki.runtime.datatype.unit.member.*;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
@@ -99,6 +100,16 @@ public abstract class LUnit
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*Polymorphic Methods on Internal Level                                                                           */
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
+	{
+		return LUndefined.instance;
+	}
+
+	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
+	{
+		return LUndefined.instance;
+	}
 
 	@Override
 	public int hashCode()
@@ -348,29 +359,5 @@ return _toBoolean().getValue();
 					}
 				};
 		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*TODO: Should be moved to members (Also fix object type)                                                         */
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public LUnit getIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return callMember(LUnitMember.GET_INDEX_ITEM.name, parameters, null);
-	}
-
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return LUndefined.instance;
-	}
-
-	public LUnit setIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return callMember(LUnitMember.SET_INDEX_ITEM.name, parameters, null);
-	}
-
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return LUndefined.instance;
 	}
 }

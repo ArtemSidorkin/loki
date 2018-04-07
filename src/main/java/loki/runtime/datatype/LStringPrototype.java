@@ -1,6 +1,7 @@
 package loki.runtime.datatype;
 
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.unit.LUnit;
 
 public class LStringPrototype extends LUnit
 {

@@ -7,7 +7,8 @@ import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.ModuleGenerationRuleMixin
 import loki.language.parsing.LokiParser.ModuleContext
 import loki.runtime.context.{LModuleContext, LUnitContext}
-import loki.runtime.datatype.{LModule, LUnit}
+import loki.runtime.datatype.LModule
+import loki.runtime.datatype.unit.LUnit
 import loki.system.SystemConfiguration
 import loki.system.SystemConfiguration.UNIX
 import loki.util.FileUtil

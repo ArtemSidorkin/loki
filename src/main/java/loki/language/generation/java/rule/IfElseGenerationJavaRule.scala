@@ -4,7 +4,7 @@ import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.IfElseGenerationRuleMixin
 import loki.language.parsing.LokiParser.IfElseContext
 import loki.runtime.context.LUnitContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 import loki.util.extension.StringExtension.StringExtension
 
 class IfElseGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:IfElseContext)

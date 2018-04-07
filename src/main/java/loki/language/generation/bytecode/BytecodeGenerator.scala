@@ -3,8 +3,8 @@ package loki.language.generation.bytecode
 import loki.language.generation.Generator
 import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationContext
 import loki.language.generation.bytecode.rule._
-import loki.language.generation.bytecode.rule.template.ContainerGenerationBytecodeRuleTemplate
-import loki.language.generation.rule.mixin.{ArrayGenerationRuleMixin, MapGenerationRuleMixin, ObjectGenerationRuleMixin}
+import loki.language.generation.bytecode.rule.template.{ContainerGenerationBytecodeRuleTemplate, MemberCallBytecodeGenerationRuleTemplate}
+import loki.language.generation.rule.mixin.{AssignIndexGenerationRuleMixin, _}
 import loki.language.parsing.LokiParser._
 
 class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationContext]
@@ -83,19 +83,31 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 
-	override def enterIndex(ruleContext:IndexContext):Unit =
-		IndexBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterIndex(indexContext:IndexContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, indexContext)
+			with IndexGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitIndex(ruleContext:IndexContext):Unit =
-		IndexBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitIndex(indexContext:IndexContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, indexContext)
+			with IndexGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterAssignIndex(ruleContext:AssignIndexContext):Unit =
-		AssignIndexBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, assignIndexContext)
+			with AssignIndexGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitAssignIndex(ruleContext:AssignIndexContext):Unit =
-		AssignIndexBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, assignIndexContext)
+			with AssignIndexGenerationRuleMixin
+	)
+		.exit()
 
 
 
@@ -123,12 +135,17 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 
-	override def enterMemberCall(ruleContext:MemberCallContext):Unit =
-		MemberCallBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterMemberCall(memberCallContext:MemberCallContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, memberCallContext)
+			with MemberCallGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitMemberCall(ruleContext:MemberCallContext):Unit =
-		MemberCallBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
-
+	override def exitMemberCall(memberCallContext:MemberCallContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, memberCallContext)
+			with MemberCallGenerationRuleMixin
+	)
+		.exit()
 
 
 	override def enterVariableOrParameter(ruleContext:VariableOrParameterContext):Unit =

@@ -5,7 +5,7 @@ import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 
 public class LUnitBangEquals extends LBinaryOperation<LUnit, LUnit, LUnit>
 {

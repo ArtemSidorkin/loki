@@ -1,6 +1,6 @@
 package loki.runtime.datatype.number.member.internal;
 
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 
 import java.util.Map;
 

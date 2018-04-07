@@ -3,7 +3,7 @@ package loki.language.generation.java.rule.template
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.java.rule.GenerationJavaRule
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 import org.antlr.v4.runtime.RuleContext
 
 abstract class ContainerGenerationJavaRuleTemplate[RULE_CONTEXT <: RuleContext](

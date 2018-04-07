@@ -2,7 +2,7 @@ package loki.runtime.builtin.unit;
 
 import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.util.Nullable;

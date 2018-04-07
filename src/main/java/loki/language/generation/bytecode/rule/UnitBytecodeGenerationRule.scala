@@ -12,7 +12,7 @@ import loki.language.generation.bytecode.template.UnitBytecodeTemplate.CTemplate
 import loki.language.generation.rule.mixin.UnitGenerationRuleMixin
 import loki.language.parsing.LokiParser
 import loki.language.parsing.LokiParser.UnitContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 import loki.system.SystemSettings
 
 class UnitBytecodeGenerationRule(generationContext:BytecodeGenerationContext, ruleContext:UnitContext)

@@ -1,7 +1,7 @@
 package loki.runtime.datatype.number.member.internal;
 
 import loki.runtime.constant.LUnitMember;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
 public class LHashCodeNumberInternalMember extends LNumberInternalMember

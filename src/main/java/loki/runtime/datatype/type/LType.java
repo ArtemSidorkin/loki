@@ -2,7 +2,7 @@ package loki.runtime.datatype.type;
 
 import loki.runtime.LSettings;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.member.LGetIdTypeMember;
 import loki.runtime.datatype.type.member.LGetNameTypeMember;
 import loki.runtime.datatype.type.member.internal.*;

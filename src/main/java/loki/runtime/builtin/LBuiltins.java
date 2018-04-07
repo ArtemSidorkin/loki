@@ -5,6 +5,7 @@ import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumberPrototype;
+import loki.runtime.datatype.unit.LUnit;
 
 import java.util.Collections;
 import java.util.HashMap;

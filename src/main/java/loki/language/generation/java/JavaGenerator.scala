@@ -3,8 +3,8 @@ package loki.language.generation.java
 import loki.language.generation.Generator
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.java.rule._
-import loki.language.generation.java.rule.template.ContainerGenerationJavaRuleTemplate
-import loki.language.generation.rule.mixin.{ArrayGenerationRuleMixin, MapGenerationRuleMixin, ObjectGenerationRuleMixin}
+import loki.language.generation.java.rule.template.{ContainerGenerationJavaRuleTemplate, MemberCallGenerationJavaRuleTemplate}
+import loki.language.generation.rule.mixin._
 import loki.language.parsing.LokiParser._
 
 class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
@@ -73,19 +73,27 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 
-	override def enterIndex(ruleContext:IndexContext):Unit =
-		IndexGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterIndex(indexContext:IndexContext):Unit =
+		(new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, indexContext) with IndexGenerationRuleMixin)
+			.enter()
 
-	override def exitIndex(ruleContext:IndexContext):Unit =
-		IndexGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitIndex(indexContext:IndexContext):Unit =
+		(new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, indexContext) with IndexGenerationRuleMixin)
+			.exit()
 
 
 
-	override def enterAssignIndex(ruleContext:AssignIndexContext):Unit =
-		AssignIndexGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, assignIndexContext)
+			with AssignIndexGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitAssignIndex(ruleContext:AssignIndexContext):Unit =
-		AssignIndexGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, assignIndexContext)
+			with AssignIndexGenerationRuleMixin
+	)
+		.exit()
 
 
 
@@ -113,11 +121,17 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 
-	override def enterMemberCall(ruleContext:MemberCallContext):Unit =
-		MemberCallGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterMemberCall(memberCallContext:MemberCallContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, memberCallContext)
+			with MemberCallGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitMemberCall(ruleContext:MemberCallContext):Unit =
-		MemberCallGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitMemberCall(memberCallContext:MemberCallContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, memberCallContext)
+			with MemberCallGenerationRuleMixin
+	)
+		.exit()
 
 
 

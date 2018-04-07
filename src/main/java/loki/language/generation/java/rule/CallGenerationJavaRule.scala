@@ -4,7 +4,7 @@ import loki.language.generation.constant.LanguageMembers._
 import loki.language.generation.java.JavaGeneration.JavaGenerationContext
 import loki.language.generation.rule.mixin.CallGenerationRuleMixin
 import loki.language.parsing.LokiParser.CallContext
-import loki.runtime.datatype.LUnit
+import loki.runtime.datatype.unit.LUnit
 
 class CallGenerationJavaRule(generationContext:JavaGenerationContext, ruleContext:CallContext)
 	extends GenerationJavaRule(generationContext, ruleContext) with CallGenerationRuleMixin

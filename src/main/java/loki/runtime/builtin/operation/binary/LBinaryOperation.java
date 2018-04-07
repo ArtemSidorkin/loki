@@ -4,7 +4,7 @@ import loki.runtime.builtin.operation.LOperation;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUndefined;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;

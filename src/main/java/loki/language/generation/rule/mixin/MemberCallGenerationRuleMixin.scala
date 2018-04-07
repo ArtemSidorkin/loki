@@ -1,13 +1,19 @@
 package loki.language.generation.rule.mixin
 
-import loki.language.parsing.LokiParser.{ExpressionContext, MemberCallContext}
+import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
+import loki.language.parsing.LokiParser
+import loki.language.parsing.LokiParser.MemberCallContext
 
-private[generation] trait MemberCallGenerationRuleMixin extends GenerationRuleMixin[MemberCallContext]
+import scala.collection.JavaConverters._
+
+private[generation] trait MemberCallGenerationRuleMixin
+	extends GenerationRuleMixin[MemberCallContext]
+		with MemberCallGenerationRuleMixinTemplate
 {
-	protected val callParameterCount:Int = ruleContext.expression.size - 1
-	protected val memberExpression:ExpressionContext = ruleContext expression 0
-	protected val memberName:String = ruleContext.IDENTIFIER.getText
+	override protected val memberName:String = ruleContext.IDENTIFIER.getText
 
-	protected def getCallParameterExpression(parameterIndex:Int):ExpressionContext =
-		ruleContext expression parameterIndex
+	override protected val memberExpressionContext:LokiParser.ExpressionContext = ruleContext expression 0
+
+	override protected val parameterExpressionContexts:Seq[LokiParser.ExpressionContext] =
+		ruleContext.expression.asScala.tail
 }

@@ -2,6 +2,7 @@ package loki.runtime.datatype;
 
 import loki.runtime.constant.LTypes;
 import loki.runtime.datatype.number.LNumber;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 

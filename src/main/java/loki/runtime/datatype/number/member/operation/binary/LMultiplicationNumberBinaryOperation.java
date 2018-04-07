@@ -1,7 +1,7 @@
 package loki.runtime.datatype.number.member.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
 public class LMultiplicationNumberBinaryOperation extends LNumberBinaryOperation

@@ -2,7 +2,7 @@ package loki.runtime.datatype.type.member.internal;
 
 import loki.runtime.constant.LTypeMember;
 import loki.runtime.datatype.LString;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 
 public class LGetNameTypeInternalMember extends LTypeInternalMember
 {

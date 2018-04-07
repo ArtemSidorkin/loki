@@ -1,12 +1,16 @@
 package loki.language.generation.rule.mixin
 
-import loki.language.parsing.LokiParser.{ExpressionContext, IndexContext}
+import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
+import loki.language.parsing.LokiParser
+import loki.language.parsing.LokiParser.IndexContext
+import loki.runtime.constant.LUnitMember
 
-private[generation] trait IndexGenerationRuleMixin extends GenerationRuleMixin[IndexContext]
+import scala.collection.JavaConverters._
+
+private[generation] trait IndexGenerationRuleMixin
+	extends GenerationRuleMixin[IndexContext] with MemberCallGenerationRuleMixinTemplate
 {
-	protected val indexExpressionCount:Int = ruleContext.expression.size - 1
-	protected val hostExpression:ExpressionContext = ruleContext expression 0
-
-	protected def getIndexExpression(indexExpressionIndex:Int):ExpressionContext =
-		ruleContext expression indexExpressionIndex + 1
+	override protected val memberName: String = LUnitMember.GET_INDEX_ITEM.name
+	override protected val memberExpressionContext: LokiParser.ExpressionContext = ruleContext.expression.asScala.head
+	override protected val parameterExpressionContexts: Seq[LokiParser.ExpressionContext] = ruleContext.expression.asScala.tail
 }

@@ -3,6 +3,7 @@ package loki.runtime.datatype;
 import loki.runtime.constant.LDataUnit;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.type.LType;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
@@ -72,13 +73,6 @@ public class LUndefined extends LUnit
 	{
 		LErrors.printError("Calling \"asType\" from \"undefined\"!");
 		return super.asType(type);
-	}
-
-	@Override
-	public LUnit getIndexedItem(LUnit[] parameters)
-	{
-		LErrors.printError("Calling \"getIndexedItem\" from \"undefined\"!");
-		return super.getIndexedItem(parameters);
 	}
 
 	@Override

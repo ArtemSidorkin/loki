@@ -4,7 +4,7 @@ import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUndefined;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.LVoid;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;

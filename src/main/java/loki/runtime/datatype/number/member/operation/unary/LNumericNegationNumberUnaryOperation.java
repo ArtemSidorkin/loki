@@ -1,7 +1,7 @@
 package loki.runtime.datatype.number.member.operation.unary;
 
 import loki.runtime.constant.LUnaryOperator;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
 public class LNumericNegationNumberUnaryOperation extends LNumberUnaryOperation

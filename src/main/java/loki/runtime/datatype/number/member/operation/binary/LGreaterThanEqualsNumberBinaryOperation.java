@@ -3,7 +3,7 @@ package loki.runtime.datatype.number.member.operation.binary;
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.datatype.LFalse;
 import loki.runtime.datatype.LTrue;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
 
 public class LGreaterThanEqualsNumberBinaryOperation extends LNumberBinaryOperation

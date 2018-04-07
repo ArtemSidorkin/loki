@@ -1,9 +1,9 @@
-package loki.runtime.builtin.member.unit;
+package loki.runtime.datatype.unit.member;
 
-import loki.runtime.builtin.member.LMember;
+import loki.runtime.datatype.LMember;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.util.Nullable;
 

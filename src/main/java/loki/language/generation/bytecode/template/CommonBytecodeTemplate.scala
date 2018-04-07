@@ -5,6 +5,7 @@ import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.datatype._
 import loki.runtime.datatype.`type`.LType
 import loki.runtime.datatype.number.LNumber
+import loki.runtime.datatype.unit.LUnit
 
 private[bytecode] object CommonBytecodeTemplate
 {

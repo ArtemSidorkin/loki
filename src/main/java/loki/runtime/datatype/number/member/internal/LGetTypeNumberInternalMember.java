@@ -2,7 +2,7 @@ package loki.runtime.datatype.number.member.internal;
 
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
-import loki.runtime.datatype.LUnit;
+import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.member.operation.internal.LNumberInternalOperation;
 
 public class LGetTypeNumberInternalMember extends LNumberInternalOperation
