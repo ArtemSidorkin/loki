@@ -223,11 +223,17 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 
-	override def enterUnaryOperation(ruleContext:UnaryOperationContext):Unit =
-		UnaryOperationGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, unaryOperationContext)
+			with UnaryOperationGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitUnaryOperation(ruleContext:UnaryOperationContext):Unit =
-		UnaryOperationGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate(javaGenerationContext, unaryOperationContext)
+			with UnaryOperationGenerationRuleMixin
+	)
+		.exit()
 
 
 

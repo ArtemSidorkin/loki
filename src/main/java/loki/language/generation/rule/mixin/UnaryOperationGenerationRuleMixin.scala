@@ -1,17 +1,20 @@
 package loki.language.generation.rule.mixin
 
 import loki.language.generation.constant.LanguageMembers._
+import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
 import loki.language.parsing.LokiParser.{ExpressionContext, UnaryOperationContext}
 
-private[generation] trait UnaryOperationGenerationRuleMixin extends GenerationRuleMixin[UnaryOperationContext]
+private[generation] trait UnaryOperationGenerationRuleMixin
+	extends GenerationRuleMixin[UnaryOperationContext] with MemberCallGenerationRuleMixinTemplate
 {
-	protected val operator:String =
+	override protected val memberName:String =
 	{
 		if (ruleContext.BANG() != null) UNARY_OPERATOR_BANG
 		else if (ruleContext.MINUS() != null) UNARY_OPERATOR_MINUS
 		else throw new IllegalArgumentException(ruleContext.toString)
 	}
 
-	protected val expression:ExpressionContext = ruleContext.expression
+	override protected val memberExpressionContext:ExpressionContext = ruleContext.expression
+	override protected val parameterExpressionContexts:Seq[ExpressionContext] = Nil
 }
 

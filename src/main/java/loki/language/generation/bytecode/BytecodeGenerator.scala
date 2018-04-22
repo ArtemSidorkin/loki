@@ -236,11 +236,17 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 
-	override def enterUnaryOperation(ruleContext:UnaryOperationContext):Unit =
-		UnaryOperationBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, unaryOperationContext)
+			with UnaryOperationGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitUnaryOperation(ruleContext:UnaryOperationContext):Unit =
-		UnaryOperationBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit =	(
+		new MemberCallBytecodeGenerationRuleTemplate(bytecodeGenerationContext, unaryOperationContext)
+			with UnaryOperationGenerationRuleMixin
+	)
+		.exit()
 
 
 
