@@ -237,51 +237,85 @@ class JavaGenerator(moduleName:String) extends Generator[JavaGenerationContext]
 
 
 
-	override def enterMulDiv(ruleContext:MulDivContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterMulDiv(mulDivContext:MulDivContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, mulDivContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitMulDiv(ruleContext:MulDivContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
-
-
-
-	override def enterAddSub(ruleContext:AddSubContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
-
-	override def exitAddSub(ruleContext:AddSubContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitMulDiv(mulDivContext:MulDivContext):Unit =	(
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, mulDivContext)
+			with OperatorGenerationRuleMixin
+	).exit()
 
 
 
-	override def enterEqNeq(ruleContext:EqNeqContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterAddSub(addSubContext:AddSubContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, addSubContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitEqNeq(ruleContext:EqNeqContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
-
-
-
-	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
-
-	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitAddSub(addSubContext:AddSubContext):Unit =	(
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, addSubContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterEqNeq(eqNeqContext:EqNeqContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, eqNeqContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitEqNeq(eqNeqContext:EqNeqContext):Unit =	(
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, eqNeqContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterPipePipe(ruleContext:PipePipeContext):Unit =
-		OperatorGenerationJavaRule.enter(javaGenerationContext, ruleContext)
+	override def enterGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, gteLteGtLtContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitPipePipe(ruleContext:PipePipeContext):Unit =
-		OperatorGenerationJavaRule.exit(javaGenerationContext, ruleContext)
+	override def exitGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit =	(
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, gteLteGtLtContext)
+			with OperatorGenerationRuleMixin
+	).exit()
+
+
+
+	override def enterAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, ampersandAmpersandContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
+
+	override def exitAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, ampersandAmpersandContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
+
+
+
+	override def enterPipePipe(pipePipeContext:PipePipeContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, pipePipeContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
+
+	override def exitPipePipe(pipePipeContext:PipePipeContext):Unit = (
+		new MemberCallGenerationJavaRuleTemplate[ExpressionContext](javaGenerationContext, pipePipeContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 

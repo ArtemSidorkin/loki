@@ -250,51 +250,89 @@ class BytecodeGenerator(moduleName:String) extends Generator[BytecodeGenerationC
 
 
 
-	override def enterMulDiv(ruleContext:MulDivContext):Unit =
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterMulDiv(mulDivContext:MulDivContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, mulDivContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 
-	override def exitMulDiv(ruleContext:MulDivContext):Unit =
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitMulDiv(mulDivContext:MulDivContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, mulDivContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterAddSub(ruleContext:AddSubContext):Unit =
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterAddSub(addSubContext:AddSubContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, addSubContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 	
-	override def exitAddSub(ruleContext:AddSubContext):Unit =
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitAddSub(addSubContext:AddSubContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, addSubContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
-
-
-	override def enterEqNeq(ruleContext:EqNeqContext):Unit = 
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterEqNeq(eqNeqContext:EqNeqContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, eqNeqContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 	
-	override def exitEqNeq(ruleContext:EqNeqContext):Unit = 
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitEqNeq(eqNeqContext:EqNeqContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, eqNeqContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterGteLteGtLt(ruleContext:GteLteGtLtContext):Unit = 
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, gteLteGtLtContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 	
-	override def exitGteLteGtLt(ruleContext:GteLteGtLtContext):Unit = 
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, gteLteGtLtContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit = 
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](
+			bytecodeGenerationContext, ampersandAmpersandContext
+		)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 	
-	override def exitAmpersandAmpersand(ruleContext:AmpersandAmpersandContext):Unit = 
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](
+			bytecodeGenerationContext, ampersandAmpersandContext
+		)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
-	override def enterPipePipe(ruleContext:PipePipeContext):Unit = 
-		OperatorBytecodeGenerationRule.enter(bytecodeGenerationContext, ruleContext)
+	override def enterPipePipe(pipePipeContext:PipePipeContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, pipePipeContext)
+			with OperatorGenerationRuleMixin
+	)
+		.enter()
 	
-	override def exitPipePipe(ruleContext:PipePipeContext):Unit = 
-		OperatorBytecodeGenerationRule.exit(bytecodeGenerationContext, ruleContext)
+	override def exitPipePipe(pipePipeContext:PipePipeContext):Unit = (
+		new MemberCallBytecodeGenerationRuleTemplate[ExpressionContext](bytecodeGenerationContext, pipePipeContext)
+			with OperatorGenerationRuleMixin
+	)
+		.exit()
 
 
 
