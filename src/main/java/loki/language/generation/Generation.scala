@@ -63,7 +63,7 @@ private[generation] trait Generation
 
 	abstract class FrameStack
 	{
-		protected val frames:mutable.ArrayStack[FRAME] = mutable.ArrayStack().asInstanceOf[mutable.ArrayStack[FRAME]]
+		protected val frames:mutable.ArrayStack[FRAME] = new mutable.ArrayStack[FRAME]()
 
 		def apply(frameIndex:Int):FRAME = frames(frameIndex)
 
