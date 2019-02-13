@@ -348,6 +348,7 @@ return _toBoolean().getValue();
 					private void initializeBuiltins()
 					{
 						LNew.instance.init(this);
+						LAddParent.instance.init(this);
 						LGetIndexItem.instance.init(this);
 						LSetIndexItem.instance.init(this);
 						LGetType.instance.init(this);

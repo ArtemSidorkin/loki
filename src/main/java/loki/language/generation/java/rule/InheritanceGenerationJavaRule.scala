@@ -10,25 +10,24 @@ class InheritanceGenerationJavaRule(generationContext:JavaGenerationContext, rul
 {
 	override protected def enterAction() =
 	{
-		for (i <- 0 until parentCount - 1) generationContext.addPostExitRuleTask(
-			getParentExpression(i), () => addCode(s").$UNIT__METHOD__ADD_PARENT(")
+		(addCode _ compose tabulateIfLastCharacterIsNewLine)(s"""$UNIT__METHOD__CALL_MEMBER("addParent", new loki.runtime.datatype.unit.LUnit[]{""")
+
+		for (i <- 0 until parentCount - 2) generationContext.addPostExitRuleTask(
+			getParentExpression(i), () => addCode(s", ")
 		)
 
 		generationContext
 			.addPostExitRuleTask(
-				getParentExpression(parentCount - 1),
+				getParentExpression(parentCount - 2),
 				() =>
 				{
-					addRightParenthesis
-					addSemicolon()
-					addNewLine()
+					addComa()
+					addSpace()
 				}
 			)
-
-		removeLastNewLineIfPresent()
-		addNewLine()
-		(addCode _ compose tabulateIfLastCharacterIsNewLine) (s"$UNIT__METHOD__ADD_PARENT(")
 	}
+
+	override protected def exitAction():Unit = addCode("}, unitContext);\n")
 }
 
 object InheritanceGenerationJavaRule

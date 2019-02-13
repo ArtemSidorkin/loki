@@ -4,6 +4,8 @@ import loki.language.generation.bytecode.BytecodeGeneration.BytecodeGenerationCo
 import loki.language.generation.bytecode.template.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.generation.rule.mixin.InheritanceGenerationRuleMixin
 import loki.language.parsing.LokiParser.InheritanceContext
+import loki.runtime.datatype.unit.LUnit
+import loki.runtime.datatype.unit.member.LAddParent
 
 class InheritanceBytecodeGenerationRule
 (
@@ -12,20 +14,21 @@ class InheritanceBytecodeGenerationRule
 {
 	override protected def enterAction() =
 	{
+		topMethodCall.aloadthis().ldc("addParent").ldc(parentCount).anewarray(classOf[LUnit])
+
 		for (i <- 0 until parentCount)
 		{
-			generationContext.addPreEnterRuleTask(getParentExpression(i), () => topMethodCall.aloadthis())
+			generationContext.addPreEnterRuleTask(getParentExpression(i), () => topMethodCall.dup().ldc(i).decrementObjectCounter())
 
 			generationContext.addPostExitRuleTask(
 				getParentExpression(i),
-				() => (
-					topMethodCall
-						invokeVirtualUnitMethodAddParent()
-						decrementObjectCounter()
-				)
+				() => topMethodCall.aastore()
+
 			)
 		}
 	}
+
+	override protected def exitAction(): Unit = topMethodCall.aloadUnitMethodCallVariableUnitContext().invokeVirtualUnitMethodCallMember()
 }
 
 object InheritanceBytecodeGenerationRule
