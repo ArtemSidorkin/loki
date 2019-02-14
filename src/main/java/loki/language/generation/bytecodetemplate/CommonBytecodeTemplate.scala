@@ -9,7 +9,7 @@ import loki.runtime.datatype.unit.LUnit
 
 object CommonBytecodeTemplate
 {
-	implicit class CTemplateCommon(method:MethodBuilder)
+	implicit class CTemplateCommon(val method:MethodBuilder)
 	{
 		def anewarrayJavaString():method.type = method anewarray classOf[String]
 		def newUnitContext():method.type = method `new` classOf[LUnitContext]
