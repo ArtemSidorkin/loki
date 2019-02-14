@@ -1,11 +1,11 @@
 package loki.language.generation.rule.mixin
 
-import loki.language.generation.{Generation, GenerationClassLoader}
+import loki.language.generation.{GenerationContext, GenerationClassLoader}
 import org.antlr.v4.runtime.RuleContext
 
-private[generation] trait GenerationRuleMixin[RULE_CONTEXT <: RuleContext]
+trait GenerationRuleMixin[RULE_CONTEXT <: RuleContext]
 {
-	protected val generationContext:Generation#GenerationContext
+	protected val generationContext:GenerationContext
 	protected val ruleContext:RULE_CONTEXT
 
 	protected def classLoader:GenerationClassLoader = generationContext.classLoader

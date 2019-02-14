@@ -3,21 +3,17 @@ package loki
 import java.io.File
 
 import loki.execution.Execution
-import loki.execution.Execution.{ExecutionTargetBytecode, ExecutionTargetJava}
 import loki.system.SystemSettings
 import loki.test.Tester
 import loki.util.ConsoleCommander
 
 object Main extends App
 {
-	private val JAVA_KEY = "--java"
 	private val TEST_KEY = "--test"
 	private val TRACE_PREPROCESSED_CODE = "--trace-preprocessed-code"
 
 
 	{
-		SystemSettings.EXECUTION_TARGET = ExecutionTargetBytecode
-
 		ConsoleCommander(
 			args,
 			arguments =>
@@ -26,8 +22,6 @@ object Main extends App
 					SystemSettings.TRACE_PREPROCESSED_CODE = true
 
 				if (arguments.parameterlessKeys contains TEST_KEY) Tester()
-
-				if (arguments.parameterlessKeys contains JAVA_KEY) SystemSettings.EXECUTION_TARGET = ExecutionTargetJava
 
 				if (arguments.keylessArguments.nonEmpty)
 				{

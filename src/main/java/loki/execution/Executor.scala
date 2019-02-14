@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
-import loki.language.generation.Generator
+import loki.language.generation.BytecodeGenerator
 import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.language.preprocessing.Preprocessor
 import loki.runtime.context.LUnitContext
@@ -21,7 +21,7 @@ private[execution] class Executor(
 	_modulePaths:Seq[String],
 	val outputPrintStream:PrintStream = System.out,
 	val errorPrintStream:PrintStream = System.err,
-	protected val generatorFactory:(String=>Generator[_])
+	protected val generatorFactory: String=>BytecodeGenerator
 )
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
@@ -56,11 +56,7 @@ private[execution] class Executor(
 					instantiate(
 						parameters getOrElse null.asInstanceOf[Array[LUnit]],
 						null.asInstanceOf[LUnitContext],
-						new Consumer[LUnit]
-						{
-							override def accept(unit:LUnit):Unit =
-								moduleInstances += moduleName -> unit
-						}
+						(unit:LUnit) => moduleInstances += moduleName -> unit
 					)
 			)
 		}
@@ -82,7 +78,7 @@ private[execution] class Executor(
 			.asInstanceOf[LModule]
 	}
 
-	private def generate(generator:Generator[_], relativeModulePathname:String)()
+	private def generate(generator:BytecodeGenerator, relativeModulePathname:String)()
 	{
 		val antlrModuleInputStream =
 			new ANTLRInputStream(

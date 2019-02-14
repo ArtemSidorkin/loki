@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 object FileUtil
 {
-	def getFilePathnameWithoutExtension(filePathname:String) = (
+	def getFilePathnameWithoutExtension(filePathname:String):String = (
 		filePathname
 			substring (0, {val index = filePathname lastIndexOf "."; if (index != -1) index else filePathname.length})
 	)

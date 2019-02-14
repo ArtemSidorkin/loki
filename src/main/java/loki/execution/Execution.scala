@@ -2,16 +2,10 @@ package loki.execution
 
 import java.io.PrintStream
 
-import loki.language.generation.bytecode.BytecodeGenerator
-import loki.language.generation.java.JavaGenerator
-import loki.system.SystemSettings
+import loki.language.generation.BytecodeGenerator
 
 object Execution
 {
-	sealed class ExecutionTarget
-	object ExecutionTargetJava extends ExecutionTarget
-	object ExecutionTargetBytecode extends ExecutionTarget
-
 	@volatile
 	private var _executor:Executor = null.asInstanceOf[Executor]
 
@@ -26,16 +20,6 @@ object Execution
 		if (_executor == null || force) this.synchronized
 		{
 			if (_executor == null || force)
-				_executor = new Executor(
-					modulePaths,
-					outputPrintStream,
-					errorPrintStream,
-					SystemSettings.EXECUTION_TARGET match
-					{
-						case _:ExecutionTargetBytecode.type => new BytecodeGenerator(_)
-						case _:ExecutionTargetJava.type => new JavaGenerator(_)
-						case executor => throw new IllegalArgumentException(s"""Unknown executor "$executor"!""")
-					}
-				)
+				_executor = new Executor(modulePaths, outputPrintStream, errorPrintStream, new BytecodeGenerator(_))
 		}
 }

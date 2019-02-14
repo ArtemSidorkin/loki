@@ -3,8 +3,6 @@ package loki.test
 import java.io.File
 
 import loki.execution.Execution
-import loki.execution.Execution.{ExecutionTargetBytecode, ExecutionTargetJava}
-import loki.system.SystemSettings
 import loki.util.FileUtil
 
 object Tester
@@ -15,16 +13,8 @@ object Tester
 		println("Starting bytecode testing...")
 		println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
-		SystemSettings.EXECUTION_TARGET = ExecutionTargetBytecode
 		val succeededToAllTestsByteCodeCounter = startTesting()
 		println("-----------------------------------------------------------------------------------------------------")
-
-		println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-		println("Starting java testing...")
-		println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-
-		SystemSettings.EXECUTION_TARGET = ExecutionTargetJava
-		val succeededToAllTestsJavaCodeCounter = startTesting()
 
 		println("-----------------------------------------------------------------------------------------------------")
 		println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
@@ -36,12 +26,6 @@ object Tester
 			s"of ${succeededToAllTestsByteCodeCounter._2} " +
 			s"bytecode tests succeed."
 		)
-		println(
-			s"${succeededToAllTestsJavaCodeCounter._1} " +
-			s"of ${succeededToAllTestsJavaCodeCounter._2} " +
-			s"java tests succeed."
-		)
-
 	}
 
 	private def startTesting():(Int, Int) =
