@@ -19,22 +19,22 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 	def addPreEnterRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(preEnterRuleTasks, _:RuleContext, _:RULE_TASK)
 
-	def checkPreEnterRuleTasks:(RuleContext) => Unit = applyRuleTasks(preEnterRuleTasks, _:RuleContext)
+	def checkPreEnterRuleTasks:RuleContext => Unit = applyRuleTasks(preEnterRuleTasks, _:RuleContext)
 
 	def addPostEnterRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(postEnterRuleTasks, _:RuleContext, _:RULE_TASK)
 
-	def checkPostEnterRuleTasks:(RuleContext) => Unit = applyRuleTasks(postEnterRuleTasks, _:RuleContext)
+	def checkPostEnterRuleTasks:RuleContext => Unit = applyRuleTasks(postEnterRuleTasks, _:RuleContext)
 
 	def addPreExitRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(preExitRuleTasks, _:RuleContext, _:RULE_TASK)
 
-	def checkPreExitRuleTasks:(RuleContext) => Unit = applyRuleTasks(preExitRuleTasks, _:RuleContext)
+	def checkPreExitRuleTasks:RuleContext => Unit = applyRuleTasks(preExitRuleTasks, _:RuleContext)
 
 	def addPostExitRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(postExitRuleTasks, _:RuleContext, _:RULE_TASK)
 
-	def checkPostExitRuleTasks:(RuleContext) => Unit = applyRuleTasks(postExitRuleTasks, _:RuleContext)
+	def checkPostExitRuleTasks: RuleContext => Unit = applyRuleTasks(postExitRuleTasks, _:RuleContext)
 
 	private def addRuleTask(tasks:RULE_TASKS, ruleContext:RuleContext, ruleTask:RULE_TASK):Unit =
 		tasks.getOrElseUpdate(ruleContext, mutable.ArrayStack()) += ruleTask
@@ -43,12 +43,12 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 		ruleTasks
 			get ruleContext
 			foreach (tasks =>
-		{
-			while(tasks.nonEmpty) tasks.pop()()
+			{
+				while(tasks.nonEmpty) tasks.pop()()
 
-			ruleTasks -= ruleContext
-		})
-		)
+				ruleTasks -= ruleContext
+			})
+	)
 
 	private def createRuleTasks = mutable.HashMap[RuleContext, mutable.ArrayStack[()=>Unit]]()
 }

@@ -13,15 +13,15 @@ class BytecodeFrameStack
 
 	def apply(frameIndex:Int):BytecodeFrame = frames(frameIndex)
 
-	def size: Int = frames.size
-
-	def pop():Unit = frames.pop()
+	def size:Int = frames.size
 	def top:BytecodeFrame = frames.top
 	def preTop:BytecodeFrame = frames.tail.head
 
+	def pop():Unit = frames.pop()
+
 	def push(classFrame:FrameClassBuilder):Unit = frames.push(new BytecodeFrame(classFrame, frameIdGenerator()))
 
-	def push(classFrameCreator: (Long => FrameClassBuilder))
+	def push(classFrameCreator: Long => FrameClassBuilder)
 	{
 		val id = frameIdGenerator()
 
