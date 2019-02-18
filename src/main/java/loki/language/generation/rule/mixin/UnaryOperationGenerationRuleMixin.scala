@@ -14,7 +14,7 @@ private[generation] trait UnaryOperationGenerationRuleMixin
 		else throw new IllegalArgumentException(ruleContext.toString)
 	}
 
-	override protected val memberExpressionContext:ExpressionContext = ruleContext.expression
-	override protected val parameterExpressionContexts:Seq[ExpressionContext] = Nil
+	override protected val hostExpressionContext:ExpressionContext = ruleContext.expression
+	override protected val callParameterExpressionContexts:Seq[ExpressionContext] = Nil
 }
 

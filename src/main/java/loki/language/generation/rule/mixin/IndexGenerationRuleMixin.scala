@@ -11,6 +11,6 @@ private[generation] trait IndexGenerationRuleMixin
 	extends GenerationRuleMixin[IndexContext] with MemberCallGenerationRuleMixinTemplate
 {
 	override protected val memberName: String = LUnitMember.GET_INDEX_ITEM.name
-	override protected val memberExpressionContext: LokiParser.ExpressionContext = ruleContext.expression.asScala.head
-	override protected val parameterExpressionContexts: Seq[LokiParser.ExpressionContext] = ruleContext.expression.asScala.tail
+	override protected val hostExpressionContext: LokiParser.ExpressionContext = ruleContext.expression.asScala.head
+	override protected val callParameterExpressionContexts: Seq[LokiParser.ExpressionContext] = ruleContext.expression.asScala.tail
 }

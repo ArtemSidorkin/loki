@@ -5,6 +5,6 @@ import loki.language.parsing.LokiParser.ExpressionContext
 private[generation] trait MemberCallGenerationRuleMixinTemplate
 {
 	protected val memberName:String
-	protected val memberExpressionContext:ExpressionContext
-	protected val parameterExpressionContexts:Seq[ExpressionContext]
+	protected val hostExpressionContext:ExpressionContext
+	protected val callParameterExpressionContexts:Seq[ExpressionContext]
 }

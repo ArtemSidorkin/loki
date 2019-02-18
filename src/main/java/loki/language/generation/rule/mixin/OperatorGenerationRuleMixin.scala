@@ -44,10 +44,10 @@ private[generation] trait OperatorGenerationRuleMixin
 
 
 
-	override protected val memberExpressionContext:ExpressionContext =
+	override protected val hostExpressionContext:ExpressionContext =
 		ruleContext getChild (classOf[ExpressionContext], 0)
 
-	override protected val parameterExpressionContexts:Seq[ExpressionContext] =
+	override protected val callParameterExpressionContexts:Seq[ExpressionContext] =
 		(ruleContext getChild (classOf[ExpressionContext], 1)) :: Nil
 
 	private def ruleContextAsMulDivOperatorCode:Int = ruleContext.asInstanceOf[MulDivContext].operator.getType

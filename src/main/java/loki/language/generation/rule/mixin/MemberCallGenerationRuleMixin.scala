@@ -12,8 +12,8 @@ private[generation] trait MemberCallGenerationRuleMixin
 {
 	override protected val memberName:String = ruleContext.IDENTIFIER.getText
 
-	override protected val memberExpressionContext:LokiParser.ExpressionContext = ruleContext expression 0
+	override protected val hostExpressionContext:LokiParser.ExpressionContext = ruleContext expression 0
 
-	override protected val parameterExpressionContexts:Seq[LokiParser.ExpressionContext] =
+	override protected val callParameterExpressionContexts:Seq[LokiParser.ExpressionContext] =
 		ruleContext.expression.asScala.tail
 }

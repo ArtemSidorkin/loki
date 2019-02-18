@@ -10,6 +10,6 @@ private[generation] trait AssignIndexGenerationRuleMixin
 	extends GenerationRuleMixin[AssignIndexContext] with MemberCallGenerationRuleMixinTemplate
 {
 	override protected val memberName:String = LUnitMember.SET_INDEX_ITEM.name
-	override protected val memberExpressionContext:ExpressionContext = ruleContext.expression.asScala.head
-	override protected val parameterExpressionContexts: Seq[ExpressionContext] = ruleContext.expression.asScala.tail
+	override protected val hostExpressionContext:ExpressionContext = ruleContext.expression.asScala.head
+	override protected val callParameterExpressionContexts: Seq[ExpressionContext] = ruleContext.expression.asScala.tail
 }
