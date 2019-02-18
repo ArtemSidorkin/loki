@@ -26,11 +26,8 @@ abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 					incrementObjectCounter ()
 			)
 
-			if (containerItemCount != 0) (
-				topMethodCall
-					ldc containerItemCount
-					anewarrayUnit ()
-			)
+			if (containerItemCount != 0) topMethodCall anewarrayUnit containerItemCount
+
 			else topMethodCall aconstnull ()
 		}
 

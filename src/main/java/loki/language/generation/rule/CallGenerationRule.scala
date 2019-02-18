@@ -21,8 +21,7 @@ class CallGenerationRule(generationContext:GenerationContext, ruleContext:CallCo
 			(
 				topMethodCall
 				aloadUnitMethodCallParameterHost ()
-				ldc callParameterCount
-				anewarrayUnit ()
+				anewarrayUnit callParameterCount
 			))
 
 		def generateCallParameters():Unit = for (i <- 1 to callParameterCount)

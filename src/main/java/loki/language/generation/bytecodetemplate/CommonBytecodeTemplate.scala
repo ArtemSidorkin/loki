@@ -12,15 +12,31 @@ object CommonBytecodeTemplate
 	implicit class CTemplateCommon(val method:MethodBuilder)
 	{
 		def anewarrayJavaString():method.type = method anewarray classOf[String]
+
 		def newUnitContext():method.type = method `new` classOf[LUnitContext]
+
 		def newModuleContext():method.type = method `new` classOf[LModuleContext]
+
 		def newType():method.type = method `new` classOf[LType]
+
 		def newNumber():method.type = method `new` classOf[LNumber]
+
 		def newString():method.type = method `new` classOf[LString]
+
 		def newArray():method.type = method `new` classOf[LArray]
+
 		def newMap():method.type = method `new` classOf[LMap]
+
 		def newObject():method.type = method `new` classOf[LObject]
+
+		def anewarrayUnit(arraySize:Int):method.type = (
+			method
+				ldc arraySize
+				anewarray classOf[LUnit]
+		)
+
 		def anewarrayUnit():method.type = method anewarray classOf[LUnit]
+
 		def void():method.type = method getstatic (classOf[LVoid], "instance", classOf[LVoid])
 	}
 }

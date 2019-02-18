@@ -26,8 +26,7 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 			private def loadMemberNameAndCreateCallParameterArray():Unit = (
 				topMethodCall
 					ldc memberName
-					ldc callParameterExpressionContexts.size
-					anewarrayUnit()
+					anewarrayUnit callParameterExpressionContexts.size
 			)
 		}
 
