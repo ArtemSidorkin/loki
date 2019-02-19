@@ -8,9 +8,9 @@ import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixi
 import org.antlr.v4.runtime.RuleContext
 
 abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
-	bytecodeGenerationContext:GenerationContext, ruleContext:RULE_CONTEXT
+	generationContext:GenerationContext, ruleContext:RULE_CONTEXT
 )
-	extends GenerationRule(bytecodeGenerationContext, ruleContext) with MemberCallGenerationRuleMixinTemplate
+	extends GenerationRule(generationContext, ruleContext) with MemberCallGenerationRuleMixinTemplate
 {
 	override protected def enterAction()
 	{
@@ -20,8 +20,7 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 		object LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpression
 		{
 			def apply():Unit =
-				bytecodeGenerationContext
-					.addPostExitRuleTask(hostExpressionContext, loadMemberNameAndCreateCallParameterArray)
+				generationContext.addPostExitRuleTask(hostExpressionContext, loadMemberNameAndCreateCallParameterArray)
 
 			private def loadMemberNameAndCreateCallParameterArray():Unit = (
 				topMethodCall
@@ -32,7 +31,7 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 
 		object StoreCallParameters
 		{
-			def apply():Unit =
+			def apply()
 			{
 				callParameterExpressionContexts
 					.indices
@@ -47,7 +46,7 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 				object DuplicateParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpression
 				{
 					def apply(callParameterIndex:Int):Unit =
-						bytecodeGenerationContext.
+						generationContext.
 							addPreEnterRuleTask(
 								callParameterExpressionContexts(callParameterIndex),
 								() => duplicateParameterArrayAndLoadCallParameterIndex(callParameterIndex)
@@ -63,7 +62,7 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 				object StoreCallParameterAfterExitCallParameterExpression
 				{
 					def apply(callParameterIndex:Int):Unit =
-						bytecodeGenerationContext
+						generationContext
 							.addPostExitRuleTask(
 								callParameterExpressionContexts(callParameterIndex), storeCallParameter
 							)
