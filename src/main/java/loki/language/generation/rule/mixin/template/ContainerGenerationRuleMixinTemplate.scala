@@ -6,5 +6,6 @@ import loki.runtime.datatype.unit.LUnit
 private[generation] trait ContainerGenerationRuleMixinTemplate
 {
 	protected val containerClass:Class[_ <: LUnit]
+
 	protected val containerItemExpressionContexts:Seq[ExpressionContext]
 }

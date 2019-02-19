@@ -11,5 +11,6 @@ private[generation] trait MapGenerationRuleMixin
 	extends GenerationRuleMixin[MapContext] with ContainerGenerationRuleMixinTemplate
 {
 	override protected val containerClass:Class[_ <: LUnit] = classOf[LMap]
+
 	override protected val containerItemExpressionContexts:Seq[ExpressionContext] = ruleContext.expression.asScala
 }

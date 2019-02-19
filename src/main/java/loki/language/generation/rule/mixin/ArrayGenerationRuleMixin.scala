@@ -11,5 +11,6 @@ private[generation] trait ArrayGenerationRuleMixin
 	extends GenerationRuleMixin[ArrayContext] with ContainerGenerationRuleMixinTemplate
 {
 	override protected val containerClass:Class[_ <: LUnit] = classOf[LArray]
+
 	override protected val containerItemExpressionContexts:Seq[ExpressionContext] = ruleContext.expression.asScala
 }

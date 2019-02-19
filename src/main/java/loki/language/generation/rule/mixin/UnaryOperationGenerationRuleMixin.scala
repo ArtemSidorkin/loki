@@ -15,6 +15,7 @@ private[generation] trait UnaryOperationGenerationRuleMixin
 	}
 
 	override protected val hostExpressionContext:ExpressionContext = ruleContext.expression
+
 	override protected val callParameterExpressionContexts:Seq[ExpressionContext] = Nil
 }
 

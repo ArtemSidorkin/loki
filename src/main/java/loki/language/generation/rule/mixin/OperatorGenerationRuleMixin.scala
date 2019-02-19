@@ -2,8 +2,8 @@ package loki.language.generation.rule.mixin
 
 import loki.language.generation.constant.LanguageMembers._
 import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
-import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.language.parsing.LokiParser._
+import loki.language.parsing.{LokiLexer, LokiParser}
 
 private[generation] trait OperatorGenerationRuleMixin
 	extends GenerationRuleMixin[ExpressionContext] with MemberCallGenerationRuleMixinTemplate
@@ -41,8 +41,6 @@ private[generation] trait OperatorGenerationRuleMixin
 				case LokiLexer.PIPE_PIPE => OPERATOR_PIPE_PIPE
 			}
 		}
-
-
 
 	override protected val hostExpressionContext:ExpressionContext =
 		ruleContext getChild (classOf[ExpressionContext], 0)

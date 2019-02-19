@@ -11,5 +11,6 @@ private[generation] trait ObjectGenerationRuleMixin
 	extends GenerationRuleMixin[ObjectContext] with ContainerGenerationRuleMixinTemplate
 {
 	protected val containerClass:Class[_ <: LUnit] = classOf[LObject]
+
 	protected val containerItemExpressionContexts:Seq[ExpressionContext] = ruleContext.expression.asScala
 }

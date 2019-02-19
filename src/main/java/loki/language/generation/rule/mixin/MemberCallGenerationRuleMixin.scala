@@ -7,8 +7,7 @@ import loki.language.parsing.LokiParser.MemberCallContext
 import scala.collection.JavaConverters._
 
 private[generation] trait MemberCallGenerationRuleMixin
-	extends GenerationRuleMixin[MemberCallContext]
-		with MemberCallGenerationRuleMixinTemplate
+	extends GenerationRuleMixin[MemberCallContext] with MemberCallGenerationRuleMixinTemplate
 {
 	override protected val memberName:String = ruleContext.IDENTIFIER.getText
 
