@@ -11,10 +11,18 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 
 	val frameStack:BytecodeFrameStack = new BytecodeFrameStack
 
+	private val ruleContextVariables:collection.mutable.Map[RuleContext, Any] = mutable.HashMap()
+
 	private val preEnterRuleTasks = createRuleTasks
 	private val postEnterRuleTasks = createRuleTasks
 	private val preExitRuleTasks = createRuleTasks
 	private val postExitRuleTasks = createRuleTasks
+
+	def getRuleContextVariable[VARIABLE](ruleContext:RuleContext):VARIABLE =
+		ruleContextVariables(ruleContext).asInstanceOf[VARIABLE]
+
+	def setRuleContextVariable(ruleContext:RuleContext, ruleContextVariable:Any):Unit =
+		ruleContextVariables += (ruleContext -> ruleContextVariable)
 
 	def addPreEnterRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(preEnterRuleTasks, _:RuleContext, _:RULE_TASK)
