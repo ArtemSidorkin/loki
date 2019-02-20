@@ -4,7 +4,7 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.generation.rule.WhileGenerationRule.Labels
-import loki.language.parsing.LokiParser.{ExpressionContext, InstructionContext, WhileContext}
+import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode
 
 private[generation] class WhileGenerationRule(generationContext:GenerationContext, whileContext:WhileContext)
@@ -14,34 +14,52 @@ private[generation] class WhileGenerationRule(generationContext:GenerationContex
 
 	override protected def enterAction()
 	{
-		val labels = Labels(new LabelNode, new LabelNode)
+		val labels = generationContext.setRuleContextVariable(whileContext, Labels(new LabelNode, new LabelNode))
 
-		generationContext
-			.addPreEnterRuleTask(logicalExpressionContext, () => topMethodCall label labels.beginWhileLabelNode)
+		PutBeginLabelBeforeEnterLogicalExpressionContext()
+		ConvertLogicalExpressionToBooleanAndConditionallyGoToEndLabelAfterExistLogicalExpressionContext()
 
-		generationContext
-			.addPostExitRuleTask(
-				logicalExpressionContext,
-				() => (
-					topMethodCall
-						invokeVirtualUnitMethodToBoolean()
-						decrementObjectCounter ()
-						ifeq labels.endWhileLabelNode
-				)
+		object PutBeginLabelBeforeEnterLogicalExpressionContext
+		{
+			def apply():Unit =
+				generationContext.addPreEnterRuleTask(logicalExpressionContext, putBeginLabel)
+
+			private def putBeginLabel():Unit = topMethodCall label labels.begin
+		}
+
+		object ConvertLogicalExpressionToBooleanAndConditionallyGoToEndLabelAfterExistLogicalExpressionContext
+		{
+			def apply():Unit =
+				generationContext
+					.addPostExitRuleTask(
+						logicalExpressionContext, convertLogicalExpressionToBooleanAndConditionallyGoToEndLabel
+					)
+
+			private def convertLogicalExpressionToBooleanAndConditionallyGoToEndLabel():Unit = (
+				topMethodCall
+					invokeVirtualUnitMethodToBoolean()
+					decrementObjectCounter ()
+					ifeq labels.end
 			)
-
-		generationContext.setRuleContextVariable(whileContext, labels)
+		}
 	}
 
-	override def exit():Unit = {
-		val labelNodes:Labels = generationContext getRuleContextVariable whileContext
+	override def exit():Unit =
+	{
+		val labels:Labels = generationContext getRuleContextVariable whileContext
 
-		(topMethodCall
-				goto labelNodes.beginWhileLabelNode
-				label labelNodes.endWhileLabelNode
-				void ()
-				incrementObjectCounter ()
-		)
+		GoToBeginLabelAndPutEndLabel()
+
+		object GoToBeginLabelAndPutEndLabel
+		{
+			def apply():Unit = (
+				topMethodCall
+					goto labels.begin
+					label labels.end
+					void ()
+					incrementObjectCounter ()
+			)
+		}
 	}
 }
 
@@ -53,5 +71,5 @@ private[generation] object WhileGenerationRule
 	def exit(generationContext:GenerationContext, whileContext:WhileContext):Unit =
 		new WhileGenerationRule(generationContext, whileContext).exit()
 
-	private case class Labels(beginWhileLabelNode:LabelNode, endWhileLabelNode:LabelNode)
+	private case class Labels(begin:LabelNode, end:LabelNode)
 }

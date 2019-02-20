@@ -21,8 +21,11 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 	def getRuleContextVariable[VARIABLE](ruleContext:RuleContext):VARIABLE =
 		ruleContextVariables(ruleContext).asInstanceOf[VARIABLE]
 
-	def setRuleContextVariable(ruleContext:RuleContext, ruleContextVariable:Any):Unit =
+	def setRuleContextVariable[VARIABLE](ruleContext:RuleContext, ruleContextVariable:VARIABLE):VARIABLE =
+	{
 		ruleContextVariables += (ruleContext -> ruleContextVariable)
+		ruleContextVariable
+	}
 
 	def addPreEnterRuleTask:(RuleContext, RULE_TASK) => Unit =
 		addRuleTask(preEnterRuleTasks, _:RuleContext, _:RULE_TASK)
