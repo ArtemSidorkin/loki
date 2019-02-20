@@ -7,17 +7,17 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateU
 import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
-abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
+private[generation] abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 	generationContext:GenerationContext, ruleContext:RULE_CONTEXT
 )
 	extends GenerationRule(generationContext, ruleContext) with MemberCallGenerationRuleMixinTemplate
 {
 	override protected def enterAction()
 	{
-		LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpression()
+		LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext()
 		StoreCallParameters()
 
-		object LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpression
+		object LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext
 		{
 			def apply():Unit =
 				generationContext.addPostExitRuleTask(hostExpressionContext, loadMemberNameAndCreateCallParameterArray)
@@ -37,29 +37,29 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 					.indices
 					.foreach(callParameterIndex =>
 					{
-						DuplicateParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpression(
+						DuplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext(
 							callParameterIndex
 						)
-						StoreCallParameterAfterExitCallParameterExpression(callParameterIndex)
+						StoreCallParameterAfterExitCallParameterExpressionContext(callParameterIndex)
 					})
 
-				object DuplicateParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpression
+				object DuplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext
 				{
 					def apply(callParameterIndex:Int):Unit =
 						generationContext.
 							addPreEnterRuleTask(
 								callParameterExpressionContexts(callParameterIndex),
-								() => duplicateParameterArrayAndLoadCallParameterIndex(callParameterIndex)
+								() => duplicateCallParameterArrayAndLoadCallParameterIndex(callParameterIndex)
 							)
 
-					private def duplicateParameterArrayAndLoadCallParameterIndex(callParameterIndex:Int):Unit = (
+					private def duplicateCallParameterArrayAndLoadCallParameterIndex(callParameterIndex:Int):Unit = (
 						topMethodCall
 							dup ()
 							ldc callParameterIndex
 					)
 				}
 
-				object StoreCallParameterAfterExitCallParameterExpression
+				object StoreCallParameterAfterExitCallParameterExpressionContext
 				{
 					def apply(callParameterIndex:Int):Unit =
 						generationContext
@@ -77,11 +77,11 @@ abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 		}
 	}
 
-	override protected def exitAction():Unit =
+	override protected def exitAction()
 	{
-		LoadContextAndInvokeCallMember()
+		LoadUnitContextAndInvokeCallMember()
 
-		object LoadContextAndInvokeCallMember
+		object LoadUnitContextAndInvokeCallMember
 		{
 			def apply():Unit = (
 				topMethodCall

@@ -5,28 +5,27 @@ import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTempla
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.VariableOrParameterContext
 
-class VariableOrParameterGenerationRule(
-												   generationContext:GenerationContext, ruleContext:VariableOrParameterContext
+private[generation] class VariableOrParameterGenerationRule(
+   generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext
 )
-	extends GenerationRule(generationContext, ruleContext)
+	extends GenerationRule(generationContext, variableOrParameterContext)
 {
-	private val variableOrParameterName:String = ruleContext.IDENTIFIER.getText
+	private val variableOrParameterName:String = variableOrParameterContext.IDENTIFIER.getText
 
-	override protected def enterAction():Unit =
-	(
+	override protected def enterAction():Unit = (
 		topMethodCall
-		aloadUnitMethodCallVariableUnitContext ()
-		ldc variableOrParameterName
-		invokeVirtualUnitContextMethodGetVariable ()
-		incrementObjectCounter ()
+			aloadUnitMethodCallVariableUnitContext ()
+			ldc variableOrParameterName
+			invokeVirtualUnitContextMethodGetVariable ()
+			incrementObjectCounter ()
 	)
 }
 
-object VariableOrParameterGenerationRule
+private[generation] object VariableOrParameterGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:VariableOrParameterContext):Unit =
-		new VariableOrParameterGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext):Unit =
+		new VariableOrParameterGenerationRule(generationContext, variableOrParameterContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:VariableOrParameterContext):Unit =
-		new VariableOrParameterGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext):Unit =
+		new VariableOrParameterGenerationRule(generationContext, variableOrParameterContext).exit()
 }

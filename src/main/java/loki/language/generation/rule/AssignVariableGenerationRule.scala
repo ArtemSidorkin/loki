@@ -5,28 +5,27 @@ import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTempla
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.AssignVariableContext
 
-class AssignVariableGenerationRule
-(
-	generationContext:GenerationContext, ruleContext:AssignVariableContext
-) extends GenerationRule(generationContext, ruleContext)
+private[generation] class AssignVariableGenerationRule(
+	generationContext:GenerationContext, assignVariableContext:AssignVariableContext
+)
+	extends GenerationRule(generationContext, assignVariableContext)
 {
-	private val variableName = ruleContext.IDENTIFIER.getText
+	private val variableName = assignVariableContext.IDENTIFIER.getText
 
-	override protected def enterAction():Unit =
-	(
-		topMethodCall aloadUnitMethodCallVariableUnitContext ()
-		ldc variableName
+	override protected def enterAction():Unit =	(
+		topMethodCall
+			aloadUnitMethodCallVariableUnitContext ()
+			ldc variableName
 	)
-
 
 	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitContextMethodSetVariable ()
 }
 
-object AssignVariableGenerationRule
+private[generation] object AssignVariableGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:AssignVariableContext):Unit =
-		new AssignVariableGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, assignVariableContext:AssignVariableContext):Unit =
+		new AssignVariableGenerationRule(generationContext, assignVariableContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:AssignVariableContext):Unit =
-		new AssignVariableGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, assignVariableContext:AssignVariableContext):Unit =
+		new AssignVariableGenerationRule(generationContext, assignVariableContext).exit()
 }

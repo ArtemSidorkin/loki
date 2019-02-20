@@ -7,15 +7,15 @@ import loki.language.generation.bytecodetemplate.ContainerBytecodeTemplate.Templ
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
-abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
-	bytecodeGenerationContext:GenerationContext, ruleContext:RULE_CONTEXT
+private[generation] abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
+	generationContext:GenerationContext, ruleContext:RULE_CONTEXT
 )
-	extends GenerationRule(bytecodeGenerationContext, ruleContext) with ContainerGenerationRuleMixinTemplate
+	extends GenerationRule(generationContext, ruleContext) with ContainerGenerationRuleMixinTemplate
 {
 	override protected def enterAction()
 	{
 		CreateAndDuplicateContainerClass()
-		CreateContainerClassParameterArray()
+		CreateContainerClassConstructorParameterArray()
 		StoreContainerItems()
 
 		object CreateAndDuplicateContainerClass
@@ -28,7 +28,7 @@ abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 			)
 		}
 
-		object CreateContainerClassParameterArray
+		object CreateContainerClassConstructorParameterArray
 		{
 			def apply():Unit =
 				if (containerItemExpressionContexts.nonEmpty)
@@ -44,30 +44,32 @@ abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 					.indices
 					.foreach(containerItemExpressionContextIndex =>
 					{
-						DuplicateItemArrayAndLoadItemIndexBeforeEnterItemExpression(containerItemExpressionContextIndex)
-						StoreContainerItemAfterExist(containerItemExpressionContextIndex)
+						DuplicateContainerItemArrayAndLoadContainerItemIndexBeforeEnterContainerItemExpressionContext(
+							containerItemExpressionContextIndex
+						)
+						StoreContainerItemAfterExitContainerItemExpressionContext(containerItemExpressionContextIndex)
 					})
 
-				object DuplicateItemArrayAndLoadItemIndexBeforeEnterItemExpression
+				object DuplicateContainerItemArrayAndLoadContainerItemIndexBeforeEnterContainerItemExpressionContext
 				{
 					def apply(itemIndex:Int):Unit =
-						bytecodeGenerationContext
+						generationContext
 							.addPreEnterRuleTask(
 								containerItemExpressionContexts(itemIndex),
-								() => duplicateItemArrayAndLoadItemIndex(itemIndex)
+								() => duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex)
 							)
 
-					private def duplicateItemArrayAndLoadItemIndex(itemIndex:Int):Unit = (
+					private def duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex:Int):Unit = (
 						topMethodCall
 							dup ()
 							ldc itemIndex
 					)
 				}
 
-				object StoreContainerItemAfterExist
+				object StoreContainerItemAfterExitContainerItemExpressionContext
 				{
 					def apply(containerItemIndex:Int):Unit =
-						bytecodeGenerationContext
+						generationContext
 							.addPostExitRuleTask(
 								containerItemExpressionContexts(containerItemIndex), storeContainerItem
 							)
@@ -84,9 +86,9 @@ abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
 
 	override protected def exitAction()
 	{
-		InvokeContainerInit()
+		InvokeInitContainer()
 
-		object InvokeContainerInit
+		object InvokeInitContainer
 		{
 			def apply():Unit = topMethodCall invokeInitContainer containerClass
 		}

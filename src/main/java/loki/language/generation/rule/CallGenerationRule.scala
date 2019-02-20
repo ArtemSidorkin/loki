@@ -5,7 +5,7 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplat
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 
-class CallGenerationRule(generationContext:GenerationContext, ruleContext:CallContext)
+private[generation] class CallGenerationRule(generationContext:GenerationContext, ruleContext:CallContext)
 	extends GenerationRule(generationContext, ruleContext)
 {
 	private val callParameterCount:Int = ruleContext.expression.size - 1
@@ -51,7 +51,7 @@ class CallGenerationRule(generationContext:GenerationContext, ruleContext:CallCo
 		ruleContext expression parameterIndex
 }
 
-object CallGenerationRule
+private[generation] object CallGenerationRule
 {
 	def enter(generationContext:GenerationContext, ruleContext:CallContext):Unit =
 		new CallGenerationRule(generationContext, ruleContext).enter()

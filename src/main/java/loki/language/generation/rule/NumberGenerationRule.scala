@@ -5,27 +5,26 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplat
 import loki.language.generation.bytecodetemplate.NumberBytecodeTemplate.CTemplateNumber
 import loki.language.parsing.LokiParser.NumberContext
 
-class NumberGenerationRule(generationContext:GenerationContext, ruleContext:NumberContext)
-	extends GenerationRule(generationContext, ruleContext)
+private[generation] class NumberGenerationRule(generationContext:GenerationContext, numberContext:NumberContext)
+	extends GenerationRule(generationContext, numberContext)
 {
-	private val number:Double = java.lang.Double.parseDouble(ruleContext.getText)
+	private val number:Double = java.lang.Double.parseDouble(numberContext.getText)
 
-	override protected def enterAction() =
-	(
+	override protected def enterAction():Unit = (
 		topMethodCall
-		newNumber ()
-		dup ()
-		ldc number
-		invokeInitNumber ()
-		incrementObjectCounter ()
+			newNumber ()
+			dup ()
+			ldc number
+			invokeInitNumber ()
+			incrementObjectCounter ()
 	)
 }
 
-object NumberGenerationRule
+private[generation] object NumberGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:NumberContext):Unit =
-		new NumberGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, numberContext:NumberContext):Unit =
+		new NumberGenerationRule(generationContext, numberContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:NumberContext):Unit =
-		new NumberGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, numberContext:NumberContext):Unit =
+		new NumberGenerationRule(generationContext, numberContext).exit()
 }

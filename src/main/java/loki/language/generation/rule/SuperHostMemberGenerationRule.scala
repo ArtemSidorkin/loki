@@ -4,28 +4,27 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.SuperHostMemberContext
 
-class SuperHostMemberGenerationRule
-(
-	generationContext:GenerationContext, ruleContext:SuperHostMemberContext
-) extends GenerationRule(generationContext, ruleContext)
+private[generation] class SuperHostMemberGenerationRule(
+	generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext
+)
+	extends GenerationRule(generationContext, superHostMemberContext)
 {
-	private val superMemberName:String = ruleContext.IDENTIFIER.getText
+	private val superMemberName:String = superHostMemberContext.IDENTIFIER.getText
 
-	override protected def enterAction() =
-	(
+	override protected def enterAction():Unit = (
 		topMethodCall
-		aloadUnitMethodCallParameterHost ()
-		ldc superMemberName
-		invokeVirtualUnitMethodGetSuperMember ()
-		incrementObjectCounter ()
+			aloadUnitMethodCallParameterHost ()
+			ldc superMemberName
+			invokeVirtualUnitMethodGetSuperMember ()
+			incrementObjectCounter ()
 	)
 }
 
-object SuperHostMemberGenerationRule
+private[generation] object SuperHostMemberGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:SuperHostMemberContext):Unit =
-		new SuperHostMemberGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext):Unit =
+		new SuperHostMemberGenerationRule(generationContext, superHostMemberContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:SuperHostMemberContext):Unit =
-		new SuperHostMemberGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext):Unit =
+		new SuperHostMemberGenerationRule(generationContext, superHostMemberContext).exit()
 }

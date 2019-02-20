@@ -4,22 +4,22 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.HostMemberContext
 
-class HostMemberGenerationRule(generationContext:GenerationContext, ruleContext:HostMemberContext)
+private[generation] class HostMemberGenerationRule(generationContext:GenerationContext, ruleContext:HostMemberContext)
 	extends GenerationRule(generationContext, ruleContext)
 {
 	private val hostMemberName = ruleContext.IDENTIFIER.getText
 
-	override protected def enterAction() =
+	override protected def enterAction():Unit =
 	(
 		topMethodCall
-		aloadUnitMethodCallParameterHost ()
-		ldc hostMemberName
-		invokeVirtualUnitMethodGetMember ()
-		incrementObjectCounter ()
+			aloadUnitMethodCallParameterHost ()
+			ldc hostMemberName
+			invokeVirtualUnitMethodGetMember ()
+			incrementObjectCounter ()
 	)
 }
 
-object HostMemberGenerationRule
+private[generation] object HostMemberGenerationRule
 {
 	def enter(generationContext:GenerationContext, ruleContext:HostMemberContext):Unit =
 		new HostMemberGenerationRule(generationContext, ruleContext).enter()

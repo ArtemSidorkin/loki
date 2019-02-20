@@ -3,18 +3,20 @@ package loki.language.generation.rule
 import loki.language.generation.GenerationContext
 import loki.language.parsing.LokiParser.InstructionContext
 
-class InstructionGenerationRule(generationContext:GenerationContext, ruleContext:InstructionContext)
-	extends GenerationRule(generationContext, ruleContext)
+private[generation] class InstructionGenerationRule(
+	generationContext:GenerationContext, instructionContext:InstructionContext
+)
+	extends GenerationRule(generationContext, instructionContext)
 {
-	override protected def enterAction() = topMethodCall pushFrame ()
-	override protected def exitAction() = topMethodCall popFrame ()
+	override protected def enterAction():Unit = topMethodCall pushFrame ()
+	override protected def exitAction():Unit = topMethodCall popFrame ()
 }
 
-object InstructionGenerationRule
+private[generation] object InstructionGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:InstructionContext):Unit =
-		new InstructionGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, instructionContext:InstructionContext):Unit =
+		new InstructionGenerationRule(generationContext, instructionContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:InstructionContext):Unit =
-		new InstructionGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, instructionContext:InstructionContext):Unit =
+		new InstructionGenerationRule(generationContext, instructionContext).exit()
 }

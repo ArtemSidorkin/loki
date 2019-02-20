@@ -1,16 +1,52 @@
 package loki.language.generation.rule
 
+import assembler.builder.MethodBuilder
 import loki.language.generation.GenerationContext
-import loki.language.generation.classbuilder.{ModuleFrameClassBuilder, UnitFrameClassBuilder}
+import loki.language.generation.classbuilder.{FrameClassBuilder, ModuleFrameClassBuilder, UnitFrameClassBuilder}
 import loki.language.generation.constant.BytecodeCommon
 import loki.language.generation.rule.mixin.GenerationRuleMixin
 import org.antlr.v4.runtime.RuleContext
 
 
-class GenerationRule[RULE_CONTEXT <: RuleContext](protected val generationContext:GenerationContext, protected val ruleContext:RULE_CONTEXT)
+private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
+	protected val generationContext:GenerationContext, protected val ruleContext:RULE_CONTEXT
+)
 	extends GenerationRuleMixin[RULE_CONTEXT]
 {
+	protected def topFrameId:Long = generationContext.frameStack.top.id
+
+	protected def preTopFrameId:Long = generationContext.frameStack.preTop.id
+
+	protected def topClassFrame:FrameClassBuilder = generationContext.frameStack.top.classFrame
+
+	protected def preTopClassFrame:FrameClassBuilder = generationContext.frameStack.preTop.classFrame
+
+	protected def topMethodCall:MethodBuilder = topClassFrame.methodCall
+
+	protected def preTopMethodCall:MethodBuilder = preTopClassFrame.methodCall
+
+	protected def topOuterClassFieldName:String = BytecodeCommon OUTER_CLASS_FIELD_NAME topFrameId
+
+	protected def topParametersFieldName:String = BytecodeCommon PARAMETERS_FIELD_NAME topFrameId
+
+	protected def getFrameClass(frameIndex:Int):FrameClassBuilder = generationContext frameStack frameIndex classFrame
+
+	protected def getFrameId(frameIndex:Int):Long = generationContext frameStack frameIndex id
+
+	protected def getOuterClassFieldName(frameId:Long):String = BytecodeCommon OUTER_CLASS_FIELD_NAME frameId
+
+	protected def getParametersFieldName(frameId:Long):String = BytecodeCommon PARAMETERS_FIELD_NAME frameId
+
+	protected def pushModuleFrame():Unit =
+		generationContext.frameStack.push(new ModuleFrameClassBuilder(generationContext.moduleName))
+
+	protected def pushUnitFrame():Unit =
+		generationContext
+			.frameStack
+			.push(id => new UnitFrameClassBuilder(BytecodeCommon.FRAME_CLASS_NAME(generationContext.moduleName, id)))
+
 	protected def enterAction():Unit = ()
+
 	protected def exitAction():Unit = ()
 
 	def enter()
@@ -26,28 +62,9 @@ class GenerationRule[RULE_CONTEXT <: RuleContext](protected val generationContex
 		exitAction()
 		generationContext.checkPostExitRuleTasks(ruleContext)
 	}
-
-	protected def topFrameId = generationContext.frameStack.top.id
-	protected def preTopFrameId = generationContext.frameStack.preTop.id
-	protected def topClassFrame = generationContext.frameStack.top.classFrame
-	protected def preTopClassFrame = generationContext.frameStack.preTop.classFrame
-	protected def topMethodCall = topClassFrame.methodCall
-	protected def preTopMethodCall = preTopClassFrame.methodCall
-	protected def topOuterClassFieldName = BytecodeCommon OUTER_CLASS_FIELD_NAME topFrameId
-	protected def topParametersFieldName = BytecodeCommon PARAMETERS_FIELD_NAME topFrameId
-
-	protected def getFrameClass(frameIndex:Int) = generationContext frameStack frameIndex classFrame
-	protected def getFrameId(frameIndex:Int) = generationContext frameStack frameIndex id
-	protected def getOuterClassFieldName(frameId:Long) = BytecodeCommon OUTER_CLASS_FIELD_NAME frameId
-	protected def getParametersFieldName(frameId:Long) = BytecodeCommon PARAMETERS_FIELD_NAME frameId
-
-	protected def pushModuleFrame() = generationContext.frameStack.push(new ModuleFrameClassBuilder(generationContext.moduleName))
-	protected def pushUnitFrame() = generationContext.frameStack.push(
-		id => new UnitFrameClassBuilder(BytecodeCommon.FRAME_CLASS_NAME(generationContext.moduleName, id))
-	)
 }
 
-object GenerationRule
+private[generation] object GenerationRule
 {
 	def enter[RULE_CONTEXT <: RuleContext](generationContext:GenerationContext, ruleContext:RULE_CONTEXT):Unit =
 		new GenerationRule(generationContext, ruleContext).enter()
