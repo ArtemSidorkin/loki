@@ -29,6 +29,24 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
 
 	protected def topParametersFieldName:String = BytecodeCommon PARAMETERS_FIELD_NAME topFrameId
 
+	def enter()
+	{
+		generationContext.checkPreEnterRuleTasks(ruleContext)
+		enterAction()
+		generationContext.checkPostEnterRuleTasks(ruleContext)
+	}
+
+	def exit()
+	{
+		generationContext.checkPreExitRuleTasks(ruleContext)
+		exitAction()
+		generationContext.checkPostExitRuleTasks(ruleContext)
+	}
+
+	protected def enterAction():Unit = ()
+
+	protected def exitAction():Unit = ()
+
 	protected def getFrameClass(frameIndex:Int):FrameClassBuilder = generationContext frameStack frameIndex classFrame
 
 	protected def getFrameId(frameIndex:Int):Long = generationContext frameStack frameIndex id
@@ -44,24 +62,6 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
 		generationContext
 			.frameStack
 			.push(id => new UnitFrameClassBuilder(BytecodeCommon.FRAME_CLASS_NAME(generationContext.moduleName, id)))
-
-	protected def enterAction():Unit = ()
-
-	protected def exitAction():Unit = ()
-
-	def enter()
-	{
-		generationContext.checkPreEnterRuleTasks(ruleContext)
-		enterAction()
-		generationContext.checkPostEnterRuleTasks(ruleContext)
-	}
-
-	def exit()
-	{
-		generationContext.checkPreExitRuleTasks(ruleContext)
-		exitAction()
-		generationContext.checkPostExitRuleTasks(ruleContext)
-	}
 }
 
 private[generation] object GenerationRule

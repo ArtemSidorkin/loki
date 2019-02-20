@@ -4,13 +4,13 @@ import assembler._
 import assembler.builder.MethodBuilder
 import assembler.constant.{FINAL, PUBLIC, SYNTHETIC}
 import loki.language.generation.GenerationContext
-import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
 import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTemplateContext
 import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.CTemplateType
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
-import loki.language.parsing.{LokiLexer, LokiParser}
+import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
+import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.runtime.datatype.unit.LUnit
 import loki.system.SystemSettings
 

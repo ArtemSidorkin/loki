@@ -2,8 +2,8 @@ package loki.language.generation.rule
 
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
-import loki.language.generation.constant.LanguageMembers
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
+import loki.language.generation.constant.LanguageMembers
 import loki.language.parsing.LokiParser.{ExpressionContext, InheritanceContext}
 
 class InheritanceGenerationRule(generationContext:GenerationContext, ruleContext:InheritanceContext)

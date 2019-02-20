@@ -1,9 +1,9 @@
 package loki.language.generation.rule.template
 
 import loki.language.generation.GenerationContext
-import loki.language.generation.rule.GenerationRule
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
 import loki.language.generation.bytecodetemplate.ContainerBytecodeTemplate.Template
+import loki.language.generation.rule.GenerationRule
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
@@ -15,7 +15,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT 
 	override protected def enterAction()
 	{
 		CreateAndDuplicateContainerClass()
-		CreateContainerClassConstructorParameterArray()
+		CreateContainerClassConstructorParameter()
 		StoreContainerItems()
 
 		object CreateAndDuplicateContainerClass
@@ -28,7 +28,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT 
 			)
 		}
 
-		object CreateContainerClassConstructorParameterArray
+		object CreateContainerClassConstructorParameter
 		{
 			def apply():Unit =
 				if (containerItemExpressionContexts.nonEmpty)
