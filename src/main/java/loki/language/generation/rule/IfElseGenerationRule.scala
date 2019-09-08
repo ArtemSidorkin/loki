@@ -6,7 +6,7 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateU
 import loki.language.parsing.LokiParser.IfElseContext
 import org.objectweb.asm.tree.LabelNode
 
-class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:IfElseContext)
+private[generation] class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:IfElseContext)
 	extends GenerationRule(generationContext, ifElseContext)
 {
 	private def conditionalExpressionContext = ruleContext expression
@@ -93,7 +93,7 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 	}
 }
 
-object IfElseGenerationRule
+private[generation] object IfElseGenerationRule
 {
 	def enter(generationContext:GenerationContext, ifElseContext:IfElseContext):Unit =
 		new IfElseGenerationRule(generationContext, ifElseContext).enter()
