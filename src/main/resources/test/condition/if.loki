@@ -1,0 +1,43 @@
+variable = 0
+if (true) variable = 1
+assert(variable, 1)
+
+variable = 0
+if (1) variable = 1
+assert(variable, 1)
+
+variable = 0
+if (false) variable = 1
+assert(variable, 0)
+
+variable = 0
+if (true)
+	variable = 1
+	variable = variable + 1
+assert(variable, 2)
+
+variable = 0
+if (false)
+	variable = 1
+	variable = variable + 1
+assert(variable, 0)
+
+variable = 0
+if (true)
+	if (true) variable = 1
+assert(variable, 1)
+
+variable = 0
+if (true)
+	if (false) variable = 1
+assert(variable, 0)
+
+variable = 0
+if (false)
+	if (true) variable = 1
+assert(variable, 0)
+
+variable = 0
+if (false)
+	if (false) variable = 1
+assert(variable, 0)

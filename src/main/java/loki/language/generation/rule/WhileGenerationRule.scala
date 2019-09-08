@@ -7,6 +7,8 @@ import loki.language.generation.rule.WhileGenerationRule.Labels
 import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode
 
+//TODO: while is expression, it means that it has result on top of jvm stack. But result is always LVoid instance. May be it can be something more useful?
+
 private[generation] class WhileGenerationRule(generationContext:GenerationContext, whileContext:WhileContext)
 	extends GenerationRule(generationContext, whileContext)
 {

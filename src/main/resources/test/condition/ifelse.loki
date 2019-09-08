@@ -1,0 +1,7 @@
+variable = 0
+if (true) variable = 1 else variable = -1
+assert(variable, 1)
+
+variable = 0
+if (false) variable = 1 else variable = -1
+assert(variable, -1)

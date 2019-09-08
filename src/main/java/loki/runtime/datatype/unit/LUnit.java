@@ -157,8 +157,8 @@ public abstract class LUnit
 	}
 
 	public boolean toBoolean()
-	{//=> members
-return _toBoolean().getValue();
+	{	//=> members
+		return _toBoolean().getValue();
 	}
 
 	public LBoolean _toBoolean()
@@ -218,6 +218,10 @@ return _toBoolean().getValue();
 	{
 		initParentsIfNeeded();
 
+		if (getParents() == null) {
+			return LUndefined.instance;
+		}
+
 		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
@@ -258,6 +262,7 @@ return _toBoolean().getValue();
 	public LUnit addParent(LUnit parent)
 	{
 		initParentsIfNeeded();
+		//TODO: parents can be null, print error and exit. Also system should exit on any arror.
 		getParents().add(parent);
 		return this;
 	}
@@ -268,6 +273,10 @@ return _toBoolean().getValue();
 		if (getType() == type) return (TYPE)this;
 
 		initParentsIfNeeded();
+
+		if (getParents() == null) {
+			return null;
+		}
 
 		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
 		{

@@ -2,7 +2,12 @@ simpleVariable, /test/variable/simpleVariable.loki
 
 simple_arithmetic, /test/arithmetic/simpleArithmetic.loki
 
-type_mebers, /test/type/members.loki
+if, /test/condition/if.loki
+ifelse, /test/condition/ifelse.loki
+
+while, /test/loop/while.loki
+
+type_members, /test/type/members.loki
 
 creation_map, /test/map/creationMap.loki
 formatting_map, /test/map/formattingMap.loki
