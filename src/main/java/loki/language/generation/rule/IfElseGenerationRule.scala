@@ -76,13 +76,13 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 				saveLastElseValue()
 			}
 
-			def placeTrueConditionLabel():Unit =
-				generationContext
-					.addPostExitRuleTask(lastElseExpressionContext, () => topMethodCall label trueConditionLabelNode)
-
 			def placeFalseConditionLabel():Unit =
 				generationContext
 					.addPreEnterRuleTask(firstElseExpressionContext, () => topMethodCall label falseConditionLabelNode)
+
+			def placeTrueConditionLabel():Unit =
+				generationContext
+					.addPostExitRuleTask(lastElseExpressionContext, () => topMethodCall label trueConditionLabelNode)
 
 			def saveLastElseValue():Unit =
 				generationContext
