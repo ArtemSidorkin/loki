@@ -9,13 +9,13 @@ import org.objectweb.asm.tree.LabelNode
 class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:IfElseContext)
 	extends GenerationRule(generationContext, ifElseContext)
 {
-	private def logicalExpression = ruleContext expression
-	private def lastIfExpression = lastIfInstruction expression
-	private def lastIfInstruction = ruleContext instruction ruleContext.instruction.size - 1
+	private def logicalExpressionContext = ruleContext expression
+	private def lastIfExpressionContext = lastIfInstructionContext expression
+	private def lastIfInstructionContext = ruleContext instruction ruleContext.instruction.size - 1
 	private def isElsePresent = Option(ruleContext.else_) isDefined
-	private def firstElseExpression = ruleContext.else_ instruction 0 expression
-	private def lastElseExpression = lastElseInstruction expression
-	private def lastElseInstruction = ruleContext.else_ instruction (ruleContext.else_.instruction.size - 1)
+	private def firstElseExpressionContext = ruleContext.else_ instruction 0 expression
+	private def lastElseExpressionContext = lastElseInstructionContext expression
+	private def lastElseInstructionContext = ruleContext.else_ instruction (ruleContext.else_.instruction.size - 1)
 
 	override protected def enterAction()
 	{
@@ -30,7 +30,7 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 		def handleCondition():Unit =
 			generationContext
 				.addPostExitRuleTask(
-					logicalExpression,
+					logicalExpressionContext,
 					() => (
 						topMethodCall
 							invokeVirtualUnitMethodToBoolean ()
@@ -43,7 +43,7 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 		{
 			generationContext
 				.addPostExitRuleTask(
-					lastIfExpression,
+					lastIfExpressionContext,
 					() =>
 					{
 						gotoTrueConditionLabel()
@@ -63,7 +63,8 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 				)
 
 			def saveLastIfValue():Unit =
-				generationContext.addPreExitRuleTask(lastIfInstruction, () => topMethodCall decrementObjectCounter ())
+				generationContext
+					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall decrementObjectCounter ())
 		}
 
 		def handleElseBranchIfPresent()
@@ -77,14 +78,15 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 
 			def placeTrueConditionLabel():Unit =
 				generationContext
-					.addPostExitRuleTask(lastElseExpression, () => topMethodCall label trueConditionLabelNode)
+					.addPostExitRuleTask(lastElseExpressionContext, () => topMethodCall label trueConditionLabelNode)
 
 			def placeFalseConditionLabel():Unit =
 				generationContext
-					.addPreEnterRuleTask(firstElseExpression, () => topMethodCall label falseConditionLabelNode)
+					.addPreEnterRuleTask(firstElseExpressionContext, () => topMethodCall label falseConditionLabelNode)
 
 			def saveLastElseValue():Unit =
-				generationContext.addPreExitRuleTask(lastElseInstruction, () => topMethodCall decrementObjectCounter ())
+				generationContext
+					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall decrementObjectCounter ())
 		}
 
 		def unsaveConditionResult():Unit = topMethodCall incrementObjectCounter ()
