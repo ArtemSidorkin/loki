@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.LabelNode
 class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:IfElseContext)
 	extends GenerationRule(generationContext, ifElseContext)
 {
-	private def conditionExpressionContext = ruleContext expression
+	private def conditionalExpressionContext = ruleContext expression
 	private def lastIfExpressionContext = lastIfInstructionContext expression
 	private def lastIfInstructionContext = ruleContext instruction ruleContext.instruction.size - 1
 	private def isElsePresent = Option(ruleContext.else_) isDefined
@@ -30,7 +30,7 @@ class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:If
 		def handleCondition():Unit =
 			generationContext
 				.addPostExitRuleTask(
-					conditionExpressionContext,
+					conditionalExpressionContext,
 					() => (
 						topMethodCall
 							invokeVirtualUnitMethodToBoolean ()
