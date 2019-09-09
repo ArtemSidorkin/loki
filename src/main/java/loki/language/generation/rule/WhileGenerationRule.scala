@@ -7,61 +7,51 @@ import loki.language.generation.rule.WhileGenerationRule.Labels
 import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode
 
-//TODO: while is expression, it means that it has result on top of jvm stack. But result is always LVoid instance. May be it can be something more useful?
-
 private[generation] class WhileGenerationRule(generationContext:GenerationContext, whileContext:WhileContext)
 	extends GenerationRule(generationContext, whileContext)
 {
-	private def logicalExpressionContext:ExpressionContext = whileContext expression
+	private def conditionalExpressionContext:ExpressionContext = ruleContext expression
 
 	override protected def enterAction()
 	{
-		val labels = generationContext.setRuleContextVariable(whileContext, Labels(new LabelNode, new LabelNode))
+		val labels = generationContext.setRuleContextVariable(ruleContext, Labels(new LabelNode, new LabelNode))
 
-		PutBeginLabelBeforeEnterLogicalExpressionContext()
-		ConvertLogicalExpressionToBooleanAndConditionallyGoToEndLabelAfterExistLogicalExpressionContext()
+		placeBeginLabel()
+		handleCondition()
 
-		object PutBeginLabelBeforeEnterLogicalExpressionContext
-		{
-			def apply():Unit =
-				generationContext.addPreEnterRuleTask(logicalExpressionContext, putBeginLabel)
-
-			private def putBeginLabel():Unit = topMethodCall label labels.begin
-		}
-
-		object ConvertLogicalExpressionToBooleanAndConditionallyGoToEndLabelAfterExistLogicalExpressionContext
-		{
-			def apply():Unit =
+		def placeBeginLabel():Unit =
 				generationContext
-					.addPostExitRuleTask(
-						logicalExpressionContext, convertLogicalExpressionToBooleanAndConditionallyGoToEndLabel
-					)
+					.addPreEnterRuleTask(conditionalExpressionContext, () => topMethodCall label labels.begin)
 
-			private def convertLogicalExpressionToBooleanAndConditionallyGoToEndLabel():Unit = (
-				topMethodCall
-					invokeVirtualUnitMethodToBoolean()
-					decrementObjectCounter ()
-					ifeq labels.end
-			)
-		}
+		def handleCondition():Unit =
+			generationContext
+				.addPostExitRuleTask(
+					conditionalExpressionContext,
+					() => (
+						topMethodCall
+							invokeVirtualUnitMethodToBoolean ()
+							decrementObjectCounter ()
+							ifeq labels.end
+					)
+				)
 	}
 
 	override def exit():Unit =
 	{
-		val labels:Labels = generationContext getRuleContextVariable whileContext
+		encloseLoop(generationContext getRuleContextVariable ruleContext)
+		prepareResult()
 
-		GoToBeginLabelAndPutEndLabel()
+		def encloseLoop(labels:Labels) = (
+			topMethodCall
+				goto labels.begin
+				label labels.end
+		)
 
-		object GoToBeginLabelAndPutEndLabel
-		{
-			def apply():Unit = (
-				topMethodCall
-					goto labels.begin
-					label labels.end
-					void ()
-					incrementObjectCounter ()
-			)
-		}
+		def prepareResult():Unit = (
+			topMethodCall
+				void ()
+				incrementObjectCounter ()
+		)
 	}
 }
 
