@@ -5,12 +5,13 @@ import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTempla
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.AssignVariableContext
 
+
 private[generation] class AssignVariableGenerationRule(
 	generationContext:GenerationContext, assignVariableContext:AssignVariableContext
 )
 	extends GenerationRule(generationContext, assignVariableContext)
 {
-	private val variableName = assignVariableContext.IDENTIFIER.getText
+	private def variableName = ruleContext.IDENTIFIER.getText
 
 	override protected def enterAction():Unit =	(
 		topMethodCall

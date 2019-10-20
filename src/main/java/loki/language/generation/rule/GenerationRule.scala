@@ -14,19 +14,12 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
 	extends GenerationRuleMixin[RULE_CONTEXT]
 {
 	protected def topFrameId:Long = generationContext.frameStack.top.id
-
 	protected def preTopFrameId:Long = generationContext.frameStack.preTop.id
-
 	protected def topClassFrame:FrameClassBuilder = generationContext.frameStack.top.classFrame
-
 	protected def preTopClassFrame:FrameClassBuilder = generationContext.frameStack.preTop.classFrame
-
 	protected def topMethodCall:MethodBuilder = topClassFrame.methodCall
-
 	protected def preTopMethodCall:MethodBuilder = preTopClassFrame.methodCall
-
 	protected def topOuterClassFieldName:String = BytecodeCommon OUTER_CLASS_FIELD_NAME topFrameId
-
 	protected def topParametersFieldName:String = BytecodeCommon PARAMETERS_FIELD_NAME topFrameId
 
 	def enter()

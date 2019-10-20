@@ -10,44 +10,42 @@ import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.ModuleContext
 import loki.system.SystemSettings
 
-class ModuleGenerationRule(generationContext:GenerationContext, ruleContext:ModuleContext)
-	extends GenerationRule(generationContext, ruleContext)
+private[generation] class ModuleGenerationRule(generationContext:GenerationContext, moduleContext:ModuleContext)
+	extends GenerationRule(generationContext, moduleContext)
 {
-	override protected def enterAction() =
+	override protected def enterAction():Unit =
 	{
 		pushModuleFrame()
-//			val init = addAndGenerateMethodInit()
+		init()
+		generateContextInTopMethodCall()
 
-
-		val init =
+		def init():Unit =
 		(
 			topClassFrame
-			addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
-			aloadthis ()
-			ldc moduleName
-			aloadModuleHeirMethodInitParameterUnitContext ()
-			invokeInitModule ()
-			`return` ()
+				addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
+				aloadthis ()
+				ldc moduleName
+				aloadModuleHeirMethodInitParameterUnitContext ()
+				invokeInitModule ()
+				`return` ()
 		)
-
-		generateContextInTopMethodCall()
 
 		def generateContextInTopMethodCall():Unit =
 		(
 			topMethodCall
-			newModuleContext ()
-			dup ()
-			aloadthis ()
-			aloadUnitMethodCallParameterHost ()
-			aloadUnitMethodCallParameterParameters ()
-			aloadthis ()
-			getUnitFieldUnitContext topClassFrame.internalName
-			invokeInitModuleContext ()
-			astoreUnitMethodCallVariableUnitContext ()
+				newModuleContext ()
+				dup ()
+				aloadthis ()
+				aloadUnitMethodCallParameterHost ()
+				aloadUnitMethodCallParameterParameters ()
+				aloadthis ()
+				getUnitFieldUnitContext topClassFrame.internalName
+				invokeInitModuleContext ()
+				astoreUnitMethodCallVariableUnitContext ()
 		)
 	}
 
-	override protected def exitAction() =
+	override protected def exitAction():Unit =
 	{
 		(
 			topMethodCall
@@ -64,11 +62,11 @@ class ModuleGenerationRule(generationContext:GenerationContext, ruleContext:Modu
 	}
 }
 
-object ModuleGenerationRule
+private[generation] object ModuleGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:ModuleContext):Unit =
-		new ModuleGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, moduleContext:ModuleContext):Unit =
+		new ModuleGenerationRule(generationContext, moduleContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:ModuleContext):Unit =
-		new ModuleGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, moduleContext:ModuleContext):Unit =
+		new ModuleGenerationRule(generationContext, moduleContext).exit()
 }

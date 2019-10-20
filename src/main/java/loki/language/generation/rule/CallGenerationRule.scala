@@ -5,46 +5,56 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplat
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 
-private[generation] class CallGenerationRule(generationContext:GenerationContext, ruleContext:CallContext)
-	extends GenerationRule(generationContext, ruleContext)
+
+private[generation] class CallGenerationRule(generationContext:GenerationContext, callContext:CallContext)
+	extends GenerationRule(generationContext, callContext)
 {
-	private val callParameterCount:Int = ruleContext.expression.size - 1
-	private val callExpression:ExpressionContext = ruleContext expression 0
+	private def callParameterCount:Int = ruleContext.expression.size - 1
+	private def callExpression:ExpressionContext = ruleContext expression 0
 
 	override protected def enterAction()
 	{
-		generateCallHostAndCallParameterArray()
-		generateCallParameters()
+		loadHostAndCreateParameterArray()
+		storeParametersInParameterArray()
 
-		def generateCallHostAndCallParameterArray():Unit =
-			generationContext.addPostExitRuleTask(callExpression, () =>
-			(
-				topMethodCall
-				aloadUnitMethodCallParameterHost ()
-				anewarrayUnit callParameterCount
-			))
+		def loadHostAndCreateParameterArray():Unit =
+			generationContext
+				.addPostExitRuleTask(
+					callExpression,
+					() =>
+						topMethodCall
+							aloadUnitMethodCallParameterHost ()
+							anewarrayUnit callParameterCount
+				)
 
-		def generateCallParameters():Unit = for (i <- 1 to callParameterCount)
-		{
-			generationContext.addPreEnterRuleTask(getCallParameterExpression(i), () =>
-				topMethodCall
-				dup ()
-				ldc i - 1
-			)
-			generationContext.addPostExitRuleTask(getCallParameterExpression(i), () =>
-			(
-				topMethodCall
-				aastore ()
-				decrementObjectCounter ()
-			))
-		}
+		def storeParametersInParameterArray():Unit =
+			for (parameterIndex <- 1 to callParameterCount)
+			{
+				generationContext
+					.addPreEnterRuleTask(
+						getCallParameterExpression(parameterIndex),
+						() =>
+							topMethodCall
+								dup ()
+								ldc parameterIndex - 1
+					)
+
+				generationContext
+					.addPostExitRuleTask(
+						getCallParameterExpression(parameterIndex),
+						() =>
+							topMethodCall
+								aastore ()
+								decrementObjectCounter ()
+
+					)
+			}
 	}
 
-	override protected def exitAction():Unit =
-	(
+	override protected def exitAction():Unit = (
 		topMethodCall
-		aloadUnitMethodCallVariableUnitContext ()
-		invokeVirtualUnitMethodCall ()
+			aloadUnitMethodCallVariableUnitContext ()
+			invokeVirtualUnitMethodCall ()
 	)
 
 	private def getCallParameterExpression(parameterIndex:Int):ExpressionContext =

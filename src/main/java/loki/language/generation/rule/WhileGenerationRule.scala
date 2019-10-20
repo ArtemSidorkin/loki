@@ -7,10 +7,11 @@ import loki.language.generation.rule.WhileGenerationRule.Labels
 import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode
 
+
 private[generation] class WhileGenerationRule(generationContext:GenerationContext, whileContext:WhileContext)
 	extends GenerationRule(generationContext, whileContext)
 {
-	private def conditionalExpressionContext:ExpressionContext = ruleContext expression
+	private def conditionalExpressionContext:ExpressionContext = ruleContext.expression
 
 	override protected def enterAction()
 	{

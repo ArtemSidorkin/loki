@@ -4,6 +4,7 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.{AssignMemberAccessorContext, ExpressionContext}
 
+
 private[generation] class AssignMemberAccessorGenerationRule(
 	generationContext:GenerationContext, assignMemberAccessorContext:AssignMemberAccessorContext
 )

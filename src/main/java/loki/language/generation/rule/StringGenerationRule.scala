@@ -5,17 +5,17 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplat
 import loki.language.generation.bytecodetemplate.StringBytecodeTemplate.CTemplateNumber
 import loki.language.parsing.LokiParser
 
-class StringGenerationRule(
-									  bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext
-) extends GenerationRule(bytecodeGenerationContext, stringContext)
+
+private[generation] class StringGenerationRule(
+	bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext
+)
+	extends GenerationRule(bytecodeGenerationContext, stringContext)
 {
-	private val string:String = ruleContext.getText substring 1
+	private def rawString:String = ruleContext.getText
+	private def isAcuteString:Boolean = rawString startsWith "`"
 
 	override protected def enterAction()
 	{
-		val preparedString =
-			if (isAcuteString) string else string split "\n" map (string => s"""${string.init}""") mkString "\n"
-
 		(
 			topMethodCall
 			newString ()
@@ -24,12 +24,12 @@ class StringGenerationRule(
 			invokeInitString ()
 			incrementObjectCounter ()
 		)
-	}
 
-	private def isAcuteString:Boolean = ruleContext.getText startsWith "`"
+		def preparedString = (if (isAcuteString) rawString else rawString split "\n" map (_ init) mkString "\n") tail
+	}
 }
 
-object StringGenerationRule
+private[generation] object StringGenerationRule
 {
 	def enter(bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext):Unit =
 		new StringGenerationRule(bytecodeGenerationContext, stringContext).enter()

@@ -14,7 +14,9 @@ import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.runtime.datatype.unit.LUnit
 import loki.system.SystemSettings
 
-class UnitGenerationRule(generationContext:GenerationContext, ruleContext:UnitContext)
+
+//TODO: check & refactor
+private[generation] class UnitGenerationRule(generationContext:GenerationContext, ruleContext:UnitContext)
 	extends GenerationRule(generationContext, ruleContext)
 {
 	private val isInheritancePresent:Boolean = ruleContext.inheritance != null
@@ -223,7 +225,7 @@ class UnitGenerationRule(generationContext:GenerationContext, ruleContext:UnitCo
 	private def getUnitParameterIdentifier(parameterIndex:Int) = ruleContext IDENTIFIER parameterIndex
 }
 
-object UnitGenerationRule
+private[generation] object UnitGenerationRule
 {
 	def enter(generationContext:GenerationContext, ruleContext:UnitContext):Unit =
 		new UnitGenerationRule(generationContext, ruleContext).enter()

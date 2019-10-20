@@ -6,39 +6,52 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateU
 import loki.language.generation.constant.LanguageMembers
 import loki.language.parsing.LokiParser.{ExpressionContext, InheritanceContext}
 
-class InheritanceGenerationRule(generationContext:GenerationContext, ruleContext:InheritanceContext)
-	extends GenerationRule(generationContext, ruleContext)
+private[generation] class InheritanceGenerationRule(generationContext:GenerationContext, inheritanceContext:InheritanceContext)
+	extends GenerationRule(generationContext, inheritanceContext)
 {
-	private val parentCount:Int = ruleContext.expression.size
+	private def parentCount:Int = inheritanceContext.expression.size
 
-	override protected def enterAction() =
+	override protected def enterAction()
 	{
-		(topMethodCall
-			aloadthis()
-			ldc LanguageMembers.UNIT__METHOD__ADD_PARENT
-			anewarrayUnit parentCount
+		loadThisAndCreateParentArray()
+		storeParentsInParentArray()
+
+		def loadThisAndCreateParentArray():Unit = (
+			topMethodCall
+				aloadthis()
+				ldc LanguageMembers.UNIT__METHOD__ADD_PARENT
+				anewarrayUnit parentCount
 		)
 
-		for (i <- 0 until parentCount)
-		{
-			generationContext
-				.addPreEnterRuleTask(getParentExpression(i), () => topMethodCall dup () ldc i decrementObjectCounter ())
+		def storeParentsInParentArray():Unit =
+			for (parentIndex <- 0 until parentCount)
+			{
+				generationContext
+					.addPreEnterRuleTask(
+						getParentExpression(parentIndex),
+						() =>
+							topMethodCall
+								dup ()
+								ldc parentIndex
+								decrementObjectCounter ()
+					)
 
-			generationContext.addPostExitRuleTask(getParentExpression(i), () => topMethodCall aastore ())
-		}
+				generationContext
+					.addPostExitRuleTask(getParentExpression(parentIndex), () => topMethodCall aastore ())
+			}
 	}
 
 	override protected def exitAction():Unit =
 		topMethodCall.aloadUnitMethodCallVariableUnitContext().invokeVirtualUnitMethodCallMember()
 
-	private def getParentExpression(parentIndex:Int):ExpressionContext = ruleContext expression parentIndex
+	private def getParentExpression(parentIndex:Int):ExpressionContext = inheritanceContext expression parentIndex
 }
 
-object InheritanceGenerationRule
+private[generation] object InheritanceGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:InheritanceContext):Unit =
-		new InheritanceGenerationRule(generationContext, ruleContext).enter()
+	def enter(generationContext:GenerationContext, inheritanceContext:InheritanceContext):Unit =
+		new InheritanceGenerationRule(generationContext, inheritanceContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:InheritanceContext):Unit =
-		new InheritanceGenerationRule(generationContext, ruleContext).exit()
+	def exit(generationContext:GenerationContext, inheritanceContext:InheritanceContext):Unit =
+		new InheritanceGenerationRule(generationContext, inheritanceContext).exit()
 }

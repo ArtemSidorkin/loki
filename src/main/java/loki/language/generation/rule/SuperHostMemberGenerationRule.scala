@@ -4,12 +4,13 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.SuperHostMemberContext
 
+
 private[generation] class SuperHostMemberGenerationRule(
 	generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext
 )
 	extends GenerationRule(generationContext, superHostMemberContext)
 {
-	private val superMemberName:String = superHostMemberContext.IDENTIFIER.getText
+	private def superMemberName:String = superHostMemberContext.IDENTIFIER.getText
 
 	override protected def enterAction():Unit = (
 		topMethodCall

@@ -5,10 +5,11 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplat
 import loki.language.generation.bytecodetemplate.NumberBytecodeTemplate.CTemplateNumber
 import loki.language.parsing.LokiParser.NumberContext
 
+
 private[generation] class NumberGenerationRule(generationContext:GenerationContext, numberContext:NumberContext)
 	extends GenerationRule(generationContext, numberContext)
 {
-	private val number:Double = java.lang.Double.parseDouble(numberContext.getText)
+	private def number:Double = java.lang.Double.parseDouble(numberContext.getText)
 
 	override protected def enterAction():Unit = (
 		topMethodCall

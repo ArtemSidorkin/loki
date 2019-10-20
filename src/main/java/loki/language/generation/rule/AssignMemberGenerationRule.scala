@@ -4,13 +4,14 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
 import loki.language.parsing.LokiParser.{AssignMemberContext, ExpressionContext}
 
+
 private[generation] class AssignMemberGenerationRule(
 	generationContext:GenerationContext, assignMemberContext:AssignMemberContext
 )
 	extends GenerationRule(generationContext, assignMemberContext)
 {
-	private val memberName:String = assignMemberContext.IDENTIFIER.getText
-	private val expressionContextToAssign:ExpressionContext = assignMemberContext expression 0
+	private def memberName:String = ruleContext.IDENTIFIER.getText
+	private def expressionContextToAssign:ExpressionContext = ruleContext expression 0
 
 	override protected def enterAction():Unit =
 		generationContext.addPostExitRuleTask(expressionContextToAssign, () => topMethodCall ldc memberName)

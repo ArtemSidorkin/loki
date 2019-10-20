@@ -3,6 +3,7 @@ package loki.language.generation.rule
 import loki.language.generation.GenerationContext
 import loki.language.parsing.LokiParser.InstructionContext
 
+
 private[generation] class InstructionGenerationRule(
 	generationContext:GenerationContext, instructionContext:InstructionContext
 )
