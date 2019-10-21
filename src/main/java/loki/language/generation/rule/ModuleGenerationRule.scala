@@ -16,10 +16,10 @@ private[generation] class ModuleGenerationRule(generationContext:GenerationConte
 	override protected def enterAction():Unit =
 	{
 		pushModuleFrame()
-		init()
+		generateInit()
 		generateContextInTopMethodCall()
 
-		def init():Unit =
+		def generateInit():Unit =
 		(
 			topClassFrame
 				addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)

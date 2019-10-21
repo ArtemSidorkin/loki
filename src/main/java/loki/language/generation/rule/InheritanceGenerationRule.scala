@@ -6,7 +6,9 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateU
 import loki.language.generation.constant.LanguageMembers
 import loki.language.parsing.LokiParser.{ExpressionContext, InheritanceContext}
 
-private[generation] class InheritanceGenerationRule(generationContext:GenerationContext, inheritanceContext:InheritanceContext)
+private[generation] class InheritanceGenerationRule(
+	generationContext:GenerationContext, inheritanceContext:InheritanceContext
+)
 	extends GenerationRule(generationContext, inheritanceContext)
 {
 	private def parentCount:Int = inheritanceContext.expression.size
