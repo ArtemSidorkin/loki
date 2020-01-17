@@ -35,7 +35,7 @@ public class LMapPrototype extends LUnit
 
 		if (key == LUndefined.instance)
 		{
-			LErrors.printErrorIndexIsUndefined();
+			LErrors.indexIsUndefined();
 			return LUndefined.instance;
 		}
 
@@ -54,7 +54,7 @@ public class LMapPrototype extends LUnit
 
 		if (key == LUndefined.instance)
 		{
-			LErrors.printErrorIndexIsUndefined();
+			LErrors.indexIsUndefined();
 			return LUndefined.instance;
 		}
 
@@ -62,7 +62,7 @@ public class LMapPrototype extends LUnit
 
 		if (value == LUndefined.instance)
 		{
-			LErrors.printErrorIndexValueIsUndefined();
+			LErrors.indexValueIsUndefined();
 			return LUndefined.instance;
 		}
 

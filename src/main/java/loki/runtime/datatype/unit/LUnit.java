@@ -11,6 +11,7 @@ import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.datatype.unit.member.*;
+import loki.runtime.util.Internal;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
@@ -28,11 +29,10 @@ public abstract class LUnit
 
 	private static volatile LUnit prototype;
 
-	//TODO: block direct access, move to compiler api, same for others
-	@Nullable protected volatile LUnitContext unitContext;
+	@Nullable protected volatile LUnitContext capturedOnCreationUnitContext;
 
 	private final LType type;
-	@Nullable protected volatile ConcurrentLinkedDeque<LUnit> parents;
+	protected volatile ConcurrentLinkedDeque<LUnit> parents;
 	@Nullable protected volatile ConcurrentMap<String, LUnit> members;
 	@Nullable private volatile Map<String, Integer> parameterIndexes;
 
@@ -46,10 +46,10 @@ public abstract class LUnit
 		this(type, null);
 	}
 
-	public LUnit(LType type, @Nullable LUnitContext unitContext)
+	public LUnit(LType type, @Nullable LUnitContext capturedOnCreationUnitContext)
 	{
 		this.type = type;
-		this.unitContext = unitContext;
+		this.capturedOnCreationUnitContext = capturedOnCreationUnitContext;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,8 +70,8 @@ public abstract class LUnit
 
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		initMembersIfNeeded();
-		members.put(memberName, member);
+		initMembersIfNecessary().put(memberName, member);
+
 		return member;
 	}
 
@@ -94,6 +94,7 @@ public abstract class LUnit
 		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
 
 		this.parameterIndexes = parameterIndexes;
+
 		return this;
 	}
 
@@ -192,14 +193,8 @@ public abstract class LUnit
 
 	public static LUnit getPrototype()
 	{
-		initPrototypeIfNeeded();
+		initPrototypeIfNecessary();
 		return prototype;
-	}
-
-    @Nullable
-	protected ConcurrentLinkedDeque<LUnit> getParents()
-	{
-		return parents;
 	}
 
 	@Nullable
@@ -209,29 +204,20 @@ public abstract class LUnit
 	}
 
 	@Nullable
-	public LUnitContext getUnitContext()
+	public LUnitContext getCapturedOnCreationUnitContext()
 	{
-		return unitContext;
+		return capturedOnCreationUnitContext;
 	}
 
 	public LUnit getSuperMember(String superMemberName)
 	{
-		initParentsIfNeeded();
-
-		if (getParents() == null) {
-			return LUndefined.instance;
-		}
-
-		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
 
-			if (parent != null)
-			{
-				LUnit member = parent.getMember(superMemberName);
+			LUnit member = parent.getMember(superMemberName);
 
-				if (member != LUndefined.instance) return member;
-			}
+			if (member != LUndefined.instance) return member;
 		}
 
 		return LUndefined.instance;
@@ -243,7 +229,7 @@ public abstract class LUnit
 	{
 		LUnit self = this;
 
-		LUnit newUnit = new LUnit(new LType(getType().name), getUnitContext())
+		LUnit newUnit = new LUnit(new LType(getType().name), getCapturedOnCreationUnitContext())
 		{
 			@Override
 			public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
@@ -255,15 +241,16 @@ public abstract class LUnit
 		if (saver != null) saver.accept(newUnit);
 
 		newUnit.addParent(this);
+
 		call(newUnit, parameters, unitContext);
+
 		return newUnit;
 	}
 
 	public LUnit addParent(LUnit parent)
 	{
-		initParentsIfNeeded();
-		//TODO: parents can be null, print error and exit. Also system should exit on any arror.
-		getParents().add(parent);
+		initParentsIfNecessary().add(parent);
+
 		return this;
 	}
 
@@ -272,22 +259,13 @@ public abstract class LUnit
 	{
 		if (getType() == type) return (TYPE)this;
 
-		initParentsIfNeeded();
-
-		if (getParents() == null) {
-			return null;
-		}
-
-		for (Iterator<LUnit> parentIterator = getParents().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
 
-			if (parent != null)
-			{
-				LUnit parentAsType = parent.asType(type);
+			LUnit parentAsType = parent.asType(type);
 
-				if (parentAsType != null) return (TYPE)parentAsType;
-			}
+			if (parentAsType != null) return (TYPE)parentAsType;
 		}
 
 		return null;
@@ -297,44 +275,51 @@ public abstract class LUnit
 	/*Internal helpers                                                                                                */
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	@Internal
 	protected LUnit checkCallParameter(@Nullable LUnit[] parameters, int parameterIndex)
 	{
 		if (parameters != null && parameterIndex >= 0 && parameterIndex < parameters.length)
 			return parameters[parameterIndex];
 
-		LErrors.printErrorParameterIsMissedForUnit(parameterIndex, this);
-		return LUndefined.instance;
+		LErrors.parameterIsMissedForUnit(parameterIndex, this);
+
+		return null;
 	}
 
-	protected void initParentsIfNeeded()
+	@Internal
+	protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
 	{
 		if (parents == null) synchronized(this)
 		{
 			if (parents == null)
 			{
 				parents = new ConcurrentLinkedDeque<>();
-				initPrototypeIfNeeded();
+				initPrototypeIfNecessary();
 				addParent(prototype);
 			}
 		}
+
+		return parents;
 	}
 
-	private void initMembersIfNeeded()
+	@Internal
+	private ConcurrentMap<String, LUnit> initMembersIfNecessary()
 	{
 		if (members == null) synchronized(this)
 		{
 			if (members == null)
-			{
 				members = new ConcurrentHashMap<>(
 					LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
 					LSettings.UNIT_MEMBERS_LOAD_FACTOR,
 					LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
 				);
-			}
 		}
+
+		return members;
 	}
 
-	private static void initPrototypeIfNeeded()
+	@Internal
+	private static void initPrototypeIfNecessary()
 	{
 		if (prototype == null) synchronized(LUnit.class)
 		{
@@ -352,7 +337,15 @@ public abstract class LUnit
 					}
 
 					@Override
-					protected void initParentsIfNeeded() {}
+					protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+					{
+						if (parents == null) synchronized(this)
+						{
+							if (parents == null) parents = new ConcurrentLinkedDeque<>();
+						}
+
+						return parents;
+					}
 
 					private void initializeBuiltins()
 					{

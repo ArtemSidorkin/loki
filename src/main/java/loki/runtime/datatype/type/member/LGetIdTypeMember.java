@@ -24,7 +24,7 @@ public class LGetIdTypeMember extends LMember
 	{
 		if (host instanceof LType) return new LNumber(((LType)host).id);
 
-		LErrors.printErrorUnitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
+		LErrors.unitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
 		return LUndefined.instance;
 	}
 }

@@ -6,43 +6,50 @@ import loki.runtime.datatype.unit.LUnit;
 
 public class LErrors
 {
-	public static void printErrorUnitDoesNotBelongToType(Object unit, Object type)
+	public static void unitDoesNotBelongToType(Object unit, Object type)
 	{
-		printError(String.format("\"%s\" is not \"%s\"", unit, type));
+		printErrorAndExit(String.format("\"%s\" is not \"%s\"", unit, type));
 	}
 
-	public static void printErrorRightOperandDoesNotBelongToTypeOrUndefined(Object type)
+	public static void rightOperandDoesNotBelongToTypeOrUndefined(Object type)
 	{
-		printError(String.format("Right operand does not belong to type \"%s\" or undefined", type));
+		printErrorAndExit(String.format("Right operand does not belong to type \"%s\" or undefined", type));
 	}
 
-	public static void printErrorOperatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
+	public static void operatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
 	{
-		printError(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));
+		printErrorAndExit(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));
 	}
 
-	public static void printErrorParameterIsMissedForUnit(int parameterIndex, LUnit unit)
+	public static void parameterIsMissedForUnit(int parameterIndex, LUnit unit)
 	{
-		printError(String.format("Parameter \"%s\" is missed for \"%s\"", parameterIndex, unit));
+		printErrorAndExit(String.format("Parameter \"%s\" is missed for \"%s\"", parameterIndex, unit));
 	}
 
-	public static void printErrorItemWithIndexDoesNotExist(Object index)
+	public static void itemWithIndexDoesNotExist(Object index)
 	{
-		printError(String.format("Item with index \"%s\" does not exist", index));
+		printErrorAndExit(String.format("Item with index \"%s\" does not exist", index));
 	}
 
-	public static void printErrorIndexIsUndefined()
+	public static void indexIsUndefined()
 	{
-		printError("Index is undefined");
+		printErrorAndExit("Index is undefined");
 	}
 
-	public static void printErrorIndexValueIsUndefined()
+	public static void indexValueIsUndefined()
 	{
-		printError("Index value is undefined");
+		printErrorAndExit("Index value is undefined");
 	}
 
-	public static void printError(String error)
+	public static void printErrorAndExit(String error)
 	{
 		Execution.executor().errorPrintStream().println(error);
+
+		exit();
+	}
+
+	private static void exit()
+	{
+		System.exit(-1);
 	}
 }

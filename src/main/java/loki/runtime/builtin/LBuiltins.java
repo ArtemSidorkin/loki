@@ -4,7 +4,7 @@ import loki.runtime.builtin.unit.*;
 import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.datatype.*;
-import loki.runtime.datatype.number.LNumberPrototype;
+import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.unit.LUnit;
 
 import java.util.Collections;
@@ -30,8 +30,8 @@ public class LBuiltins
 		builtinContainer.put(LDataUnit.TRUE.name, () -> LTrue.instance);
 		builtinContainer.put(LDataUnit.FALSE.name, () -> LFalse.instance);
 		builtinContainer.put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
-		builtinContainer.put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumberPrototype.instance);
-		builtinContainer.put(LDataUnit.STRING_PROTOTYPE.name, () -> LStringPrototype.instance);
+		builtinContainer.put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumber.prototype);
+		builtinContainer.put(LDataUnit.STRING_PROTOTYPE.name, () -> LString.instance);
 		builtinContainer.put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
 	}
 

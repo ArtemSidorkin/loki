@@ -1,53 +1,63 @@
 package loki.runtime.datatype.number;
 
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.number.operation.binary.*;
 import loki.runtime.datatype.unit.LUnit;
-import loki.runtime.datatype.type.LType;
+import loki.runtime.datatype.number.operation.unary.LNumericNegationNumberUnaryOperation;
 
-import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class LNumber extends LNumberPrototype
+public class LNumber extends LUnit
 {
-	private static final ConcurrentLinkedDeque<LUnit> _parents = new ConcurrentLinkedDeque<>();
+	public static final LNumber prototype = new LNumber();
 
-	static
-	{
-		_parents.add(LNumberPrototype.instance);
-	}
+	public final double value;
 
 	public LNumber(double value)
 	{
-		super(value);
+		super(LTypes.NUMBER);
+		this.value = value;
+		addParent(prototype);
 	}
 
-	@Override
-	public LType getType()
+	private LNumber()
 	{
-		return LTypes.NUMBER;
+		super(LTypes.NUMBER_PROTOTYPE);
+		value = 0;
+		initBuiltins();
 	}
 
 	@Override
-	protected ConcurrentLinkedDeque<LUnit> getParents()
+	public int _hashCode()
 	{
-		if (parents != null) return parents;
-
-		return _parents;
+		return Double.hashCode(value);
 	}
 
 	@Override
-	public LUnit addParent(LUnit parent)
+	public boolean _equals(LUnit unit)
 	{
-		if (parents == null) synchronized (this)
-		{
-			if (parents == null) parents = new ConcurrentLinkedDeque<>(_parents);
-		}
+		LNumber number = unit.asType(LTypes.NUMBER);
 
-		parents.add(parent);
-
-		return this;
+		return number != null && value == number.value;
 	}
 
 	@Override
-	protected void initParentsIfNeeded() {}
+	public String _toString()
+	{
+		return value == Math.floor(value) ? String.valueOf((long)value) : String.valueOf(value);
+	}
+
+	private void initBuiltins()
+	{
+		LNumericNegationNumberUnaryOperation.instance.init(this);
+		LMultiplicationNumberBinaryOperation.instance.init(this);
+		LDivisionNumberBinaryOperation.instance.init(this);
+		LAdditionNumberBinaryOperation.instance.init(this);
+		LSubtractionNumberBinaryOperation.instance.init(this);
+		LEqualityNumberBinaryOperation.instance.init(this);
+		LInequalityNumberBinaryOperation.instance.init(this);
+		LGreaterThanEqualsNumberBinaryOperation.instance.init(this);
+		LLessThanEqualsNumberBinaryOperation.instance.init(this);
+		LGreaterThanNumberBinaryOperation.instance.init(this);
+		LLessThanNumberBinaryOperation.instance.init(this);
+	}
 }
-

@@ -31,7 +31,7 @@ public class LImport extends LUnit
 
 		if (relativeFilePathNameWithExtensionAsString == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(relativeFilePathNameWithExtensionAsUnit, LTypes.STRING);
+			LErrors.unitDoesNotBelongToType(relativeFilePathNameWithExtensionAsUnit, LTypes.STRING);
 			return LUndefined.instance;
 		}
 

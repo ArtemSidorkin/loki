@@ -36,7 +36,7 @@ public class LArrayPrototype extends LUnit
 
 		if (indexAsNumber == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
+			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
 			return LUndefined.instance;
 		}
 
@@ -44,7 +44,7 @@ public class LArrayPrototype extends LUnit
 
 		if (items != null && index >= 0 && index < items.size()) return items.get(index);
 
-		LErrors.printErrorItemWithIndexDoesNotExist(index);
+		LErrors.itemWithIndexDoesNotExist(index);
 		return LUndefined.instance;
 	}
 
@@ -56,7 +56,7 @@ public class LArrayPrototype extends LUnit
 
 		if (indexAsNumber == null)
 		{
-			LErrors.printErrorUnitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
+			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
 			return LUndefined.instance;
 		}
 
@@ -74,7 +74,7 @@ public class LArrayPrototype extends LUnit
 			return item;
 		}
 
-		LErrors.printErrorItemWithIndexDoesNotExist(index);
+		LErrors.itemWithIndexDoesNotExist(index);
 		return LUndefined.instance;
 	}
 

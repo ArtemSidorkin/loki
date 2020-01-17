@@ -34,7 +34,7 @@ object UnitBytecodeTemplate
 		def getUnitFieldUnitContext(classInternalName:String) = method getfield
 		(
 			classInternalName,
-			LanguageMembers.UNIT__FIELD__UNIT_CONTEXT,
+			LanguageMembers.UNIT__FIELD__CAPTURED_ON_CREATION_UNIT_CONTEXT,
 			classOf[LUnitContext]
 		)
 

@@ -23,7 +23,7 @@ public class LGetNameTypeMember extends LMember
 	{
 		if (host instanceof LType) return new LString(((LType)host).name);
 
-		LErrors.printErrorUnitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
+		LErrors.unitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
 		return LUndefined.instance;
 	}
 }

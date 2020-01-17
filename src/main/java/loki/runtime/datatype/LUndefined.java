@@ -9,6 +9,7 @@ import loki.runtime.util.Nullable;
 
 import java.util.function.Consumer;
 
+//TODO: add all missing methods
 public class LUndefined extends LUnit
 {
 	public static final LUndefined instance = new LUndefined();
@@ -21,72 +22,82 @@ public class LUndefined extends LUnit
 	@Override
 	public LUnit addParent(LUnit parent)
 	{
-		LErrors.printError("Inheriting from \"undefined\"!");
-		return super.addParent(parent);
+		LErrors.printErrorAndExit("Inheriting from \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit getSuperMember(String superMemberName)
 	{
-		LErrors.printError("Getting supper member from \"undefined\"!");
-		return super.getSuperMember(superMemberName);
+		LErrors.printErrorAndExit("Getting supper member from \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit getMember(String memberName)
 	{
-		LErrors.printError("Getting member from \"undefined\"!");
-		return super.getMember(memberName);
+		LErrors.printErrorAndExit("Getting member from \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		LErrors.printError("Setting member to \"undefined\"!");
-		return super.setMember(memberName, member);
+		LErrors.printErrorAndExit("Setting member to \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit instantiate(LUnit[] parameters, LUnitContext unitContext, Consumer<LUnit> saver)
 	{
-		LErrors.printError("Instantiating \"undefined\"!");
-		return super.instantiate(parameters, unitContext, saver);
+		LErrors.printErrorAndExit("Instantiating \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters, LUnitContext unitContext)
 	{
-		LErrors.printError("Calling \"undefined\"!");
-		return super.call(host, parameters, unitContext);
+		LErrors.printErrorAndExit("Calling \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
 	{
-		LErrors.printError("Calling member of \"undefined\"!");
-		return super.callMember(memberName, parameters, unitContext);
+		LErrors.printErrorAndExit("Calling member of \"undefined\"!");
+
+		return null;
 	}
 
 	@Nullable
 	@Override
 	public <T extends LUnit> T asType(LType type)
 	{
-		LErrors.printError("Calling \"asType\" from \"undefined\"!");
-		return super.asType(type);
+		LErrors.printErrorAndExit("Calling \"asType\" from \"undefined\"!");
+
+		return null;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		LErrors.printError("Calling \"hashCode\" from \"undefined\"!");
-		return super.hashCode();
+		LErrors.printErrorAndExit("Calling \"hashCode\" from \"undefined\"!");
+
+		return -1;
 	}
 
 	@Override
 	public boolean equals(Object object)
 	{
-		LErrors.printError("Calling \"equals\" from \"undefined\"!");
-		return super.equals(object);
+		LErrors.printErrorAndExit("Calling \"equals\" from \"undefined\"!");
+
+		return false;
 	}
 
 }

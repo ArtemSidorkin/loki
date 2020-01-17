@@ -7,8 +7,7 @@ private[generation] object LanguageMembers
 	val UNIT_CONTEXT__METHOD__GET_VARIABLE = "getVariable"
 	val UNIT_CONTEXT__METHOD__SET_VARIABLE = "setVariable"
 
-	val UNIT__FIELD__UNIT_CONTEXT = "unitContext"
-	val UNIT__METHOD__INIT__CALL_PARAMETER__CONTEXT = "unitContext"
+	val UNIT__FIELD__CAPTURED_ON_CREATION_UNIT_CONTEXT = "capturedOnCreationUnitContext"
 	val UNIT__METHOD__ADD_PARENT = "addParent"
 	val UNIT__METHOD__GET_SUPER_MEMBER = "getSuperMember"
 	val UNIT__METHOD__GET_MEMBER = "getMember"
@@ -16,7 +15,6 @@ private[generation] object LanguageMembers
 	val UNIT__METHOD__SET_PARAMETER_NAMES = "setParameterNames"
 	val UNIT__METHOD__CALL__PARAMETER__HOST = "host"
 	def UNIT__METHOD__CALL__PARAMETER__PARAMETERS = "parameters" //why def?
-	val UNIT__METHOD__CALL__PARAMETER__CONTEXT = "unitContext"
 	val UNIT__METHOD__CALL = "call"
 	val UNIT__METHOD__CALL_MEMBER = "callMember"
 	val UNIT__METHOD__CHECK_CALL_PARAMETER = "checkCallParameter"

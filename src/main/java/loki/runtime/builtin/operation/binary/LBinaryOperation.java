@@ -85,6 +85,6 @@ public abstract class LBinaryOperation<
 
 	protected void printErrorUndefinedOperation(LUnit leftOperand, LUnit rightOperand)
 	{
-		LErrors.printErrorOperatorIsNotDefinedForUnits(operator, leftOperand, rightOperand);
+		LErrors.operatorIsNotDefinedForUnits(operator, leftOperand, rightOperand);
 	}
 }
