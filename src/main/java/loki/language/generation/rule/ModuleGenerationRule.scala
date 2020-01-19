@@ -39,7 +39,7 @@ private[generation] class ModuleGenerationRule(generationContext:GenerationConte
 				aloadUnitMethodCallParameterHost ()
 				aloadUnitMethodCallParameterParameters ()
 				aloadthis ()
-				getUnitFieldUnitContext topClassFrame.internalName
+				invokeVirtualUnitMethodGetCapturedOnCreationUnitContext topClassFrame.internalName
 				invokeInitModuleContext ()
 				astoreUnitMethodCallVariableUnitContext ()
 		)

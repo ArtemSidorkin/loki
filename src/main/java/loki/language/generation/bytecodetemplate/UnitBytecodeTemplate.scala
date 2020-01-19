@@ -31,11 +31,11 @@ object UnitBytecodeTemplate
 		def aloadUnitHeirMethodInitParameterParameters() =
 			method aload BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__PARAMETERS
 
-		def getUnitFieldUnitContext(classInternalName:String) = method getfield
+		def invokeVirtualUnitMethodGetCapturedOnCreationUnitContext(classInternalName:String) = method invokevirtual
 		(
 			classInternalName,
-			LanguageMembers.UNIT__FIELD__CAPTURED_ON_CREATION_UNIT_CONTEXT,
-			classOf[LUnitContext]
+			LanguageMembers.UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT,
+			BytecodeMethodDescriptors.UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT
 		)
 
 		def invokeVirtualUnitMethodAddParent() = method invokevirtual
@@ -85,13 +85,6 @@ object UnitBytecodeTemplate
 			classOf[LUnit],
 			LanguageMembers.UNIT__METHOD__CALL_MEMBER,
 			BytecodeMethodDescriptors.UNIT__METHOD__CALL_MEMBER
-		)
-
-		def invokeVirtualUnitMethodCheckCallParameter() = method invokevirtual //unused
-		(
-			classOf[LUnit],
-			LanguageMembers.UNIT__METHOD__CHECK_CALL_PARAMETER,
-			BytecodeMethodDescriptors.UNIT__METHOD__CHECK_CALL_PARAMETER
 		)
 
 		def invokeVirtualUnitMethodToBoolean() = method invokevirtual

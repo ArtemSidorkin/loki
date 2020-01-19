@@ -179,6 +179,16 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 			methodOwnerClass.isInterface
 		)
 
+	def invokevirtual(
+		methodOwnerClassInternalName:String, methodName:String, methodDescriptor:MethodDescriptor
+	):this.type =
+		invokevirtual(
+			methodOwnerClassInternalName,
+			methodName,
+			methodDescriptor.untypedDescriptor,
+			false
+		)
+
 	def invokevirtual(methodOwnerClass:Class[_], methodName:String, methodDescriptor:String):this.type =
 		invokevirtual(
 			Utils getClassInternalName methodOwnerClass, methodName, methodDescriptor, methodOwnerClass.isInterface
@@ -193,7 +203,10 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		invokevirtual(methodOwnerClassInternalName, methodName, methodDescriptor.untypedDescriptor, isInterfaceMethod)
 
 	def invokevirtual(
-		methodOwnerClassInternalName:String, methodName:String, methodDescriptor:String, isInterfaceMethod:Boolean
+		methodOwnerClassInternalName:String,
+		methodName:String,
+		methodDescriptor:String,
+		isInterfaceMethod:Boolean
 	):this.type =
 	{
 		methodNode

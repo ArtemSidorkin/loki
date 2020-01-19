@@ -173,7 +173,7 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 			aloadthis ()
 			aloadUnitMethodCallParameterHost ()
 			aloadthis ()
-			getUnitFieldUnitContext topClassFrame.internalName
+			invokeVirtualUnitMethodGetCapturedOnCreationUnitContext topClassFrame.internalName
 			aloadUnitMethodCallParameterParameters ()
 			invokeInitUnitContext ()
 			astoreUnitMethodCallVariableUnitContext ()

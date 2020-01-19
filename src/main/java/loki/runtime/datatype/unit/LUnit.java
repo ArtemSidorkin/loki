@@ -11,6 +11,7 @@ import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.datatype.unit.member.*;
+import loki.runtime.util.Compiler;
 import loki.runtime.util.Internal;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
@@ -29,200 +30,24 @@ public abstract class LUnit
 
 	private static volatile LUnit prototype;
 
-	@Nullable protected volatile LUnitContext capturedOnCreationUnitContext;
-
 	private final LType type;
-	protected volatile ConcurrentLinkedDeque<LUnit> parents;
-	@Nullable protected volatile ConcurrentMap<String, LUnit> members;
-	@Nullable private volatile Map<String, Integer> parameterIndexes;
-
-	public LUnit()
-	{
-		type = null;
-	}
+	private volatile @Nullable LUnitContext capturedOnCreationUnitContext;
+	private volatile @Nullable ConcurrentLinkedDeque<LUnit> parents;
+	private volatile @Nullable ConcurrentMap<String, LUnit> members;
+	private volatile @Nullable Map<String, Integer> parameterIndexes;
 
 	public LUnit(LType type)
 	{
 		this(type, null);
 	}
 
-	public LUnit(LType type, @Nullable LUnitContext capturedOnCreationUnitContext)
+	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedOnCreationUnitContext)
 	{
 		this.type = type;
 		this.capturedOnCreationUnitContext = capturedOnCreationUnitContext;
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*Compiler API                                                                                                    */
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public LUnit getMember(String memberName)
-	{
-		if (members != null)
-		{
-			LUnit member = members.get(memberName);
-
-			if (member != null) return member;
-		}
-
-		return getSuperMember(memberName);
-	}
-
-	public LUnit setMember(String memberName, LUnit member)
-	{
-		initMembersIfNecessary().put(memberName, member);
-
-		return member;
-	}
-
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
-	{
-		return LUndefined.instance;
-	}
-
-	public LUnit callMember(String memberName, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
-	{
-		return getMember(memberName).call(this, parameters, unitContext);
-	}
-
-	public LUnit setParameterNames(@Nullable String[] parameterNames)
-	{
-		HashMap<String, Integer> parameterIndexes = new HashMap<>(
-			LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR
-		);
-
-		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
-
-		this.parameterIndexes = parameterIndexes;
-
-		return this;
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*Polymorphic Methods on Internal Level                                                                           */
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return LUndefined.instance;
-	}
-
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
-	{
-		return LUndefined.instance;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null, null);
-		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
-
-		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.value);
-
-		return hashCodeAsUnit.hashCode();
-	}
-
-	public int _hashCode()
-	{
-		return super.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object object)
-	{
-		if (!(object instanceof LUnit)) return false;
-
-		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}, null).toBoolean();
-	}
-
-	public boolean _equals(LUnit unit)
-	{
-		return super.equals(unit);
-	}
-
-	@Override
-	public String toString()
-	{
-		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null, null);
-		LString string = stringAsUnit.asType(LTypes.STRING);
-
-		if (string != null) return string.getValue();
-
-		return stringAsUnit.toString();
-	}
-
-	public String _toString()
-	{
-		return getType()._toString();
-	}
-
-	public boolean toBoolean()
-	{	//=> members
-		return _toBoolean().getValue();
-	}
-
-	public LBoolean _toBoolean()
-	{
-		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
-
-		if (thisAsBoolean != null) return thisAsBoolean.getValue() ? LTrue.instance : LFalse.instance;
-		else
-		{
-			boolean boolean_ = (
-				this != LVoid.instance &&
-				this != LNone.instance &&
-				this != LUndefined.instance &&
-				(
-					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0
-				)
-			);
-
-			return boolean_ ? LTrue.instance : LFalse.instance;
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*Constant Methods on Internal Level                                                                              */
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public LType getType()
-	{
-		return type;
-    }
-
-	public static LUnit getPrototype()
-	{
-		initPrototypeIfNecessary();
-		return prototype;
-	}
-
-	@Nullable
-	public Map<String, Integer> getParameterIndexes()
-	{
-		return parameterIndexes;
-	}
-
-	@Nullable
-	public LUnitContext getCapturedOnCreationUnitContext()
-	{
-		return capturedOnCreationUnitContext;
-	}
-
-	public LUnit getSuperMember(String superMemberName)
-	{
-		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
-		{
-			LUnit parent = parentIterator.next();
-
-			LUnit member = parent.getMember(superMemberName);
-
-			if (member != LUndefined.instance) return member;
-		}
-
-		return LUndefined.instance;
-	}
-
+	@Internal
 	public LUnit instantiate(
 		@Nullable LUnit[] parameters, @Nullable LUnitContext unitContext, @Nullable Consumer<LUnit> saver
 	)
@@ -247,6 +72,69 @@ public abstract class LUnit
 		return newUnit;
 	}
 
+	@Internal
+	public static LUnit getPrototype()
+	{
+		initPrototypeIfNecessary();
+
+		return prototype;
+	}
+
+	@Internal
+	public LType getType()
+	{
+		return type;
+	}
+
+	@Internal
+	public @Nullable Map<String, Integer> getParameterIndexes()
+	{
+		return parameterIndexes;
+	}
+
+	@Compiler
+	protected @Nullable LUnitContext getCapturedOnCreationUnitContext()
+	{
+		return capturedOnCreationUnitContext;
+	}
+
+	@Compiler
+	public LUnit getMember(String memberName)
+	{
+		if (members != null)
+		{
+			LUnit member = members.get(memberName);
+
+			if (member != null) return member;
+		}
+
+		return getSuperMember(memberName);
+	}
+
+	@Compiler
+	public LUnit setMember(String memberName, LUnit member)
+	{
+		initMembersIfNecessary().put(memberName, member);
+
+		return member;
+	}
+
+	@Compiler
+	public LUnit getSuperMember(String superMemberName)
+	{
+		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
+		{
+			LUnit parent = parentIterator.next();
+
+			LUnit member = parent.getMember(superMemberName);
+
+			if (member != LUndefined.instance) return member;
+		}
+
+		return LUndefined.instance;
+	}
+
+	@Compiler
 	public LUnit addParent(LUnit parent)
 	{
 		initParentsIfNecessary().add(parent);
@@ -254,8 +142,124 @@ public abstract class LUnit
 		return this;
 	}
 
-	@Nullable
-	public <TYPE extends LUnit> TYPE asType(LType type)
+	@Compiler
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	{
+		return LUndefined.instance;
+	}
+
+	@Compiler
+	public LUnit callMember(String memberName, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	{
+		return getMember(memberName).call(this, parameters, unitContext);
+	}
+
+	@Internal
+	public LUnit _getIndexedItem(@Nullable LUnit[] parameters) // TODO: check
+	{
+		return LUndefined.instance;
+	}
+
+	@Internal
+	public LUnit _setIndexedItem(@Nullable LUnit[] parameters) // TODO: check
+	{
+		return LUndefined.instance;
+	}
+
+	@Compiler
+	public LUnit setParameterNames(@Nullable String[] parameterNames)
+	{
+		HashMap<String, Integer> parameterIndexes = new HashMap<>(
+			LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR
+		);
+
+		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
+
+		this.parameterIndexes = parameterIndexes;
+
+		return this;
+	}
+
+	@Internal
+	@Override
+	public int hashCode()
+	{
+		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null, null);
+		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
+
+		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.value);
+
+		return hashCodeAsUnit.hashCode();
+	}
+
+	@Internal
+	public int _hashCode()
+	{
+		return super.hashCode();
+	}
+
+	@Internal
+	@Override
+	public boolean equals(Object object)
+	{
+		if (!(object instanceof LUnit)) return false;
+
+		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}, null).toBoolean();
+	}
+
+	@Internal
+	public boolean _equals(LUnit unit)
+	{
+		return super.equals(unit);
+	}
+
+	@Compiler
+	@Override
+	public String toString()
+	{
+		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null, null);
+		LString string = stringAsUnit.asType(LTypes.STRING);
+
+		if (string != null) return string.getValue();
+
+		return stringAsUnit.toString();
+	}
+
+	@Internal
+	public String _toString()
+	{
+		return getType()._toString();
+	}
+
+	@Compiler
+	public boolean toBoolean()
+	{	//TODO: => members
+		return _toBoolean().getValue();
+	}
+
+	@Internal
+	public LBoolean _toBoolean()
+	{
+		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
+
+		if (thisAsBoolean != null) return thisAsBoolean.getValue() ? LTrue.instance : LFalse.instance;
+		else
+		{
+			boolean boolean_ = (
+				this != LVoid.instance &&
+				this != LNone.instance &&
+				this != LUndefined.instance &&
+				(
+					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0
+				)
+			);
+
+			return boolean_ ? LTrue.instance : LFalse.instance;
+		}
+	}
+
+	@Internal
+	public @Nullable <TYPE extends LUnit> TYPE asType(LType type) //TODO: polymorphic?
 	{
 		if (getType() == type) return (TYPE)this;
 
@@ -271,10 +275,6 @@ public abstract class LUnit
 		return null;
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*Internal helpers                                                                                                */
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	@Internal
 	protected LUnit checkCallParameter(@Nullable LUnit[] parameters, int parameterIndex)
 	{
@@ -283,23 +283,7 @@ public abstract class LUnit
 
 		LErrors.parameterIsMissedForUnit(parameterIndex, this);
 
-		return null;
-	}
-
-	@Internal
-	protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
-	{
-		if (parents == null) synchronized(this)
-		{
-			if (parents == null)
-			{
-				parents = new ConcurrentLinkedDeque<>();
-				initPrototypeIfNecessary();
-				addParent(prototype);
-			}
-		}
-
-		return parents;
+		return LUndefined.instance;
 	}
 
 	@Internal
@@ -316,6 +300,22 @@ public abstract class LUnit
 		}
 
 		return members;
+	}
+
+	@Internal
+	protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+	{
+		if (parents == null) synchronized(this)
+		{
+			if (parents == null)
+			{
+				parents = new ConcurrentLinkedDeque<>();
+				initPrototypeIfNecessary();
+				addParent(prototype);
+			}
+		}
+
+		return parents;
 	}
 
 	@Internal
@@ -337,14 +337,25 @@ public abstract class LUnit
 					}
 
 					@Override
+					public LUnit addParent(LUnit parent)
+					{
+						LErrors.printErrorAndExit("Unit prototype cannot have parents");
+
+						return LUndefined.instance;
+					}
+
+					@Override
+					public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
+					{
+						if (getType().equals(type)) return (TYPE)this;
+
+						return null;
+					}
+
+					@Override
 					protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
 					{
-						if (parents == null) synchronized(this)
-						{
-							if (parents == null) parents = new ConcurrentLinkedDeque<>();
-						}
-
-						return parents;
+						return null;
 					}
 
 					private void initializeBuiltins()
