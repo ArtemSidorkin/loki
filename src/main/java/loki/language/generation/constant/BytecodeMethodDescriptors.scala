@@ -37,22 +37,20 @@ object BytecodeMethodDescriptors
 	val UNIT__METHOD__INIT =
 		TypedMethodDescriptor((classOf[LType] :: classOf[LUnitContext] :: Nil) -> None)
 
-	def UNIT_HEIR__METHOD__INIT_1(outerClassDescriptor:String) =
-		MixedMethodDescriptor(
+	def UNIT_HEIR__METHOD__INIT_1 =
+		TypedMethodDescriptor(
 			(
-				Right(outerClassDescriptor) ::
-				Left(classOf[LType]) ::
-				Left(classOf[LUnitContext]) ::
+				classOf[LType] ::
+				classOf[LUnitContext] ::
 				Nil
 			) -> None
 		)
-	def UNIT_HEIR__METHOD__INIT_2(outerClassDescriptor:String) =
-		MixedMethodDescriptor(
+	def UNIT_HEIR__METHOD__INIT_2 =
+		TypedMethodDescriptor(
 			(
-				Right(outerClassDescriptor) ::
-				Left(classOf[LType]) ::
-				Left(classOf[LUnitContext]) ::
-				Left(classOf[Array[LUnit]]) ::
+				classOf[LType] ::
+				classOf[LUnitContext] ::
+				classOf[Array[LUnit]] ::
 				Nil
 			) -> None
 		)

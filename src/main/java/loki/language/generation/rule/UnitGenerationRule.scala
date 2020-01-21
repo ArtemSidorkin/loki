@@ -40,7 +40,6 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 
 		(
 			generateUnitMethodInit _
-			compose addAndGenerateUnitFieldOuterClassInMethodInit
 			compose addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit
 		) (addUnitMethodInit())
 
@@ -57,27 +56,11 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 
 		def addUnitMethodInit() =
 			if (isPreTopFrameModule) topClassFrame.addMethodInit(
-				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_1 preTopClassFrame.descriptor
+				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_1
 			)
 			else topClassFrame.addMethodInit(
-				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2 preTopClassFrame.descriptor
+				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2
 			)
-
-		def addAndGenerateUnitFieldOuterClassInMethodInit(methodInit:MethodBuilder) =
-		{
-			topClassFrame.addField(
-				FINAL & SYNTHETIC, topOuterClassFieldName, Utils getClassDescriptor preTopClassFrame.internalName
-			)
-			(
-				methodInit
-				aloadthis ()
-				aloadUnitMethodCallParameterHost ()
-				putfield
-				(
-					topClassFrame.internalName, topOuterClassFieldName, preTopClassFrame.descriptor
-				)
-			)
-		}
 
 		def addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit(methodInit:MethodBuilder) =
 		{
@@ -115,7 +98,6 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 		def generateUnitCreationAndInitInPreTopMethodCall()
 		{
 			generateUnitCreation()
-			generateOuterClassInstance()
 			generateUnitType()
 			generateUnitContext()
 			generateUnitInit()
@@ -151,12 +133,12 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 			def generateUnitInit():Unit = (if (isPreTopFrameModule)
 			(
 				preTopMethodCall
-				invokeInit1UnitHeir (topClassFrame.internalName, preTopClassFrame.descriptor)
+				invokeInit1UnitHeir (topClassFrame.internalName)
 			) else
 			(
 				preTopMethodCall
 				aloadUnitMethodCallParameterParameters ()
-				invokeInit2UnitHeir (topClassFrame.internalName, preTopClassFrame.descriptor)
+				invokeInit2UnitHeir (topClassFrame.internalName)
 			))
 		}
 

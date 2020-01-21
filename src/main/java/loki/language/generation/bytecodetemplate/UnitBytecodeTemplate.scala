@@ -106,16 +106,16 @@ object UnitBytecodeTemplate
 			classOf[LUnit], BytecodeMethodDescriptors.UNIT__METHOD__INIT
 		)
 
-		def invokeInit1UnitHeir(initOwnerClassInternalName:String, outerClassDescriptor:String) = method invokeinit
+		def invokeInit1UnitHeir(initOwnerClassInternalName:String) = method invokeinit
 		(
 			initOwnerClassInternalName,
-			BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_1 outerClassDescriptor
+			BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_1
 		)
 
-		def invokeInit2UnitHeir(initOwnerClassInternalName:String, outerClassDescriptor:String) = method invokeinit
+		def invokeInit2UnitHeir(initOwnerClassInternalName:String) = method invokeinit
 		(
 			initOwnerClassInternalName,
-			BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2 outerClassDescriptor
+			BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2
 		)
 	}
 }
