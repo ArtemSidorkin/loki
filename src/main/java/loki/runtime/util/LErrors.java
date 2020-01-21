@@ -11,11 +11,6 @@ public class LErrors
 		printErrorAndExit(String.format("\"%s\" is not \"%s\"", unit, type));
 	}
 
-	public static void rightOperandDoesNotBelongToTypeOrUndefined(Object type)
-	{
-		printErrorAndExit(String.format("Right operand does not belong to type \"%s\" or undefined", type));
-	}
-
 	public static void operatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
 	{
 		printErrorAndExit(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));

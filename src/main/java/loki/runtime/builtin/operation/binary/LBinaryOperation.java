@@ -58,7 +58,7 @@ public abstract class LBinaryOperation<
 
 		if (leftOperandAsSpecifiedType == null)
 		{
-			printErrorUndefinedOperation(leftOperand, rightOperand);
+			operatorIsNotDefinedForUnits(leftOperand, rightOperand);
 			return LUndefined.instance;
 		}
 
@@ -74,7 +74,8 @@ public abstract class LBinaryOperation<
 
 		if (rightOperandAsSpecifiedType == null)
 		{
-			printErrorUndefinedOperation(leftOperand, rightOperand);
+			operatorIsNotDefinedForUnits(leftOperand, rightOperand);
+
 			return LUndefined.instance;
 		}
 
@@ -83,7 +84,7 @@ public abstract class LBinaryOperation<
 
 	protected LUnit __execute(LEFT_OPERAND leftOperand, RIGHT_OPERAND rightOperand) {return LUndefined.instance;}
 
-	protected void printErrorUndefinedOperation(LUnit leftOperand, LUnit rightOperand)
+	protected void operatorIsNotDefinedForUnits(LUnit leftOperand, LUnit rightOperand)
 	{
 		LErrors.operatorIsNotDefinedForUnits(operator, leftOperand, rightOperand);
 	}
