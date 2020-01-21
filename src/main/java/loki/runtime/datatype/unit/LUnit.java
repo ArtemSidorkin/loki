@@ -36,7 +36,7 @@ public abstract class LUnit
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
 	private volatile @Nullable Map<String, Integer> parameterIndexes;
 
-	public LUnit(LType type)
+	public LUnit(@Nullable/*check it, only for LTYPE type is null*/ LType type)
 	{
 		this(type, null);
 	}
@@ -155,13 +155,13 @@ public abstract class LUnit
 	}
 
 	@Internal
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters) // TODO: check
+	public LUnit _getIndexedItem(@Nullable LUnit[] parameters) // TODO: check polymorphic/nullable
 	{
 		return LUndefined.instance;
 	}
 
 	@Internal
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters) // TODO: check
+	public LUnit _setIndexedItem(@Nullable LUnit[] parameters) // TODO: check polymorphic/nullable
 	{
 		return LUndefined.instance;
 	}
@@ -200,7 +200,7 @@ public abstract class LUnit
 
 	@Internal
 	@Override
-	public boolean equals(Object object)
+	public boolean equals(@Nullable Object object)
 	{
 		if (!(object instanceof LUnit)) return false;
 
@@ -208,7 +208,7 @@ public abstract class LUnit
 	}
 
 	@Internal
-	public boolean _equals(LUnit unit)
+	public boolean _equals(@Nullable LUnit unit)
 	{
 		return super.equals(unit);
 	}
@@ -231,9 +231,9 @@ public abstract class LUnit
 		return getType()._toString();
 	}
 
-	@Compiler
+	@Compiler //TODO: => members
 	public boolean toBoolean()
-	{	//TODO: => members
+	{
 		return _toBoolean().getValue();
 	}
 
@@ -330,12 +330,14 @@ public abstract class LUnit
 						initializeBuiltins();
 					}
 
+					@Compiler
 					@Override
 					public LUnit getSuperMember(String superMemberName)
 					{
 						return LUndefined.instance;
 					}
 
+					@Compiler
 					@Override
 					public LUnit addParent(LUnit parent)
 					{
@@ -344,6 +346,7 @@ public abstract class LUnit
 						return LUndefined.instance;
 					}
 
+					@Internal
 					@Override
 					public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
 					{
@@ -352,12 +355,14 @@ public abstract class LUnit
 						return null;
 					}
 
+					@Internal
 					@Override
-					protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+					protected @Nullable ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
 					{
 						return null;
 					}
 
+					@Internal
 					private void initializeBuiltins()
 					{
 						LNew.instance.init(this);
