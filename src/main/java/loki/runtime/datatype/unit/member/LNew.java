@@ -17,8 +17,8 @@ public class LNew extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		return host.instantiate(parameters, unitContext, null);
+		return host.instantiate(parameters, null);
 	}
 }

@@ -49,7 +49,7 @@ public abstract class LUnit
 
 	@Internal
 	public LUnit instantiate(
-		@Nullable LUnit[] parameters, @Nullable LUnitContext unitContext, @Nullable Consumer<LUnit> saver
+		@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver
 	)
 	{
 		LUnit self = this;
@@ -57,9 +57,9 @@ public abstract class LUnit
 		LUnit newUnit = new LUnit(new LType(getType().name), getCapturedOnCreationUnitContext())
 		{
 			@Override
-			public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+			public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 			{
-				return self.call(host, parameters, unitContext);
+				return self.call(host, parameters);
 			}
 		};
 
@@ -67,7 +67,7 @@ public abstract class LUnit
 
 		newUnit.addParent(this);
 
-		call(newUnit, parameters, unitContext);
+		call(newUnit, parameters);
 
 		return newUnit;
 	}
@@ -143,15 +143,15 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		return LUndefined.instance;
 	}
 
 	@Compiler
-	public LUnit callMember(String memberName, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit callMember(String memberName, @Nullable LUnit[] parameters)
 	{
-		return getMember(memberName).call(this, parameters, unitContext);
+		return getMember(memberName).call(this, parameters);
 	}
 
 	@Internal
@@ -184,7 +184,7 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null, null);
+		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null);
 		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
 
 		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.value);
@@ -204,7 +204,7 @@ public abstract class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}, null).toBoolean();
+		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}).toBoolean();
 	}
 
 	@Internal
@@ -217,7 +217,7 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null, null);
+		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null);
 		LString string = stringAsUnit.asType(LTypes.STRING);
 
 		if (string != null) return string.getValue();

@@ -19,7 +19,7 @@ public class LBooleanNegation extends LUnaryOperation<LBooleanPrototype>
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		LBoolean hostAsBoolean = host.asType(LTypes.BOOLEAN);
 

@@ -11,6 +11,9 @@ import loki.runtime.datatype.LVoid;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
+import scala.None;
+import scala.None$;
+import scala.Option;
 import scala.Some;
 
 public class LInclude extends LUnit
@@ -23,7 +26,7 @@ public class LInclude extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		LUnit relativeFilePathNameWithExtensionAsUnit = checkCallParameter(parameters, 0);
 		LString relativeFilePathNameWithExtensionAsString =
@@ -37,8 +40,8 @@ public class LInclude extends LUnit
 
 		Execution
 			.executor()
-			.getModule(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(unitContext))
-			.call(host, parameters, unitContext);
+			.getModule(relativeFilePathNameWithExtensionAsString.getValue(), Option.apply(null))
+			.call(host, parameters);
 
 		return LVoid.instance;
 	}

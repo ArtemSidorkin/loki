@@ -19,7 +19,7 @@ public class LGetNameTypeMember extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters, LUnitContext unitContext)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		if (host instanceof LType) return new LString(((LType)host).name);
 

@@ -18,7 +18,7 @@ public abstract class LNumberUnaryOperation extends LUnaryOperation<LNumber>
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		LNumber hostAsNumber = host.asType(LTypes.NUMBER);
 

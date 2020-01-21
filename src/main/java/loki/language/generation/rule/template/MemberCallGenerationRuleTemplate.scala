@@ -83,11 +83,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT
 
 		object LoadUnitContextAndInvokeCallMember
 		{
-			def apply():Unit = (
-				topMethodCall
-					aloadUnitMethodCallVariableUnitContext ()
-					invokeVirtualUnitMethodCallMember ()
-			)
+			def apply():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
 		}
 	}
 }

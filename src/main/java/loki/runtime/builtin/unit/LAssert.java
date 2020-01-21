@@ -21,7 +21,7 @@ public class LAssert extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		if (parameters.length < 1) throw new LAssertionException("Actual value is not specified");
 		if (parameters.length < 2) throw new LAssertionException("Expected value is not specified");

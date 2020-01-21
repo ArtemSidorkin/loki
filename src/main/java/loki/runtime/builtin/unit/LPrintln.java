@@ -20,7 +20,7 @@ public class LPrintln extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		if (parameters.length > 0)
 			for (LUnit parameter : parameters) getOutputPrintStream().println(parameter);

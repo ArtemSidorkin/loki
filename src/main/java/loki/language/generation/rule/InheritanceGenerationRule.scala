@@ -43,8 +43,7 @@ private[generation] class InheritanceGenerationRule(
 			}
 	}
 
-	override protected def exitAction():Unit =
-		topMethodCall.aloadUnitMethodCallVariableUnitContext().invokeVirtualUnitMethodCallMember()
+	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
 
 	private def getParentExpression(parentIndex:Int):ExpressionContext = inheritanceContext expression parentIndex
 }

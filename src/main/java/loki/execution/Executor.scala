@@ -55,7 +55,6 @@ private[execution] class Executor(
 				getModule(relativeModulePathname)
 					instantiate(
 						parameters getOrElse null.asInstanceOf[Array[LUnit]],
-						null.asInstanceOf[LUnitContext],
 						(unit:LUnit) => moduleInstances += moduleName -> unit
 					)
 			)

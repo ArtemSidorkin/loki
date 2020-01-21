@@ -51,11 +51,7 @@ private[generation] class CallGenerationRule(generationContext:GenerationContext
 			}
 	}
 
-	override protected def exitAction():Unit = (
-		topMethodCall
-			aloadUnitMethodCallVariableUnitContext ()
-			invokeVirtualUnitMethodCall ()
-	)
+	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCall ()
 
 	private def getCallParameterExpression(parameterIndex:Int):ExpressionContext =
 		ruleContext expression parameterIndex

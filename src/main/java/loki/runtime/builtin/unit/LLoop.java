@@ -21,7 +21,7 @@ public class LLoop extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		LUnit countAsUnit = checkCallParameter(parameters, 0);
 		LNumber countAsNumber = countAsUnit.asType(LTypes.NUMBER);
@@ -34,7 +34,7 @@ public class LLoop extends LUnit
 
 		LUnit actions = checkCallParameter(parameters, 1);
 
-		for (int i = 0; i < countAsNumber.value; i++) actions.call(host, EMPTY_UNIT_ARRAY, unitContext);
+		for (int i = 0; i < countAsNumber.value; i++) actions.call(host, EMPTY_UNIT_ARRAY);
 
 		return LVoid.instance;
 	}

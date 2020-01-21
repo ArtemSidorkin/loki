@@ -52,7 +52,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit instantiate(LUnit[] parameters, LUnitContext unitContext, Consumer<LUnit> saver)
+	public LUnit instantiate(LUnit[] parameters, Consumer<LUnit> saver)
 	{
 		LErrors.printErrorAndExit("Instantiating \"undefined\"!");
 
@@ -60,7 +60,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters, LUnitContext unitContext)
+	public LUnit call(LUnit host, LUnit[] parameterst)
 	{
 		LErrors.printErrorAndExit("Calling \"undefined\"!");
 
@@ -68,7 +68,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
+	public LUnit callMember(String memberName, LUnit[] parameters)
 	{
 		LErrors.printErrorAndExit("Calling member of \"undefined\"!");
 

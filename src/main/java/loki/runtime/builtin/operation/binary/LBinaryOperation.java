@@ -44,7 +44,7 @@ public abstract class LBinaryOperation<
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters, @Nullable LUnitContext unitContext)
+	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
 		return execute(host, checkCallParameter(parameters, 0));
 	}

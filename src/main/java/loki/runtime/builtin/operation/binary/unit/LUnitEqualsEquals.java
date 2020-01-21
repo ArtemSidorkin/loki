@@ -20,7 +20,7 @@ public class LUnitEqualsEquals extends LBinaryOperation<LUnit, LUnit, LUnit>
 	protected LUnit execute(LUnit leftOperand, LUnit rightOperand)
 	{
 		return leftOperand
-			.callMember(LUnitMember.EQUALS.name, new LUnit[] {rightOperand}, null).toBoolean()
+			.callMember(LUnitMember.EQUALS.name, new LUnit[] {rightOperand}).toBoolean()
 				? LTrue.instance
 				: LFalse.instance;
 	}

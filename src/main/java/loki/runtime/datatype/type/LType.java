@@ -91,13 +91,13 @@ public class LType extends LUnit
 	}
 
 	@Override
-	public LUnit callMember(String memberName, LUnit[] parameters, LUnitContext unitContext)
+	public LUnit callMember(String memberName, LUnit[] parameters)
 	{
 		LTypeInternalMember internalMember = internalMembers.get(memberName);
 
 		if (internalMember != null) return internalMember.apply(name, id, parameters);
 
-		return super.callMember(memberName, parameters, unitContext);
+		return super.callMember(memberName, parameters);
 	}
 
 	@Override
