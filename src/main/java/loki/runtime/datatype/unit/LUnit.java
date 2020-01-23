@@ -36,7 +36,7 @@ public abstract class LUnit
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
 	private volatile @Nullable Map<String, Integer> parameterIndexes;
 
-	public LUnit(@Nullable/*check it, only for LTYPE type is null*/ LType type)
+	public LUnit(@Nullable LType type)
 	{
 		this(type, null);
 	}
@@ -54,7 +54,7 @@ public abstract class LUnit
 	{
 		LUnit self = this;
 
-		LUnit newUnit = new LUnit(new LType(getType().name), getCapturedOnCreationUnitContext())
+		LUnit newUnit = new LUnit(new LType(getType().getName()), getCapturedOnCreationUnitContext())
 		{
 			@Override
 			public LUnit call(LUnit host, @Nullable LUnit[] parameters)

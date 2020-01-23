@@ -36,7 +36,8 @@ public class LArrayPrototype extends LUnit
 
 		if (indexAsNumber == null)
 		{
-			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
+			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.getFullName());
+
 			return LUndefined.instance;
 		}
 
@@ -56,7 +57,8 @@ public class LArrayPrototype extends LUnit
 
 		if (indexAsNumber == null)
 		{
-			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.name);
+			LErrors.unitDoesNotBelongToType(indexAsUnit, LTypes.NUMBER.getFullName());
+
 			return LUndefined.instance;
 		}
 

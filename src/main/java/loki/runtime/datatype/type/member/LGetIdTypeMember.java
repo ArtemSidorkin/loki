@@ -22,9 +22,13 @@ public class LGetIdTypeMember extends LMember
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		if (host instanceof LType) return new LNumber(((LType)host).id);
+		if (host instanceof LType) return new LNumber(((LType)host).getId());
 
-		LErrors.unitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
+		LErrors
+			.unitDoesNotBelongToType(
+				host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID)
+			);
+
 		return LUndefined.instance;
 	}
 }

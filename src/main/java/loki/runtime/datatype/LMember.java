@@ -10,7 +10,7 @@ public class LMember extends LUnit
 	protected LMember(LType type)
 	{
 		super(type);
-		name = type.name;
+		name = type.getName();
 	}
 
 	public void init(LUnit unit)

@@ -21,9 +21,13 @@ public class LGetNameTypeMember extends LMember
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		if (host instanceof LType) return new LString(((LType)host).name);
+		if (host instanceof LType) return new LString(((LType)host).getName());
 
-		LErrors.unitDoesNotBelongToType(host, loki.runtime.constant.LType.TYPE.name);
+		LErrors
+			.unitDoesNotBelongToType(
+				host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID)
+			);
+
 		return LUndefined.instance;
 	}
 }

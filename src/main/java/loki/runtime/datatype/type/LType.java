@@ -1,45 +1,21 @@
 package loki.runtime.datatype.type;
 
-import loki.runtime.LSettings;
-import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.member.LGetIdTypeMember;
 import loki.runtime.datatype.type.member.LGetNameTypeMember;
-import loki.runtime.datatype.type.member.internal.*;
-import loki.util.IdGenerator;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class LType extends LUnit
 {
-	private static final IdGenerator idGenerator = new IdGenerator();
+	public static final long META_TYPE_ID = 0;
 
-	private static final ConcurrentMap<String, LTypeInternalMember> internalMembers =
-		new ConcurrentHashMap<String, LTypeInternalMember>(
-			LSettings.INTERNAL_MEMBERS_INITIAL_CAPACITY,
-			LSettings.INTERNAL_MEMBERS_LOAD_FACTOR,
-			LSettings.INTERNAL_MEMBERS_CONCURRENCY_LEVEL
-		)
-		{{
-			LHashCodeTypeInternalMember.instance.initialize(this);
-			LToStringTypeInternalMember.instance.initialize(this);
-
-			LGetIdTypeInternalMember.instance.initialize(this);
-			LGetNameTypeInternalMember.instance.initialize(this);
-		}};
-
+	private static final AtomicLong idGenerator = new AtomicLong(0);
 	private static volatile LType type;
 
-	public final String name;
-	public final long id = idGenerator.apply();
-
+	private final String name;
+	private final long id = idGenerator.incrementAndGet();
 	private volatile boolean builtinsInitialized = false;
-
-	public LType(LType original)
-	{
-		this(original.name);
-	}
 
 	public LType(String name)
 	{
@@ -52,9 +28,24 @@ public class LType extends LUnit
 		return new LType(loki.runtime.constant.LType.ANONYMOUS.name);
 	}
 
-	public String getNameWithId()
+	public static String makeFullName(String name, long id)
 	{
-		return String.format("%s#%s", name, id);
+		return String.format("%s(%s)", name, id);
+	}
+
+	public String getFullName()
+	{
+		return makeFullName(name, id);
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public long getId()
+	{
+		return id;
 	}
 
 	@Override
@@ -81,23 +72,6 @@ public class LType extends LUnit
 		}
 
 		return super.getMember(memberName);
-	}
-
-	@Override
-	public LUnit setMember(String memberName, LUnit member)
-	{
-		internalMembers.remove(memberName);
-		return super.setMember(memberName, member);
-	}
-
-	@Override
-	public LUnit callMember(String memberName, LUnit[] parameters)
-	{
-		LTypeInternalMember internalMember = internalMembers.get(memberName);
-
-		if (internalMember != null) return internalMember.apply(name, id, parameters);
-
-		return super.callMember(memberName, parameters);
 	}
 
 	@Override

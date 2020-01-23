@@ -3,7 +3,6 @@ package loki.runtime.datatype.number.operation.unary;
 import loki.runtime.builtin.operation.unary.LUnaryOperation;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnaryOperator;
-import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.number.LNumber;
@@ -24,7 +23,8 @@ public abstract class LNumberUnaryOperation extends LUnaryOperation<LNumber>
 
 		if (hostAsNumber != null) return execute(hostAsNumber);
 
-		LErrors.unitDoesNotBelongToType(host, LTypes.NUMBER.getNameWithId());
+		LErrors.unitDoesNotBelongToType(host, LTypes.NUMBER.getFullName());
+
 		return LUndefined.instance;
 	}
 
