@@ -9,6 +9,7 @@ public enum LUnitMember
 	SET_INDEX_ITEM("setIndexedItem"),
 	GET_TYPE("getType"),
 	TO_STRING("toString"),
+	TO_BOOLEAN("toBoolean"),
 	HASH_CODE("hashCode"),
 	EQUALS("equals");
 

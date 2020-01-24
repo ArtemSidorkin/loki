@@ -26,9 +26,9 @@ public class LBuiltins
 		builtinContainer.put(LDataUnit.UNDEFINED.name, () -> LUndefined.instance);
 		builtinContainer.put(LDataUnit.VOID.name, () -> LVoid.instance);
 		builtinContainer.put(LDataUnit.NONE.name, () -> LNone.instance);
-		builtinContainer.put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBooleanPrototype.instance);
-		builtinContainer.put(LDataUnit.TRUE.name, () -> LTrue.instance);
-		builtinContainer.put(LDataUnit.FALSE.name, () -> LFalse.instance);
+		builtinContainer.put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBoolean.PROTOTYPE);
+		builtinContainer.put(LDataUnit.TRUE.name, () -> LBoolean.TRUE);
+		builtinContainer.put(LDataUnit.FALSE.name, () -> LBoolean.FALSE);
 		builtinContainer.put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
 		builtinContainer.put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumber.prototype);
 		builtinContainer.put(LDataUnit.STRING_PROTOTYPE.name, () -> LString.instance);

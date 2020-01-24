@@ -11,10 +11,8 @@ import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.datatype.unit.member.*;
+import loki.runtime.util.*;
 import loki.runtime.util.Compiler;
-import loki.runtime.util.Internal;
-import loki.runtime.util.LErrors;
-import loki.runtime.util.Nullable;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
+
+import static loki.runtime.util.Polymorphic.Type.ACCESS;
+import static loki.runtime.util.Polymorphic.Type.DEFAULT;
 
 public abstract class LUnit
 {
@@ -199,7 +200,7 @@ public abstract class LUnit
 	}
 
 	@Internal
-	@Override
+	@Override // TODO: check for correct work (other code too)
 	public boolean equals(@Nullable Object object)
 	{
 		if (!(object instanceof LUnit)) return false;
@@ -214,6 +215,7 @@ public abstract class LUnit
 	}
 
 	@Compiler
+	@Polymorphic(ACCESS)
 	@Override
 	public String toString()
 	{
@@ -231,18 +233,20 @@ public abstract class LUnit
 		return getType()._toString();
 	}
 
-	@Compiler //TODO: => members
+	@Compiler
+	@Polymorphic(ACCESS)
 	public boolean toBoolean()
 	{
-		return _toBoolean().getValue();
+		return LToBoolean.instance.call(this, null).getValue();
 	}
 
 	@Internal
+	@Polymorphic(DEFAULT)
 	public LBoolean _toBoolean()
 	{
 		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
 
-		if (thisAsBoolean != null) return thisAsBoolean.getValue() ? LTrue.instance : LFalse.instance;
+		if (thisAsBoolean != null) return thisAsBoolean;
 		else
 		{
 			boolean boolean_ = (
@@ -254,12 +258,12 @@ public abstract class LUnit
 				)
 			);
 
-			return boolean_ ? LTrue.instance : LFalse.instance;
+			return LBoolean.valueOf(boolean_);
 		}
 	}
 
 	@Internal
-	public @Nullable <TYPE extends LUnit> TYPE asType(LType type) //TODO: polymorphic?
+	public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
 	{
 		if (getType() == type) return (TYPE)this;
 
