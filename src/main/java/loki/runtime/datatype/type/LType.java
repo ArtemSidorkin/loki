@@ -1,5 +1,7 @@
 package loki.runtime.datatype.type;
 
+import loki.runtime.datatype.LString;
+import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.datatype.type.member.LGetIdTypeMember;
 import loki.runtime.datatype.type.member.LGetNameTypeMember;
@@ -75,9 +77,9 @@ public class LType extends LUnit
 	}
 
 	@Override
-	public int _hashCode()
+	public LNumber _hashCode()
 	{
-		return Long.hashCode(id);
+		return new LNumber(Long.hashCode(id));
 	}
 
 	@Override
@@ -87,9 +89,9 @@ public class LType extends LUnit
 	}
 
 	@Override
-	public String _toString()
+	public LString _toString()
 	{
-		return name;
+		return new LString(name);
 	}
 
 	private void initializeBuiltins()

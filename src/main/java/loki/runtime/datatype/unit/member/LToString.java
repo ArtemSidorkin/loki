@@ -20,6 +20,6 @@ public class LToString extends LMember
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		return new LString(host._toString());
+		return host._toString();
 	}
 }

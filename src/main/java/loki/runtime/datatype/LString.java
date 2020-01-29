@@ -1,6 +1,7 @@
 package loki.runtime.datatype;
 
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.unit.LUnit;
 
 public class LString extends LUnit
@@ -28,9 +29,9 @@ public class LString extends LUnit
 	}
 
 	@Override
-	public int _hashCode()
+	public LNumber _hashCode()
 	{
-		return value.hashCode();
+		return new LNumber(value.hashCode());
 	}
 
 	@Override
@@ -41,8 +42,8 @@ public class LString extends LUnit
 	}
 
 	@Override
-	public String _toString()
+	public LString _toString()
 	{
-		return value;
+		return new LString(value);
 	}
 }

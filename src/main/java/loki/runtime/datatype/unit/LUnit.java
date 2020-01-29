@@ -11,8 +11,8 @@ import loki.runtime.datatype.*;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.datatype.unit.member.*;
-import loki.runtime.util.*;
 import loki.runtime.util.Compiler;
+import loki.runtime.util.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,9 +49,7 @@ public abstract class LUnit
 	}
 
 	@Internal
-	public LUnit instantiate(
-		@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver
-	)
+	public LUnit instantiate(@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver)
 	{
 		LUnit self = this;
 
@@ -126,7 +124,6 @@ public abstract class LUnit
 		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parent = parentIterator.next();
-
 			LUnit member = parent.getMember(superMemberName);
 
 			if (member != LUndefined.instance) return member;
@@ -135,7 +132,7 @@ public abstract class LUnit
 		return LUndefined.instance;
 	}
 
-	@Compiler
+	@Internal
 	public LUnit addParent(LUnit parent)
 	{
 		initParentsIfNecessary().add(parent);
@@ -156,13 +153,15 @@ public abstract class LUnit
 	}
 
 	@Internal
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters) // TODO: check polymorphic/nullable
+	@Polymorphic(DEFAULT)
+	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
 	{
 		return LUndefined.instance;
 	}
 
 	@Internal
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters) // TODO: check polymorphic/nullable
+	@Polymorphic(DEFAULT)
+	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
 	{
 		return LUndefined.instance;
 	}
@@ -170,9 +169,8 @@ public abstract class LUnit
 	@Compiler
 	public LUnit setParameterNames(@Nullable String[] parameterNames)
 	{
-		HashMap<String, Integer> parameterIndexes = new HashMap<>(
-			LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR
-		);
+		HashMap<String, Integer> parameterIndexes =
+			new HashMap<>(LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR);
 
 		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
 
@@ -182,25 +180,28 @@ public abstract class LUnit
 	}
 
 	@Internal
+	@Polymorphic(DEFAULT)
 	@Override
 	public int hashCode()
 	{
 		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null);
 		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
 
-		if (hashCodeAsNumber != null) return Double.hashCode(hashCodeAsNumber.value);
+		if (hashCodeAsNumber == null) hashCodeAsNumber = hashCodeAsUnit._hashCode();
 
-		return hashCodeAsUnit.hashCode();
+		return (int)hashCodeAsNumber.value;
 	}
 
 	@Internal
-	public int _hashCode()
+	@Polymorphic(DEFAULT)
+	public LNumber _hashCode()
 	{
-		return super.hashCode();
+		return new LNumber(super.hashCode());
 	}
 
 	@Internal
-	@Override // TODO: check for correct work (other code too)
+	@Polymorphic(ACCESS)
+	@Override
 	public boolean equals(@Nullable Object object)
 	{
 		if (!(object instanceof LUnit)) return false;
@@ -209,6 +210,7 @@ public abstract class LUnit
 	}
 
 	@Internal
+	@Polymorphic(DEFAULT)
 	public boolean _equals(@Nullable LUnit unit)
 	{
 		return super.equals(unit);
@@ -222,22 +224,28 @@ public abstract class LUnit
 		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null);
 		LString string = stringAsUnit.asType(LTypes.STRING);
 
-		if (string != null) return string.getValue();
+		if (string == null) string = stringAsUnit._toString();
 
-		return stringAsUnit.toString();
+		return string.getValue();
 	}
 
 	@Internal
-	public String _toString()
+	@Polymorphic(DEFAULT)
+	public LString _toString()
 	{
-		return getType()._toString();
+		return new LString(getType().toString());
 	}
 
 	@Compiler
 	@Polymorphic(ACCESS)
 	public boolean toBoolean()
 	{
-		return LToBoolean.instance.call(this, null).getValue();
+		LUnit booleanAsUnit = callMember(LUnitMember.TO_BOOLEAN.name, null);
+		LBoolean boolean_ = booleanAsUnit.asType(LTypes.BOOLEAN);
+
+		if (boolean_ == null) boolean_ = booleanAsUnit._toBoolean();
+
+		return boolean_.getValue();
 	}
 
 	@Internal
@@ -247,19 +255,13 @@ public abstract class LUnit
 		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
 
 		if (thisAsBoolean != null) return thisAsBoolean;
-		else
-		{
-			boolean boolean_ = (
+		else return
+			LBoolean.valueOf(
 				this != LVoid.instance &&
 				this != LNone.instance &&
 				this != LUndefined.instance &&
-				(
-					asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0
-				)
+				(asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0)
 			);
-
-			return LBoolean.valueOf(boolean_);
-		}
 	}
 
 	@Internal
@@ -269,9 +271,7 @@ public abstract class LUnit
 
 		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
 		{
-			LUnit parent = parentIterator.next();
-
-			LUnit parentAsType = parent.asType(type);
+			LUnit parentAsType = parentIterator.next().asType(type);
 
 			if (parentAsType != null) return (TYPE)parentAsType;
 		}
@@ -296,11 +296,12 @@ public abstract class LUnit
 		if (members == null) synchronized(this)
 		{
 			if (members == null)
-				members = new ConcurrentHashMap<>(
-					LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
-					LSettings.UNIT_MEMBERS_LOAD_FACTOR,
-					LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
-				);
+				members =
+					new ConcurrentHashMap<>(
+						LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
+						LSettings.UNIT_MEMBERS_LOAD_FACTOR,
+						LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
+					);
 		}
 
 		return members;
@@ -375,6 +376,7 @@ public abstract class LUnit
 						LSetIndexItem.instance.init(this);
 						LGetType.instance.init(this);
 						LToString.instance.init(this);
+						LToBoolean.instance.init(this);
 						LHashCode.instance.init(this);
 						LEquals.instance.init(this);
 						LUnitEqualsEquals.instance.init(this);

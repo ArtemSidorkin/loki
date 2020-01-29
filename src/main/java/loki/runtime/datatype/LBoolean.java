@@ -5,6 +5,7 @@ import loki.runtime.builtin.operation.binary.bool.LBooleanAmpersandAmpersand;
 import loki.runtime.builtin.operation.binary.bool.LBooleanPipePipe;
 import loki.runtime.builtin.operation.unary.bool.LBooleanNegation;
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.unit.LUnit;
 
 public class LBoolean extends LUnit
@@ -40,9 +41,9 @@ public class LBoolean extends LUnit
 	}
 
 	@Override
-	public int _hashCode()
+	public LNumber _hashCode()
 	{
-		return Boolean.hashCode(value);
+		return new LNumber(Boolean.hashCode(value));
 	}
 
 	@Override

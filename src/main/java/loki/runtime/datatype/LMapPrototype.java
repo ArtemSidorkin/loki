@@ -6,6 +6,7 @@ import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -13,7 +14,7 @@ public class LMapPrototype extends LUnit
 {
 	public static final LMapPrototype instance = new LMapPrototype();
 
-	@Nullable protected final Map<LUnit, LUnit> items = new HashMap<>();
+	@Nullable protected final Map<LUnit, LUnit> items = new LinkedHashMap<>();
 
 	public LMapPrototype(LUnit[] items)
 	{
@@ -76,14 +77,14 @@ public class LMapPrototype extends LUnit
 	}
 
 	@Override
-	public String _toString()
+	public LString _toString()
 	{
-		if (items == null || items.size() == 0) return "[:]";
+		if (items == null || items.size() == 0) return new LString("[:]");
 
 		StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
 
 		for (LUnit key : items.keySet()) stringJoiner.add(String.format("%s : %s", key, items.get(key)));
 
-		return stringJoiner.toString();
+		return new LString(stringJoiner.toString());
 	}
 }

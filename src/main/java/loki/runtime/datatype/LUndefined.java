@@ -60,7 +60,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameterst)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		LErrors.printErrorAndExit("Calling \"undefined\"!");
 

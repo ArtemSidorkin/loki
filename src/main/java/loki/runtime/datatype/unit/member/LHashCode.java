@@ -20,6 +20,6 @@ public class LHashCode extends LMember
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		return new LNumber(host._hashCode());
+		return host._hashCode();
 	}
 }
