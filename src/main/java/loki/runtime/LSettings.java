@@ -12,8 +12,4 @@ public class LSettings
 
 	public static final int UNIT_PARAMETER_NAMES_INITIAL_CAPACITY = 8;
 	public static final float UNIT_PARAMETER_NAMES_LOAD_FACTOR = 0.75f;
-
-	public static final int INTERNAL_MEMBERS_INITIAL_CAPACITY = 8;
-	public static final float INTERNAL_MEMBERS_LOAD_FACTOR = 0.25f;
-	public static final int INTERNAL_MEMBERS_CONCURRENCY_LEVEL = 1;
 }
