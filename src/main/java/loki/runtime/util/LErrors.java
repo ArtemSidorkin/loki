@@ -11,6 +11,11 @@ public class LErrors
 		printErrorAndExit(String.format("\"%s\" is not \"%s\"", unit, type));
 	}
 
+	public static void unitOperationIsNotCorrect(Object unit, String operation)
+	{
+		printErrorAndExit(String.format("\"%s\" implementation of \"%s\" is not correct", unit, operation));
+	}
+
 	public static void operatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
 	{
 		printErrorAndExit(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));

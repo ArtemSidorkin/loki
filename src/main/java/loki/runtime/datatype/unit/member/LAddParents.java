@@ -1,25 +1,24 @@
 package loki.runtime.datatype.unit.member;
 
 import loki.runtime.constant.LUnitMember;
-import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LMember;
 import loki.runtime.datatype.type.LType;
 import loki.runtime.datatype.unit.LUnit;
 import loki.runtime.util.Nullable;
 
-public class LAddParent extends LMember
+public class LAddParents extends LMember
 {
-	public static final LAddParent instance = new LAddParent();
+	public static final LAddParents instance = new LAddParents();
 
-	private LAddParent()
+	private LAddParents()
 	{
-		super(new LType(LUnitMember.ADD_PARENT.name));
+		super(new LType(LUnitMember.ADD_PARENTS.name));
 	}
 
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		for (LUnit parent : parameters) host.addParent(parent);
+		host._addParents(parameters);
 
 		return host;
 	}

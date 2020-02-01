@@ -3,7 +3,7 @@ package loki.runtime.constant;
 public enum LUnitMember
 {
 	NEW("new"),
-	ADD_PARENT("addParent"),
+	ADD_PARENTS("addParents"),
 	GET_SUPER_MEMBER("getSuperMember"),
 	GET_INDEX_ITEM("getIndexedItem"),
 	SET_INDEX_ITEM("setIndexedItem"),

@@ -17,6 +17,6 @@ public class LUnitEqualsEquals extends LBinaryOperation<LUnit, LUnit, LUnit>
 	@Override
 	protected LUnit execute(LUnit leftOperand, LUnit rightOperand)
 	{
-		return LBoolean.valueOf(leftOperand._equals(rightOperand));
+		return LBoolean.valueOf(leftOperand == rightOperand);
 	}
 }

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface Polymorphic
 {
-	enum Type {DEFAULT, ACCESS}
+	enum Type {DEFAULT, ACCESS, COMMON}
 
 	Type value();
 }

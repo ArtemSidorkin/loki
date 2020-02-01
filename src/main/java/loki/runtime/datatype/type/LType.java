@@ -1,5 +1,6 @@
 package loki.runtime.datatype.type;
 
+import loki.runtime.datatype.LBoolean;
 import loki.runtime.datatype.LString;
 import loki.runtime.datatype.number.LNumber;
 import loki.runtime.datatype.unit.LUnit;
@@ -83,9 +84,9 @@ public class LType extends LUnit
 	}
 
 	@Override
-	public boolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
-		return this == unit;
+		return LBoolean.valueOf(this == unit);
 	}
 
 	@Override

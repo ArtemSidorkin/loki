@@ -38,11 +38,11 @@ object UnitBytecodeTemplate
 			BytecodeMethodDescriptors.UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT
 		)
 
-		def invokeVirtualUnitMethodAddParent() = method invokevirtual
+		def invokeVirtualUnitMethodAddParents() = method invokevirtual
 		(
 			classOf[LUnit],
-			LanguageMembers.UNIT__METHOD__ADD_PARENT,
-			BytecodeMethodDescriptors.UNIT__METHOD__ADD_PARENT
+			LanguageMembers.UNIT__METHOD__ADD_PARENTS,
+			BytecodeMethodDescriptors.UNIT__METHOD__ADD_PARENTS
 		)
 
 		def invokeVirtualUnitMethodGetSuperMember() = method invokevirtual

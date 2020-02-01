@@ -14,7 +14,7 @@ public class LString extends LUnit
 	{
 		super(LTypes.STRING);
 		this.value = value;
-		addParent(instance);
+		_addParents(instance);
 	}
 
 	private LString()
@@ -35,10 +35,11 @@ public class LString extends LUnit
 	}
 
 	@Override
-	public boolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
-		LString string = unit.asType(LTypes.STRING);
-		return string != null && getValue().equals(string.getValue());
+		LString string = new LString(unit.toString());
+
+		return LBoolean.valueOf(value.equals(string.value));
 	}
 
 	@Override

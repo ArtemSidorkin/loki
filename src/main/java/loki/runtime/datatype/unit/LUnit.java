@@ -24,6 +24,7 @@ import java.util.function.Consumer;
 
 import static loki.runtime.util.Polymorphic.Type.ACCESS;
 import static loki.runtime.util.Polymorphic.Type.DEFAULT;
+import static loki.runtime.util.Polymorphic.Type.COMMON;
 
 public abstract class LUnit
 {
@@ -49,7 +50,8 @@ public abstract class LUnit
 	}
 
 	@Internal
-	public LUnit instantiate(@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver)
+	@Polymorphic(COMMON)
+	public LUnit newInstance(@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver)
 	{
 		LUnit self = this;
 
@@ -64,7 +66,7 @@ public abstract class LUnit
 
 		if (saver != null) saver.accept(newUnit);
 
-		newUnit.addParent(this);
+		newUnit.addParents(this);
 
 		call(newUnit, parameters);
 
@@ -132,10 +134,22 @@ public abstract class LUnit
 		return LUndefined.instance;
 	}
 
-	@Internal
-	public LUnit addParent(LUnit parent)
+	@Compiler
+	@Polymorphic(ACCESS)
+	public LUnit addParents(LUnit... parents)
 	{
-		initParentsIfNecessary().add(parent);
+		callMember(LUnitMember.ADD_PARENTS.name, parents);
+
+		return this;
+	}
+
+	@Internal
+	@Polymorphic(DEFAULT)
+	public LUnit _addParents(LUnit... parents)
+	{
+		initParentsIfNecessary();
+
+		for (LUnit parent : parents) this.parents.add(parent);
 
 		return this;
 	}
@@ -184,12 +198,11 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LUnit hashCodeAsUnit = callMember(LUnitMember.HASH_CODE.name, null);
-		LNumber hashCodeAsNumber = hashCodeAsUnit.asType(LTypes.NUMBER);
+		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, null).asType(LTypes.NUMBER);
 
-		if (hashCodeAsNumber == null) hashCodeAsNumber = hashCodeAsUnit._hashCode();
+		if (hashCode == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.HASH_CODE.name);
 
-		return (int)hashCodeAsNumber.value;
+		return (int)hashCode.value;
 	}
 
 	@Internal
@@ -211,9 +224,9 @@ public abstract class LUnit
 
 	@Internal
 	@Polymorphic(DEFAULT)
-	public boolean _equals(@Nullable LUnit unit)
+	public LBoolean _equals(@Nullable LUnit unit)
 	{
-		return super.equals(unit);
+		return LBoolean.valueOf(super.equals(unit));
 	}
 
 	@Compiler
@@ -221,10 +234,9 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LUnit stringAsUnit = callMember(LUnitMember.TO_STRING.name, null);
-		LString string = stringAsUnit.asType(LTypes.STRING);
+		LString string = callMember(LUnitMember.TO_STRING.name, null).asType(LTypes.STRING);
 
-		if (string == null) string = stringAsUnit._toString();
+		if (string == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.TO_STRING.name);
 
 		return string.getValue();
 	}
@@ -240,10 +252,9 @@ public abstract class LUnit
 	@Polymorphic(ACCESS)
 	public boolean toBoolean()
 	{
-		LUnit booleanAsUnit = callMember(LUnitMember.TO_BOOLEAN.name, null);
-		LBoolean boolean_ = booleanAsUnit.asType(LTypes.BOOLEAN);
+		LBoolean boolean_ = callMember(LUnitMember.TO_BOOLEAN.name, null).asType(LTypes.BOOLEAN);
 
-		if (boolean_ == null) boolean_ = booleanAsUnit._toBoolean();
+		if (boolean_ == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.TO_BOOLEAN.name);
 
 		return boolean_.getValue();
 	}
@@ -316,7 +327,7 @@ public abstract class LUnit
 			{
 				parents = new ConcurrentLinkedDeque<>();
 				initPrototypeIfNecessary();
-				addParent(prototype);
+				_addParents(prototype);
 			}
 		}
 
@@ -335,23 +346,20 @@ public abstract class LUnit
 						initializeBuiltins();
 					}
 
-					@Compiler
 					@Override
 					public LUnit getSuperMember(String superMemberName)
 					{
 						return LUndefined.instance;
 					}
 
-					@Compiler
 					@Override
-					public LUnit addParent(LUnit parent)
+					public LUnit addParents(LUnit... parents)
 					{
 						LErrors.printErrorAndExit("Unit prototype cannot have parents");
 
 						return LUndefined.instance;
 					}
 
-					@Internal
 					@Override
 					public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
 					{
@@ -360,18 +368,16 @@ public abstract class LUnit
 						return null;
 					}
 
-					@Internal
 					@Override
 					protected @Nullable ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
 					{
 						return null;
 					}
 
-					@Internal
 					private void initializeBuiltins()
 					{
 						LNew.instance.init(this);
-						LAddParent.instance.init(this);
+						LAddParents.instance.init(this);
 						LGetIndexItem.instance.init(this);
 						LSetIndexItem.instance.init(this);
 						LGetType.instance.init(this);

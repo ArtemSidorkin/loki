@@ -5,7 +5,7 @@ import loki.runtime.datatype.unit.LUnit;
 public class LMap extends LMapPrototype
 {
 	{
-		addParent(LMapPrototype.instance);
+		_addParents(LMapPrototype.instance);
 	}
 
 	public LMap(LUnit[] items)

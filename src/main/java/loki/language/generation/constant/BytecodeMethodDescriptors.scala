@@ -56,8 +56,8 @@ object BytecodeMethodDescriptors
 		)
 	val UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT =
 		TypedMethodDescriptor((Nil) -> Some(classOf[LUnitContext]))
-	val UNIT__METHOD__ADD_PARENT =
-		TypedMethodDescriptor((classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+	val UNIT__METHOD__ADD_PARENTS =
+		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_SUPER_MEMBER =
 		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_MEMBER =

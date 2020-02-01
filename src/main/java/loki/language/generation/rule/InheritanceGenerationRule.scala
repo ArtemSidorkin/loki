@@ -21,7 +21,6 @@ private[generation] class InheritanceGenerationRule(
 		def loadThisAndCreateParentArray():Unit = (
 			topMethodCall
 				aloadthis()
-				ldc LanguageMembers.UNIT__METHOD__ADD_PARENT
 				anewarrayUnit parentCount
 		)
 
@@ -43,7 +42,7 @@ private[generation] class InheritanceGenerationRule(
 			}
 	}
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
+	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodAddParents ()
 
 	private def getParentExpression(parentIndex:Int):ExpressionContext = inheritanceContext expression parentIndex
 }

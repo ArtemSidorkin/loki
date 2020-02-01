@@ -1,6 +1,7 @@
 package loki.runtime.datatype.number;
 
 import loki.runtime.constant.LTypes;
+import loki.runtime.datatype.LBoolean;
 import loki.runtime.datatype.LString;
 import loki.runtime.datatype.number.operation.binary.*;
 import loki.runtime.datatype.unit.LUnit;
@@ -17,7 +18,7 @@ public class LNumber extends LUnit
 	{
 		super(LTypes.NUMBER);
 		this.value = value;
-		addParent(prototype);
+		_addParents(prototype);
 	}
 
 	private LNumber()
@@ -34,11 +35,11 @@ public class LNumber extends LUnit
 	}
 
 	@Override
-	public boolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
 		LNumber number = unit.asType(LTypes.NUMBER);
 
-		return number != null && value == number.value;
+		return LBoolean.valueOf(number != null && value == number.value);
 	}
 
 	@Override

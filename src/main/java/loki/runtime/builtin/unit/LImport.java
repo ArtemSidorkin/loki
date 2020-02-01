@@ -3,7 +3,6 @@ package loki.runtime.builtin.unit;
 import loki.execution.Execution;
 import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.constant.LTypes;
-import loki.runtime.context.LUnitContext;
 import loki.runtime.datatype.LString;
 import loki.runtime.datatype.LUndefined;
 import loki.runtime.datatype.unit.LUnit;
@@ -37,7 +36,7 @@ public class LImport extends LUnit
 		}
 
 		host
-			.addParent(
+			.addParents(
 				Execution
 					.executor()
 					.getModuleInstance(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(parameters))

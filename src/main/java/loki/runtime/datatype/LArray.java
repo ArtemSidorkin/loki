@@ -6,7 +6,7 @@ import loki.runtime.util.Nullable;
 public class LArray extends LArrayPrototype
 {
 	{
-		addParent(LArrayPrototype.instance);
+		_addParents(LArrayPrototype.instance);
 	}
 
 	public LArray(@Nullable LUnit[] items)

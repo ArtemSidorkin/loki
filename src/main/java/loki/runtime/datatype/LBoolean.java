@@ -21,7 +21,7 @@ public class LBoolean extends LUnit
 	{
 		super(LTypes.BOOLEAN);
 		this.value = value;
-		addParent(LBoolean.PROTOTYPE);
+		_addParents(LBoolean.PROTOTYPE);
 	}
 
 	private LBoolean()
@@ -47,10 +47,17 @@ public class LBoolean extends LUnit
 	}
 
 	@Override
-	public boolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
-		LBoolean boolean_ = unit.asType(LTypes.BOOLEAN);
-		return boolean_ != null && getValue() == boolean_.getValue();
+		LBoolean boolean_ = valueOf(unit.toBoolean());
+
+		return LBoolean.valueOf(value == boolean_.value);
+	}
+
+	@Override
+	public LString _toString()
+	{
+		return new LString(String.valueOf(value));
 	}
 
 	private void initializeBuiltins()

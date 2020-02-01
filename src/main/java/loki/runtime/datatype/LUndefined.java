@@ -9,7 +9,6 @@ import loki.runtime.util.Nullable;
 
 import java.util.function.Consumer;
 
-//TODO: add all missing methods
 public class LUndefined extends LUnit
 {
 	public static final LUndefined instance = new LUndefined();
@@ -20,9 +19,9 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit addParent(LUnit parent)
+	public LUnit addParents(LUnit... parents)
 	{
-		LErrors.printErrorAndExit("Inheriting from \"undefined\"!");
+		LErrors.printErrorAndExit("Adding parents to \"undefined\"!");
 
 		return null;
 	}
@@ -52,7 +51,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public LUnit instantiate(LUnit[] parameters, Consumer<LUnit> saver)
+	public LUnit newInstance(LUnit[] parameters, Consumer<LUnit> saver)
 	{
 		LErrors.printErrorAndExit("Instantiating \"undefined\"!");
 

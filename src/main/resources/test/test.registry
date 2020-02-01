@@ -18,6 +18,7 @@ number_inheritance, /test/inheritance/numberInheritance.loki
 single_inheritance, /test/inheritance/singleInheritance.loki
 multiple_inheritance, /test/inheritance/multipleInheritance.loki
 default_constructor_inheritance, /test/inheritance/defaultConstructorInheritance.loki
+polymorphic_inheritance, /test/inheritance/polymorphicInheritance.loki
 
 object_formatting, /test/object/objectFormatting.loki
 simple_object_usage, /test/object/simpleObjectUsage.loki
