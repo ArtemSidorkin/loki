@@ -107,7 +107,7 @@ expression:
 	DOLLAR IDENTIFIER #HostMember |
 	IDENTIFIER #VariableOrParameter |
 	expression DOT IDENTIFIER #Member |
-	expression LEFT_BRACKET (BEGIN)? (expression (COMMA expression)*)? (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
+	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
 	expression LEFT_BRACE ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACE #MemberAccessor |
 
 
@@ -154,14 +154,14 @@ expression:
 
 	expression LEFT_BRACKET
 		(BEGIN)?
-			(expression (COMMA expression)*)? (SEMICOLON)?
+			expression
 		(END)?
 	RIGHT_BRACKET EQUALS expression
 	#AssignIndex |
 
 	expression LEFT_BRACKET
 		(BEGIN)?
-			(expression (COMMA expression)*)? (SEMICOLON)?
+			expression
 		(END)?
 	RIGHT_BRACKET EQUALS BEGIN expression SEMICOLON END
 	#AssignIndex |
