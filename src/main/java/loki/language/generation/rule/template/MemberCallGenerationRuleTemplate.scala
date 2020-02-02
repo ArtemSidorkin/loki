@@ -14,76 +14,58 @@ private[generation] abstract class MemberCallGenerationRuleTemplate[RULE_CONTEXT
 {
 	override protected def enterAction()
 	{
-		LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext()
-		StoreCallParameters()
+		loadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext()
+		storeCallParameters()
 
-		object LoadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext
+		def loadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext():Unit =
+			generationContext
+				.addPostExitRuleTask(
+					hostExpressionContext,
+					() => (
+						topMethodCall
+							ldc memberName
+							anewarrayUnit callParameterExpressionContexts.size
+					)
+				)
+
+		def storeCallParameters()
 		{
-			def apply():Unit =
-				generationContext.addPostExitRuleTask(hostExpressionContext, loadMemberNameAndCreateCallParameterArray)
+			callParameterExpressionContexts
+				.indices
+				.foreach(callParameterIndex =>
+				{
+					duplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext(
+						callParameterIndex
+					)
 
-			private def loadMemberNameAndCreateCallParameterArray():Unit = (
-				topMethodCall
-					ldc memberName
-					anewarrayUnit callParameterExpressionContexts.size
-			)
-		}
+					storeCallParameterAfterExitCallParameterExpressionContext(callParameterIndex)
+				})
 
-		object StoreCallParameters
-		{
-			def apply()
-			{
-				callParameterExpressionContexts
-					.indices
-					.foreach(callParameterIndex =>
-					{
-						DuplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext(
-							callParameterIndex
+			def duplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext(
+				callParameterIndex:Int
+			):Unit =
+				generationContext.
+					addPreEnterRuleTask(
+						callParameterExpressionContexts(callParameterIndex),
+						() => (
+							topMethodCall
+								dup ()
+								ldc callParameterIndex
 						)
-						StoreCallParameterAfterExitCallParameterExpressionContext(callParameterIndex)
-					})
-
-				object DuplicateCallParameterArrayAndLoadCallParameterIndexBeforeEnterCallParameterExpressionContext
-				{
-					def apply(callParameterIndex:Int):Unit =
-						generationContext.
-							addPreEnterRuleTask(
-								callParameterExpressionContexts(callParameterIndex),
-								() => duplicateCallParameterArrayAndLoadCallParameterIndex(callParameterIndex)
-							)
-
-					private def duplicateCallParameterArrayAndLoadCallParameterIndex(callParameterIndex:Int):Unit = (
-						topMethodCall
-							dup ()
-							ldc callParameterIndex
 					)
-				}
 
-				object StoreCallParameterAfterExitCallParameterExpressionContext
-				{
-					def apply(callParameterIndex:Int):Unit =
-						generationContext
-							.addPostExitRuleTask(
-								callParameterExpressionContexts(callParameterIndex), storeCallParameter
-							)
-
-					private def storeCallParameter():Unit = (
-						topMethodCall
-							aastore ()
-							decrementObjectCounter()
+			def storeCallParameterAfterExitCallParameterExpressionContext(callParameterIndex:Int):Unit =
+				generationContext
+					.addPostExitRuleTask(
+						callParameterExpressionContexts(callParameterIndex),
+						() => (
+							topMethodCall
+								aastore ()
+								decrementObjectCounter()
+						)
 					)
-				}
-			}
 		}
 	}
 
-	override protected def exitAction()
-	{
-		LoadUnitContextAndInvokeCallMember()
-
-		object LoadUnitContextAndInvokeCallMember
-		{
-			def apply():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
-		}
-	}
+	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
 }
