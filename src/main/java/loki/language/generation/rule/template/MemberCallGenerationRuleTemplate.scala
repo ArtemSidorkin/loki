@@ -1,8 +1,8 @@
 package loki.language.generation.rule.template
 
 import loki.language.generation.GenerationContext
-import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
-import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
+import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.rule.GenerationRule
 import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext

@@ -1,8 +1,8 @@
 package loki.language.generation.rule
 
 import loki.language.generation.GenerationContext
-import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
-import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
+import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.rule.WhileGenerationRule.Labels
 import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode

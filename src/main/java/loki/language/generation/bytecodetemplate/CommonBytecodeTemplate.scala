@@ -7,36 +7,36 @@ import loki.runtime.datatype.`type`.LType
 import loki.runtime.datatype.number.LNumber
 import loki.runtime.datatype.unit.LUnit
 
-object CommonBytecodeTemplate
+private[generation] object CommonBytecodeTemplate
 {
-	implicit class CTemplateCommon(val method:MethodBuilder)
+	implicit class CommonBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
-		def anewarrayJavaString():method.type = method anewarray classOf[String]
+		def anewarrayJavaString():methodBuilder.type = methodBuilder anewarray classOf[String]
 
-		def newUnitContext():method.type = method `new` classOf[LUnitContext]
+		def newUnitContext():methodBuilder.type = methodBuilder `new` classOf[LUnitContext]
 
-		def newModuleContext():method.type = method `new` classOf[LModuleContext]
+		def newModuleContext():methodBuilder.type = methodBuilder `new` classOf[LModuleContext]
 
-		def newType():method.type = method `new` classOf[LType]
+		def newType():methodBuilder.type = methodBuilder `new` classOf[LType]
 
-		def newNumber():method.type = method `new` classOf[LNumber]
+		def newNumber():methodBuilder.type = methodBuilder `new` classOf[LNumber]
 
-		def newString():method.type = method `new` classOf[LString]
+		def newString():methodBuilder.type = methodBuilder `new` classOf[LString]
 
-		def newArray():method.type = method `new` classOf[LArray]
+		def newArray():methodBuilder.type = methodBuilder `new` classOf[LArray]
 
-		def newMap():method.type = method `new` classOf[LMap]
+		def newMap():methodBuilder.type = methodBuilder `new` classOf[LMap]
 
-		def newObject():method.type = method `new` classOf[LObject]
+		def newObject():methodBuilder.type = methodBuilder `new` classOf[LObject]
 
-		def anewarrayUnit(arraySize:Int):method.type = (
-			method
+		def anewarrayUnit(arraySize:Int):methodBuilder.type = (
+			methodBuilder
 				ldc arraySize
 				anewarray classOf[LUnit]
 		)
 
-		def anewarrayUnit():method.type = method anewarray classOf[LUnit]
+		def anewarrayUnit():methodBuilder.type = methodBuilder anewarray classOf[LUnit]
 
-		def void():method.type = method getstatic (classOf[LVoid], "instance", classOf[LVoid])
+		def void():methodBuilder.type = methodBuilder getstatic (classOf[LVoid], "instance", classOf[LVoid])
 	}
 }

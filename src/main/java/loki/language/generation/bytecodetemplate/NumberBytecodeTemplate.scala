@@ -4,12 +4,11 @@ import assembler.builder.MethodBuilder
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.runtime.datatype.number.LNumber
 
-object NumberBytecodeTemplate
+private[generation] object NumberBytecodeTemplate
 {
-	implicit class CTemplateNumber(method:MethodBuilder)
+	implicit class NumberBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
-		def invokeInitNumber() = method invokeinit
-		(
+		def invokeInitNumber():methodBuilder.type = methodBuilder invokeinit (
 			classOf[LNumber], BytecodeMethodDescriptors.NUMBER__METHOD__INIT
 		)
 	}

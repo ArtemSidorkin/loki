@@ -4,18 +4,16 @@ import assembler.builder.MethodBuilder
 import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, BytecodeMethodDescriptors}
 import loki.runtime.datatype.LModule
 
-object ModuleBytecodeTemplate
+private[generation] object ModuleBytecodeTemplate
 {
-	implicit class CTemplateModule(method:MethodBuilder)
+	implicit class ModuleBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
-		def aloadModuleHeirMethodInitParameterUnitContext() =
-		(
-			method
+		def aloadModuleHeirMethodInitParameterUnitContext():methodBuilder.type = (
+			methodBuilder
 			aload BytecodeLocalVariablesOrParameters.MODULE_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT
 		)
 
-		def invokeInitModule() = method invokeinit
-		(
+		def invokeInitModule():methodBuilder.type = methodBuilder invokeinit (
 			classOf[LModule], BytecodeMethodDescriptors.MODULE__METHOD__INIT
 		)
 	}

@@ -1,8 +1,8 @@
 package loki.language.generation.rule
 
 import loki.language.generation.GenerationContext
-import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTemplateContext
-import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
+import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.ContextBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.AssignVariableContext
 
 

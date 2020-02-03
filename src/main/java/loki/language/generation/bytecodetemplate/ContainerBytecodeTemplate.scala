@@ -4,11 +4,11 @@ import assembler.builder.MethodBuilder
 import loki.language.generation.constant.BytecodeContainerMethodDescriptors
 import loki.runtime.datatype.unit.LUnit
 
-object ContainerBytecodeTemplate
+private[generation] object ContainerBytecodeTemplate
 {
-	implicit class Template(method:MethodBuilder)
+	implicit class ContainerBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
-		def invokeInitContainer(containerClass:Class[_ <: LUnit]):MethodBuilder =
-			method invokeinit (containerClass, BytecodeContainerMethodDescriptors.INIT)
+		def invokeInitContainer(containerClass:Class[_ <: LUnit]):methodBuilder.type =
+			methodBuilder invokeinit (containerClass, BytecodeContainerMethodDescriptors.INIT)
 	}
 }

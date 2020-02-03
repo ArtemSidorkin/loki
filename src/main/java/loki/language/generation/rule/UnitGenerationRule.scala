@@ -1,13 +1,12 @@
 package loki.language.generation.rule
 
-import assembler._
 import assembler.builder.MethodBuilder
 import assembler.constant.{FINAL, PUBLIC, SYNTHETIC}
 import loki.language.generation.GenerationContext
-import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CTemplateCommon
-import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.CTemplateContext
-import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.CTemplateType
-import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.CTemplateUnit
+import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
+import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.ContextBytecodeTemplate
+import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.{LokiLexer, LokiParser}
@@ -121,7 +120,7 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 			)) getOrElse
 			(
 				preTopMethodCall
-				invokestaticTypeMethodCreateAnonymous
+				invokestaticTypeMethodCreateAnonymous ()
 			)
 
 			def generateUnitContext():Unit =

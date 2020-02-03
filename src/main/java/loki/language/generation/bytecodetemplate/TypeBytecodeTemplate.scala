@@ -1,18 +1,17 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
-import loki.language.generation.constant.BytecodeMethodDescriptors
-import loki.language.generation.constant.LanguageMembers
+import loki.language.generation.constant.{BytecodeMethodDescriptors, LanguageMembers}
 import loki.runtime.datatype.`type`.LType
 
-object TypeBytecodeTemplate
+private[generation] object TypeBytecodeTemplate
 {
-	implicit class CTemplateType(method:MethodBuilder)
+	implicit class TypeBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
-		def invokeInitType() = method invokeinit(classOf[LType], BytecodeMethodDescriptors.TYPE__METHOD__INIT)
+		def invokeInitType():methodBuilder.type =
+			methodBuilder invokeinit(classOf[LType], BytecodeMethodDescriptors.TYPE__METHOD__INIT)
 
-		def invokestaticTypeMethodCreateAnonymous = method invokestatic
-		(
+		def invokestaticTypeMethodCreateAnonymous():methodBuilder.type = methodBuilder invokestatic (
 			classOf[LType],
 			LanguageMembers.TYPE__METHOD__CREATE_ANONYMOUS,
 			BytecodeMethodDescriptors.TYPE__METHOD__CREATE_ANONYMOUS
