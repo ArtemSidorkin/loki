@@ -66,6 +66,20 @@ object UnitBytecodeTemplate
 			BytecodeMethodDescriptors.UNIT__METHOD__SET_MEMBER
 		)
 
+		def invokeVirtualUnitMethodGetIndexedItem() = method invokevirtual
+		(
+			classOf[LUnit],
+			LanguageMembers.UNIT__METHOD__GET_INDEXED_ITEM,
+			BytecodeMethodDescriptors.UNIT__METHOD__GET_INDEXED_ITEM
+		)
+
+		def invokeVirtualUnitMethodSetIndexedItem() = method invokevirtual
+		(
+			classOf[LUnit],
+			LanguageMembers.UNIT__METHOD__SET_INDEXED_ITEM,
+			BytecodeMethodDescriptors.UNIT__METHOD__SET_INDEXED_ITEM
+		)
+
 		def invokeVirtualUnitMethodSetParameterNames() = method invokevirtual
 		(
 			classOf[LUnit],

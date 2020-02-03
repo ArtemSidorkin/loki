@@ -167,15 +167,31 @@ public abstract class LUnit
 	}
 
 	@Internal
+	@Polymorphic(ACCESS)
+	public LUnit getIndexedItem(LUnit index)
+	{
+		return callMember(LUnitMember.GET_INDEXED_ITEM.name, new LUnit[] {index});
+	}
+
+	@Internal
 	@Polymorphic(DEFAULT)
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
 		return LUndefined.instance;
 	}
 
 	@Internal
+	@Polymorphic(ACCESS)
+	public LUnit setIndexedItem(LUnit index, LUnit value)
+	{
+		callMember(LUnitMember.SET_INDEXED_ITEM.name, new LUnit[] {index});
+
+		return value;
+	}
+
+	@Internal
 	@Polymorphic(DEFAULT)
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
 		return LUndefined.instance;
 	}

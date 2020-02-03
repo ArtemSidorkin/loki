@@ -11,7 +11,7 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 {
 	val classLoader = new GenerationClassLoader
 
-	private implicit val generationContext = new GenerationContext(moduleName, classLoader)
+	private implicit val generationContext:GenerationContext = new GenerationContext(moduleName, classLoader)
 
 	override def visitErrorNode(errorNode:ErrorNode):Unit = throw new IllegalStateException
 
@@ -66,25 +66,15 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 	)
 		.exit()
 
-	override def enterIndex(indexContext:IndexContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, indexContext) with IndexGenerationRuleMixin
-	)
-		.enter()
+	override def enterIndex(indexContext:IndexContext):Unit = IndexGenerationRule.enter(generationContext, indexContext)
 
-	override def exitIndex(indexContext:IndexContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, indexContext) with IndexGenerationRuleMixin
-	)
-		.exit()
+	override def exitIndex(indexContext:IndexContext):Unit = IndexGenerationRule.exit(generationContext, indexContext)
 
-	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, assignIndexContext) with AssignIndexGenerationRuleMixin
-	)
-		.enter()
+	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit =
+		AssignIndexGenerationRule.exit(generationContext, assignIndexContext)
 
-	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, assignIndexContext) with AssignIndexGenerationRuleMixin
-	)
-		.exit()
+	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit =
+		AssignIndexGenerationRule.exit(generationContext, assignIndexContext)
 
 	override def enterMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
 		MemberAccessorGenerationRule.enter(generationContext, memberAccessorContext)

@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
 private[generation] trait AssignIndexGenerationRuleMixin
 	extends GenerationRuleMixin[AssignIndexContext] with MemberCallGenerationRuleMixinTemplate
 {
-	override protected val memberName:String = LUnitMember.SET_INDEX_ITEM.name
+	override protected val memberName:String = LUnitMember.SET_INDEXED_ITEM.name
 
 	override protected val hostExpressionContext:ExpressionContext = ruleContext.expression.asScala.head
 

@@ -12,6 +12,8 @@ private[generation] object LanguageMembers
 	val UNIT__METHOD__GET_SUPER_MEMBER = "getSuperMember"
 	val UNIT__METHOD__GET_MEMBER = "getMember"
 	val UNIT__METHOD__SET_MEMBER = "setMember"
+	val UNIT__METHOD__GET_INDEXED_ITEM = "getIndexedItem"
+	val UNIT__METHOD__SET_INDEXED_ITEM = "setIndexedItem"
 	val UNIT__METHOD__SET_PARAMETER_NAMES = "setParameterNames"
 	val UNIT__METHOD__CALL = "call"
 	val UNIT__METHOD__CALL_MEMBER = "callMember"

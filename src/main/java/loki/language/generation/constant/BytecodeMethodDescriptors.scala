@@ -64,6 +64,10 @@ object BytecodeMethodDescriptors
 		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_MEMBER =
 		TypedMethodDescriptor((classOf[String] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+	val UNIT__METHOD__GET_INDEXED_ITEM =
+		TypedMethodDescriptor((classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
+	val UNIT__METHOD__SET_INDEXED_ITEM =
+		TypedMethodDescriptor((classOf[LUnit] :: classOf[LUnit] :: classOf[LUnit] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__SET_PARAMETER_NAMES =
 		TypedMethodDescriptor((classOf[Array[String]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__CALL =
