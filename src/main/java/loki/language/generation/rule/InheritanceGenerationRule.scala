@@ -5,10 +5,9 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.{ExpressionContext, InheritanceContext}
 
-private[generation] class InheritanceGenerationRule(
-	generationContext:GenerationContext, inheritanceContext:InheritanceContext
-)
-	extends GenerationRule(generationContext, inheritanceContext)
+private[generation] class InheritanceGenerationRule
+	(inheritanceContext:InheritanceContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(inheritanceContext)
 {
 	private def parentCount:Int = inheritanceContext.expression.size
 
@@ -43,14 +42,14 @@ private[generation] class InheritanceGenerationRule(
 
 	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodAddParents ()
 
-	private def getParentExpression(parentIndex:Int):ExpressionContext = inheritanceContext expression parentIndex
+	private def getParentExpression(parentIndex:Int) = inheritanceContext expression parentIndex
 }
 
 private[generation] object InheritanceGenerationRule
 {
-	def enter(generationContext:GenerationContext, inheritanceContext:InheritanceContext):Unit =
-		new InheritanceGenerationRule(generationContext, inheritanceContext).enter()
+	def enter(inheritanceContext:InheritanceContext)(implicit generationContext:GenerationContext):Unit =
+		new InheritanceGenerationRule(inheritanceContext).enter()
 
-	def exit(generationContext:GenerationContext, inheritanceContext:InheritanceContext):Unit =
-		new InheritanceGenerationRule(generationContext, inheritanceContext).exit()
+	def exit(inheritanceContext:InheritanceContext)(implicit generationContext:GenerationContext):Unit =
+		new InheritanceGenerationRule(inheritanceContext).exit()
 }

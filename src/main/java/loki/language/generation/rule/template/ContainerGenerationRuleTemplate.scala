@@ -7,10 +7,9 @@ import loki.language.generation.rule.GenerationRule
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
 
-private[generation] abstract class ContainerGenerationRuleTemplate[RULE_CONTEXT <: RuleContext](
-	generationContext:GenerationContext, ruleContext:RULE_CONTEXT
-)
-	extends GenerationRule(generationContext, ruleContext) with ContainerGenerationRuleMixinTemplate
+private[generation] abstract class ContainerGenerationRuleTemplate
+	[RULE_CONTEXT <: RuleContext](ruleContext:RULE_CONTEXT)(implicit generationContext:GenerationContext)
+	extends GenerationRule(ruleContext) with ContainerGenerationRuleMixinTemplate
 {
 	override protected def enterAction()
 	{

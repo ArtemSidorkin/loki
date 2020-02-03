@@ -5,13 +5,11 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.StringBytecodeTemplate.StringBytecodeTemplate
 import loki.language.parsing.LokiParser
 
-
-private[generation] class StringGenerationRule(
-	bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext
-)
-	extends GenerationRule(bytecodeGenerationContext, stringContext)
+private[generation] class StringGenerationRule
+	(stringContext:LokiParser.StringContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(stringContext)
 {
-	private def rawString:String = ruleContext.getText
+	private def rawString:String = stringContext.getText
 	private def isAcuteString:Boolean = rawString startsWith "`"
 
 	override protected def enterAction()
@@ -31,9 +29,9 @@ private[generation] class StringGenerationRule(
 
 private[generation] object StringGenerationRule
 {
-	def enter(bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext):Unit =
-		new StringGenerationRule(bytecodeGenerationContext, stringContext).enter()
+	def enter(stringContext:LokiParser.StringContext)(implicit bytecodeGenerationContext:GenerationContext):Unit =
+		new StringGenerationRule(stringContext).enter()
 
-	def exit(bytecodeGenerationContext:GenerationContext, stringContext:LokiParser.StringContext):Unit =
-		new StringGenerationRule(bytecodeGenerationContext, stringContext).exit()
+	def exit(stringContext:LokiParser.StringContext)(implicit bytecodeGenerationContext:GenerationContext):Unit =
+		new StringGenerationRule(stringContext).exit()
 }

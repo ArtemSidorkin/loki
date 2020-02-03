@@ -13,25 +13,23 @@ import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.runtime.datatype.unit.LUnit
 import loki.system.SystemSettings
 
-
 //TODO: check & refactor
-private[generation] class UnitGenerationRule(generationContext:GenerationContext, ruleContext:UnitContext)
-	extends GenerationRule(generationContext, ruleContext)
+private[generation] class UnitGenerationRule
+	(unitContext:UnitContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(unitContext)
 {
-	private val isInheritancePresent:Boolean = ruleContext.inheritance != null
-
 	private val unitName:Option[String] =
-		ruleContext.head.getType match
+		unitContext.head.getType match
 		{
 			case LokiLexer.IDENTIFIER => Some(getUnitParameterIdentifier(0).getText)
 			case LokiLexer.BACKSLASH => None
 		}
 
 	private val unitParameterNames:Seq[String] =
-		for (i <- unitName.foldLeft(0)((_, _) => 1) until ruleContext.IDENTIFIER.size)
+		for (i <- unitName.foldLeft(0)((_, _) => 1) until unitContext.IDENTIFIER.size)
 			yield getUnitParameterIdentifier(i).getText
 
-	private val unitLastInstruction:InstructionContext = ruleContext instruction ruleContext.instruction.size - 1
+	private val unitLastInstruction:InstructionContext = unitContext instruction unitContext.instruction.size - 1
 
 	override protected def enterAction()
 	{
@@ -108,8 +106,6 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 				dup ()
 			)
 
-			def generateOuterClassInstance():Unit = preTopMethodCall aloadthis ()
-
 			def generateUnitType():Unit = unitName map (untNm =>
 			(
 				preTopMethodCall
@@ -185,9 +181,10 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 		}
 
 		def addReturnToUnitMethodCall(
-										 generationContext:GenerationContext, ruleContext:LokiParser.InstructionContext
-		):Unit = if (ruleContext.expression != null)
-			generationContext.addPostExitRuleTask(ruleContext.expression, () => topMethodCall aReturn ())
+			generationContext:GenerationContext, unitContext:LokiParser.InstructionContext
+		):Unit =
+			if (unitContext.expression != null)
+				generationContext.addPostExitRuleTask(unitContext.expression, () => topMethodCall aReturn ())
 	}
 
 	override protected def exitAction()
@@ -200,17 +197,17 @@ private[generation] class UnitGenerationRule(generationContext:GenerationContext
 		popFrame()
 	}
 
-	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && ruleContext.DOLLAR != null
-	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && ruleContext.DOLLAR != null
+	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.DOLLAR != null
+	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.DOLLAR != null
 
-	private def getUnitParameterIdentifier(parameterIndex:Int) = ruleContext IDENTIFIER parameterIndex
+	private def getUnitParameterIdentifier(parameterIndex:Int) = unitContext IDENTIFIER parameterIndex
 }
 
 private[generation] object UnitGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:UnitContext):Unit =
-		new UnitGenerationRule(generationContext, ruleContext).enter()
+	def enter(unitContext:UnitContext)(implicit generationContext:GenerationContext):Unit =
+		new UnitGenerationRule(unitContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:UnitContext):Unit =
-		new UnitGenerationRule(generationContext, ruleContext).exit()
+	def exit(unitContext:UnitContext)(implicit generationContext:GenerationContext):Unit =
+		new UnitGenerationRule(unitContext).exit()
 }

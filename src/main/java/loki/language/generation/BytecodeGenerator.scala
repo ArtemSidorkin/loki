@@ -15,248 +15,188 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 
 	override def visitErrorNode(errorNode:ErrorNode):Unit = throw new IllegalStateException
 
-	override def enterModule(moduleContext:ModuleContext):Unit =
-		ModuleGenerationRule.enter(generationContext, moduleContext)
-
-	override def exitModule(moduleContext:ModuleContext):Unit =
-		ModuleGenerationRule.exit(generationContext, moduleContext)
+	override def enterModule(moduleContext:ModuleContext):Unit = ModuleGenerationRule.enter(moduleContext)
+	override def exitModule(moduleContext:ModuleContext):Unit = ModuleGenerationRule.exit(moduleContext)
 
 	override def enterInstruction(instructionContext:InstructionContext):Unit =
-		InstructionGenerationRule.enter(generationContext, instructionContext)
+		InstructionGenerationRule.enter(instructionContext)
 
 	override def exitInstruction(instructionContext:InstructionContext):Unit =
-		InstructionGenerationRule.exit(generationContext, instructionContext)
+		InstructionGenerationRule.exit(instructionContext)
 
 	override def enterExpressionGroup(expressionGroupContext:ExpressionGroupContext):Unit =
-		GenerationRule.enter(generationContext, expressionGroupContext)
+		GenerationRule.enter( expressionGroupContext)
 
 	override def exitExpressionGroup(expressionGroupContext:ExpressionGroupContext):Unit =
-		GenerationRule.exit(generationContext, expressionGroupContext)
+		GenerationRule.exit(expressionGroupContext)
 
-	override def enterUnit(unitContext:UnitContext):Unit = UnitGenerationRule.enter(generationContext, unitContext)
-	override def exitUnit(unitContext:UnitContext):Unit = UnitGenerationRule.exit(generationContext, unitContext)
+	override def enterUnit(unitContext:UnitContext):Unit = UnitGenerationRule.enter(unitContext)
+	override def exitUnit(unitContext:UnitContext):Unit = UnitGenerationRule.exit(unitContext)
 
-	override def enterArray(arrayContext:ArrayContext):Unit = (
-		new ContainerGenerationRuleTemplate(generationContext, arrayContext) with ArrayGenerationRuleMixin
-	)
-		.enter()
+	override def enterArray(arrayContext:ArrayContext):Unit =
+		(new ContainerGenerationRuleTemplate(arrayContext) with ArrayGenerationRuleMixin).enter()
 
-	override def exitArray(arrayContext:ArrayContext):Unit = (
-		new ContainerGenerationRuleTemplate(generationContext, arrayContext) with ArrayGenerationRuleMixin
-	)
-		.exit()
+	override def exitArray(arrayContext:ArrayContext):Unit =
+		(new ContainerGenerationRuleTemplate(arrayContext) with ArrayGenerationRuleMixin).exit()
 
-	override def enterMap(mapContext:MapContext):Unit =	(
-		new ContainerGenerationRuleTemplate(generationContext, mapContext)	with MapGenerationRuleMixin
-	)
-		.enter()
+	override def enterMap(mapContext:MapContext):Unit =
+		(new ContainerGenerationRuleTemplate(mapContext) with MapGenerationRuleMixin).enter()
 
-	override def exitMap(mapContext:MapContext):Unit = (
-		new ContainerGenerationRuleTemplate(generationContext, mapContext)	with MapGenerationRuleMixin
-	)
-		.exit()
+	override def exitMap(mapContext:MapContext):Unit =
+		(new ContainerGenerationRuleTemplate(mapContext) with MapGenerationRuleMixin).exit()
 
-	override def enterObject(objectContext:ObjectContext):Unit = (
-		new ContainerGenerationRuleTemplate(generationContext, objectContext) with ObjectGenerationRuleMixin
-	)
-		.enter()
+	override def enterObject(objectContext:ObjectContext):Unit =
+		(new ContainerGenerationRuleTemplate(objectContext) with ObjectGenerationRuleMixin).enter()
 
-	override def exitObject(objectContext:ObjectContext):Unit =	(
-		new ContainerGenerationRuleTemplate(generationContext, objectContext) with ObjectGenerationRuleMixin
-	)
-		.exit()
+	override def exitObject(objectContext:ObjectContext):Unit =
+		(new ContainerGenerationRuleTemplate(objectContext) with ObjectGenerationRuleMixin).exit()
 
-	override def enterIndex(indexContext:IndexContext):Unit = IndexGenerationRule.enter(generationContext, indexContext)
-
-	override def exitIndex(indexContext:IndexContext):Unit = IndexGenerationRule.exit(generationContext, indexContext)
+	override def enterIndex(indexContext:IndexContext):Unit = IndexGenerationRule.enter(indexContext)
+	override def exitIndex(indexContext:IndexContext):Unit = IndexGenerationRule.exit(indexContext)
 
 	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit =
-		AssignIndexGenerationRule.exit(generationContext, assignIndexContext)
+		AssignIndexGenerationRule.exit(assignIndexContext)
 
 	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit =
-		AssignIndexGenerationRule.exit(generationContext, assignIndexContext)
+		AssignIndexGenerationRule.exit(assignIndexContext)
 
 	override def enterMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
-		MemberAccessorGenerationRule.enter(generationContext, memberAccessorContext)
+		MemberAccessorGenerationRule.enter(memberAccessorContext)
 
 	override def exitMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
-		MemberAccessorGenerationRule.exit(generationContext, memberAccessorContext)
+		MemberAccessorGenerationRule.exit(memberAccessorContext)
 
 	override def enterAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		AssignMemberAccessorGenerationRule.enter(generationContext, assignMemberAccessorContext)
+		AssignMemberAccessorGenerationRule.enter(assignMemberAccessorContext)
 
 	override def exitAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		AssignMemberAccessorGenerationRule.exit(generationContext, assignMemberAccessorContext)
+		AssignMemberAccessorGenerationRule.exit(assignMemberAccessorContext)
 
-	override def enterCall(callContext:CallContext):Unit = CallGenerationRule.enter(generationContext, callContext)
-	override def exitCall(callContext:CallContext):Unit = CallGenerationRule.exit(generationContext, callContext)
+	override def enterCall(callContext:CallContext):Unit = CallGenerationRule.enter(callContext)
+	override def exitCall(callContext:CallContext):Unit = CallGenerationRule.exit(callContext)
 
-	override def enterMemberCall(memberCallContext:MemberCallContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, memberCallContext) with MemberCallGenerationRuleMixin
-	)
-		.enter()
+	override def enterMemberCall(memberCallContext:MemberCallContext):Unit =
+		(new MemberCallGenerationRuleTemplate(memberCallContext) with MemberCallGenerationRuleMixin).enter()
 
-	override def exitMemberCall(memberCallContext:MemberCallContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, memberCallContext) with MemberCallGenerationRuleMixin
-	)
-		.exit()
+	override def exitMemberCall(memberCallContext:MemberCallContext):Unit =
+		(new MemberCallGenerationRuleTemplate(memberCallContext) with MemberCallGenerationRuleMixin).exit()
 
 	override def enterVariableOrParameter(variableOrParameterContext:VariableOrParameterContext):Unit =
-		VariableOrParameterGenerationRule.enter(generationContext, variableOrParameterContext)
+		VariableOrParameterGenerationRule.enter(variableOrParameterContext)
 
 	override def exitVariableOrParameter(variableOrParameterContext:VariableOrParameterContext):Unit =
-		VariableOrParameterGenerationRule.exit(generationContext, variableOrParameterContext)
+		VariableOrParameterGenerationRule.exit(variableOrParameterContext)
 
 	override def enterSuperHostMember(superHostMemberContext:SuperHostMemberContext):Unit =
-		SuperHostMemberGenerationRule.enter(generationContext, superHostMemberContext)
+		SuperHostMemberGenerationRule.enter(superHostMemberContext)
 
 	override def exitSuperHostMember(superHostMemberContext:SuperHostMemberContext):Unit =
-		SuperHostMemberGenerationRule.exit(generationContext, superHostMemberContext)
+		SuperHostMemberGenerationRule.exit(superHostMemberContext)
 
 	override def enterHostMember(hostMemberContext:HostMemberContext):Unit =
-		HostMemberGenerationRule.enter(generationContext, hostMemberContext)
+		HostMemberGenerationRule.enter(hostMemberContext)
 
 	override def exitHostMember(hostMemberContext:HostMemberContext):Unit =
-		HostMemberGenerationRule.exit(generationContext, hostMemberContext)
+		HostMemberGenerationRule.exit(hostMemberContext)
 
-	override def enterMember(memberContext:MemberContext):Unit =
-		MemberGenerationRule.enter(generationContext, memberContext)
-
-	override def exitMember(memberContext:MemberContext):Unit =
-		MemberGenerationRule.exit(generationContext, memberContext)
+	override def enterMember(memberContext:MemberContext):Unit = MemberGenerationRule.enter(memberContext)
+	override def exitMember(memberContext:MemberContext):Unit =	MemberGenerationRule.exit(memberContext)
 
 	override def enterAssignVariable(assignVariableContext:AssignVariableContext):Unit =
-		AssignVariableGenerationRule.enter(generationContext, assignVariableContext)
+		AssignVariableGenerationRule.enter(assignVariableContext)
 
 	override def exitAssignVariable(assignVariableContext:AssignVariableContext):Unit =
-		AssignVariableGenerationRule.exit(generationContext, assignVariableContext)
+		AssignVariableGenerationRule.exit(assignVariableContext)
 
 	override def enterAssignHostMember(assignHostMemberContext:AssignHostMemberContext):Unit =
-		AssignHostMemberGenerationRule.enter(generationContext, assignHostMemberContext)
+		AssignHostMemberGenerationRule.enter(assignHostMemberContext)
 
 	override def exitAssignHostMember(assignHostMemberContext:AssignHostMemberContext):Unit =
-		AssignHostMemberGenerationRule.exit(generationContext, assignHostMemberContext)
+		AssignHostMemberGenerationRule.exit(assignHostMemberContext)
 
 	override def enterAssignMember(assignMemberContext:AssignMemberContext):Unit =
-		AssignMemberGenerationRule.enter(generationContext, assignMemberContext)
+		AssignMemberGenerationRule.enter(assignMemberContext)
 
 	override def exitAssignMember(assignMemberContext:AssignMemberContext):Unit =
-		AssignMemberGenerationRule.exit(generationContext, assignMemberContext)
+		AssignMemberGenerationRule.exit(assignMemberContext)
 
-	override def enterHost(hostContext:HostContext):Unit = HostGenerationRule.enter(generationContext, hostContext)
-	override def exitHost(hostContext:HostContext):Unit = HostGenerationRule.exit(generationContext, hostContext)
+	override def enterHost(hostContext:HostContext):Unit = HostGenerationRule.enter(hostContext)
+	override def exitHost(hostContext:HostContext):Unit = HostGenerationRule.exit(hostContext)
 
-	override def enterThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(generationContext, thisContext)
-	override def exitThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(generationContext, thisContext)
+	override def enterThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(thisContext)
+	override def exitThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(thisContext)
 
-	override def enterString(stringContext:StringContext):Unit =
-		StringGenerationRule.enter(generationContext, stringContext)
+	override def enterString(stringContext:StringContext):Unit = StringGenerationRule.enter(stringContext)
+	override def exitString(stringContext:StringContext):Unit =	StringGenerationRule.exit(stringContext)
 
-	override def exitString(stringContext:StringContext):Unit =
-		StringGenerationRule.exit(generationContext, stringContext)
+	override def enterNumber(numberContext:NumberContext):Unit = NumberGenerationRule.enter(numberContext)
+	override def exitNumber(numberContext:NumberContext):Unit =	NumberGenerationRule.exit(numberContext)
 
-	override def enterNumber(numberContext:NumberContext):Unit =
-		NumberGenerationRule.enter(generationContext, numberContext)
+	override def enterUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit =
+		(new MemberCallGenerationRuleTemplate(unaryOperationContext) with UnaryOperationGenerationRuleMixin).enter()
 
-	override def exitNumber(numberContext:NumberContext):Unit =
-		NumberGenerationRule.exit(generationContext, numberContext)
+	override def exitUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit =
+		(new MemberCallGenerationRuleTemplate(unaryOperationContext) with UnaryOperationGenerationRuleMixin).exit()
 
-	override def enterUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit = (
-		new MemberCallGenerationRuleTemplate(generationContext, unaryOperationContext)
-			with UnaryOperationGenerationRuleMixin
-	)
-		.enter()
+	override def enterMulDiv(mulDivContext:MulDivContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](mulDivContext) with OperatorGenerationRuleMixin)
+			.enter()
 
-	override def exitUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit =	(
-		new MemberCallGenerationRuleTemplate(generationContext, unaryOperationContext)
-			with UnaryOperationGenerationRuleMixin
-	)
-		.exit()
+	override def exitMulDiv(mulDivContext:MulDivContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](mulDivContext) with OperatorGenerationRuleMixin).exit()
 
-	override def enterMulDiv(mulDivContext:MulDivContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, mulDivContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
-
-	override def exitMulDiv(mulDivContext:MulDivContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, mulDivContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
-
-	override def enterAddSub(addSubContext:AddSubContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, addSubContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
+	override def enterAddSub(addSubContext:AddSubContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](addSubContext) with OperatorGenerationRuleMixin)
+			.enter()
 	
-	override def exitAddSub(addSubContext:AddSubContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, addSubContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
+	override def exitAddSub(addSubContext:AddSubContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](addSubContext)	with OperatorGenerationRuleMixin).exit()
 
-	override def enterEqNeq(eqNeqContext:EqNeqContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, eqNeqContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
+	override def enterEqNeq(eqNeqContext:EqNeqContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](eqNeqContext) with OperatorGenerationRuleMixin).enter()
 	
-	override def exitEqNeq(eqNeqContext:EqNeqContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, eqNeqContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
+	override def exitEqNeq(eqNeqContext:EqNeqContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](eqNeqContext) with OperatorGenerationRuleMixin).exit()
 
-	override def enterGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, gteLteGtLtContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
+	override def enterGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](gteLteGtLtContext)	with OperatorGenerationRuleMixin)
+			.enter()
 	
-	override def exitGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, gteLteGtLtContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
+	override def exitGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](gteLteGtLtContext)	with OperatorGenerationRuleMixin)
+			.exit()
 
-	override def enterAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, ampersandAmpersandContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
+	override def enterAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit =
+		(
+			new MemberCallGenerationRuleTemplate[ExpressionContext](ampersandAmpersandContext)
+				with OperatorGenerationRuleMixin
+		)
+			.enter()
 	
-	override def exitAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, ampersandAmpersandContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
+	override def exitAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit =
+		(
+			new MemberCallGenerationRuleTemplate[ExpressionContext](ampersandAmpersandContext)
+				with OperatorGenerationRuleMixin
+		)
+			.exit()
 
-	override def enterPipePipe(pipePipeContext:PipePipeContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, pipePipeContext)
-			with OperatorGenerationRuleMixin
-	)
-		.enter()
+	override def enterPipePipe(pipePipeContext:PipePipeContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](pipePipeContext) with OperatorGenerationRuleMixin)
+			.enter()
 	
-	override def exitPipePipe(pipePipeContext:PipePipeContext):Unit = (
-		new MemberCallGenerationRuleTemplate[ExpressionContext](generationContext, pipePipeContext)
-			with OperatorGenerationRuleMixin
-	)
-		.exit()
+	override def exitPipePipe(pipePipeContext:PipePipeContext):Unit =
+		(new MemberCallGenerationRuleTemplate[ExpressionContext](pipePipeContext) with OperatorGenerationRuleMixin)
+			.exit()
 
-	override def enterIfElse(ifElseContext:IfElseContext):Unit =
-		IfElseGenerationRule.enter(generationContext, ifElseContext)
-	
-	override def exitIfElse(ifElseContext:IfElseContext):Unit =
-		IfElseGenerationRule.exit(generationContext, ifElseContext)
+	override def enterIfElse(ifElseContext:IfElseContext):Unit = IfElseGenerationRule.enter(ifElseContext)
+	override def exitIfElse(ifElseContext:IfElseContext):Unit =	IfElseGenerationRule.exit(ifElseContext)
 
-	override def enterWhile(whileContext:WhileContext):Unit = WhileGenerationRule.enter(generationContext, whileContext)
-	override def exitWhile(whileContext:WhileContext):Unit = WhileGenerationRule.exit(generationContext, whileContext)
+	override def enterWhile(whileContext:WhileContext):Unit = WhileGenerationRule.enter(whileContext)
+	override def exitWhile(whileContext:WhileContext):Unit = WhileGenerationRule.exit(whileContext)
 
 	override def enterInheritance(inheritanceContext:InheritanceContext):Unit =
-		InheritanceGenerationRule.enter(generationContext, inheritanceContext)
+		InheritanceGenerationRule.enter(inheritanceContext)
 
 	override def exitInheritance(inheritanceContext:InheritanceContext):Unit =
-		InheritanceGenerationRule.exit(generationContext, inheritanceContext)
+		InheritanceGenerationRule.exit(inheritanceContext)
 }

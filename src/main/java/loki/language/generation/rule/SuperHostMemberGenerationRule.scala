@@ -4,11 +4,9 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.SuperHostMemberContext
 
-
-private[generation] class SuperHostMemberGenerationRule(
-	generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext
-)
-	extends GenerationRule(generationContext, superHostMemberContext)
+private[generation] class SuperHostMemberGenerationRule
+	(superHostMemberContext:SuperHostMemberContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(superHostMemberContext)
 {
 	private def superMemberName:String = superHostMemberContext.IDENTIFIER.getText
 
@@ -23,9 +21,9 @@ private[generation] class SuperHostMemberGenerationRule(
 
 private[generation] object SuperHostMemberGenerationRule
 {
-	def enter(generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext):Unit =
-		new SuperHostMemberGenerationRule(generationContext, superHostMemberContext).enter()
+	def enter(superHostMemberContext:SuperHostMemberContext)(implicit generationContext:GenerationContext):Unit =
+		new SuperHostMemberGenerationRule(superHostMemberContext).enter()
 
-	def exit(generationContext:GenerationContext, superHostMemberContext:SuperHostMemberContext):Unit =
-		new SuperHostMemberGenerationRule(generationContext, superHostMemberContext).exit()
+	def exit(superHostMemberContext:SuperHostMemberContext)(implicit generationContext:GenerationContext):Unit =
+		new SuperHostMemberGenerationRule(superHostMemberContext).exit()
 }

@@ -3,9 +3,8 @@ package loki.language.generation.rule
 import loki.language.generation.GenerationContext
 import loki.language.parsing.LokiParser.ThisContext
 
-
-private[generation] class ThisGenerationRule(generationContext:GenerationContext, thisContext:ThisContext)
-	extends GenerationRule(generationContext, thisContext)
+private[generation] class ThisGenerationRule(thisContext:ThisContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(thisContext)
 {
 	override protected def enterAction():Unit = (
 		topMethodCall
@@ -16,9 +15,9 @@ private[generation] class ThisGenerationRule(generationContext:GenerationContext
 
 private[generation] object ThisGenerationRule
 {
-	def enter(generationContext:GenerationContext, thisContext:ThisContext):Unit =
-		new ThisGenerationRule(generationContext, thisContext).enter()
+	def enter(thisContext:ThisContext)(implicit generationContext:GenerationContext):Unit =
+		new ThisGenerationRule(thisContext).enter()
 
-	def exit(generationContext:GenerationContext, thisContext:ThisContext):Unit =
-		new ThisGenerationRule(generationContext, thisContext).exit()
+	def exit(thisContext:ThisContext)(implicit generationContext:GenerationContext):Unit =
+		new ThisGenerationRule(thisContext).exit()
 }

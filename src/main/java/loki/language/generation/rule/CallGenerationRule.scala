@@ -5,12 +5,11 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 
-
-private[generation] class CallGenerationRule(generationContext:GenerationContext, callContext:CallContext)
-	extends GenerationRule(generationContext, callContext)
+private[generation] class CallGenerationRule(callContext:CallContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(callContext)
 {
-	private def callParameterCount:Int = ruleContext.expression.size - 1
-	private def callExpression:ExpressionContext = ruleContext expression 0
+	private def callParameterCount:Int = callContext.expression.size - 1
+	private def callExpression:ExpressionContext = callContext expression 0
 
 	override protected def enterAction()
 	{
@@ -53,15 +52,14 @@ private[generation] class CallGenerationRule(generationContext:GenerationContext
 
 	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCall ()
 
-	private def getCallParameterExpression(parameterIndex:Int):ExpressionContext =
-		ruleContext expression parameterIndex
+	private def getCallParameterExpression(parameterIndex:Int) = callContext expression parameterIndex
 }
 
 private[generation] object CallGenerationRule
 {
-	def enter(generationContext:GenerationContext, ruleContext:CallContext):Unit =
-		new CallGenerationRule(generationContext, ruleContext).enter()
+	def enter(callContext:CallContext)(implicit generationContext:GenerationContext):Unit =
+		new CallGenerationRule(callContext).enter()
 
-	def exit(generationContext:GenerationContext, ruleContext:CallContext):Unit =
-		new CallGenerationRule(generationContext, ruleContext).exit()
+	def exit(callContext:CallContext)(implicit generationContext:GenerationContext):Unit =
+		new CallGenerationRule(callContext).exit()
 }

@@ -7,10 +7,8 @@ import loki.language.generation.constant.BytecodeCommon
 import loki.language.generation.rule.mixin.GenerationRuleMixin
 import org.antlr.v4.runtime.RuleContext
 
-
-private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
-	protected val generationContext:GenerationContext, protected val ruleContext:RULE_CONTEXT
-)
+private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext]
+	(protected val ruleContext:RULE_CONTEXT)(implicit protected val generationContext:GenerationContext)
 	extends GenerationRuleMixin[RULE_CONTEXT]
 {
 	protected def topFrameId:Long = generationContext.frameStack.top.id
@@ -59,9 +57,11 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext](
 
 private[generation] object GenerationRule
 {
-	def enter[RULE_CONTEXT <: RuleContext](generationContext:GenerationContext, ruleContext:RULE_CONTEXT):Unit =
-		new GenerationRule(generationContext, ruleContext).enter()
+	def enter
+		[RULE_CONTEXT <: RuleContext](ruleContext:RULE_CONTEXT)(implicit generationContext:GenerationContext):Unit =
+		new GenerationRule(ruleContext).enter()
 
-	def exit[RULE_CONTEXT <: RuleContext](generationContext:GenerationContext, ruleContext:RULE_CONTEXT):Unit =
-		new GenerationRule(generationContext, ruleContext).exit()
+	def exit
+		[RULE_CONTEXT <: RuleContext](ruleContext:RULE_CONTEXT)(implicit generationContext:GenerationContext):Unit =
+		new GenerationRule(ruleContext).exit()
 }

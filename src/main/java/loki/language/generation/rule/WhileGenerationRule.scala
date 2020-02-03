@@ -7,15 +7,14 @@ import loki.language.generation.rule.WhileGenerationRule.Labels
 import loki.language.parsing.LokiParser.{ExpressionContext, WhileContext}
 import org.objectweb.asm.tree.LabelNode
 
-
-private[generation] class WhileGenerationRule(generationContext:GenerationContext, whileContext:WhileContext)
-	extends GenerationRule(generationContext, whileContext)
+private[generation] class WhileGenerationRule(whileContext:WhileContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(whileContext)
 {
-	private def conditionalExpressionContext:ExpressionContext = ruleContext.expression
+	private def conditionalExpressionContext:ExpressionContext = whileContext.expression
 
 	override protected def enterAction()
 	{
-		val labels = generationContext.setRuleContextVariable(ruleContext, Labels(new LabelNode, new LabelNode))
+		val labels = generationContext.setRuleContextVariable(whileContext, Labels(new LabelNode, new LabelNode))
 
 		placeBeginLabel()
 		handleCondition()
@@ -39,7 +38,7 @@ private[generation] class WhileGenerationRule(generationContext:GenerationContex
 
 	override def exit():Unit =
 	{
-		encloseLoop(generationContext getRuleContextVariable ruleContext)
+		encloseLoop(generationContext getRuleContextVariable whileContext)
 		prepareResult()
 
 		def encloseLoop(labels:Labels) = (
@@ -58,11 +57,11 @@ private[generation] class WhileGenerationRule(generationContext:GenerationContex
 
 private[generation] object WhileGenerationRule
 {
-	def enter(generationContext:GenerationContext, whileContext:WhileContext):Unit =
-		new WhileGenerationRule(generationContext, whileContext).enter()
+	def enter(whileContext:WhileContext)(implicit generationContext:GenerationContext):Unit =
+		new WhileGenerationRule(whileContext).enter()
 
-	def exit(generationContext:GenerationContext, whileContext:WhileContext):Unit =
-		new WhileGenerationRule(generationContext, whileContext).exit()
+	def exit(whileContext:WhileContext)(implicit generationContext:GenerationContext):Unit =
+		new WhileGenerationRule(whileContext).exit()
 
 	private case class Labels(begin:LabelNode, end:LabelNode)
 }

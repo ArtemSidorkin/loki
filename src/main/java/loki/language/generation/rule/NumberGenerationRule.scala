@@ -5,9 +5,9 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.NumberBytecodeTemplate.NumberBytecodeTemplate
 import loki.language.parsing.LokiParser.NumberContext
 
-
-private[generation] class NumberGenerationRule(generationContext:GenerationContext, numberContext:NumberContext)
-	extends GenerationRule(generationContext, numberContext)
+private[generation] class NumberGenerationRule
+	(numberContext:NumberContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(numberContext)
 {
 	private def number:Double = java.lang.Double.parseDouble(numberContext.getText)
 
@@ -23,9 +23,9 @@ private[generation] class NumberGenerationRule(generationContext:GenerationConte
 
 private[generation] object NumberGenerationRule
 {
-	def enter(generationContext:GenerationContext, numberContext:NumberContext):Unit =
-		new NumberGenerationRule(generationContext, numberContext).enter()
+	def enter(numberContext:NumberContext)(implicit generationContext:GenerationContext):Unit =
+		new NumberGenerationRule(numberContext).enter()
 
-	def exit(generationContext:GenerationContext, numberContext:NumberContext):Unit =
-		new NumberGenerationRule(generationContext, numberContext).exit()
+	def exit(numberContext:NumberContext)(implicit generationContext:GenerationContext):Unit =
+		new NumberGenerationRule(numberContext).exit()
 }

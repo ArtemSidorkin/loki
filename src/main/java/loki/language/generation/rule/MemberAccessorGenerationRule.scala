@@ -4,11 +4,9 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.MemberAccessorContext
 
-
-private[generation] class MemberAccessorGenerationRule(
-	generationContext:GenerationContext, memberAccessorContext:MemberAccessorContext
-)
-	extends GenerationRule(generationContext, memberAccessorContext)
+private[generation] class MemberAccessorGenerationRule
+	(memberAccessorContext:MemberAccessorContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(memberAccessorContext)
 {
 	override protected def enterAction():Unit = ()
 
@@ -22,9 +20,9 @@ private[generation] class MemberAccessorGenerationRule(
 
 private[generation] object MemberAccessorGenerationRule
 {
-	def enter(generationContext:GenerationContext, memberAccessorContext:MemberAccessorContext):Unit =
-		new MemberAccessorGenerationRule(generationContext, memberAccessorContext).enter()
+	def enter(memberAccessorContext:MemberAccessorContext)(implicit generationContext:GenerationContext):Unit =
+		new MemberAccessorGenerationRule(memberAccessorContext).enter()
 
-	def exit(generationContext:GenerationContext, memberAccessorContext:MemberAccessorContext):Unit =
-		new MemberAccessorGenerationRule(generationContext, memberAccessorContext).exit()
+	def exit(memberAccessorContext:MemberAccessorContext)(implicit generationContext:GenerationContext):Unit =
+		new MemberAccessorGenerationRule(memberAccessorContext).exit()
 }

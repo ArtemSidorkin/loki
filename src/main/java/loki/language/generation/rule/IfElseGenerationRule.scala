@@ -6,16 +6,17 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitByteco
 import loki.language.parsing.LokiParser.IfElseContext
 import org.objectweb.asm.tree.LabelNode
 
-private[generation] class IfElseGenerationRule(generationContext:GenerationContext, ifElseContext:IfElseContext)
-	extends GenerationRule(generationContext, ifElseContext)
+private[generation] class IfElseGenerationRule
+	(ifElseContext:IfElseContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(ifElseContext)
 {
-	private def conditionalExpressionContext = ruleContext expression
+	private def conditionalExpressionContext = ifElseContext expression
 	private def lastIfExpressionContext = lastIfInstructionContext expression
-	private def lastIfInstructionContext = ruleContext instruction ruleContext.instruction.size - 1
-	private def isElsePresent = Option(ruleContext.else_) isDefined
-	private def firstElseExpressionContext = ruleContext.else_ instruction 0 expression
+	private def lastIfInstructionContext = ifElseContext instruction ifElseContext.instruction.size - 1
+	private def isElsePresent = Option(ifElseContext.else_) isDefined
+	private def firstElseExpressionContext = ifElseContext.else_ instruction 0 expression
 	private def lastElseExpressionContext = lastElseInstructionContext expression
-	private def lastElseInstructionContext = ruleContext.else_ instruction (ruleContext.else_.instruction.size - 1)
+	private def lastElseInstructionContext = ifElseContext.else_ instruction (ifElseContext.else_.instruction.size - 1)
 
 	override protected def enterAction()
 	{
@@ -95,9 +96,9 @@ private[generation] class IfElseGenerationRule(generationContext:GenerationConte
 
 private[generation] object IfElseGenerationRule
 {
-	def enter(generationContext:GenerationContext, ifElseContext:IfElseContext):Unit =
-		new IfElseGenerationRule(generationContext, ifElseContext).enter()
+	def enter(ifElseContext:IfElseContext)(implicit generationContext:GenerationContext):Unit =
+		new IfElseGenerationRule(ifElseContext).enter()
 
-	def exit(generationContext:GenerationContext, ifElseContext:IfElseContext):Unit =
-		new IfElseGenerationRule(generationContext, ifElseContext).exit()
+	def exit(ifElseContext:IfElseContext)(implicit generationContext:GenerationContext):Unit =
+		new IfElseGenerationRule(ifElseContext).exit()
 }

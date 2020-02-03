@@ -5,11 +5,9 @@ import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.Context
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.VariableOrParameterContext
 
-
-private[generation] class VariableOrParameterGenerationRule(
-   generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext
-)
-	extends GenerationRule(generationContext, variableOrParameterContext)
+private[generation] class VariableOrParameterGenerationRule
+	(variableOrParameterContext:VariableOrParameterContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(variableOrParameterContext)
 {
 	private def variableOrParameterName:String = variableOrParameterContext.IDENTIFIER.getText
 
@@ -24,9 +22,10 @@ private[generation] class VariableOrParameterGenerationRule(
 
 private[generation] object VariableOrParameterGenerationRule
 {
-	def enter(generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext):Unit =
-		new VariableOrParameterGenerationRule(generationContext, variableOrParameterContext).enter()
+	def enter
+		(variableOrParameterContext:VariableOrParameterContext)(implicit generationContext:GenerationContext):Unit =
+		new VariableOrParameterGenerationRule(variableOrParameterContext).enter()
 
-	def exit(generationContext:GenerationContext, variableOrParameterContext:VariableOrParameterContext):Unit =
-		new VariableOrParameterGenerationRule(generationContext, variableOrParameterContext).exit()
+	def exit(variableOrParameterContext:VariableOrParameterContext)(implicit generationContext:GenerationContext):Unit =
+		new VariableOrParameterGenerationRule(variableOrParameterContext).exit()
 }

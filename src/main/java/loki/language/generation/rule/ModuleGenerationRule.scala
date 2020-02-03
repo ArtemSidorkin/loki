@@ -10,8 +10,9 @@ import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.ModuleContext
 import loki.system.SystemSettings
 
-private[generation] class ModuleGenerationRule(generationContext:GenerationContext, moduleContext:ModuleContext)
-	extends GenerationRule(generationContext, moduleContext)
+private[generation] class ModuleGenerationRule
+	(moduleContext:ModuleContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(moduleContext)
 {
 	override protected def enterAction():Unit =
 	{
@@ -64,9 +65,9 @@ private[generation] class ModuleGenerationRule(generationContext:GenerationConte
 
 private[generation] object ModuleGenerationRule
 {
-	def enter(generationContext:GenerationContext, moduleContext:ModuleContext):Unit =
-		new ModuleGenerationRule(generationContext, moduleContext).enter()
+	def enter(moduleContext:ModuleContext)(implicit generationContext:GenerationContext):Unit =
+		new ModuleGenerationRule(moduleContext).enter()
 
-	def exit(generationContext:GenerationContext, moduleContext:ModuleContext):Unit =
-		new ModuleGenerationRule(generationContext, moduleContext).exit()
+	def exit(moduleContext:ModuleContext)(implicit generationContext:GenerationContext):Unit =
+		new ModuleGenerationRule(moduleContext).exit()
 }

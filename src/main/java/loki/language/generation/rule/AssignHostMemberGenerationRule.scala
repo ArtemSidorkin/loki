@@ -4,11 +4,9 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.AssignHostMemberContext
 
-
-private[generation] class AssignHostMemberGenerationRule(
-	generationContext:GenerationContext, assignHostMemberContext:AssignHostMemberContext
-)
-	extends GenerationRule(generationContext, assignHostMemberContext)
+private[generation] class AssignHostMemberGenerationRule
+	(assignHostMemberContext:AssignHostMemberContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(assignHostMemberContext)
 {
 	private def hostMemberName = assignHostMemberContext.IDENTIFIER.getText
 
@@ -21,12 +19,11 @@ private[generation] class AssignHostMemberGenerationRule(
 	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodSetMember ()
 }
 
-
 private[generation] object AssignHostMemberGenerationRule
 {
-	def enter(generationContext:GenerationContext, assignHostMemberContext:AssignHostMemberContext):Unit =
-		new AssignHostMemberGenerationRule(generationContext, assignHostMemberContext).enter()
+	def enter(assignHostMemberContext:AssignHostMemberContext)(implicit generationContext:GenerationContext):Unit =
+		new AssignHostMemberGenerationRule(assignHostMemberContext).enter()
 
-	def exit(generationContext:GenerationContext, assignHostMemberContext:AssignHostMemberContext):Unit =
-		new AssignHostMemberGenerationRule(generationContext, assignHostMemberContext).exit()
+	def exit(assignHostMemberContext:AssignHostMemberContext)(implicit generationContext:GenerationContext):Unit =
+		new AssignHostMemberGenerationRule(assignHostMemberContext).exit()
 }

@@ -4,13 +4,11 @@ import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.{AssignMemberAccessorContext, ExpressionContext}
 
-
-private[generation] class AssignMemberAccessorGenerationRule(
-	generationContext:GenerationContext, assignMemberAccessorContext:AssignMemberAccessorContext
-)
-	extends GenerationRule(generationContext, assignMemberAccessorContext)
+private[generation] class AssignMemberAccessorGenerationRule
+	(assignMemberAccessorContext:AssignMemberAccessorContext)(implicit generationContext:GenerationContext)
+	extends GenerationRule(assignMemberAccessorContext)
 {
-	private def memberNameExpressionContext:ExpressionContext = ruleContext expression 1
+	private def memberNameExpressionContext:ExpressionContext = assignMemberAccessorContext expression 1
 
 	override protected def enterAction():Unit =
 		generationContext
@@ -25,9 +23,11 @@ private[generation] class AssignMemberAccessorGenerationRule(
 
 private[generation] object AssignMemberAccessorGenerationRule
 {
-	def enter(generationContext:GenerationContext, assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		new AssignMemberAccessorGenerationRule(generationContext, assignMemberAccessorContext).enter()
+	def enter
+		(assignMemberAccessorContext:AssignMemberAccessorContext)(implicit generationContext:GenerationContext):Unit =
+		new AssignMemberAccessorGenerationRule(assignMemberAccessorContext).enter()
 
-	def exit(generationContext:GenerationContext, assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		new AssignMemberAccessorGenerationRule(generationContext, assignMemberAccessorContext).exit()
+	def exit
+		(assignMemberAccessorContext:AssignMemberAccessorContext)(implicit generationContext:GenerationContext):Unit =
+		new AssignMemberAccessorGenerationRule(assignMemberAccessorContext).exit()
 }
