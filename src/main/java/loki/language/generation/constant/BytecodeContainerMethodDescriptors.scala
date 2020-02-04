@@ -1,7 +1,7 @@
 package loki.language.generation.constant
 
 import assembler.methoddescriptor.TypedMethodDescriptor
-import loki.runtime.datatype.unit.LUnit
+import loki.runtime.unit.unit.LUnit
 
 object BytecodeContainerMethodDescriptors
 {

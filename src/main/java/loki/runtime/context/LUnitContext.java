@@ -1,9 +1,8 @@
 package loki.runtime.context;
 
 import loki.runtime.LSettings;
-import loki.runtime.builtin.LBuiltins;
-import loki.runtime.datatype.LUndefined;
-import loki.runtime.datatype.unit.LUnit;
+import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.Nullable;
 
 import java.util.concurrent.ConcurrentHashMap;

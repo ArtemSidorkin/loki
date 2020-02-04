@@ -2,10 +2,10 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import loki.runtime.context.{LModuleContext, LUnitContext}
-import loki.runtime.datatype._
-import loki.runtime.datatype.`type`.LType
-import loki.runtime.datatype.number.LNumber
-import loki.runtime.datatype.unit.LUnit
+import loki.runtime.unit._
+import loki.runtime.unit.`type`.LType
+import loki.runtime.unit.number.LNumber
+import loki.runtime.unit.unit.LUnit
 
 private[generation] object CommonBytecodeTemplate
 {

@@ -1,6 +1,6 @@
 package loki.runtime.context;
 
-import loki.runtime.datatype.unit.LUnit;
+import loki.runtime.unit.unit.LUnit;
 
 public class LModuleContext extends LUnitContext
 {

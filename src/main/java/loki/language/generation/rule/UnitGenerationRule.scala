@@ -10,7 +10,7 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitByteco
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.{LokiLexer, LokiParser}
-import loki.runtime.datatype.unit.LUnit
+import loki.runtime.unit.unit.LUnit
 import loki.system.SystemSettings
 
 //TODO: check & refactor

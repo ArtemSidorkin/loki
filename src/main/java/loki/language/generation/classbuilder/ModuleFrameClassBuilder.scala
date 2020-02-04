@@ -3,7 +3,7 @@ package loki.language.generation.classbuilder
 import assembler.constant.PUBLIC
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.generation.constant.LanguageMembers
-import loki.runtime.datatype.LModule
+import loki.runtime.unit.LModule
 
 class ModuleFrameClassBuilder(name:String) extends FrameClassBuilder(name, classOf[LModule])
 {

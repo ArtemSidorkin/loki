@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, BytecodeMethodDescriptors}
-import loki.runtime.datatype.LModule
+import loki.runtime.unit.LModule
 
 private[generation] object ModuleBytecodeTemplate
 {
