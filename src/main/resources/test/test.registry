@@ -14,6 +14,8 @@ formatting_map, /test/map/formattingMap.loki
 nested_map, /test/map/nestedMap.loki
 function_map, /test/map/functionMap.loki
 
+simple_oop, /test/oop/simpleOOP.loki
+
 number_inheritance, /test/inheritance/numberInheritance.loki
 single_inheritance, /test/inheritance/singleInheritance.loki
 multiple_inheritance, /test/inheritance/multipleInheritance.loki

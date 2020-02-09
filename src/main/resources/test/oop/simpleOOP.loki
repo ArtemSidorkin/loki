@@ -7,5 +7,5 @@ p1 = Point.new(1, 2)
 p2 = Point.new(10, 20)
 p3 = p1.add(p2)
 
-println(p3.x)
-println(p3.y)
+assert(p3.x, 11)
+assert(p3.y, 22)
