@@ -4,11 +4,11 @@ import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 
-public class LNumericNegationNumberUnaryOperation extends LNumberUnaryOperation
+public class LNegationNumberUnaryOperation extends LNumberUnaryOperation
 {
-	public static final LNumericNegationNumberUnaryOperation instance = new LNumericNegationNumberUnaryOperation();
+	public static final LNegationNumberUnaryOperation instance = new LNegationNumberUnaryOperation();
 
-	private LNumericNegationNumberUnaryOperation()
+	private LNegationNumberUnaryOperation()
 	{
 		super(LUnaryOperator.MINUS);
 	}

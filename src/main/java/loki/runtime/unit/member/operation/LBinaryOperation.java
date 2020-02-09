@@ -10,21 +10,22 @@ import loki.runtime.util.Nullable;
 
 public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit>	extends LMember
 {
-	protected final LBinaryOperator operator;
+	protected final LBinaryOperator binaryOperator;
 	protected final @Nullable LType leftOperandType;
 	protected final @Nullable LType rightOperandType;
 
-	protected LBinaryOperation(LBinaryOperator operator)
+	public LBinaryOperation(LBinaryOperator binaryOperator)
 	{
-		this(operator, null, null);
+		this(binaryOperator, null, null);
 	}
 
 	protected LBinaryOperation(
-		LBinaryOperator operator, @Nullable LType leftOperandType,  @Nullable LType rightOperandType
+		LBinaryOperator binaryOperator, @Nullable LType leftOperandType, @Nullable LType rightOperandType
 	)
 	{
-		super(new LType(operator.symbol));
-		this.operator = operator;
+		super(new LType(binaryOperator.symbol));
+
+		this.binaryOperator = binaryOperator;
 		this.leftOperandType = leftOperandType;
 		this.rightOperandType = rightOperandType;
 	}
@@ -32,38 +33,23 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 	@Override
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		return execute(host, checkCallParameter(parameters, 0));
-	}
+		LEFT_OPERAND leftOperand = host.asType(leftOperandType);
+		RIGHT_OPERAND rightOperand = checkCallParameter(parameters, 0).asType(rightOperandType);
 
-	protected LUnit execute(LUnit leftOperand, LUnit rightOperand)
-	{
-		LEFT_OPERAND leftOperandAsSpecifiedType =
-			leftOperandType != null ? leftOperand.asType(leftOperandType) : (LEFT_OPERAND)leftOperand;
-
-		if (leftOperandAsSpecifiedType == null)
+		if (leftOperand == null || rightOperand == null)
 		{
-			operatorIsNotDefinedForUnits(leftOperand, rightOperand);
+			operatorIsNotDefinedForUnits(host, parameters[0]);
 
 			return LUndefined.instance;
 		}
 
-		RIGHT_OPERAND rightOperandAsSpecifiedType =
-			rightOperandType != null ? rightOperand.asType(rightOperandType) : (RIGHT_OPERAND)rightOperand;
-
-		if (rightOperandAsSpecifiedType == null)
-		{
-			operatorIsNotDefinedForUnits(leftOperand, rightOperand);
-
-			return LUndefined.instance;
-		}
-
-		return _execute(leftOperandAsSpecifiedType, rightOperandAsSpecifiedType);
+		return execute(leftOperand, rightOperand);
 	}
 
-	protected abstract LUnit _execute(LEFT_OPERAND leftOperand, RIGHT_OPERAND rightOperand);
+	protected abstract LUnit execute(LEFT_OPERAND leftOperand, RIGHT_OPERAND rightOperand);
 
 	private void operatorIsNotDefinedForUnits(LUnit leftOperand, LUnit rightOperand)
 	{
-		LErrors.operatorIsNotDefinedForUnits(operator, leftOperand, rightOperand);
+		LErrors.operatorIsNotDefinedForUnits(binaryOperator, leftOperand, rightOperand);
 	}
 }

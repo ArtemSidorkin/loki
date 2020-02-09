@@ -4,7 +4,7 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.unit.LString;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.member.operation.binary.*;
-import loki.runtime.unit.number.member.operation.unary.LNumericNegationNumberUnaryOperation;
+import loki.runtime.unit.number.member.operation.unary.LNegationNumberUnaryOperation;
 import loki.runtime.unit.unit.LUnit;
 
 
@@ -50,7 +50,7 @@ public class LNumber extends LUnit
 
 	private void initBuiltins()
 	{
-		LNumericNegationNumberUnaryOperation.instance.init(this);
+		LNegationNumberUnaryOperation.instance.init(this);
 		LMultiplicationNumberBinaryOperation.instance.init(this);
 		LDivisionNumberBinaryOperation.instance.init(this);
 		LAdditionNumberBinaryOperation.instance.init(this);

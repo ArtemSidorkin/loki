@@ -5,16 +5,14 @@ import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
-import loki.runtime.unit.LNone;
 import loki.runtime.unit.LString;
 import loki.runtime.unit.LUndefined;
-import loki.runtime.unit.LVoid;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.member.*;
-import loki.runtime.unit.unit.member.operation.binary.LUnitBangEquals;
-import loki.runtime.unit.unit.member.operation.binary.LUnitEqualsEquals;
+import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
+import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.*;
 
@@ -267,35 +265,21 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	@Polymorphic(ACCESS)
+	@Invariable
 	public boolean toBoolean()
-	{
-		LBoolean boolean_ = callMember(LUnitMember.TO_BOOLEAN.name, null).asType(LTypes.BOOLEAN);
-
-		if (boolean_ == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.TO_BOOLEAN.name);
-
-		return boolean_.getValue();
-	}
-
-	@Internal
-	@Polymorphic(DEFAULT)
-	public LBoolean _toBoolean()
 	{
 		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
 
-		if (thisAsBoolean != null) return thisAsBoolean;
-		else return
-			LBoolean.valueOf(
-				this != LVoid.instance &&
-				this != LNone.instance &&
-				this != LUndefined.instance &&
-				(asType(LTypes.NUMBER) == null || ((LNumber)asType(LTypes.NUMBER)).value != 0)
-			);
+		if (thisAsBoolean == null) LErrors.unitDoesNotBelongToType(this, LTypes.NUMBER.getFullName());
+
+		return thisAsBoolean.getValue();
 	}
 
 	@Internal
-	public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
+	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
 	{
+		if (type == null) return (TYPE) this;
+
 		if (getType() == type) return (TYPE)this;
 
 		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
@@ -400,11 +384,10 @@ public abstract class LUnit
 						LSetIndexItem.instance.init(this);
 						LGetType.instance.init(this);
 						LToString.instance.init(this);
-						LToBoolean.instance.init(this);
 						LHashCode.instance.init(this);
 						LEquals.instance.init(this);
-						LUnitEqualsEquals.instance.init(this);
-						LUnitBangEquals.instance.init(this);
+						LEqualityUnitBinaryOperation.instance.init(this);
+						LInequalityUnitBinaryOperation.instance.init(this);
 					}
 				};
 		}

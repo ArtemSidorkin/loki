@@ -15,7 +15,7 @@ public class LEqualityNumberBinaryOperation extends LNumberBinaryOperation
 	}
 
 	@Override
-	protected LUnit _execute(LNumber leftOperand, LNumber rightOperand)
+	protected LUnit execute(LNumber leftOperand, LNumber rightOperand)
 	{
 		return LBoolean.valueOf(leftOperand.value == rightOperand.value);
 	}

@@ -2,9 +2,9 @@ package loki.runtime.unit.bool;
 
 import loki.runtime.constant.LTypes;
 import loki.runtime.unit.LString;
-import loki.runtime.unit.bool.member.operation.binary.LBooleanAmpersandAmpersand;
-import loki.runtime.unit.bool.member.operation.binary.LBooleanPipePipe;
-import loki.runtime.unit.bool.member.operation.unary.LBooleanNegation;
+import loki.runtime.unit.bool.member.operation.binary.LAndBooleanBinaryOperation;
+import loki.runtime.unit.bool.member.operation.binary.LOrBooleanBinaryOperation;
+import loki.runtime.unit.bool.member.operation.unary.LNegationBooleanUnaryOperation;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 
@@ -62,8 +62,8 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		LBooleanNegation.instance.init(this);
-		LBooleanAmpersandAmpersand.instance.init(this);
-		LBooleanPipePipe.instance.init(this);
+		LNegationBooleanUnaryOperation.instance.init(this);
+		LAndBooleanBinaryOperation.instance.init(this);
+		LOrBooleanBinaryOperation.instance.init(this);
 	}
 }
