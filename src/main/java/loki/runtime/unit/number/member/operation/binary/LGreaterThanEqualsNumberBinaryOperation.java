@@ -18,6 +18,6 @@ public class LGreaterThanEqualsNumberBinaryOperation extends LNumberBinaryOperat
 	@Override
 	protected LUnit execute(LNumber leftOperand, LNumber rightOperand)
 	{
-		return LBoolean.valueOf(leftOperand.value >= rightOperand.value);
+		return LBoolean.valueOf(leftOperand.getValue() >= rightOperand.getValue());
 	}
 }

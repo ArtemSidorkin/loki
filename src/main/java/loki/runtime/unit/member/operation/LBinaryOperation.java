@@ -40,7 +40,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 		{
 			operatorIsNotDefinedForUnits(host, parameters[0]);
 
-			return LUndefined.instance;
+			return LUndefined.INSTANCE;
 		}
 
 		return execute(leftOperand, rightOperand);

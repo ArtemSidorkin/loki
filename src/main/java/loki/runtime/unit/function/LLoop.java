@@ -29,13 +29,13 @@ public class LLoop extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(countAsUnit, LTypes.NUMBER.getFullName());
 
-			return LUndefined.instance;
+			return LUndefined.INSTANCE;
 		}
 
 		LUnit actions = checkCallParameter(parameters, 1);
 
-		for (int i = 0; i < countAsNumber.value; i++) actions.call(host, EMPTY_UNIT_ARRAY);
+		for (int i = 0; i < countAsNumber.getValue(); i++) actions.call(host, EMPTY_UNIT_ARRAY);
 
-		return LVoid.instance;
+		return LVoid.INSTANCE;
 	}
 }

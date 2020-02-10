@@ -6,7 +6,7 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LVoid extends LUnit
 {
-	public static final LVoid instance = new LVoid();
+	public static final LVoid INSTANCE = new LVoid();
 
 	private LVoid()
 	{

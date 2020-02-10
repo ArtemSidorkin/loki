@@ -16,6 +16,7 @@ import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOpera
 import loki.runtime.util.Compiler;
 import loki.runtime.util.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -128,10 +129,10 @@ public abstract class LUnit
 			LUnit parent = parentIterator.next();
 			LUnit member = parent.getMember(superMemberName);
 
-			if (member != LUndefined.instance) return member;
+			if (member != LUndefined.INSTANCE) return member;
 		}
 
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	@Compiler
@@ -149,7 +150,7 @@ public abstract class LUnit
 	{
 		initParentsIfNecessary();
 
-		for (LUnit parent : parents) this.parents.add(parent);
+		this.parents.addAll(Arrays.asList(parents));
 
 		return this;
 	}
@@ -157,7 +158,7 @@ public abstract class LUnit
 	@Compiler
 	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
 	{
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	@Compiler
@@ -165,6 +166,8 @@ public abstract class LUnit
 	{
 		return getMember(memberName).call(this, parameters);
 	}
+
+	//TODO: check nullables for indexes
 
 	@Internal
 	@Polymorphic(ACCESS)
@@ -177,7 +180,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	@Internal
@@ -193,7 +196,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	@Compiler
@@ -218,7 +221,7 @@ public abstract class LUnit
 
 		if (hashCode == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.HASH_CODE.name);
 
-		return (int)hashCode.value;
+		return (int)hashCode.getValue();
 	}
 
 	@Internal
@@ -300,7 +303,7 @@ public abstract class LUnit
 
 		LErrors.parameterIsMissedForUnit(parameterIndex, this);
 
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	@Internal
@@ -351,7 +354,7 @@ public abstract class LUnit
 					@Override
 					public LUnit getSuperMember(String superMemberName)
 					{
-						return LUndefined.instance;
+						return LUndefined.INSTANCE;
 					}
 
 					@Override
@@ -359,7 +362,7 @@ public abstract class LUnit
 					{
 						LErrors.printErrorAndExit("Unit prototype cannot have parents");
 
-						return LUndefined.instance;
+						return LUndefined.INSTANCE;
 					}
 
 					@Override

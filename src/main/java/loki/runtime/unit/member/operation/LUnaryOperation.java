@@ -26,7 +26,7 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 
 		LErrors.unitDoesNotBelongToType(host, operandType);
 
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	protected abstract LUnit execute(OPERAND operand);

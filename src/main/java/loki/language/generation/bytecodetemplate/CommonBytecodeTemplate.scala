@@ -37,6 +37,7 @@ private[generation] object CommonBytecodeTemplate
 
 		def anewarrayUnit():methodBuilder.type = methodBuilder anewarray classOf[LUnit]
 
-		def void():methodBuilder.type = methodBuilder getstatic (classOf[LVoid], "instance", classOf[LVoid])
+		//TODO: move instance to constants
+		def void():methodBuilder.type = methodBuilder getstatic (classOf[LVoid], "INSTANCE", classOf[LVoid])
 	}
 }

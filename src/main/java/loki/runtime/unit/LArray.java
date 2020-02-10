@@ -1,16 +1,95 @@
 package loki.runtime.unit;
 
+import loki.runtime.constant.LTypes;
+import loki.runtime.unit.bool.LBoolean;
+import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
-public class LArray extends LArrayPrototype
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringJoiner;
+
+public class LArray extends LUnit
 {
-	{
-		_addParents(LArrayPrototype.instance);
-	}
+	public static final LArray PROTOTYPE = new LArray();
+
+	private final @Nullable ArrayList<LUnit> items = new ArrayList<>();
 
 	public LArray(@Nullable LUnit[] items)
 	{
-		super(items);
+		super(LTypes.ARRAY);
+
+		_addParents(PROTOTYPE);
+
+		if (items != null) this.items.addAll(Arrays.asList(items));
+	}
+
+	private LArray()
+	{
+		super(LTypes.ARRAY_PROTOTYPE);
+	}
+
+	@Override
+	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
+	{
+		int index = getIndexFromCallParameters(parameters);
+
+		return index >= 0 && index < items.size() ? items.get(index) : LUndefined.INSTANCE;
+	}
+
+	@Override
+	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
+	{
+		int index = getIndexFromCallParameters(parameters);
+
+		if (index < 0 || index >= items.size()) LErrors.itemWithIndexDoesNotExist(index);
+
+		LUnit item = checkCallParameter(parameters, 1);
+
+		items.set(index, item);
+
+		return item;
+	}
+
+	@Override
+	public LNumber _hashCode()
+	{
+		return new LNumber(items.hashCode());
+	}
+
+	@Override
+	public LBoolean _equals(@Nullable LUnit unit)
+	{
+		LArray array = unit.asType(LTypes.ARRAY);
+
+		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE;
+	}
+
+	@Override
+	public LString _toString()
+	{
+		if (items.size() == 0) return new LString("[]");
+
+		StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
+
+		for (LUnit item : items) stringJoiner.add(item.toString());
+
+		return new LString(stringJoiner.toString());
+	}
+
+	private int getIndexFromCallParameters(@Nullable LUnit[] parameters)
+	{
+		LUnit unitIndex = checkCallParameter(parameters, 0);
+		LNumber numberIndex = unitIndex.asType(LTypes.NUMBER);
+
+		if (numberIndex == null) LErrors.unitDoesNotBelongToType(unitIndex, LTypes.NUMBER.getFullName());
+
+		int index = (int)numberIndex.getValue();
+
+		if (index < 0) index = items.size() - Math.abs(index);
+
+		return index;
 	}
 }

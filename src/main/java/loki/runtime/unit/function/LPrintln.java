@@ -25,7 +25,7 @@ public class LPrintln extends LUnit
 			for (LUnit parameter : parameters) getOutputPrintStream().println(parameter);
 		else getOutputPrintStream().println();
 
-		return LVoid.instance;
+		return LVoid.INSTANCE;
 	}
 
 	private static PrintStream getOutputPrintStream()

@@ -44,7 +44,7 @@ public class LUnitContext
 		else if (LBuiltins.container.containsKey(superVariableName))
 			return LBuiltins.container.get(superVariableName).get();
 
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 
 	public LUnit getVariable(String variableName)
@@ -70,13 +70,13 @@ public class LUnitContext
 			}
 
 			variable = self.getMember(variableName);
-			if (variable != LUndefined.instance) return variable;
+			if (variable != LUndefined.INSTANCE) return variable;
 		}
 
 		if (self != host)
 		{
 			variable = host.getMember(variableName);
-			if (variable != LUndefined.instance) return variable;
+			if (variable != LUndefined.INSTANCE) return variable;
 		}
 
 		return getSuperVariable(variableName);

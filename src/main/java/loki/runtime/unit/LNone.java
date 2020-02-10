@@ -6,7 +6,7 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LNone extends LUnit
 {
-	public static final LNone instance = new LNone();
+	public static final LNone INSTANCE = new LNone();
 
 	private LNone()
 	{

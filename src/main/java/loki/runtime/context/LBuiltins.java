@@ -24,16 +24,16 @@ public class LBuiltins
 
 	private static void initializeDefaultDataUnitInstances(Map<String, Supplier<LUnit>> builtinContainer)
 	{
-		builtinContainer.put(LDataUnit.UNDEFINED.name, () -> LUndefined.instance);
-		builtinContainer.put(LDataUnit.VOID.name, () -> LVoid.instance);
-		builtinContainer.put(LDataUnit.NONE.name, () -> LNone.instance);
+		builtinContainer.put(LDataUnit.UNDEFINED.name, () -> LUndefined.INSTANCE);
+		builtinContainer.put(LDataUnit.VOID.name, () -> LVoid.INSTANCE);
+		builtinContainer.put(LDataUnit.NONE.name, () -> LNone.INSTANCE);
 		builtinContainer.put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBoolean.PROTOTYPE);
 		builtinContainer.put(LDataUnit.TRUE.name, () -> LBoolean.TRUE);
 		builtinContainer.put(LDataUnit.FALSE.name, () -> LBoolean.FALSE);
 		builtinContainer.put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
 		builtinContainer.put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumber.prototype);
-		builtinContainer.put(LDataUnit.STRING_PROTOTYPE.name, () -> LString.instance);
-		builtinContainer.put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArrayPrototype.instance);
+		builtinContainer.put(LDataUnit.STRING_PROTOTYPE.name, () -> LString.PROTOTYPE);
+		builtinContainer.put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArray.PROTOTYPE);
 	}
 
 	private static void initializeDefaultFunctionalUnitInstances(Map<String, Supplier<LUnit>> builtinContainer)

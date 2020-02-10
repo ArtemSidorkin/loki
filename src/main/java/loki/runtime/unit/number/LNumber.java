@@ -12,7 +12,7 @@ public class LNumber extends LUnit
 {
 	public static final LNumber prototype = new LNumber();
 
-	public final double value;
+	private final double value;
 
 	public LNumber(double value)
 	{
@@ -26,6 +26,11 @@ public class LNumber extends LUnit
 		super(LTypes.NUMBER_PROTOTYPE);
 		value = 0;
 		initBuiltins();
+	}
+
+	public double getValue()
+	{
+		return value;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class LInclude extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(relativeFilePathNameWithExtensionAsUnit, LTypes.STRING.getFullName());
 
-			return LUndefined.instance;
+			return LUndefined.INSTANCE;
 		}
 
 		Execution
@@ -40,6 +40,6 @@ public class LInclude extends LUnit
 			.getModule(relativeFilePathNameWithExtensionAsString.getValue(), Option.apply(null))
 			.call(host, parameters);
 
-		return LVoid.instance;
+		return LVoid.INSTANCE;
 	}
 }

@@ -9,6 +9,6 @@ public class LModule extends LUnit
 {
 	public LModule(String moduleTypeName, @Nullable LUnitContext moduleContext)
 	{
-		super(new LType("[module] ".concat(moduleTypeName)), moduleContext);
+		super(new LType(String.format("module(%s)", moduleTypeName)), moduleContext);
 	}
 }

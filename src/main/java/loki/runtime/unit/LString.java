@@ -4,18 +4,21 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.util.Nullable;
 
 public class LString extends LUnit
 {
-	public static final LString instance = new LString();
+	public static final LString PROTOTYPE = new LString();
 
 	private final String value;
 
 	public LString(String value)
 	{
 		super(LTypes.STRING);
+
+		_addParents(PROTOTYPE);
+
 		this.value = value;
-		_addParents(instance);
 	}
 
 	private LString()
@@ -36,11 +39,11 @@ public class LString extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(LUnit unit)
+	public LBoolean _equals(@Nullable LUnit unit)
 	{
-		LString string = new LString(unit.toString());
+		LString string = unit.asType(LTypes.STRING);
 
-		return LBoolean.valueOf(value.equals(string.value));
+		return string != null ? LBoolean.valueOf(value.equals(string.value)) : LBoolean.FALSE;
 	}
 
 	@Override

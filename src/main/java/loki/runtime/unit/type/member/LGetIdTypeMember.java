@@ -28,6 +28,6 @@ public class LGetIdTypeMember extends LMember
 				host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID)
 			);
 
-		return LUndefined.instance;
+		return LUndefined.INSTANCE;
 	}
 }

@@ -36,7 +36,7 @@ public class LAssert extends LUnit
 		getOutputPrintStream()
 			.println(String.format("%s[%s] equals to %s[%s]", actual, actual.getType(), expected, expected.getType()));
 
-		return LVoid.instance;
+		return LVoid.INSTANCE;
 	}
 
 	private static PrintStream getOutputPrintStream()

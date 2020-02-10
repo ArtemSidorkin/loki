@@ -8,9 +8,10 @@ import loki.runtime.util.Nullable;
 
 import java.util.function.Consumer;
 
+//TODO: rename, add "Nullable's" reorganize, introduce some "isundefined" or allow to work with it in other way
 public class LUndefined extends LUnit
 {
-	public static final LUndefined instance = new LUndefined();
+	public static final LUndefined INSTANCE = new LUndefined();
 
 	private LUndefined()
 	{

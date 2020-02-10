@@ -32,7 +32,7 @@ public class LImport extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(relativeFilePathNameWithExtensionAsUnit, LTypes.STRING.getFullName());
 
-			return LUndefined.instance;
+			return LUndefined.INSTANCE;
 		}
 
 		host
@@ -42,6 +42,6 @@ public class LImport extends LUnit
 					.getModuleInstance(relativeFilePathNameWithExtensionAsString.getValue(), Some.apply(parameters))
 			);
 
-		return LVoid.instance;
+		return LVoid.INSTANCE;
 	}
 }
