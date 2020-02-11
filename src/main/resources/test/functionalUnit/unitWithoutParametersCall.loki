@@ -1,0 +1,5 @@
+test: $testData = 100
+
+test()
+
+assert($testData, 100)

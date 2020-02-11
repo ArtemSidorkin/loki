@@ -2,12 +2,16 @@ simpleVariable, /test/variable/simpleVariable.loki
 
 simple_arithmetic, /test/arithmetic/simpleArithmetic.loki
 
+unit_without_parameters_call, /test/functionalUnit/unitWithoutParametersCall.loki
+
 if, /test/condition/if.loki
 ifelse, /test/condition/ifelse.loki
 
 while, /test/loop/while.loki
 
 type_members, /test/type/members.loki
+
+array_creation, /test/array/arrayCreation.loki
 
 creation_map, /test/map/creationMap.loki
 formatting_map, /test/map/formattingMap.loki
@@ -27,6 +31,7 @@ simple_object_usage, /test/object/simpleObjectUsage.loki
 
 
 linked_list, /test/algorithm/linkedList.loki
+factorial, /test/algorithm/factorial.loki
 
 
 #performance, /test/performance.loki
