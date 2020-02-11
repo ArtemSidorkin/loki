@@ -5,7 +5,6 @@ import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
-import loki.runtime.util.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,15 +14,15 @@ public class LArray extends LUnit
 {
 	public static final LArray PROTOTYPE = new LArray();
 
-	private final @Nullable ArrayList<LUnit> items = new ArrayList<>();
+	private final ArrayList<LUnit> items = new ArrayList<>();
 
-	public LArray(@Nullable LUnit[] items)
+	public LArray(LUnit[] items)
 	{
 		super(LTypes.ARRAY);
 
 		_addParents(PROTOTYPE);
 
-		if (items != null) this.items.addAll(Arrays.asList(items));
+		this.items.addAll(Arrays.asList(items));
 	}
 
 	private LArray()
@@ -32,7 +31,7 @@ public class LArray extends LUnit
 	}
 
 	@Override
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
 		int index = getIndexFromCallParameters(parameters);
 
@@ -40,7 +39,7 @@ public class LArray extends LUnit
 	}
 
 	@Override
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
 		int index = getIndexFromCallParameters(parameters);
 
@@ -60,7 +59,7 @@ public class LArray extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(@Nullable LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
 		LArray array = unit.asType(LTypes.ARRAY);
 
@@ -79,7 +78,7 @@ public class LArray extends LUnit
 		return new LString(stringJoiner.toString());
 	}
 
-	private int getIndexFromCallParameters(@Nullable LUnit[] parameters)
+	private int getIndexFromCallParameters(LUnit[] parameters)
 	{
 		LUnit unitIndex = checkCallParameter(parameters, 0);
 		LNumber numberIndex = unitIndex.asType(LTypes.NUMBER);

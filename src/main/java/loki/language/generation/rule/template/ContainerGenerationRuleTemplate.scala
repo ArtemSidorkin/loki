@@ -3,6 +3,7 @@ package loki.language.generation.rule.template
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
 import loki.language.generation.bytecodetemplate.ContainerBytecodeTemplate.ContainerBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.rule.GenerationRule
 import loki.language.generation.rule.mixin.template.ContainerGenerationRuleMixinTemplate
 import org.antlr.v4.runtime.RuleContext
@@ -32,7 +33,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 			def apply():Unit =
 				if (containerItemExpressionContexts.nonEmpty)
 					topMethodCall anewarrayUnit containerItemExpressionContexts.size
-				else topMethodCall aconstnull ()
+				else topMethodCall emptyUnitArray ()
 		}
 
 		object StoreContainerItems

@@ -4,7 +4,6 @@ import loki.runtime.constant.LUnitMember;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 public class LAddParents extends LMember
 {
@@ -16,7 +15,7 @@ public class LAddParents extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		host._addParents(parameters);
 

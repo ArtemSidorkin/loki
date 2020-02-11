@@ -6,7 +6,6 @@ import loki.runtime.unit.LVoid;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LAssertionException;
-import loki.runtime.util.Nullable;
 
 import java.io.PrintStream;
 
@@ -20,7 +19,7 @@ public class LAssert extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		if (parameters.length < 1) throw new LAssertionException("Actual value is not specified");
 		if (parameters.length < 2) throw new LAssertionException("Expected value is not specified");

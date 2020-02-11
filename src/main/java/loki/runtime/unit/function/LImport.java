@@ -9,7 +9,6 @@ import loki.runtime.unit.LVoid;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
-import loki.runtime.util.Nullable;
 import scala.Some;
 
 public class LImport extends LUnit
@@ -22,7 +21,7 @@ public class LImport extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		LUnit relativeFilePathNameWithExtensionAsUnit = checkCallParameter(parameters, 0);
 		LString relativeFilePathNameWithExtensionAsString =

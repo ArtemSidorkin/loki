@@ -20,11 +20,13 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 			generationContext
 				.addPostExitRuleTask(
 					hostExpressionContext,
-					() => (
-						topMethodCall
-							ldc memberName
-							anewarrayUnit callParameterExpressionContexts.size
-					)
+					() =>
+					{
+						topMethodCall ldc memberName
+						if (callParameterExpressionContexts.nonEmpty)
+							topMethodCall anewarrayUnit callParameterExpressionContexts.size
+						else topMethodCall emptyUnitArray ()
+					}
 				)
 
 		def storeCallParameters()

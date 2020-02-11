@@ -4,7 +4,6 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,14 +15,13 @@ public class LMap extends LUnit
 
 	private final Map<LUnit, LUnit> items = new LinkedHashMap<>();
 
-	public LMap(@Nullable LUnit[] items)
+	public LMap(LUnit[] items)
 	{
 		super(LTypes.MAP);
 
 		_addParents(PROTOTYPE);
 
-		if (items != null)
-			for (int i = 0; i < items.length; i += 2) this.items.put(items[i], items[i + 1]);
+		for (int i = 0; i < items.length; i += 2) this.items.put(items[i], items[i + 1]);
 	}
 
 	private LMap()
@@ -32,7 +30,7 @@ public class LMap extends LUnit
 	}
 
 	@Override
-	public LUnit _getIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
 		LUnit key = checkCallParameter(parameters, 0);
 		LUnit item = items.get(key);
@@ -41,7 +39,7 @@ public class LMap extends LUnit
 	}
 
 	@Override
-	public LUnit _setIndexedItem(@Nullable LUnit[] parameters)
+	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
 		LUnit key = checkCallParameter(parameters, 0);
 		LUnit value = checkCallParameter(parameters, 1);
@@ -58,7 +56,7 @@ public class LMap extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(@Nullable LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
 		LMap map = unit.asType(LTypes.MAP);
 

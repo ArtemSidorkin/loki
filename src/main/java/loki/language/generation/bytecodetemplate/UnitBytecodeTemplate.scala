@@ -8,6 +8,9 @@ private[generation] object UnitBytecodeTemplate
 {
 	implicit class UnitBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
+		def emptyUnitArray():methodBuilder.type =
+			methodBuilder getstatic (classOf[LUnit], "EMPTY_UNIT_ARRAY", classOf[Array[LUnit]])
+
 		def aloadUnitMethodCallParameterHost():methodBuilder.type =
 			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__HOST
 

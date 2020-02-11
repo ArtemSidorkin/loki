@@ -74,9 +74,9 @@ public class LUndefined extends LUnit
 		return null;
 	}
 
-	@Nullable
+
 	@Override
-	public <T extends LUnit> T asType(LType type)
+	public @Nullable <T extends LUnit> T asType(@Nullable LType type)
 	{
 		LErrors.printErrorAndExit("Calling \"asType\" from \"undefined\"!");
 
@@ -92,7 +92,7 @@ public class LUndefined extends LUnit
 	}
 
 	@Override
-	public boolean equals(Object object)
+	public boolean equals(@Nullable Object object)
 	{
 		LErrors.printErrorAndExit("Calling \"equals\" from \"undefined\"!");
 

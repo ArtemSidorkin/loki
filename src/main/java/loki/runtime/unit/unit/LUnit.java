@@ -52,14 +52,14 @@ public abstract class LUnit
 
 	@Internal
 	@Polymorphic(COMMON)
-	public LUnit newInstance(@Nullable LUnit[] parameters, @Nullable Consumer<LUnit> saver)
+	public LUnit newInstance(LUnit[] parameters, @Nullable Consumer<LUnit> saver)
 	{
 		LUnit self = this;
 
 		LUnit newUnit = new LUnit(new LType(getType().getName()), getCapturedOnCreationUnitContext())
 		{
 			@Override
-			public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+			public LUnit call(LUnit host, LUnit[] parameters)
 			{
 				return self.call(host, parameters);
 			}
@@ -148,26 +148,22 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _addParents(LUnit... parents)
 	{
-		initParentsIfNecessary();
-
-		this.parents.addAll(Arrays.asList(parents));
+		initParentsIfNecessary().addAll(Arrays.asList(parents));
 
 		return this;
 	}
 
 	@Compiler
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		return LUndefined.INSTANCE;
 	}
 
 	@Compiler
-	public LUnit callMember(String memberName, @Nullable LUnit[] parameters)
+	public LUnit callMember(String memberName, LUnit[] parameters)
 	{
 		return getMember(memberName).call(this, parameters);
 	}
-
-	//TODO: check nullables for indexes
 
 	@Internal
 	@Polymorphic(ACCESS)
@@ -200,7 +196,7 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	public LUnit setParameterNames(@Nullable String[] parameterNames)
+	public LUnit setParameterNames(String[] parameterNames)
 	{
 		HashMap<String, Integer> parameterIndexes =
 			new HashMap<>(LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR);
@@ -217,7 +213,7 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, null).asType(LTypes.NUMBER);
+		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, EMPTY_UNIT_ARRAY).asType(LTypes.NUMBER);
 
 		if (hashCode == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.HASH_CODE.name);
 
@@ -243,7 +239,7 @@ public abstract class LUnit
 
 	@Internal
 	@Polymorphic(DEFAULT)
-	public LBoolean _equals(@Nullable LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
 		return LBoolean.valueOf(super.equals(unit));
 	}
@@ -253,7 +249,7 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LString string = callMember(LUnitMember.TO_STRING.name, null).asType(LTypes.STRING);
+		LString string = callMember(LUnitMember.TO_STRING.name, EMPTY_UNIT_ARRAY).asType(LTypes.STRING);
 
 		if (string == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.TO_STRING.name);
 
@@ -271,17 +267,17 @@ public abstract class LUnit
 	@Invariable
 	public boolean toBoolean()
 	{
-		LBoolean thisAsBoolean = asType(LTypes.BOOLEAN);
+		LBoolean bool = asType(LTypes.BOOLEAN);
 
-		if (thisAsBoolean == null) LErrors.unitDoesNotBelongToType(this, LTypes.NUMBER.getFullName());
+		if (bool == null) LErrors.unitDoesNotBelongToType(this, LTypes.NUMBER.getFullName());
 
-		return thisAsBoolean.getValue();
+		return bool.getValue();
 	}
 
 	@Internal
 	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
 	{
-		if (type == null) return (TYPE) this;
+		if (type == null) return (TYPE)this;
 
 		if (getType() == type) return (TYPE)this;
 
@@ -296,14 +292,12 @@ public abstract class LUnit
 	}
 
 	@Internal
-	protected LUnit checkCallParameter(@Nullable LUnit[] parameters, int parameterIndex)
+	protected LUnit checkCallParameter(LUnit[] parameters, int parameterIndex)
 	{
-		if (parameters != null && parameterIndex >= 0 && parameterIndex < parameters.length)
-			return parameters[parameterIndex];
+		if (parameterIndex < 0 || parameterIndex >= parameters.length)
+			LErrors.parameterIsMissedForUnit(parameterIndex, this);
 
-		LErrors.parameterIsMissedForUnit(parameterIndex, this);
-
-		return LUndefined.INSTANCE;
+		return parameters[parameterIndex];
 	}
 
 	@Internal
@@ -345,54 +339,55 @@ public abstract class LUnit
 		if (prototype == null) synchronized(LUnit.class)
 		{
 			if (prototype == null)
-				prototype = new LUnit(new LType(LDataUnit.UNIT_PROTOTYPE.name))
-				{
+				prototype =
+					new LUnit(new LType(LDataUnit.UNIT_PROTOTYPE.name))
 					{
-						initializeBuiltins();
-					}
+						{
+							initializeBuiltins();
+						}
 
-					@Override
-					public LUnit getSuperMember(String superMemberName)
-					{
-						return LUndefined.INSTANCE;
-					}
+						@Override
+						public LUnit getSuperMember(String superMemberName)
+						{
+							return LUndefined.INSTANCE;
+						}
 
-					@Override
-					public LUnit addParents(LUnit... parents)
-					{
-						LErrors.printErrorAndExit("Unit prototype cannot have parents");
+						@Override
+						public LUnit addParents(LUnit... parents)
+						{
+							LErrors.printErrorAndExit("Unit prototype cannot have parents");
 
-						return LUndefined.INSTANCE;
-					}
+							return LUndefined.INSTANCE;
+						}
 
-					@Override
-					public @Nullable <TYPE extends LUnit> TYPE asType(LType type)
-					{
-						if (getType().equals(type)) return (TYPE)this;
+						@Override
+						public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
+						{
+							if (getType().equals(type)) return (TYPE)this;
 
-						return null;
-					}
+							return null;
+						}
 
-					@Override
-					protected @Nullable ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
-					{
-						return null;
-					}
+						@Override
+						protected @Nullable ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+						{
+							return null;
+						}
 
-					private void initializeBuiltins()
-					{
-						LNew.instance.init(this);
-						LAddParents.instance.init(this);
-						LGetIndexItem.instance.init(this);
-						LSetIndexItem.instance.init(this);
-						LGetType.instance.init(this);
-						LToString.instance.init(this);
-						LHashCode.instance.init(this);
-						LEquals.instance.init(this);
-						LEqualityUnitBinaryOperation.instance.init(this);
-						LInequalityUnitBinaryOperation.instance.init(this);
-					}
-				};
+						private void initializeBuiltins()
+						{
+							LNew.instance.init(this);
+							LAddParents.instance.init(this);
+							LGetIndexItem.instance.init(this);
+							LSetIndexItem.instance.init(this);
+							LGetType.instance.init(this);
+							LToString.instance.init(this);
+							LHashCode.instance.init(this);
+							LEquals.instance.init(this);
+							LEqualityUnitBinaryOperation.instance.init(this);
+							LInequalityUnitBinaryOperation.instance.init(this);
+						}
+					};
 		}
 	}
 }

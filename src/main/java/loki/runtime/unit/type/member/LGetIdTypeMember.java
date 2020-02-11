@@ -7,7 +7,6 @@ import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
-import loki.runtime.util.Nullable;
 
 public class LGetIdTypeMember extends LMember
 {
@@ -19,7 +18,7 @@ public class LGetIdTypeMember extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		if (host instanceof LType) return new LNumber(((LType)host).getId());
 

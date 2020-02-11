@@ -14,7 +14,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 	protected final @Nullable LType leftOperandType;
 	protected final @Nullable LType rightOperandType;
 
-	public LBinaryOperation(LBinaryOperator binaryOperator)
+	protected LBinaryOperation(LBinaryOperator binaryOperator)
 	{
 		this(binaryOperator, null, null);
 	}

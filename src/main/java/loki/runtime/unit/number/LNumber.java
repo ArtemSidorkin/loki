@@ -7,7 +7,6 @@ import loki.runtime.unit.number.member.operation.binary.*;
 import loki.runtime.unit.number.member.operation.unary.LNegationNumberUnaryOperation;
 import loki.runtime.unit.unit.LUnit;
 
-
 public class LNumber extends LUnit
 {
 	public static final LNumber prototype = new LNumber();

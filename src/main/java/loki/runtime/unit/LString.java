@@ -4,7 +4,6 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 public class LString extends LUnit
 {
@@ -39,7 +38,7 @@ public class LString extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(@Nullable LUnit unit)
+	public LBoolean _equals(LUnit unit)
 	{
 		LString string = unit.asType(LTypes.STRING);
 

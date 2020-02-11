@@ -4,7 +4,6 @@ import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 public class LTime extends LUnit
 {
@@ -16,7 +15,7 @@ public class LTime extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		return new LNumber(System.nanoTime());
 	}

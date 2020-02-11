@@ -5,7 +5,6 @@ import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 public class LEquals extends LMember
 {
@@ -17,7 +16,7 @@ public class LEquals extends LMember
 	}
 
 	@Override
-	public LBoolean call(LUnit host, @Nullable LUnit[] parameters)
+	public LBoolean call(LUnit host, LUnit[] parameters)
 	{
 		return host._equals(checkCallParameter(parameters, 0));
 	}

@@ -5,7 +5,6 @@ import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Nullable;
 
 import java.io.PrintStream;
 
@@ -19,7 +18,7 @@ public class LPrintln extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		if (parameters.length > 0)
 			for (LUnit parameter : parameters) getOutputPrintStream().println(parameter);

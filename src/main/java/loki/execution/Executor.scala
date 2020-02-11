@@ -54,7 +54,7 @@ private[execution] class Executor(
 			if (moduleInstances containsKey moduleName unary_!) (
 				getModule(relativeModulePathname)
 					newInstance(
-						parameters getOrElse null.asInstanceOf[Array[LUnit]],
+						parameters getOrElse LUnit.EMPTY_UNIT_ARRAY,
 						(unit:LUnit) => moduleInstances += moduleName -> unit
 					)
 			)

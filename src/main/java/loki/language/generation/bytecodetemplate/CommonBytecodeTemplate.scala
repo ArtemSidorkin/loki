@@ -29,6 +29,7 @@ private[generation] object CommonBytecodeTemplate
 
 		def newObject():methodBuilder.type = methodBuilder `new` classOf[LObject]
 
+		//TODO: find and check array creators which do not use approach like this (arraySize as parameter)
 		def anewarrayUnit(arraySize:Int):methodBuilder.type = (
 			methodBuilder
 				ldc arraySize

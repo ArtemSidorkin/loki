@@ -8,7 +8,7 @@ import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 private[generation] class CallGenerationRule(callContext:CallContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(callContext)
 {
-	private def callParameterCount:Int = callContext.expression.size - 1
+	private def callParameterCount:Int = callContext.expression.size - 1 //TODO: think is it worth to declare field for this, or maybe cast to scala and save thecollection
 	private def callExpression:ExpressionContext = callContext expression 0
 
 	override protected def enterAction()
@@ -21,9 +21,12 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 				.addPostExitRuleTask(
 					callExpression,
 					() =>
-						topMethodCall
-							aloadUnitMethodCallParameterHost ()
-							anewarrayUnit callParameterCount
+					{
+						topMethodCall aloadUnitMethodCallParameterHost ()
+
+						if (callParameterCount == 0) topMethodCall emptyUnitArray ()
+						else topMethodCall anewarrayUnit callParameterCount
+					}
 				)
 
 		def storeParametersInParameterArray():Unit =
