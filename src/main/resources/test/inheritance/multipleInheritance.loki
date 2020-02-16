@@ -2,7 +2,7 @@ PointX x : $x = x
 PointY y : $y = y
 PointZ z : $z = z
 
-Point x y z <- PointX(x), PointY(y), PointZ(z) : none
+Point x y z <- PointX(x), PointY(y), PointZ(z) : void
 
 point = Point.new(1, 2, 3)
 

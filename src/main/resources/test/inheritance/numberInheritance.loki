@@ -1,5 +1,5 @@
-A <- 1 : none
-B <- 2 : none
+A <- 1 : void
+B <- 2 : void
 
 assert(A.new() + B.new(), 3)
 assert(A.new() + 2, 3)
