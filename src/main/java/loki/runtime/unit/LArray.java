@@ -44,7 +44,7 @@ public class LArray extends LUnit
 	{
 		int index = getIndexFromCallParameters(parameters);
 
-		if (index < 0 || index >= items.size()) LErrors.itemWithIndexDoesNotExist(index);
+		if (index < 0 || index >= items.size()) LErrors.UnitDoesNotHaveItemWithIndex(this, index);
 
 		LUnit item = checkCallParameter(parameters, 1);
 
@@ -84,7 +84,7 @@ public class LArray extends LUnit
 		LUnit unitIndex = checkCallParameter(parameters, 0);
 		LNumber numberIndex = unitIndex.asType(LTypes.NUMBER);
 
-		if (numberIndex == null) LErrors.unitDoesNotBelongToType(unitIndex, LTypes.NUMBER.getFullName());
+		if (numberIndex == null) LErrors.unitShouldHaveType(unitIndex, LTypes.NUMBER.getFullName());
 
 		int index = (int)numberIndex.getValue();
 

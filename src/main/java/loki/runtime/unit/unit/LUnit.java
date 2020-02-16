@@ -216,7 +216,9 @@ public abstract class LUnit
 	{
 		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, EMPTY_UNIT_ARRAY).asType(LTypes.NUMBER);
 
-		if (hashCode == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.HASH_CODE.name);
+		if (hashCode == null)
+			LErrors
+				.resultOfOperationForUnitShouldHaveType(LUnitMember.HASH_CODE.name, this, LTypes.NUMBER.getFullName());
 
 		return (int)hashCode.getValue();
 	}
@@ -252,7 +254,9 @@ public abstract class LUnit
 	{
 		LString string = callMember(LUnitMember.TO_STRING.name, EMPTY_UNIT_ARRAY).asType(LTypes.STRING);
 
-		if (string == null) LErrors.unitOperationIsNotCorrect(this, LUnitMember.TO_STRING.name);
+		if (string == null)
+			LErrors
+				.resultOfOperationForUnitShouldHaveType(LUnitMember.TO_STRING.name, this, LTypes.STRING.getFullName());
 
 		return string.getValue();
 	}
@@ -270,7 +274,7 @@ public abstract class LUnit
 	{
 		LBoolean bool = asType(LTypes.BOOLEAN);
 
-		if (bool == null) LErrors.unitDoesNotBelongToType(this, LTypes.NUMBER.getFullName());
+		if (bool == null) LErrors.unitShouldHaveType(this, LTypes.NUMBER.getFullName());
 
 		return bool.getValue();
 	}

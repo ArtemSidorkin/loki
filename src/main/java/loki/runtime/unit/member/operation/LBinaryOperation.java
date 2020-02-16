@@ -50,6 +50,6 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 
 	private void operatorIsNotDefinedForUnits(LUnit leftOperand, LUnit rightOperand)
 	{
-		LErrors.operatorIsNotDefinedForUnits(binaryOperator, leftOperand, rightOperand);
+		LErrors.binaryOperatorIsNotDefinedForUnits(binaryOperator, leftOperand, rightOperand);
 	}
 }

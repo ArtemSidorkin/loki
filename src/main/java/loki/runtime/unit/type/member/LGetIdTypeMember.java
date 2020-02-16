@@ -22,10 +22,7 @@ public class LGetIdTypeMember extends LMember
 	{
 		if (host instanceof LType) return new LNumber(((LType)host).getId());
 
-		LErrors
-			.unitDoesNotBelongToType(
-				host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID)
-			);
+		LErrors.unitShouldHaveType(host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID));
 
 		return LVoid.INSTANCE;
 	}

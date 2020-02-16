@@ -24,7 +24,7 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 
 		if (operand != null) return execute(operand);
 
-		LErrors.unitDoesNotBelongToType(host, operandType);
+		LErrors.unitShouldHaveType(host, operandType.getFullName());
 
 		return LVoid.INSTANCE;
 	}

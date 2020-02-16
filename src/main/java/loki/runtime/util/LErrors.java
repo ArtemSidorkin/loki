@@ -6,39 +6,33 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LErrors
 {
-	public static void unitDoesNotBelongToType(Object unit, Object type)
+	public static void unitShouldHaveType(Object unit, String type)
 	{
-		printErrorAndExit(String.format("\"%s\" is not \"%s\"", unit, type));
+		printErrorAndExit(String.format("Unit \"%s\" should have type \"%s\"", unit, type));
 	}
 
-	public static void unitOperationIsNotCorrect(Object unit, String operation)
+	public static void resultOfOperationForUnitShouldHaveType(String operation, Object unit, String type)
 	{
-		printErrorAndExit(String.format("\"%s\" implementation of \"%s\" is not correct", unit, operation));
+		printErrorAndExit(
+			String.format("Result of operation \"%s\" of unit \"%s\" should have type \"%s\"", operation, unit, type)
+		);
 	}
 
-	public static void operatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
+	public static void binaryOperatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
 	{
-		printErrorAndExit(String.format("Operator \"%s\" is not defined for \"%s\" and \"%s\"", operator, unit1, unit2));
+		printErrorAndExit(
+			String.format("Binary operator \"%s\" is not defined for units \"%s\" and \"%s\"", operator, unit1, unit2)
+		);
 	}
 
 	public static void parameterIsMissedForUnit(int parameterIndex, LUnit unit)
 	{
-		printErrorAndExit(String.format("Parameter \"%s\" is missed for \"%s\"", parameterIndex, unit));
+		printErrorAndExit(String.format("Parameter \"%s\" is missed for unit \"%s\"", parameterIndex, unit));
 	}
 
-	public static void itemWithIndexDoesNotExist(Object index)
+	public static void UnitDoesNotHaveItemWithIndex(LUnit unit, Object index)
 	{
-		printErrorAndExit(String.format("Item with index \"%s\" does not exist", index));
-	}
-
-	public static void indexIsUndefined()
-	{
-		printErrorAndExit("Index is undefined");
-	}
-
-	public static void indexValueIsUndefined()
-	{
-		printErrorAndExit("Index value is undefined");
+		printErrorAndExit(String.format("Unit \"%s\" does not have item with index \"%s\"", unit, index));
 	}
 
 	public static void printErrorAndExit(String error)

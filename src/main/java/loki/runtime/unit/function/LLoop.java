@@ -25,7 +25,7 @@ public class LLoop extends LUnit
 
 		if (iterationCountAsNumber == null)
 		{
-			LErrors.unitDoesNotBelongToType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
+			LErrors.unitShouldHaveType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
 
 			return null;
 		}
