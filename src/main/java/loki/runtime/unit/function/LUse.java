@@ -21,19 +21,19 @@ public class LUse extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		LUnit unitModuleFilePathname = checkCallParameter(parameters, 0);
-		LString stringModuleFilePathname = unitModuleFilePathname.asType(LTypes.STRING);
+		LUnit moduleFilePathnameAsUnit = checkCallParameter(parameters, 0);
+		LString moduleFilePathnameAsString = moduleFilePathnameAsUnit.asType(LTypes.STRING);
 
-		if (stringModuleFilePathname == null)
+		if (moduleFilePathnameAsString == null)
 		{
-			LErrors.unitDoesNotBelongToType(unitModuleFilePathname, LTypes.STRING.getFullName());
+			LErrors.unitDoesNotBelongToType(moduleFilePathnameAsUnit, LTypes.STRING.getFullName());
 
 			return LUndefined.INSTANCE;
 		}
 
-		LUnit module = Execution.executor().getModuleInstance(stringModuleFilePathname.getValue());
+		LUnit module = Execution.executor().getModuleInstance(moduleFilePathnameAsString.getValue());
 
-		if (host.asType(module.getType()) == null) host.addParents(module);
+		if (!host.isType(module.getType())) host.addParents(module);
 
 		return module;
 	}

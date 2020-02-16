@@ -21,19 +21,19 @@ public class LLoop extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		LUnit unitIterationCount = checkCallParameter(parameters, 0);
-		LNumber numberIterationCount = unitIterationCount.asType(LTypes.NUMBER);
+		LUnit iterationCountAsUnit = checkCallParameter(parameters, 0);
+		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LTypes.NUMBER);
 
-		if (numberIterationCount == null)
+		if (iterationCountAsNumber == null)
 		{
-			LErrors.unitDoesNotBelongToType(unitIterationCount, LTypes.NUMBER.getFullName());
+			LErrors.unitDoesNotBelongToType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
 
 			return LUndefined.INSTANCE;
 		}
 
 		LUnit action = checkCallParameter(parameters, 1);
 
-		for (int i = 0; i < numberIterationCount.getValue(); i++) action.call(host, EMPTY_UNIT_ARRAY);
+		for (int i = 0; i < iterationCountAsNumber.getValue(); i++) action.call(host, EMPTY_UNIT_ARRAY);
 
 		return LVoid.INSTANCE;
 	}

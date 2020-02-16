@@ -275,6 +275,12 @@ public abstract class LUnit
 	}
 
 	@Internal
+	public boolean isType(@Nullable LType type)
+	{
+		return asType(type) != null;
+	}
+
+	@Internal
 	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
 	{
 		if (type == null) return (TYPE)this;
