@@ -25,26 +25,19 @@ object BytecodeMethodDescriptors
 
 	val MODULE_CONTEXT__METHOD__INIT =
 		TypedMethodDescriptor(
-			(classOf[LUnit] :: classOf[LUnit] :: classOf[Array[LUnit]] :: classOf[LUnitContext] :: Nil) -> None
+			(classOf[LUnit] :: classOf[LUnit] :: classOf[Array[LUnit]] :: Nil) -> None
 		)
 
 	val MODULE__METHOD__INIT =
-		TypedMethodDescriptor((classOf[String] :: classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[String] :: Nil) -> None)
 
 	val MODULE_HEIR__METHOD__INIT =
-		TypedMethodDescriptor((classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((Nil) -> None)
 
+	//TODO: unify unit and subunit !SUB_UNIT!
 	val UNIT__METHOD__INIT =
 		TypedMethodDescriptor((classOf[LType] :: classOf[LUnitContext] :: Nil) -> None)
 
-	def UNIT_HEIR__METHOD__INIT_1 =
-		TypedMethodDescriptor(
-			(
-				classOf[LType] ::
-				classOf[LUnitContext] ::
-				Nil
-			) -> None
-		)
 	def UNIT_HEIR__METHOD__INIT_2 =
 		TypedMethodDescriptor(
 			(

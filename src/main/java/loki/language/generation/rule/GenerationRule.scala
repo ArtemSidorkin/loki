@@ -17,8 +17,6 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext]
 	protected def preTopClassFrame:FrameClassBuilder = generationContext.frameStack.preTop.classFrame
 	protected def topMethodCall:MethodBuilder = topClassFrame.methodCall
 	protected def preTopMethodCall:MethodBuilder = preTopClassFrame.methodCall
-	protected def topOuterClassFieldName:String = BytecodeCommon OUTER_CLASS_FIELD_NAME topFrameId
-	protected def topParametersFieldName:String = BytecodeCommon PARAMETERS_FIELD_NAME topFrameId
 
 	def enter()
 	{
@@ -41,10 +39,6 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext]
 	protected def getFrameClass(frameIndex:Int):FrameClassBuilder = generationContext frameStack frameIndex classFrame
 
 	protected def getFrameId(frameIndex:Int):Long = generationContext frameStack frameIndex id
-
-	protected def getOuterClassFieldName(frameId:Long):String = BytecodeCommon OUTER_CLASS_FIELD_NAME frameId
-
-	protected def getParametersFieldName(frameId:Long):String = BytecodeCommon PARAMETERS_FIELD_NAME frameId
 
 	protected def pushModuleFrame():Unit =
 		generationContext.frameStack.push(new ModuleFrameClassBuilder(generationContext.moduleName))

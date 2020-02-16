@@ -12,35 +12,22 @@ public class LUnitContext
 {
 	private final LUnit self;
 	private final LUnit host;
-	@Nullable private final LUnitContext parentUnitContext;
+	@Nullable private final LUnitContext frameUnitCapturedContext;
 	@Nullable private final LUnit[] parameters;
-	private final boolean storeVariablesInParent;
 
 	@Nullable private volatile ConcurrentMap<String, LUnit> variables;
 
-	public LUnitContext(LUnit self, LUnit host, @Nullable LUnitContext parentUnitContext, @Nullable LUnit[] parameters)
+	public LUnitContext(LUnit frameUnit, LUnit host, @Nullable LUnitContext frameUnitCapturedContext, @Nullable LUnit[] parameters)
 	{
-		this(self, host, parentUnitContext, parameters, false);
-	}
-
-	protected LUnitContext(
-		LUnit self,
-		LUnit host,
-		@Nullable LUnitContext parentUnitContext,
-		@Nullable LUnit[] parameters,
-		boolean storeVariablesInParent
-	)
-	{
-		this.self = self;
+		this.self = frameUnit;
 		this.host = host;
-		this.parentUnitContext = parentUnitContext;
+		this.frameUnitCapturedContext = frameUnitCapturedContext;
 		this.parameters = parameters;
-		this.storeVariablesInParent = storeVariablesInParent;
 	}
 
 	public LUnit getSuperVariable(String superVariableName)
 	{
-		if (parentUnitContext != null) return parentUnitContext.getVariable(superVariableName);
+		if (frameUnitCapturedContext != null) return frameUnitCapturedContext.getVariable(superVariableName);
 		else if (LBuiltins.container.containsKey(superVariableName))
 			return LBuiltins.container.get(superVariableName).get();
 
@@ -73,7 +60,7 @@ public class LUnitContext
 			if (variable != LUndefined.INSTANCE) return variable;
 		}
 
-		if (self != host)
+		if (self != host) //Is it check needed?
 		{
 			variable = host.getMember(variableName);
 			if (variable != LUndefined.INSTANCE) return variable;
@@ -84,8 +71,6 @@ public class LUnitContext
 
 	public LUnit setVariable(String variableName, LUnit variableValue)
 	{
-		if (storeVariablesInParent) return parentUnitContext.setVariable(variableName, variableValue);
-
 		initVariablesIfNeeded();
 		variables.put(variableName, variableValue);
 		return variableValue;

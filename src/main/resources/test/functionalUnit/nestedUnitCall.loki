@@ -1,0 +1,8 @@
+test1 a :
+	test2 b :
+		test3 c :
+			a + b + c
+		test3(b)
+	test2(a)
+
+assert(test1(1), 3)

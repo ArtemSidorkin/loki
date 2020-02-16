@@ -35,10 +35,7 @@ private[generation] class UnitGenerationRule
 	{
 		pushUnitFrame()
 
-		(
-			generateUnitMethodInit _
-			compose addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit
-		) (addUnitMethodInit())
+		generateUnitMethodInit (addUnitMethodInit())
 
 		generateContainerForUnitSavingIfUnitIsNotAnonymousInPretopMethodCall()
 		generateUnitCreationAndInitInPreTopMethodCall()
@@ -52,28 +49,7 @@ private[generation] class UnitGenerationRule
 		generationContext.addPreExitRuleTask(unitLastInstruction, () => topMethodCall decrementObjectCounter ())
 
 		def addUnitMethodInit() =
-			if (isPreTopFrameModule) topClassFrame.addMethodInit(
-				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_1
-			)
-			else topClassFrame.addMethodInit(
-				PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2
-			)
-
-		def addAndGenerateParametersUnitFieldIfOuterClassIsUnitInMethodInit(methodInit:MethodBuilder) =
-		{
-			if (isPreTopFrameUnit)
-			{
-				topClassFrame.addField(FINAL & SYNTHETIC, topParametersFieldName, classOf[Array[LUnit]])
-
-				(
-					methodInit
-					aloadthis ()
-					aloadUnitHeirMethodInitParameterParameters ()
-					putfield (topClassFrame.internalName, topParametersFieldName, classOf[Array[LUnit]])
-				)
-			}
-			methodInit
-		}
+			topClassFrame.addMethodInit(PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2)
 
 		def generateUnitMethodInit(methodInit:MethodBuilder) =
 		(
@@ -125,16 +101,11 @@ private[generation] class UnitGenerationRule
 				aloadUnitMethodCallVariableUnitContext ()
 			)
 
-			def generateUnitInit():Unit = (if (isPreTopFrameModule)
-			(
-				preTopMethodCall
-				invokeInit1UnitHeir (topClassFrame.internalName)
-			) else
-			(
-				preTopMethodCall
-				aloadUnitMethodCallParameterParameters ()
-				invokeInit2UnitHeir (topClassFrame.internalName)
-			))
+			def generateUnitInit():Unit = (
+					preTopMethodCall
+						aloadUnitMethodCallParameterParameters ()
+						invokeInit2UnitHeir (topClassFrame.internalName)
+					)
 		}
 
 		def generateUnitSavingInPretopMethodCall():Unit = unitName foreach (_ =>
@@ -150,7 +121,7 @@ private[generation] class UnitGenerationRule
 			aloadthis ()
 			aloadUnitMethodCallParameterHost ()
 			aloadthis ()
-			invokeVirtualUnitMethodGetCapturedOnCreationUnitContext topClassFrame.internalName
+			invokeVirtualUnitMethodGetCapturedUnitContext topClassFrame.internalName
 			aloadUnitMethodCallParameterParameters ()
 			invokeInitUnitContext ()
 			astoreUnitMethodCallVariableUnitContext ()
@@ -183,7 +154,7 @@ private[generation] class UnitGenerationRule
 		def addReturnToUnitMethodCall(
 			generationContext:GenerationContext, unitContext:LokiParser.InstructionContext
 		):Unit =
-			if (unitContext.expression != null)
+			if (unitContext.expression != null) //TODO: WTF?
 				generationContext.addPostExitRuleTask(unitContext.expression, () => topMethodCall aReturn ())
 	}
 

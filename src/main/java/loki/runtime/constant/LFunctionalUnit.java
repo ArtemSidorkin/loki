@@ -3,8 +3,7 @@ package loki.runtime.constant;
 public enum LFunctionalUnit
 {
 	ASSERT("assert"),
-	INCLUDE("include"),
-	IMPORT("import"),
+	USE("use"),
 	LOOP("loop"),
 	TIME("time"),
 	PRINTLN("println");

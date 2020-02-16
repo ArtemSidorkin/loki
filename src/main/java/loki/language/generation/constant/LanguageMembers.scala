@@ -7,7 +7,7 @@ private[generation] object LanguageMembers
 	val UNIT_CONTEXT__METHOD__GET_VARIABLE = "getVariable"
 	val UNIT_CONTEXT__METHOD__SET_VARIABLE = "setVariable"
 
-	val UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT = "getCapturedOnCreationUnitContext"
+	val UNIT__METHOD__GET_CAPTURED_UNIT_CONTEXT = "getCapturedUnitContext"
 	val UNIT__METHOD__ADD_PARENTS = "addParents"
 	val UNIT__METHOD__GET_SUPER_MEMBER = "getSuperMember"
 	val UNIT__METHOD__GET_MEMBER = "getMember"

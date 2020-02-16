@@ -3,6 +3,7 @@ simpleVariable, /test/variable/simpleVariable.loki
 simple_arithmetic, /test/arithmetic/simpleArithmetic.loki
 
 unit_without_parameters_call, /test/functionalUnit/unitWithoutParametersCall.loki
+nested_unit_call, /test/functionalUnit/nestedUnitCall.loki
 
 if, /test/condition/if.loki
 ifelse, /test/condition/ifelse.loki

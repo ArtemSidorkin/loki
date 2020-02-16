@@ -32,20 +32,7 @@ private[execution] class Executor(
 		map (modulePath => if (modulePath endsWith "/" unary_!) modulePath + "/" else modulePath)
 	)
 
-	def getModule(relativeModulePathname:String, unitContext:Option[LUnitContext] = None):LModule =
-	{
-		val moduleName = getModuleName(relativeModulePathname)
-
-		if (modules containsKey moduleName unary_!) modules.synchronized
-		{
-			if (modules containsKey moduleName unary_!)
-				modules += moduleName -> createModule(relativeModulePathname, unitContext)
-		}
-
-		modules(moduleName)
-	}
-
-	def getModuleInstance(relativeModulePathname:String, parameters:Option[Array[LUnit]] = None):LUnit =
+	def getModuleInstance(relativeModulePathname:String):LUnit =
 	{
 		val moduleName = getModuleName(relativeModulePathname)
 
@@ -54,7 +41,7 @@ private[execution] class Executor(
 			if (moduleInstances containsKey moduleName unary_!) (
 				getModule(relativeModulePathname)
 					newInstance(
-						parameters getOrElse LUnit.EMPTY_UNIT_ARRAY,
+						LUnit.EMPTY_UNIT_ARRAY,
 						(unit:LUnit) => moduleInstances += moduleName -> unit
 					)
 			)
@@ -63,7 +50,20 @@ private[execution] class Executor(
 		moduleInstances(moduleName)
 	}
 
-	private def createModule(relativeModulePathnameWithoutExtension:String, unitContext:Option[LUnitContext]) =
+	private def getModule(relativeModulePathname:String):LModule =
+	{
+		val moduleName = getModuleName(relativeModulePathname)
+
+		if (modules containsKey moduleName unary_!) modules.synchronized
+		{
+			if (modules containsKey moduleName unary_!)
+				modules += moduleName -> createModule(relativeModulePathname)
+		}
+
+		modules(moduleName)
+	}
+
+	private def createModule(relativeModulePathnameWithoutExtension:String) =
 	{
 		val moduleName = getModuleName(relativeModulePathnameWithoutExtension)
 		val generator = generatorFactory(moduleName)
@@ -73,7 +73,7 @@ private[execution] class Executor(
 		(generator.classLoader getClass moduleName)
 			.getConstructors
 			.head
-			.newInstance(unitContext.orNull)
+			.newInstance()
 			.asInstanceOf[LModule]
 	}
 

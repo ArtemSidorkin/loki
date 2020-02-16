@@ -39,8 +39,7 @@ public class LBuiltins
 	private static void initializeDefaultFunctionalUnitInstances(Map<String, Supplier<LUnit>> builtinContainer)
 	{
 		builtinContainer.put(LFunctionalUnit.ASSERT.name, () -> LAssert.instance);
-		builtinContainer.put(LFunctionalUnit.INCLUDE.name, () -> LInclude.instance);
-		builtinContainer.put(LFunctionalUnit.IMPORT.name, () -> LImport.instance);
+		builtinContainer.put(LFunctionalUnit.USE.name, () -> LUse.instance);
 		builtinContainer.put(LFunctionalUnit.LOOP.name, () -> LLoop.instance);
 		builtinContainer.put(LFunctionalUnit.TIME.name, () -> LTime.instance);
 		builtinContainer.put(LFunctionalUnit.PRINTLN.name, () -> LPrintln.instance);

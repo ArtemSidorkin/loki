@@ -26,7 +26,6 @@ private[generation] class ModuleGenerationRule
 				addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
 				aloadthis ()
 				ldc moduleName
-				aloadModuleHeirMethodInitParameterUnitContext ()
 				invokeInitModule ()
 				`return` ()
 		)
@@ -39,8 +38,6 @@ private[generation] class ModuleGenerationRule
 				aloadthis ()
 				aloadUnitMethodCallParameterHost ()
 				aloadUnitMethodCallParameterParameters ()
-				aloadthis ()
-				invokeVirtualUnitMethodGetCapturedOnCreationUnitContext topClassFrame.internalName
 				invokeInitModuleContext ()
 				astoreUnitMethodCallVariableUnitContext ()
 		)

@@ -32,10 +32,10 @@ private[generation] object UnitBytecodeTemplate
 		def aloadUnitHeirMethodInitParameterParameters():methodBuilder.type =
 			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__PARAMETERS
 
-		def invokeVirtualUnitMethodGetCapturedOnCreationUnitContext(classInternalName:String):methodBuilder.type =
+		def invokeVirtualUnitMethodGetCapturedUnitContext(classInternalName:String):methodBuilder.type =
 			methodBuilder invokevirtual (
 				classInternalName,
-				LanguageMembers.UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT,
+				LanguageMembers.UNIT__METHOD__GET_CAPTURED_UNIT_CONTEXT,
 				BytecodeMethodDescriptors.UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT
 			)
 
@@ -107,11 +107,6 @@ private[generation] object UnitBytecodeTemplate
 
 		def invokeInitUnit():methodBuilder.type = methodBuilder invokeinit (
 			classOf[LUnit], BytecodeMethodDescriptors.UNIT__METHOD__INIT
-		)
-
-		def invokeInit1UnitHeir(initOwnerClassInternalName:String):methodBuilder.type = methodBuilder invokeinit (
-			initOwnerClassInternalName,
-			BytecodeMethodDescriptors.UNIT_HEIR__METHOD__INIT_1
 		)
 
 		def invokeInit2UnitHeir(initOwnerClassInternalName:String):methodBuilder.type = methodBuilder invokeinit (

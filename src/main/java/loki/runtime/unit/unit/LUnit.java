@@ -34,7 +34,7 @@ public abstract class LUnit
 	private static volatile LUnit prototype;
 
 	private final LType type;
-	private volatile @Nullable LUnitContext capturedOnCreationUnitContext;
+	private volatile @Nullable LUnitContext capturedUnitContext;
 	private volatile @Nullable ConcurrentLinkedDeque<LUnit> parents;
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
 	private volatile @Nullable Map<String, Integer> parameterIndexes;
@@ -44,10 +44,10 @@ public abstract class LUnit
 		this(type, null);
 	}
 
-	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedOnCreationUnitContext)
+	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedUnitContext)
 	{
 		this.type = type;
-		this.capturedOnCreationUnitContext = capturedOnCreationUnitContext;
+		this.capturedUnitContext = capturedUnitContext;
 	}
 
 	@Internal
@@ -56,7 +56,7 @@ public abstract class LUnit
 	{
 		LUnit self = this;
 
-		LUnit newUnit = new LUnit(new LType(getType().getName()), getCapturedOnCreationUnitContext())
+		LUnit newUnit = new LUnit(new LType(getType().getName()), getCapturedUnitContext())
 		{
 			@Override
 			public LUnit call(LUnit host, LUnit[] parameters)
@@ -95,9 +95,9 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	protected @Nullable LUnitContext getCapturedOnCreationUnitContext()
+	protected @Nullable LUnitContext getCapturedUnitContext()
 	{
-		return capturedOnCreationUnitContext;
+		return capturedUnitContext;
 	}
 
 	@Compiler

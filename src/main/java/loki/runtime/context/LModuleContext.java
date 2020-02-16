@@ -4,8 +4,8 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LModuleContext extends LUnitContext
 {
-	public LModuleContext(LUnit self, LUnit host, LUnit[] parameters, LUnitContext parentUnitContext)
+	public LModuleContext(LUnit moduleUnit, LUnit host, LUnit[] parameters)
 	{
-		super(self, host, parentUnitContext, parameters, parentUnitContext != null);
+		super(moduleUnit, host, null, parameters);
 	}
 }
