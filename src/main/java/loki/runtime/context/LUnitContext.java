@@ -1,7 +1,7 @@
 package loki.runtime.context;
 
 import loki.runtime.LSettings;
-import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.Nullable;
 
@@ -31,7 +31,7 @@ public class LUnitContext
 		else if (LBuiltins.BUILTINS.containsKey(superVariableName))
 			return LBuiltins.BUILTINS.get(superVariableName).get();
 
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	public LUnit getVariable(String variableName)
@@ -57,13 +57,13 @@ public class LUnitContext
 			}
 
 			variable = self.getMember(variableName);
-			if (variable != LUndefined.INSTANCE) return variable;
+			if (variable != LVoid.INSTANCE) return variable;
 		}
 
 		if (self != host) //Is it check needed?
 		{
 			variable = host.getMember(variableName);
-			if (variable != LUndefined.INSTANCE) return variable;
+			if (variable != LVoid.INSTANCE) return variable;
 		}
 
 		return getSuperVariable(variableName);

@@ -2,7 +2,6 @@ package loki.runtime.constant;
 
 public enum LDataUnit
 {
-	UNDEFINED("undefined"),
 	VOID("void"),
 	NONE("none"),
 	TRUE("true"),

@@ -27,7 +27,6 @@ public class LBuiltins
 
 					void initializeDefaultDataUnitInstances()
 					{
-						put(LDataUnit.UNDEFINED.name, () -> LUndefined.INSTANCE);
 						put(LDataUnit.VOID.name, () -> LVoid.INSTANCE);
 						put(LDataUnit.NONE.name, () -> LNone.INSTANCE);
 						put(LDataUnit.TRUE.name, () -> LBoolean.TRUE);

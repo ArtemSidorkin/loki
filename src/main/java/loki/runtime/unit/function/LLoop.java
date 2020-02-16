@@ -1,7 +1,6 @@
 package loki.runtime.unit.function;
 
 import loki.runtime.constant.LTypes;
-import loki.runtime.unit.LUndefined;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
@@ -28,7 +27,7 @@ public class LLoop extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
 
-			return LUndefined.INSTANCE;
+			return LVoid.INSTANCE;
 		}
 
 		LUnit action = checkCallParameter(parameters, 1);

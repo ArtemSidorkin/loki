@@ -1,7 +1,7 @@
 package loki.runtime.unit.member.operation;
 
 import loki.runtime.constant.LBinaryOperator;
-import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.LVoid;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
@@ -40,7 +40,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 		{
 			operatorIsNotDefinedForUnits(host, parameters[0]);
 
-			return LUndefined.INSTANCE;
+			return LVoid.INSTANCE;
 		}
 
 		return execute(leftOperand, rightOperand);

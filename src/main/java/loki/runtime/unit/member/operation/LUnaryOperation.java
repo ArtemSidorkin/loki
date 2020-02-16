@@ -1,7 +1,7 @@
 package loki.runtime.unit.member.operation;
 
 import loki.runtime.constant.LUnaryOperator;
-import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.LVoid;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
@@ -26,7 +26,7 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 
 		LErrors.unitDoesNotBelongToType(host, operandType);
 
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	protected abstract LUnit execute(OPERAND operand);

@@ -35,7 +35,7 @@ public class LArray extends LUnit
 	{
 		int index = getIndexFromCallParameters(parameters);
 
-		return index >= 0 && index < items.size() ? items.get(index) : LUndefined.INSTANCE;
+		return index >= 0 && index < items.size() ? items.get(index) : LVoid.INSTANCE;
 	}
 
 	@Override

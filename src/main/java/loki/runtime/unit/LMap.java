@@ -35,7 +35,7 @@ public class LMap extends LUnit
 		LUnit key = checkCallParameter(parameters, 0);
 		LUnit item = items.get(key);
 
-		return item != null ? item : LUndefined.INSTANCE;
+		return item != null ? item : LVoid.INSTANCE;
 	}
 
 	@Override

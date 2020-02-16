@@ -1,7 +1,7 @@
 package loki.runtime.unit.type.member;
 
 import loki.runtime.constant.LTypeMember;
-import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.LVoid;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
@@ -27,6 +27,6 @@ public class LGetIdTypeMember extends LMember
 				host, LType.makeFullName(loki.runtime.constant.LType.TYPE.name, LType.META_TYPE_ID)
 			);
 
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 }

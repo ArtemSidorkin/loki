@@ -6,7 +6,7 @@ import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.unit.LString;
-import loki.runtime.unit.LUndefined;
+import loki.runtime.unit.LVoid;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
@@ -129,10 +129,10 @@ public abstract class LUnit
 			LUnit parent = parentIterator.next();
 			LUnit member = parent.getMember(superMemberName);
 
-			if (member != LUndefined.INSTANCE) return member;
+			if (member != LVoid.INSTANCE) return member;
 		}
 
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	@Compiler
@@ -156,7 +156,7 @@ public abstract class LUnit
 	@Compiler
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	@Compiler
@@ -176,7 +176,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	@Internal
@@ -192,7 +192,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		return LUndefined.INSTANCE;
+		return LVoid.INSTANCE;
 	}
 
 	@Compiler
@@ -355,7 +355,7 @@ public abstract class LUnit
 						@Override
 						public LUnit getSuperMember(String superMemberName)
 						{
-							return LUndefined.INSTANCE;
+							return LVoid.INSTANCE;
 						}
 
 						@Override
@@ -363,7 +363,7 @@ public abstract class LUnit
 						{
 							LErrors.printErrorAndExit("Unit prototype cannot have parents");
 
-							return LUndefined.INSTANCE;
+							return LVoid.INSTANCE;
 						}
 
 						@Override
