@@ -27,7 +27,7 @@ public class LLoop extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
 
-			return LVoid.INSTANCE;
+			return null;
 		}
 
 		LUnit action = checkCallParameter(parameters, 1);

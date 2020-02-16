@@ -28,7 +28,7 @@ public class LUse extends LUnit
 		{
 			LErrors.unitDoesNotBelongToType(moduleFilePathnameAsUnit, LTypes.STRING.getFullName());
 
-			return LVoid.INSTANCE;
+			return null;
 		}
 
 		LUnit module = Execution.executor().getModuleInstance(moduleFilePathnameAsString.getValue());
