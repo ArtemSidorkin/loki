@@ -28,8 +28,8 @@ public class LUnitContext
 	public LUnit getSuperVariable(String superVariableName)
 	{
 		if (frameUnitCapturedContext != null) return frameUnitCapturedContext.getVariable(superVariableName);
-		else if (LBuiltins.container.containsKey(superVariableName))
-			return LBuiltins.container.get(superVariableName).get();
+		else if (LBuiltins.BUILTINS.containsKey(superVariableName))
+			return LBuiltins.BUILTINS.get(superVariableName).get();
 
 		return LUndefined.INSTANCE;
 	}

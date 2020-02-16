@@ -1,17 +1,17 @@
 package loki.runtime.unit.function;
 
-import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
-public class LTime extends LUnit
+public class LTimeInNanoseconds extends LUnit
 {
-	public static final LTime instance = new LTime();
+	public static final String NAME = "timeInNanoseconds";
+	public static final LTimeInNanoseconds INSTANCE = new LTimeInNanoseconds();
 
-	private LTime()
+	private LTimeInNanoseconds()
 	{
-		super(new LType(LFunctionalUnit.TIME.name));
+		super(new LType(NAME));
 	}
 
 	@Override

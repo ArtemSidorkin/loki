@@ -1,21 +1,19 @@
 package loki.runtime.unit.function;
 
 import loki.execution.Execution;
-import loki.runtime.constant.LFunctionalUnit;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LAssertionException;
 
-import java.io.PrintStream;
-
 public class LAssert extends LUnit
 {
-	public static final LAssert instance = new LAssert();
+	public static final String NAME = "assert";
+	public static final LAssert INSTANCE = new LAssert();
 
 	private LAssert()
 	{
-		super(new LType(LFunctionalUnit.ASSERT.name));
+		super(new LType(NAME));
 	}
 
 	@Override
@@ -32,14 +30,11 @@ public class LAssert extends LUnit
 				String.format("%s[%s] does not equal to %s[%s]", actual, actual.getType(), expected, expected.getType())
 			);
 
-		getOutputPrintStream()
+		Execution
+			.executor()
+			.outputPrintStream()
 			.println(String.format("%s[%s] equals to %s[%s]", actual, actual.getType(), expected, expected.getType()));
 
 		return LVoid.INSTANCE;
-	}
-
-	private static PrintStream getOutputPrintStream()
-	{
-		return Execution.executor().outputPrintStream();
 	}
 }
