@@ -7,6 +7,7 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LString extends LUnit
 {
+	public static final String PROTOTYPE_NAME = "StringPrototype";
 	public static final LString PROTOTYPE = new LString();
 
 	private final String value;

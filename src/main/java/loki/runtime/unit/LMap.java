@@ -11,6 +11,7 @@ import java.util.StringJoiner;
 
 public class LMap extends LUnit
 {
+	public static final String PROTOTYPE_NAME = "MapPrototype";
 	public static final LMap PROTOTYPE = new LMap();
 
 	private final Map<LUnit, LUnit> items = new LinkedHashMap<>();

@@ -1,6 +1,5 @@
 package loki.runtime.context;
 
-import loki.runtime.constant.LDataUnit;
 import loki.runtime.unit.*;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.function.*;
@@ -20,29 +19,29 @@ public class LBuiltins
 				new HashMap<String, Supplier<LUnit>>()
 				{
 					{
-						initializeDefaultDataUnitInstances();
 						initializePrototypes();
+						initializeObjects();
 						initializeFunctions();
 					}
 
-					void initializeDefaultDataUnitInstances()
+					void initializeObjects()
 					{
-						put(LDataUnit.VOID.name, () -> LVoid.INSTANCE);
-						put(LDataUnit.NONE.name, () -> LNone.INSTANCE);
-						put(LDataUnit.TRUE.name, () -> LBoolean.TRUE);
-						put(LDataUnit.FALSE.name, () -> LBoolean.FALSE);
+						put(LVoid.NAME, () -> LVoid.INSTANCE);
+						put(LNone.NAME, () -> LNone.INSTANCE);
+						put(LBoolean.TRUE_NAME, () -> LBoolean.TRUE);
+						put(LBoolean.FALSE_NAME, () -> LBoolean.FALSE);
 
 					}
 
 					void initializePrototypes()
 					{
-						put(LDataUnit.UNIT_PROTOTYPE.name, LUnit::getPrototype);
-						put(LDataUnit.BOOLEAN_PROTOTYPE.name, () -> LBoolean.PROTOTYPE);
-						put(LDataUnit.NUMBER_PROTOTYPE.name, () -> LNumber.prototype);
-						put(LDataUnit.STRING_PROTOTYPE.name, () -> LString.PROTOTYPE);
-						put(LDataUnit.ARRAY_PROTOTYPE.name, () -> LArray.PROTOTYPE);
-						put(LDataUnit.MAP_PROTOTYPE.name, () -> LMap.PROTOTYPE);
-						put(LDataUnit.OBJECT_PROTOTYPE.name, () -> LObject.PROTOTYPE);
+						put(LUnit.PROTOTYPE_NAME, LUnit::getPrototype);
+						put(LBoolean.PROTOTYPE_NAME, () -> LBoolean.PROTOTYPE);
+						put(LNumber.PROTOTYPE_NAME, () -> LNumber.PROTOTYPE);
+						put(LString.PROTOTYPE_NAME, () -> LString.PROTOTYPE);
+						put(LArray.PROTOTYPE_NAME, () -> LArray.PROTOTYPE);
+						put(LMap.PROTOTYPE_NAME, () -> LMap.PROTOTYPE);
+						put(LObject.PROTOTYPE_NAME, () -> LObject.PROTOTYPE);
 					}
 
 					void initializeFunctions()

@@ -9,7 +9,8 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LNumber extends LUnit
 {
-	public static final LNumber prototype = new LNumber();
+	public static final String PROTOTYPE_NAME = "NumberPrototype";
+	public static final LNumber PROTOTYPE = new LNumber();
 
 	private final double value;
 
@@ -17,7 +18,7 @@ public class LNumber extends LUnit
 	{
 		super(LTypes.NUMBER);
 		this.value = value;
-		_addParents(prototype);
+		_addParents(PROTOTYPE);
 	}
 
 	private LNumber()

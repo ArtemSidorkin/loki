@@ -12,6 +12,7 @@ import java.util.StringJoiner;
 
 public class LArray extends LUnit
 {
+	public static final String PROTOTYPE_NAME = "ArrayPrototype";
 	public static final LArray PROTOTYPE = new LArray();
 
 	private final ArrayList<LUnit> items = new ArrayList<>();

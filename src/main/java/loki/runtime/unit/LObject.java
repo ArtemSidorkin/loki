@@ -5,6 +5,7 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LObject extends LUnit
 {
+	public static final String PROTOTYPE_NAME = "ObjectPrototype";
 	public static final LObject PROTOTYPE = new LObject();
 
 	public LObject(LUnit[] items)

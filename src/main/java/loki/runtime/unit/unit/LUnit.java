@@ -1,7 +1,6 @@
 package loki.runtime.unit.unit;
 
 import loki.runtime.LSettings;
-import loki.runtime.constant.LDataUnit;
 import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
@@ -29,6 +28,8 @@ import static loki.runtime.util.Polymorphic.Type.*;
 
 public abstract class LUnit
 {
+	public static final String PROTOTYPE_NAME = "UnitPrototype";
+
 	public static final LUnit[] EMPTY_UNIT_ARRAY = {};
 
 	private static volatile LUnit prototype;
@@ -346,7 +347,7 @@ public abstract class LUnit
 		{
 			if (prototype == null)
 				prototype =
-					new LUnit(new LType(LDataUnit.UNIT_PROTOTYPE.name))
+					new LUnit(new LType(PROTOTYPE_NAME))
 					{
 						{
 							initializeBuiltins();
@@ -361,7 +362,7 @@ public abstract class LUnit
 						@Override
 						public LUnit addParents(LUnit... parents)
 						{
-							LErrors.printErrorAndExit("Unit prototype cannot have parents");
+							LErrors.printErrorAndExit("Adding parent to UnitPrototype is not allowed");
 
 							return LVoid.INSTANCE;
 						}

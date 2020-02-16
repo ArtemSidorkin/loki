@@ -10,7 +10,11 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LBoolean extends LUnit
 {
+	public static final String PROTOTYPE_NAME = "BooleanPrototype";
 	public static final LBoolean PROTOTYPE = new LBoolean();
+
+	public static final String TRUE_NAME = "true";
+	public static final String FALSE_NAME = "false";
 
 	public static final LBoolean TRUE = new LBoolean(true);
 	public static final LBoolean FALSE = new LBoolean(false);

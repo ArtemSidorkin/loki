@@ -1,7 +1,6 @@
 package loki.runtime.unit;
 
 import loki.runtime.constant.LBinaryOperator;
-import loki.runtime.constant.LDataUnit;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
@@ -11,11 +10,12 @@ import java.util.function.Consumer;
 
 public class LVoid extends LUnit
 {
+	public static final String NAME = "void";
 	public static final LVoid INSTANCE = new LVoid();
 
 	private LVoid()
 	{
-		super(new LType(LDataUnit.VOID.name));
+		super(new LType(NAME));
 	}
 
 	@Override
