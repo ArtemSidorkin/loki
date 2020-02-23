@@ -26,8 +26,8 @@ public class LBuiltins
 
 					void initializeObjects()
 					{
-						put(LVoid.NAME, () -> LVoid.INSTANCE);
-						put(LNone.NAME, () -> LNone.INSTANCE);
+						put(LVoid.TYPE_NAME, () -> LVoid.INSTANCE);
+						put(LNone.TYPE_NAME, () -> LNone.INSTANCE);
 						put(LBoolean.TRUE_NAME, () -> LBoolean.TRUE);
 						put(LBoolean.FALSE_NAME, () -> LBoolean.FALSE);
 
@@ -47,9 +47,9 @@ public class LBuiltins
 					void initializeFunctions()
 					{
 						put(LAssert.NAME, () -> LAssert.INSTANCE);
-						put(LUse.NAME, () -> LUse.INSTANCE);
-						put(LLoop.NAME, () -> LLoop.INSTANCE);
-						put(LTimeInNanoseconds.NAME, () -> LTimeInNanoseconds.INSTANCE);
+						put(LUse.TYPE_NAME, () -> LUse.INSTANCE);
+						put(LLoop.TYPE_NAME, () -> LLoop.INSTANCE);
+						put(LTimeInNanoseconds.TYPE_NAME, () -> LTimeInNanoseconds.INSTANCE);
 						put(LPrintln.NAME, () -> LPrintln.INSTANCE);
 					}
 				}

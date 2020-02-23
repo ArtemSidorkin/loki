@@ -1,6 +1,5 @@
 package loki.runtime.unit.member.operation;
 
-import loki.runtime.constant.LUnaryOperator;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
@@ -11,9 +10,9 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 {
 	private LType operandType;
 
-	protected LUnaryOperation(LUnaryOperator unaryOperator, LType operandType)
+	protected LUnaryOperation(LType type, LType operandType)
 	{
-		super(new LType(unaryOperator.symbol));
+		super(type);
 		this.operandType = operandType;
 	}
 
@@ -24,7 +23,7 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 
 		if (operand != null) return execute(operand);
 
-		LErrors.unitShouldHaveType(host, operandType.getFullName());
+		LErrors.operandShouldHaveType(host, operandType);
 
 		return LVoid.INSTANCE;
 	}

@@ -1,7 +1,7 @@
 package loki.language.generation.rule
 
 import assembler.builder.MethodBuilder
-import assembler.constant.{FINAL, PUBLIC, SYNTHETIC}
+import assembler.constant.PUBLIC
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
 import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.ContextBytecodeTemplate
@@ -10,7 +10,6 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitByteco
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.{LokiLexer, LokiParser}
-import loki.runtime.unit.unit.LUnit
 import loki.system.SystemSettings
 
 //TODO: check & refactor
@@ -88,6 +87,8 @@ private[generation] class UnitGenerationRule
 				newType ()
 				dup ()
 				ldc untNm
+				aloadthis ()
+				invokeVirtualJavaObjectMethodGetClass () //TODO: wrong class. It is outer class, not current
 				invokeInitType ()
 			)) getOrElse
 			(

@@ -1,7 +1,6 @@
 package loki.runtime.unit.unit;
 
 import loki.runtime.LSettings;
-import loki.runtime.constant.LTypes;
 import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.unit.LString;
@@ -34,15 +33,26 @@ public abstract class LUnit
 
 	private static volatile LUnit prototype;
 
-	private final LType type;
+	private LType type;
 	private volatile @Nullable LUnitContext capturedUnitContext;
 	private volatile @Nullable ConcurrentLinkedDeque<LUnit> parents;
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
 	private volatile @Nullable Map<String, Integer> parameterIndexes;
 
+	public LUnit()
+	{
+		this(null, null);
+	}
+
+
 	public LUnit(@Nullable LType type)
 	{
 		this(type, null);
+	}
+
+	public LUnit(@Nullable LUnitContext capturedUnitContext)
+	{
+		this(null, capturedUnitContext);
 	}
 
 	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedUnitContext)
@@ -55,14 +65,16 @@ public abstract class LUnit
 	@Polymorphic(COMMON)
 	public LUnit newInstance(LUnit[] parameters, @Nullable Consumer<LUnit> saver)
 	{
-		LUnit self = this;
-
-		LUnit newUnit = new LUnit(new LType(getType().getName()), getCapturedUnitContext())
+		LUnit newUnit = new LUnit(getCapturedUnitContext())
 		{
+			{
+				setType(LUnit.this.getType());
+			}
+
 			@Override
 			public LUnit call(LUnit host, LUnit[] parameters)
 			{
-				return self.call(host, parameters);
+				return LUnit.this.call(host, parameters);
 			}
 		};
 
@@ -87,6 +99,11 @@ public abstract class LUnit
 	public LType getType()
 	{
 		return type;
+	}
+
+	public void setType(LType type)
+	{
+		this.type = type;
 	}
 
 	@Internal
@@ -214,11 +231,11 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, EMPTY_UNIT_ARRAY).asType(LTypes.NUMBER);
+		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, EMPTY_UNIT_ARRAY).asType(LNumber.TYPE);
 
 		if (hashCode == null)
 			LErrors
-				.resultOfOperationForUnitShouldHaveType(LUnitMember.HASH_CODE.name, this, LTypes.NUMBER.getFullName());
+				.resultOfOperationForUnitShouldHaveType(LUnitMember.HASH_CODE.name, this, LNumber.TYPE);
 
 		return (int)hashCode.getValue();
 	}
@@ -252,11 +269,11 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LString string = callMember(LUnitMember.TO_STRING.name, EMPTY_UNIT_ARRAY).asType(LTypes.STRING);
+		LString string = callMember(LUnitMember.TO_STRING.name, EMPTY_UNIT_ARRAY).asType(LString.TYPE);
 
 		if (string == null)
 			LErrors
-				.resultOfOperationForUnitShouldHaveType(LUnitMember.TO_STRING.name, this, LTypes.STRING.getFullName());
+				.resultOfOperationForUnitShouldHaveType(LUnitMember.TO_STRING.name, this, LString.TYPE);
 
 		return string.getValue();
 	}
@@ -272,9 +289,9 @@ public abstract class LUnit
 	@Invariable
 	public boolean toBoolean()
 	{
-		LBoolean bool = asType(LTypes.BOOLEAN);
+		LBoolean bool = asType(LBoolean.TYPE);
 
-		if (bool == null) LErrors.unitShouldHaveType(this, LTypes.NUMBER.getFullName());
+		if (bool == null) LErrors.operandShouldHaveType(this, LNumber.TYPE);
 
 		return bool.getValue();
 	}
@@ -351,9 +368,11 @@ public abstract class LUnit
 		{
 			if (prototype == null)
 				prototype =
-					new LUnit(new LType(PROTOTYPE_NAME))
+					new LUnit()
 					{
 						{
+							setType(new LType(PROTOTYPE_NAME, getClass()));
+
 							initializeBuiltins();
 						}
 
@@ -387,16 +406,15 @@ public abstract class LUnit
 
 						private void initializeBuiltins()
 						{
-							LNew.instance.init(this);
-							LAddParents.instance.init(this);
+							LNew.INSTANCE.init(this);
+							LAddParents.INSTANCE.init(this);
 							LGetIndexItem.instance.init(this);
-							LSetIndexItem.instance.init(this);
-							LGetType.instance.init(this);
-							LToString.instance.init(this);
-							LHashCode.instance.init(this);
-							LEquals.instance.init(this);
-							LEqualityUnitBinaryOperation.instance.init(this);
-							LInequalityUnitBinaryOperation.instance.init(this);
+							LSetIndexItem.INSTANCE.init(this);
+							LToString.INSTANCE.init(this);
+							LHashCode.INSTANCE.init(this);
+							LEquals.INSTANCE.init(this);
+							LEqualityUnitBinaryOperation.INSTANCE.init(this);
+							LInequalityUnitBinaryOperation.INSTANCE.init(this);
 						}
 					};
 		}

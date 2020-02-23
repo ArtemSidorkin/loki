@@ -5,11 +5,13 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LNone extends LUnit
 {
-	public static final String NAME = "none";
+	public static final String TYPE_NAME = "none";
+	public static final LType TYPE = new LType(TYPE_NAME, LNone.class);
+
 	public static final LNone INSTANCE = new LNone();
 
 	private LNone()
 	{
-		super(new LType(NAME));
+		super(TYPE);
 	}
 }

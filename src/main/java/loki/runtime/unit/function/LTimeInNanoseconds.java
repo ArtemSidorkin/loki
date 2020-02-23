@@ -6,12 +6,14 @@ import loki.runtime.unit.unit.LUnit;
 
 public class LTimeInNanoseconds extends LUnit
 {
-	public static final String NAME = "timeInNanoseconds";
+	public static final String TYPE_NAME = "timeInNanoseconds";
+	public static final LType TYPE = new LType(TYPE_NAME, LTimeInNanoseconds.class);
+
 	public static final LTimeInNanoseconds INSTANCE = new LTimeInNanoseconds();
 
 	private LTimeInNanoseconds()
 	{
-		super(new LType(NAME));
+		super(TYPE);
 	}
 
 	@Override

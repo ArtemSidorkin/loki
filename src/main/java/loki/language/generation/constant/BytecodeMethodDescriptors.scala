@@ -10,7 +10,7 @@ import loki.runtime.unit.unit.LUnit
 object BytecodeMethodDescriptors
 {
 	val TYPE__METHOD__INIT = 
-		TypedMethodDescriptor((classOf[String] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[String] :: classOf[Class[_]] :: Nil) -> None)
 	val TYPE__METHOD__CREATE_ANONYMOUS = 
 		TypedMethodDescriptor(Nil -> Some(classOf[LType]))
 
@@ -93,4 +93,6 @@ object BytecodeMethodDescriptors
 
 	val OBJECT__METHOD__INIT =
 		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> None)
+
+	val JAVA_OBJECT__METHOD__GET_CLASS = TypedMethodDescriptor(Nil -> Some(classOf[Class[_]]))
 }

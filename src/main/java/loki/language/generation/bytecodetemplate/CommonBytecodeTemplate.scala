@@ -1,6 +1,7 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
+import loki.language.generation.constant.{BytecodeMethodDescriptors, LanguageMembers}
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.unit._
 import loki.runtime.unit.`type`.LType
@@ -40,5 +41,11 @@ private[generation] object CommonBytecodeTemplate
 
 		//TODO: move instance to constants
 		def void():methodBuilder.type = methodBuilder getstatic (classOf[LVoid], "INSTANCE", classOf[LVoid])
+
+		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type = methodBuilder invokevirtual (
+			classOf[Object],
+			LanguageMembers.JAVA_OBBJECT__METHOD__GET_CLASS,
+			BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS
+		)
 	}
 }

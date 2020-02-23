@@ -1,8 +1,8 @@
 package loki.runtime.unit;
 
-import loki.runtime.constant.LTypes;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
 
@@ -12,14 +12,18 @@ import java.util.StringJoiner;
 
 public class LArray extends LUnit
 {
+	public static final String TYPE_NAME = "Array";
+	public static final LType TYPE = new LType(TYPE_NAME, LArray.class);
+
 	public static final String PROTOTYPE_NAME = "ArrayPrototype";
+	public static final LType PROTO_TYPE = new LType(PROTOTYPE_NAME, LArray.class);
 	public static final LArray PROTOTYPE = new LArray();
 
 	private final ArrayList<LUnit> items = new ArrayList<>();
 
 	public LArray(LUnit[] items)
 	{
-		super(LTypes.ARRAY);
+		super(TYPE);
 
 		_addParents(PROTOTYPE);
 
@@ -28,7 +32,7 @@ public class LArray extends LUnit
 
 	private LArray()
 	{
-		super(LTypes.ARRAY_PROTOTYPE);
+		super(PROTO_TYPE);
 	}
 
 	@Override
@@ -62,7 +66,7 @@ public class LArray extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LArray array = unit.asType(LTypes.ARRAY);
+		LArray array = unit.asType(TYPE);
 
 		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE;
 	}
@@ -82,9 +86,9 @@ public class LArray extends LUnit
 	private int getIndexFromCallParameters(LUnit[] parameters)
 	{
 		LUnit unitIndex = checkCallParameter(parameters, 0);
-		LNumber numberIndex = unitIndex.asType(LTypes.NUMBER);
+		LNumber numberIndex = unitIndex.asType(LNumber.TYPE);
 
-		if (numberIndex == null) LErrors.unitShouldHaveType(unitIndex, LTypes.NUMBER.getFullName());
+		if (numberIndex == null) LErrors.operandShouldHaveType(unitIndex, LNumber.TYPE);
 
 		int index = (int)numberIndex.getValue();
 

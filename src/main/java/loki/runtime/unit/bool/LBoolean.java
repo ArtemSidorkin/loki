@@ -1,16 +1,20 @@
 package loki.runtime.unit.bool;
 
-import loki.runtime.constant.LTypes;
 import loki.runtime.unit.LString;
 import loki.runtime.unit.bool.member.operation.binary.LAndBooleanBinaryOperation;
 import loki.runtime.unit.bool.member.operation.binary.LOrBooleanBinaryOperation;
 import loki.runtime.unit.bool.member.operation.unary.LNegationBooleanUnaryOperation;
 import loki.runtime.unit.number.LNumber;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LBoolean extends LUnit
 {
+	public static final String TYPE_NAME = "Boolean";
+	public static final LType TYPE = new LType(TYPE_NAME, LBoolean.class);
+
 	public static final String PROTOTYPE_NAME = "BooleanPrototype";
+	public static final LType PROTO_TYPE = new LType(PROTOTYPE_NAME, LBoolean.class);
 	public static final LBoolean PROTOTYPE = new LBoolean();
 
 	public static final String TRUE_NAME = "true";
@@ -23,14 +27,17 @@ public class LBoolean extends LUnit
 
 	private LBoolean(boolean value)
 	{
-		super(LTypes.BOOLEAN);
+		super(TYPE);
+
 		this.value = value;
+
 		_addParents(LBoolean.PROTOTYPE);
 	}
 
 	private LBoolean()
 	{
-		super(LTypes.BOOLEAN_PROTOTYPE);
+		super(PROTO_TYPE);
+
 		initializeBuiltins();
 	}
 
@@ -66,8 +73,8 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		LNegationBooleanUnaryOperation.instance.init(this);
-		LAndBooleanBinaryOperation.instance.init(this);
-		LOrBooleanBinaryOperation.instance.init(this);
+		LNegationBooleanUnaryOperation.INSTANCE.init(this);
+		LAndBooleanBinaryOperation.INSTANCE.init(this);
+		LOrBooleanBinaryOperation.INSTANCE.init(this);
 	}
 }

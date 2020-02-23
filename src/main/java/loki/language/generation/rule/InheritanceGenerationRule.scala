@@ -3,7 +3,7 @@ package loki.language.generation.rule
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
-import loki.language.parsing.LokiParser.{ExpressionContext, InheritanceContext}
+import loki.language.parsing.LokiParser.InheritanceContext
 
 private[generation] class InheritanceGenerationRule
 	(inheritanceContext:InheritanceContext)(implicit generationContext:GenerationContext)

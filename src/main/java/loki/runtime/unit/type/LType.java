@@ -1,44 +1,26 @@
 package loki.runtime.unit.type;
 
-import loki.runtime.unit.LString;
-import loki.runtime.unit.bool.LBoolean;
-import loki.runtime.unit.number.LNumber;
-import loki.runtime.unit.type.member.LGetIdTypeMember;
-import loki.runtime.unit.type.member.LGetNameTypeMember;
-import loki.runtime.unit.unit.LUnit;
-
-import java.util.concurrent.atomic.AtomicLong;
-
-public class LType extends LUnit
+public class LType
 {
-	public static final long META_TYPE_ID = 0;
-
-	private static final AtomicLong idGenerator = new AtomicLong(0);
-	private static volatile LType type;
+	private static class Anonymous {}
 
 	private final String name;
-	private final long id = idGenerator.incrementAndGet();
-	private volatile boolean builtinsInitialized = false;
+	private final String id;
 
-	public LType(String name)
+	public LType(String name, Class typeClass)
 	{
-		super(null);
 		this.name = name;
+		this.id = typeClass.getName();
 	}
 
 	public static LType createAnonymous()
 	{
-		return new LType(loki.runtime.constant.LType.ANONYMOUS.name);
-	}
-
-	public static String makeFullName(String name, long id)
-	{
-		return String.format("%s(%s)", name, id);
+		return new LType(loki.runtime.constant.LType.ANONYMOUS.name, Anonymous.class); // TODO: class should be unique
 	}
 
 	public String getFullName()
 	{
-		return makeFullName(name, id);
+		return String.format("%s(%s)", name, id);
 	}
 
 	public String getName()
@@ -46,58 +28,14 @@ public class LType extends LUnit
 		return name;
 	}
 
-	public long getId()
+	public String getId()
 	{
 		return id;
 	}
 
 	@Override
-	public LType getType()
+	public String toString()
 	{
-		if (type == null) synchronized(this)
-		{
-			type = new LType(loki.runtime.constant.LType.TYPE.name);
-		}
-
-		return type;
-	}
-
-	@Override
-	public LUnit getMember(String memberName)
-	{
-		if (!builtinsInitialized) synchronized(this)
-		{
-			if (!builtinsInitialized)
-			{
-				initializeBuiltins();
-				builtinsInitialized = true;
-			}
-		}
-
-		return super.getMember(memberName);
-	}
-
-	@Override
-	public LNumber _hashCode()
-	{
-		return new LNumber(Long.hashCode(id));
-	}
-
-	@Override
-	public LBoolean _equals(LUnit unit)
-	{
-		return LBoolean.valueOf(this == unit);
-	}
-
-	@Override
-	public LString _toString()
-	{
-		return new LString(name);
-	}
-
-	private void initializeBuiltins()
-	{
-		LGetIdTypeMember.instance.init(this);
-		LGetNameTypeMember.instance.init(this);
+		return getFullName();
 	}
 }

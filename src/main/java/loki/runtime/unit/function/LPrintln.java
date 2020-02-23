@@ -12,7 +12,7 @@ public class LPrintln extends LUnit
 
 	private LPrintln()
 	{
-		super(new LType(NAME));
+		setType(new LType(NAME, getClass()));
 	}
 
 	@Override

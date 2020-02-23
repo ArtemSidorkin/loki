@@ -1,8 +1,8 @@
 package loki.runtime.unit;
 
-import loki.runtime.constant.LTypes;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
 import java.util.LinkedHashMap;
@@ -11,14 +11,18 @@ import java.util.StringJoiner;
 
 public class LMap extends LUnit
 {
+	public static final String TYPE_NAME = "Map";
+	public static final LType TYPE = new LType(TYPE_NAME, LMap.class);
+
 	public static final String PROTOTYPE_NAME = "MapPrototype";
+	public static final LType PROTO_TYPE = new LType(PROTOTYPE_NAME, LMap.class);
 	public static final LMap PROTOTYPE = new LMap();
 
 	private final Map<LUnit, LUnit> items = new LinkedHashMap<>();
 
 	public LMap(LUnit[] items)
 	{
-		super(LTypes.MAP);
+		super(TYPE);
 
 		_addParents(PROTOTYPE);
 
@@ -27,7 +31,7 @@ public class LMap extends LUnit
 
 	private LMap()
 	{
-		super(LTypes.MAP_PROTOTYPE);
+		super(PROTO_TYPE);
 	}
 
 	@Override
@@ -59,7 +63,7 @@ public class LMap extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LMap map = unit.asType(LTypes.MAP);
+		LMap map = unit.asType(TYPE);
 
 		return map != null ? LBoolean.valueOf(items.equals(map.items)) : LBoolean.FALSE;
 	}

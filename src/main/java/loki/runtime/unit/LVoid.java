@@ -10,12 +10,14 @@ import java.util.function.Consumer;
 
 public class LVoid extends LUnit
 {
-	public static final String NAME = "void";
+	public static final String TYPE_NAME = "void";
+	public static final LType TYPE = new LType(TYPE_NAME, LVoid.class);
+
 	public static final LVoid INSTANCE = new LVoid();
 
 	private LVoid()
 	{
-		super(new LType(NAME));
+		super(TYPE);
 	}
 
 	@Override

@@ -3,12 +3,10 @@ package loki.execution
 import java.io.{ByteArrayInputStream, File, PrintStream}
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function.Consumer
 
 import loki.language.generation.BytecodeGenerator
 import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.language.preprocessing.Preprocessor
-import loki.runtime.context.LUnitContext
 import loki.runtime.unit.LModule
 import loki.runtime.unit.unit.LUnit
 import loki.util.FileUtil
@@ -32,6 +30,7 @@ private[execution] class Executor(
 		map (modulePath => if (modulePath endsWith "/" unary_!) modulePath + "/" else modulePath)
 	)
 
+	//TODO: each module should have pathname to starting module. So class names of units will be fixed. $$$ nested folder. $$$$$ - outer folder.
 	def getModuleInstance(relativeModulePathname:String):LUnit =
 	{
 		val moduleName = getModuleName(relativeModulePathname)

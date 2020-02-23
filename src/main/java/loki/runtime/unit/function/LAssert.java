@@ -9,11 +9,13 @@ import loki.runtime.util.LAssertionException;
 public class LAssert extends LUnit
 {
 	public static final String NAME = "assert";
+	public static final LType TYPE = new LType(NAME, LAssert.class);
+
 	public static final LAssert INSTANCE = new LAssert();
 
 	private LAssert()
 	{
-		super(new LType(NAME));
+		super(TYPE);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package loki.language.generation.constant
 
 private[generation] object LanguageMembers
 {
+	val JAVA_OBBJECT__METHOD__GET_CLASS = "getClass"
+
 	val TYPE__METHOD__CREATE_ANONYMOUS = "createAnonymous"
 
 	val UNIT_CONTEXT__METHOD__GET_VARIABLE = "getVariable"

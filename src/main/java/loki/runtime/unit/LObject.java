@@ -1,16 +1,20 @@
 package loki.runtime.unit;
 
-import loki.runtime.constant.LTypes;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LObject extends LUnit
 {
+	public static final String TYPE_NAME = "Object";
+	public static final LType TYPE = new LType(TYPE_NAME, LObject.class);
+
 	public static final String PROTOTYPE_NAME = "ObjectPrototype";
+	public static final LType PROTO_TYPE = new LType(PROTOTYPE_NAME, LObject.class);
 	public static final LObject PROTOTYPE = new LObject();
 
 	public LObject(LUnit[] items)
 	{
-		super(LTypes.OBJECT);
+		super(TYPE);
 
 		_addParents(PROTOTYPE);
 
@@ -19,6 +23,6 @@ public class LObject extends LUnit
 
 	private LObject()
 	{
-		super(LTypes.OBJECT_PROTOTYPE);
+		super(PROTO_TYPE);
 	}
 }

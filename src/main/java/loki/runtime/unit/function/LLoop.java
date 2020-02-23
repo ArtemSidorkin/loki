@@ -1,6 +1,5 @@
 package loki.runtime.unit.function;
 
-import loki.runtime.constant.LTypes;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.number.LNumber;
 import loki.runtime.unit.type.LType;
@@ -9,23 +8,25 @@ import loki.runtime.util.LErrors;
 
 public class LLoop extends LUnit
 {
-	public static final String NAME = "loop";
+	public static final String TYPE_NAME = "loop";
+	public static final LType TYPE = new LType(TYPE_NAME, LLoop.class);
+
 	public static final LLoop INSTANCE = new LLoop();
 
 	private LLoop()
 	{
-		super(new LType(NAME));
+		super(TYPE);
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		LUnit iterationCountAsUnit = checkCallParameter(parameters, 0);
-		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LTypes.NUMBER);
+		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LNumber.TYPE);
 
 		if (iterationCountAsNumber == null)
 		{
-			LErrors.unitShouldHaveType(iterationCountAsUnit, LTypes.NUMBER.getFullName());
+			LErrors.operandShouldHaveType(iterationCountAsUnit, LNumber.TYPE);
 
 			return null;
 		}

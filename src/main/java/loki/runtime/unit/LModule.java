@@ -7,6 +7,6 @@ public class LModule extends LUnit
 {
 	public LModule(String moduleTypeName)
 	{
-		super(new LType(String.format("module(%s)", moduleTypeName)));
+		setType(new LType(String.format("module(%s)", moduleTypeName), getClass()));
 	}
 }

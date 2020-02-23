@@ -85,6 +85,12 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
+	def swap():this.type =
+	{
+		methodNode.instructions.add(new InsnNode(Opcodes.SWAP))
+		this
+	}
+
 	def ifeq(labelNode:LabelNode):this.type =
 	{
 		methodNode.instructions.add(new JumpInsnNode(Opcodes.IFEQ, labelNode))

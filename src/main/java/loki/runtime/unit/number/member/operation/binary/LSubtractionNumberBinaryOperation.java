@@ -2,15 +2,19 @@ package loki.runtime.unit.number.member.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.unit.number.LNumber;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LSubtractionNumberBinaryOperation extends LNumberBinaryOperation
 {
-	public static final LSubtractionNumberBinaryOperation instance = new LSubtractionNumberBinaryOperation();
+	public static final String TYPE_NAME = LBinaryOperator.MINUS.symbol;
+	public static final LType TYPE = new LType(TYPE_NAME, LSubtractionNumberBinaryOperation.class);
+
+	public static final LSubtractionNumberBinaryOperation INSTANCE = new LSubtractionNumberBinaryOperation();
 
 	private LSubtractionNumberBinaryOperation()
 	{
-		super(LBinaryOperator.MINUS);
+		super(TYPE);
 	}
 
 	@Override

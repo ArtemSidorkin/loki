@@ -10,8 +10,6 @@ ifelse, /test/condition/ifelse.loki
 
 while, /test/loop/while.loki
 
-type_members, /test/type/members.loki
-
 array_creation, /test/array/arrayCreation.loki
 
 creation_map, /test/map/creationMap.loki

@@ -1,27 +1,36 @@
 package loki.runtime.util;
 
 import loki.execution.Execution;
-import loki.runtime.constant.LBinaryOperator;
+import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LErrors
 {
-	public static void unitShouldHaveType(Object unit, String type)
+	public static void operandShouldHaveType(Object unit, LType type)
 	{
 		printErrorAndExit(String.format("Unit \"%s\" should have type \"%s\"", unit, type));
 	}
 
-	public static void resultOfOperationForUnitShouldHaveType(String operation, Object unit, String type)
+	public static void resultOfOperationForUnitShouldHaveType(String operation, Object unit, LType type)
 	{
 		printErrorAndExit(
 			String.format("Result of operation \"%s\" of unit \"%s\" should have type \"%s\"", operation, unit, type)
 		);
 	}
 
-	public static void binaryOperatorIsNotDefinedForUnits(LBinaryOperator operator, LUnit unit1, LUnit unit2)
+	public static void operandsShouldHaveTypes(LUnit leftOperand,
+											   LType leftOperandType,
+											   LUnit rightOperand,
+											   LType rightOperandType)
 	{
 		printErrorAndExit(
-			String.format("Binary operator \"%s\" is not defined for units \"%s\" and \"%s\"", operator, unit1, unit2)
+			String
+				.format("Left operand %s should have type %s, right operand %s should have type %s",
+					leftOperand,
+					leftOperandType,
+					rightOperand,
+					rightOperandType
+				)
 		);
 	}
 

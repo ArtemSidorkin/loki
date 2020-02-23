@@ -1,6 +1,5 @@
 package loki.runtime.unit.member.operation;
 
-import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
@@ -10,22 +9,20 @@ import loki.runtime.util.Nullable;
 
 public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit>	extends LMember
 {
-	protected final LBinaryOperator binaryOperator;
 	protected final @Nullable LType leftOperandType;
 	protected final @Nullable LType rightOperandType;
 
-	protected LBinaryOperation(LBinaryOperator binaryOperator)
+	protected LBinaryOperation(LType type)
 	{
-		this(binaryOperator, null, null);
+		this(type, null, null);
 	}
 
 	protected LBinaryOperation(
-		LBinaryOperator binaryOperator, @Nullable LType leftOperandType, @Nullable LType rightOperandType
+		LType type, @Nullable LType leftOperandType, @Nullable LType rightOperandType
 	)
 	{
-		super(new LType(binaryOperator.symbol));
+		super(type);
 
-		this.binaryOperator = binaryOperator;
 		this.leftOperandType = leftOperandType;
 		this.rightOperandType = rightOperandType;
 	}
@@ -38,7 +35,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 
 		if (leftOperand == null || rightOperand == null)
 		{
-			operatorIsNotDefinedForUnits(host, parameters[0]);
+			LErrors.operandsShouldHaveTypes(leftOperand, leftOperandType, rightOperand, rightOperandType);
 
 			return LVoid.INSTANCE;
 		}
@@ -47,9 +44,4 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 	}
 
 	protected abstract LUnit execute(LEFT_OPERAND leftOperand, RIGHT_OPERAND rightOperand);
-
-	private void operatorIsNotDefinedForUnits(LUnit leftOperand, LUnit rightOperand)
-	{
-		LErrors.binaryOperatorIsNotDefinedForUnits(binaryOperator, leftOperand, rightOperand);
-	}
 }
