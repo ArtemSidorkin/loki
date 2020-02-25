@@ -4,14 +4,14 @@ import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.type.LType;
 import loki.runtime.unit.unit.LUnit;
 
-public class LSetIndexItem extends LMember
+public class LSetIndexedItem extends LMember
 {
 	public static final String TYPE_NAME = "setIndexedItem";
-	public static final LType TYPE = new LType(TYPE_NAME, LSetIndexItem.class);
+	public static final LType TYPE = new LType(TYPE_NAME, LSetIndexedItem.class);
 
-	public static final LSetIndexItem INSTANCE = new LSetIndexItem();
+	public static final LSetIndexedItem INSTANCE = new LSetIndexedItem();
 
-	private LSetIndexItem()
+	private LSetIndexedItem()
 	{
 		super(TYPE);
 	}

@@ -1,7 +1,6 @@
 package loki.runtime.unit.unit;
 
 import loki.runtime.LSettings;
-import loki.runtime.constant.LUnitMember;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.unit.LString;
 import loki.runtime.unit.LVoid;
@@ -157,7 +156,7 @@ public abstract class LUnit
 	@Polymorphic(ACCESS)
 	public LUnit addParents(LUnit... parents)
 	{
-		callMember(LUnitMember.ADD_PARENTS.name, parents);
+		callMember(LAddParents.TYPE_NAME, parents);
 
 		return this;
 	}
@@ -187,7 +186,7 @@ public abstract class LUnit
 	@Polymorphic(ACCESS)
 	public LUnit getIndexedItem(LUnit index)
 	{
-		return callMember(LUnitMember.GET_INDEXED_ITEM.name, new LUnit[] {index});
+		return callMember(LGetIndexedItem.TYPE_NAME, new LUnit[] {index});
 	}
 
 	@Internal
@@ -201,7 +200,7 @@ public abstract class LUnit
 	@Polymorphic(ACCESS)
 	public LUnit setIndexedItem(LUnit index, LUnit value)
 	{
-		callMember(LUnitMember.SET_INDEXED_ITEM.name, new LUnit[] {index});
+		callMember(LSetIndexedItem.TYPE_NAME, new LUnit[] {index});
 
 		return value;
 	}
@@ -231,11 +230,11 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LNumber hashCode = callMember(LUnitMember.HASH_CODE.name, EMPTY_UNIT_ARRAY).asType(LNumber.TYPE);
+		LNumber hashCode = callMember(LHashCode.TYPE_NAME, EMPTY_UNIT_ARRAY).asType(LNumber.TYPE);
 
 		if (hashCode == null)
 			LErrors
-				.resultOfOperationForUnitShouldHaveType(LUnitMember.HASH_CODE.name, this, LNumber.TYPE);
+				.resultOfOperationOfUnitShouldHaveType(LHashCode.TYPE, this, LNumber.TYPE);
 
 		return (int)hashCode.getValue();
 	}
@@ -254,7 +253,7 @@ public abstract class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return callMember(LUnitMember.EQUALS.name, new LUnit[] {(LUnit)object}).toBoolean();
+		return callMember(LEquals.TYPE_NAME, new LUnit[] {(LUnit)object}).toBoolean();
 	}
 
 	@Internal
@@ -269,11 +268,11 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LString string = callMember(LUnitMember.TO_STRING.name, EMPTY_UNIT_ARRAY).asType(LString.TYPE);
+		LString string = callMember(LToString.TYPE_NAME, EMPTY_UNIT_ARRAY).asType(LString.TYPE);
 
 		if (string == null)
 			LErrors
-				.resultOfOperationForUnitShouldHaveType(LUnitMember.TO_STRING.name, this, LString.TYPE);
+				.resultOfOperationOfUnitShouldHaveType(LToString.TYPE, this, LString.TYPE);
 
 		return string.getValue();
 	}
@@ -408,8 +407,8 @@ public abstract class LUnit
 						{
 							LNew.INSTANCE.init(this);
 							LAddParents.INSTANCE.init(this);
-							LGetIndexItem.instance.init(this);
-							LSetIndexItem.INSTANCE.init(this);
+							LGetIndexedItem.instance.init(this);
+							LSetIndexedItem.INSTANCE.init(this);
 							LToString.INSTANCE.init(this);
 							LHashCode.INSTANCE.init(this);
 							LEquals.INSTANCE.init(this);

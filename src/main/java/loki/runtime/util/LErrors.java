@@ -11,10 +11,11 @@ public class LErrors
 		printErrorAndExit(String.format("Unit \"%s\" should have type \"%s\"", unit, type));
 	}
 
-	public static void resultOfOperationForUnitShouldHaveType(String operation, Object unit, LType type)
+	public static void resultOfOperationOfUnitShouldHaveType(LType operationType, Object unit, LType type)
 	{
 		printErrorAndExit(
-			String.format("Result of operation \"%s\" of unit \"%s\" should have type \"%s\"", operation, unit, type)
+			String
+				.format("Result of operation \"%s\" of unit \"%s\" should have type \"%s\"", operationType, unit, type)
 		);
 	}
 

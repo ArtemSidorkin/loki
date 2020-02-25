@@ -2,7 +2,10 @@ package loki.runtime.unit.type;
 
 public class LType
 {
-	private static class Anonymous {}
+	private static class Anonymous
+	{
+		public static final String NAME = "\\";
+	}
 
 	private final String name;
 	private final String id;
@@ -15,7 +18,7 @@ public class LType
 
 	public static LType createAnonymous()
 	{
-		return new LType(loki.runtime.constant.LType.ANONYMOUS.name, Anonymous.class); // TODO: class should be unique
+		return new LType(Anonymous.NAME, Anonymous.class); // TODO: class should be unique
 	}
 
 	public String getFullName()
