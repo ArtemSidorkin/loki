@@ -1,7 +1,6 @@
 package loki.language.preprocessing.command
 
 import loki.language.preprocessing.constant.CompilerTokens
-import loki.util.extension.StringExtension.StringExtension
 
 private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand extends PreprocessingCommand
 {
@@ -13,7 +12,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand exten
 		val lastCodeLineTabCount =
 			codeLines.foldLeft(0)((previousLineTabCount, codeLine) =>
 			{
-				val tabCountInCurrentLine = codeLine.tabCount
+				val tabCountInCurrentLine = countTabsInCodeLine(codeLine)
 				val lineWithoutTab = codeLine filter CompilerTokens.TAB.!=
 
 				if (tabCountInCurrentLine > previousLineTabCount)
@@ -34,4 +33,6 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand exten
 		code.clear()
 		code ++= newCode
 	}
+
+	private def countTabsInCodeLine(string:String):Int = string takeWhile (_ == '\t') length
 }
