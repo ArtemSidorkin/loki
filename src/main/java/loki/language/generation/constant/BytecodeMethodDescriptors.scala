@@ -2,8 +2,8 @@ package loki.language.generation.constant
 
 import assembler.constant.InternalDescriptors
 import assembler.methoddescriptor.{MixedMethodDescriptor, TypedMethodDescriptor}
+import loki.runtime.LType
 import loki.runtime.context.LUnitContext
-import loki.runtime.unit.`type`.LType
 import loki.runtime.unit.unit.LUnit
 
 //Split to different files

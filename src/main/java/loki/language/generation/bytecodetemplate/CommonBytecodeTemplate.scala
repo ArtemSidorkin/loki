@@ -2,9 +2,9 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import loki.language.generation.constant.{BytecodeMethodDescriptors, LanguageMembers}
+import loki.runtime.LType
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.unit._
-import loki.runtime.unit.`type`.LType
 import loki.runtime.unit.number.LNumber
 import loki.runtime.unit.unit.LUnit
 

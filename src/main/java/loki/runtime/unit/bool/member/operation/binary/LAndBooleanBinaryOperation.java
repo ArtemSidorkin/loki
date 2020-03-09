@@ -2,7 +2,7 @@ package loki.runtime.unit.bool.member.operation.binary;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.unit.bool.LBoolean;
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 
 public class LAndBooleanBinaryOperation extends LBooleanBinaryOperation
 {

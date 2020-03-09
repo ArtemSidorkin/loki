@@ -4,7 +4,7 @@ import loki.runtime.unit.LString;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.member.operation.binary.*;
 import loki.runtime.unit.number.member.operation.unary.LNegationNumberUnaryOperation;
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LNumber extends LUnit

@@ -1,6 +1,6 @@
 package loki.runtime.unit;
 
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LObject extends LUnit

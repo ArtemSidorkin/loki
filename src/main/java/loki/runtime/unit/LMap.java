@@ -2,7 +2,7 @@ package loki.runtime.unit;
 
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 
 import java.util.LinkedHashMap;

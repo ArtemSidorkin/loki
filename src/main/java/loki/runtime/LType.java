@@ -1,4 +1,4 @@
-package loki.runtime.unit.type;
+package loki.runtime;
 
 public class LType
 {

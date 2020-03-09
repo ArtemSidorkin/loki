@@ -6,7 +6,7 @@ import loki.runtime.unit.LString;
 import loki.runtime.unit.LVoid;
 import loki.runtime.unit.bool.LBoolean;
 import loki.runtime.unit.number.LNumber;
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;

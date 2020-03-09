@@ -1,7 +1,7 @@
 package loki.runtime.util;
 
 import loki.execution.Execution;
-import loki.runtime.unit.type.LType;
+import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 
 public class LErrors
