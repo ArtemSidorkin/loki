@@ -69,8 +69,8 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		LNegationBooleanUnaryOperation.DESCRIPTOR.getInstance().init(this);
-		LAndBooleanBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LOrBooleanBinaryOperation.DESCRIPTOR.getInstance().init(this);
+		addMember(LNegationBooleanUnaryOperation.DESCRIPTOR.getInstance());
+		addMember(LAndBooleanBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LOrBooleanBinaryOperation.DESCRIPTOR.getInstance());
 	}
 }

@@ -59,17 +59,16 @@ public class LNumber extends LUnit
 
 	private void initBuiltins()
 	{
-		//TODO redirect, move init to unit (aslo for other places)
-		LNegationNumberUnaryOperation.DESCRIPTOR.getInstance().init(this);
-		LMultiplicationNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LDivisionNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LAdditionNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LSubtractionNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LEqualityNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LInequalityNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LGreaterThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LLessThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LGreaterThanNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
-		LLessThanNumberBinaryOperation.DESCRIPTOR.getInstance().init(this);
+		addMember(LNegationNumberUnaryOperation.DESCRIPTOR.getInstance());
+		addMember(LMultiplicationNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LDivisionNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LAdditionNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LSubtractionNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LEqualityNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LInequalityNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LGreaterThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LLessThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LGreaterThanNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LLessThanNumberBinaryOperation.DESCRIPTOR.getInstance());
 	}
 }

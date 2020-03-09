@@ -129,6 +129,12 @@ public abstract class LUnit
 		return getSuperMember(memberName);
 	}
 
+	@Internal
+	public void addMember(LUnit unitMember)
+	{
+		setMember(unitMember.getType().getName(), unitMember);
+	}
+
 	@Compiler
 	public LUnit setMember(String memberName, LUnit member)
 	{
@@ -418,15 +424,15 @@ public abstract class LUnit
 
 						private void initializeBuiltins()
 						{
-							LNew.DESCRIPTOR.getInstance().init(this);
-							LAddParents.DESCRIPTOR.getInstance().init(this);
-							LGetIndexedItem.DESCRIPTOR.getInstance().init(this);
-							LSetIndexedItem.DESCRIPTOR.getInstance().init(this);
-							LToString.DESCRIPTOR.getInstance().init(this);
-							LHashCode.DESCRIPTOR.getInstance().init(this);
-							LEquals.DESCRIPTOR.getInstance().init(this);
-							LEqualityUnitBinaryOperation.DESCRIPTOR.getInstance().init(this);
-							LInequalityUnitBinaryOperation.DESCRIPTOR.getInstance().init(this);
+							addMember(LNew.DESCRIPTOR.getInstance());
+							addMember(LAddParents.DESCRIPTOR.getInstance());
+							addMember(LGetIndexedItem.DESCRIPTOR.getInstance());
+							addMember(LSetIndexedItem.DESCRIPTOR.getInstance());
+							addMember(LToString.DESCRIPTOR.getInstance());
+							addMember(LHashCode.DESCRIPTOR.getInstance());
+							addMember(LEquals.DESCRIPTOR.getInstance());
+							addMember(LEqualityUnitBinaryOperation.DESCRIPTOR.getInstance());
+							addMember(LInequalityUnitBinaryOperation.DESCRIPTOR.getInstance());
 						}
 					};
 		}

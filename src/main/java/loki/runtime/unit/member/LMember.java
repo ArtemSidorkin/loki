@@ -9,9 +9,4 @@ public class LMember extends LUnit
 	{
 		super(type);
 	}
-
-	public void init(LUnit host)
-	{
-		host.setMember(getType().getName(), this);
-	}
 }
