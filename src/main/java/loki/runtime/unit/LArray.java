@@ -48,7 +48,7 @@ public class LArray extends LUnit
 	{
 		int index = getIndexFromCallParameters(parameters);
 
-		if (index < 0 || index >= items.size()) LErrors.UnitDoesNotHaveItemWithIndex(this, parameters[0]);
+		if (index < 0 || index >= items.size()) LErrors.unitDoesNotHaveItemWithIndex(this, parameters[0]);
 
 		LUnit item = checkCallParameter(parameters, 1);
 

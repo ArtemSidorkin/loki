@@ -23,7 +23,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit newInstance(LUnit[] parameters, Consumer<LUnit> saver)
 	{
-		LErrors.printErrorAndExit("Instantiating \"void\" is not allowed");
+		LErrors.actionIsNotAllowedForUnit("instantiating", this);
 
 		return null;
 	}
@@ -31,7 +31,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit getMember(String memberName)
 	{
-		LErrors.printErrorAndExit("Getting member of \"void\"  is not allowed");
+		LErrors.actionIsNotAllowedForUnit("getting members", this);
 
 		return null;
 	}
@@ -39,7 +39,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		LErrors.printErrorAndExit("Setting member of \"void\"  is not allowed");
+		LErrors.actionIsNotAllowedForUnit("setting members", this);
 
 		return null;
 	}
@@ -47,7 +47,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit getSuperMember(String superMemberName)
 	{
-		LErrors.printErrorAndExit("Getting super member of \"void\"  is not allowed");
+		LErrors.actionIsNotAllowedForUnit("getting super members", this);
 
 		return null;
 	}
@@ -55,7 +55,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit addParents(LUnit... parents)
 	{
-		LErrors.printErrorAndExit("Adding parents to \"void\" is not allowed");
+		LErrors.actionIsNotAllowedForUnit("adding parents", this);
 
 		return null;
 	}
@@ -63,7 +63,7 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		LErrors.printErrorAndExit("Calling \"void\" is not allowed");
+		LErrors.actionIsNotAllowedForUnit("calling", this);
 
 		return null;
 	}
@@ -77,15 +77,7 @@ public class LVoid extends LUnit
 		if (LBinaryOperator.BANG_EQUALS.symbol.equals(memberName))
 			return LBoolean.valueOf(this != checkCallParameter(parameters, 0));
 
-		LErrors
-			.printErrorAndExit(
-				String
-					.format(
-						"Calling member of \"void\" is not allowed except \"%s\" and \"%s\"",
-						LBinaryOperator.EQUALS_EQUALS,
-						LBinaryOperator.BANG_EQUALS
-					)
-			);
+		LErrors.actionIsNotAllowedForUnit(String.format("calling member \"%s\"", memberName), this);
 
 		return null;
 	}

@@ -43,7 +43,6 @@ public abstract class LUnit
 		this(null, null);
 	}
 
-
 	public LUnit(@Nullable LType type)
 	{
 		this(type, null);
@@ -384,7 +383,15 @@ public abstract class LUnit
 						@Override
 						public LUnit addParents(LUnit... parents)
 						{
-							LErrors.printErrorAndExit("Adding parent to UnitPrototype is not allowed");
+							LErrors.actionIsNotAllowedForUnit("adding parents", this);
+
+							return LVoid.INSTANCE;
+						}
+
+						@Override
+						public LUnit _addParents(LUnit... parents)
+						{
+							LErrors.actionIsNotAllowedForUnit("adding parents", this);
 
 							return LVoid.INSTANCE;
 						}

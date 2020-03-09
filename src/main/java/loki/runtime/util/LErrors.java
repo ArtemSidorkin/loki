@@ -40,20 +40,20 @@ public class LErrors
 		printErrorAndExit(String.format("Parameter \"%s\" is missed for unit \"%s\"", parameterIndex, unit));
 	}
 
-	public static void UnitDoesNotHaveItemWithIndex(LUnit unit, Object index)
+	public static void unitDoesNotHaveItemWithIndex(LUnit unit, Object index)
 	{
 		printErrorAndExit(String.format("Unit \"%s\" does not have item with index \"%s\"", unit, index));
 	}
 
-	public static void printErrorAndExit(String error)
+	public static void actionIsNotAllowedForUnit(String action, LUnit unit)
+	{
+		printErrorAndExit(String.format("%s is not allowed for unit \"%s\"", action, unit));
+	}
+
+	private static void printErrorAndExit(String error)
 	{
 		Execution.executor().errorPrintStream().println(error);
 
-		exit();
-	}
-
-	private static void exit()
-	{
 		System.exit(-1);
 	}
 }
