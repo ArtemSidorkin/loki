@@ -25,7 +25,7 @@ public class LNumber extends LUnit
 
 	private LNumber()
 	{
-		setType(DESCRIPTOR.getPrototypeType());
+		super(DESCRIPTOR.getPrototypeType());
 
 		value = 0;
 
