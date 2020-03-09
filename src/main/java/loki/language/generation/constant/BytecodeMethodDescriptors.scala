@@ -16,7 +16,7 @@ object BytecodeMethodDescriptors
 
 	val UNIT_CONTEXT__METHOD__INIT =
 		TypedMethodDescriptor(
-			(classOf[LUnit] :: classOf[LUnit] :: classOf[LUnitContext] :: classOf[Array[LUnit]] :: Nil) -> None
+			(classOf[LUnit] :: classOf[LUnit] :: classOf[Array[LUnit]] :: Nil) -> None
 		)
 	val UNIT_CONTEXT__METHOD__GET_VARIABLE =
 		TypedMethodDescriptor((classOf[String] :: Nil) -> Some(classOf[LUnit]))

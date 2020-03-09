@@ -121,8 +121,6 @@ private[generation] class UnitGenerationRule
 			dup ()
 			aloadthis ()
 			aloadUnitMethodCallParameterHost ()
-			aloadthis ()
-			invokeVirtualUnitMethodGetCapturedUnitContext topClassFrame.internalName
 			aloadUnitMethodCallParameterParameters ()
 			invokeInitUnitContext ()
 			astoreUnitMethodCallVariableUnitContext ()

@@ -6,6 +6,6 @@ public class LModuleContext extends LUnitContext
 {
 	public LModuleContext(LUnit moduleUnit, LUnit host, LUnit[] parameters)
 	{
-		super(moduleUnit, host, null, parameters);
+		super(moduleUnit, host, parameters);
 	}
 }

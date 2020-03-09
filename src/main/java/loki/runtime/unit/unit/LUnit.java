@@ -105,16 +105,16 @@ public abstract class LUnit
 		this.type = type;
 	}
 
+	@Compiler
+	public @Nullable LUnitContext getCapturedUnitContext()
+	{
+		return capturedUnitContext;
+	}
+
 	@Internal
 	public @Nullable Map<String, Integer> getParameterIndexes()
 	{
 		return parameterIndexes;
-	}
-
-	@Compiler
-	protected @Nullable LUnitContext getCapturedUnitContext()
-	{
-		return capturedUnitContext;
 	}
 
 	@Compiler

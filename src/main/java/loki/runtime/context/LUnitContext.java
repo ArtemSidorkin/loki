@@ -10,19 +10,20 @@ import java.util.concurrent.ConcurrentMap;
 
 public class LUnitContext
 {
-	private final LUnit self;
+	private final LUnit frameUnit;
 	private final LUnit host;
-	@Nullable private final LUnitContext frameUnitCapturedContext;
 	@Nullable private final LUnit[] parameters;
 
+	@Nullable private final LUnitContext frameUnitCapturedContext;
 	@Nullable private volatile ConcurrentMap<String, LUnit> variables;
 
-	public LUnitContext(LUnit frameUnit, LUnit host, @Nullable LUnitContext frameUnitCapturedContext, @Nullable LUnit[] parameters)
+	public LUnitContext(LUnit frameUnit, LUnit host, @Nullable LUnit[] parameters)
 	{
-		this.self = frameUnit;
+		this.frameUnit = frameUnit;
 		this.host = host;
-		this.frameUnitCapturedContext = frameUnitCapturedContext;
 		this.parameters = parameters;
+
+		frameUnitCapturedContext = this.frameUnit.getCapturedUnitContext();
 	}
 
 	public LUnit getSuperVariable(String superVariableName)
@@ -44,11 +45,11 @@ public class LUnitContext
 			if (variable != null) return variable;
 		}
 
-		if (self != null)
+		if (frameUnit != null)
 		{
-			if (self.getParameterIndexes() != null)
+			if (frameUnit.getParameterIndexes() != null)
 			{
-				Integer parameterIndex = self.getParameterIndexes().get(variableName);
+				Integer parameterIndex = frameUnit.getParameterIndexes().get(variableName);
 				if (parameterIndex != null)
 				{
 					variable = checkParameter(parameterIndex);
@@ -56,11 +57,11 @@ public class LUnitContext
 				}
 			}
 
-			variable = self.getMember(variableName);
+			variable = frameUnit.getMember(variableName);
 			if (variable != LVoid.INSTANCE) return variable;
 		}
 
-		if (self != host) //Is it check needed?
+		if (frameUnit != host) //Is it check needed?
 		{
 			variable = host.getMember(variableName);
 			if (variable != LVoid.INSTANCE) return variable;
