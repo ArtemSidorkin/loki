@@ -296,7 +296,6 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	@Invariable
 	public boolean toBoolean()
 	{
 		LBoolean bool = asType(LBoolean.DESCRIPTOR.getType());
