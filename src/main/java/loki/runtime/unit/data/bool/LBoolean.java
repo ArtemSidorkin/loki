@@ -13,9 +13,6 @@ public class LBoolean extends LUnit
 	public static final LDataUnitDescriptor<LBoolean> DESCRIPTOR =
 		new LDataUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class);
 
-	public static final String TRUE_NAME = "true";
-	public static final String FALSE_NAME = "false";
-
 	public static final LBoolean TRUE = new LBoolean(true);
 	public static final LBoolean FALSE = new LBoolean(false);
 
@@ -42,6 +39,11 @@ public class LBoolean extends LUnit
 		return value ? TRUE : FALSE;
 	}
 
+	public String getName()
+	{
+		return String.valueOf(value);
+	}
+
 	public boolean getValue()
 	{
 		return value;
@@ -64,7 +66,7 @@ public class LBoolean extends LUnit
 	@Override
 	public LString _toString()
 	{
-		return new LString(String.valueOf(value));
+		return new LString(getName());
 	}
 
 	private void initializeBuiltins()

@@ -33,8 +33,8 @@ public class LBuiltins
 					{
 						put(LVoid.DESCRIPTOR.getType().getName(), LVoid.DESCRIPTOR::getInstance);
 						put(LNone.DESCRIPTOR.getType().getName(), LNone.DESCRIPTOR::getInstance);
-						put(LBoolean.TRUE_NAME, () -> LBoolean.TRUE);
-						put(LBoolean.FALSE_NAME, () -> LBoolean.FALSE);
+						put(LBoolean.TRUE.getName(), () -> LBoolean.TRUE);
+						put(LBoolean.FALSE.getName(), () -> LBoolean.FALSE);
 					}
 
 					void initializePrototypes()
