@@ -1,19 +1,17 @@
 package loki.runtime.unit.unit.member;
 
 import loki.runtime.unit.member.LMember;
-import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LToString extends LMember
 {
-	public static final String TYPE_NAME = "toString";
-	public static final LType TYPE = new LType(TYPE_NAME, LToString.class);
-
-	public static final LToString INSTANCE = new LToString();
+	public static final LInstanceUnitDescriptor<LToString> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("toString", LToString.class);
 
 	private LToString()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

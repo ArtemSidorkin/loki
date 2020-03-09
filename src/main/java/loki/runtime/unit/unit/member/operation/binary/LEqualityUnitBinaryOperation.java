@@ -1,20 +1,17 @@
 package loki.runtime.unit.unit.member.operation.binary;
 
-import loki.runtime.constant.LBinaryOperator;
-import loki.runtime.unit.bool.LBoolean;
-import loki.runtime.LType;
+import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LEqualityUnitBinaryOperation extends LUnitBinaryOperation
 {
-	public static final String TYPE_NAME = LBinaryOperator.EQUALS_EQUALS.symbol;
-	public static final LType TYPE = new LType(TYPE_NAME, LEqualityUnitBinaryOperation.class);
-
-	public static final LEqualityUnitBinaryOperation INSTANCE = new LEqualityUnitBinaryOperation();
+	public static final LInstanceUnitDescriptor<LEqualityUnitBinaryOperation> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("==", LEqualityUnitBinaryOperation.class);
 
 	private LEqualityUnitBinaryOperation()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

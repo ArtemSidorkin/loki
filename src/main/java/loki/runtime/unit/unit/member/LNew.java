@@ -1,19 +1,16 @@
 package loki.runtime.unit.unit.member;
 
 import loki.runtime.unit.member.LMember;
-import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LNew extends LMember
 {
-	public static final String TYPE_NAME = "new";
-	public static final LType TYPE = new LType(TYPE_NAME, LNew.class);
-
-	public static final LNew INSTANCE = new LNew();
+	public static final LInstanceUnitDescriptor<LNew> DESCRIPTOR = new LInstanceUnitDescriptor<>("new", LNew.class);
 
 	private LNew()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

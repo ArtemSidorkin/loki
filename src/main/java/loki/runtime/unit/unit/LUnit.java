@@ -1,12 +1,12 @@
 package loki.runtime.unit.unit;
 
 import loki.runtime.LSettings;
-import loki.runtime.context.LUnitContext;
-import loki.runtime.unit.LString;
-import loki.runtime.unit.LVoid;
-import loki.runtime.unit.bool.LBoolean;
-import loki.runtime.unit.number.LNumber;
 import loki.runtime.LType;
+import loki.runtime.context.LUnitContext;
+import loki.runtime.unit.data.LString;
+import loki.runtime.unit.data.bool.LBoolean;
+import loki.runtime.unit.data.number.LNumber;
+import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
@@ -145,17 +145,17 @@ public abstract class LUnit
 			LUnit parent = parentIterator.next();
 			LUnit member = parent.getMember(superMemberName);
 
-			if (member != LVoid.INSTANCE) return member;
+			if (member != LVoid.DESCRIPTOR.getInstance()) return member;
 		}
 
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 
 	@Compiler
 	@Polymorphic(ACCESS)
 	public LUnit addParents(LUnit... parents)
 	{
-		callMember(LAddParents.TYPE_NAME, parents);
+		callMember(LAddParents.DESCRIPTOR.getType().getName(), parents);
 
 		return this;
 	}
@@ -172,7 +172,7 @@ public abstract class LUnit
 	@Compiler
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 
 	@Compiler
@@ -185,21 +185,21 @@ public abstract class LUnit
 	@Polymorphic(ACCESS)
 	public LUnit getIndexedItem(LUnit index)
 	{
-		return callMember(LGetIndexedItem.TYPE_NAME, new LUnit[] {index});
+		return callMember(LGetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
 	}
 
 	@Internal
 	@Polymorphic(DEFAULT)
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 
 	@Internal
 	@Polymorphic(ACCESS)
 	public LUnit setIndexedItem(LUnit index, LUnit value)
 	{
-		callMember(LSetIndexedItem.TYPE_NAME, new LUnit[] {index});
+		callMember(LSetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
 
 		return value;
 	}
@@ -208,7 +208,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 
 	@Compiler
@@ -229,11 +229,14 @@ public abstract class LUnit
 	@Override
 	public int hashCode()
 	{
-		LNumber hashCode = callMember(LHashCode.TYPE_NAME, EMPTY_UNIT_ARRAY).asType(LNumber.TYPE);
+		LNumber hashCode =
+			callMember(LHashCode.DESCRIPTOR.getType().getName(), EMPTY_UNIT_ARRAY).asType(LNumber.DESCRIPTOR.getType());
 
 		if (hashCode == null)
 			LErrors
-				.resultOfOperationOfUnitShouldHaveType(LHashCode.TYPE, this, LNumber.TYPE);
+				.resultOfOperationOfUnitShouldHaveType(
+					LHashCode.DESCRIPTOR.getType(), this, LNumber.DESCRIPTOR.getType()
+				);
 
 		return (int)hashCode.getValue();
 	}
@@ -252,7 +255,7 @@ public abstract class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return callMember(LEquals.TYPE_NAME, new LUnit[] {(LUnit)object}).toBoolean();
+		return callMember(LEquals.DESCRIPTOR.getType().getName(), new LUnit[] {(LUnit)object}).toBoolean();
 	}
 
 	@Internal
@@ -267,11 +270,14 @@ public abstract class LUnit
 	@Override
 	public String toString()
 	{
-		LString string = callMember(LToString.TYPE_NAME, EMPTY_UNIT_ARRAY).asType(LString.TYPE);
+		LString string =
+			callMember(LToString.DESCRIPTOR.getType().getName(), EMPTY_UNIT_ARRAY).asType(LString.DESCRIPTOR.getType());
 
 		if (string == null)
 			LErrors
-				.resultOfOperationOfUnitShouldHaveType(LToString.TYPE, this, LString.TYPE);
+				.resultOfOperationOfUnitShouldHaveType(
+					LToString.DESCRIPTOR.getType(), this, LString.DESCRIPTOR.getType()
+				);
 
 		return string.getValue();
 	}
@@ -287,9 +293,9 @@ public abstract class LUnit
 	@Invariable
 	public boolean toBoolean()
 	{
-		LBoolean bool = asType(LBoolean.TYPE);
+		LBoolean bool = asType(LBoolean.DESCRIPTOR.getType());
 
-		if (bool == null) LErrors.operandShouldHaveType(this, LNumber.TYPE);
+		if (bool == null) LErrors.operandShouldHaveType(this, LNumber.DESCRIPTOR.getType());
 
 		return bool.getValue();
 	}
@@ -377,7 +383,7 @@ public abstract class LUnit
 						@Override
 						public LUnit getSuperMember(String superMemberName)
 						{
-							return LVoid.INSTANCE;
+							return LVoid.DESCRIPTOR.getInstance();
 						}
 
 						@Override
@@ -385,7 +391,7 @@ public abstract class LUnit
 						{
 							LErrors.actionIsNotAllowedForUnit("adding parents", this);
 
-							return LVoid.INSTANCE;
+							return LVoid.DESCRIPTOR.getInstance();
 						}
 
 						@Override
@@ -393,7 +399,7 @@ public abstract class LUnit
 						{
 							LErrors.actionIsNotAllowedForUnit("adding parents", this);
 
-							return LVoid.INSTANCE;
+							return LVoid.DESCRIPTOR.getInstance();
 						}
 
 						@Override
@@ -412,15 +418,15 @@ public abstract class LUnit
 
 						private void initializeBuiltins()
 						{
-							LNew.INSTANCE.init(this);
-							LAddParents.INSTANCE.init(this);
-							LGetIndexedItem.instance.init(this);
-							LSetIndexedItem.INSTANCE.init(this);
-							LToString.INSTANCE.init(this);
-							LHashCode.INSTANCE.init(this);
-							LEquals.INSTANCE.init(this);
-							LEqualityUnitBinaryOperation.INSTANCE.init(this);
-							LInequalityUnitBinaryOperation.INSTANCE.init(this);
+							LNew.DESCRIPTOR.getInstance().init(this);
+							LAddParents.DESCRIPTOR.getInstance().init(this);
+							LGetIndexedItem.DESCRIPTOR.getInstance().init(this);
+							LSetIndexedItem.DESCRIPTOR.getInstance().init(this);
+							LToString.DESCRIPTOR.getInstance().init(this);
+							LHashCode.DESCRIPTOR.getInstance().init(this);
+							LEquals.DESCRIPTOR.getInstance().init(this);
+							LEqualityUnitBinaryOperation.DESCRIPTOR.getInstance().init(this);
+							LInequalityUnitBinaryOperation.DESCRIPTOR.getInstance().init(this);
 						}
 					};
 		}

@@ -1,18 +1,18 @@
 package loki.runtime.unit.function;
 
 import loki.execution.Execution;
-import loki.runtime.unit.LVoid;
-import loki.runtime.LType;
+import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LPrintln extends LUnit
 {
-	public static final String NAME = "println";
-	public static final LPrintln INSTANCE = new LPrintln();
+	public static final LInstanceUnitDescriptor<LPrintln> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("println", LPrintln.class);
 
 	private LPrintln()
 	{
-		setType(new LType(NAME, getClass()));
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override
@@ -22,6 +22,6 @@ public class LPrintln extends LUnit
 			for (LUnit parameter : parameters) Execution.executor().outputPrintStream().println(parameter);
 		else Execution.executor().outputPrintStream().println();
 
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 }

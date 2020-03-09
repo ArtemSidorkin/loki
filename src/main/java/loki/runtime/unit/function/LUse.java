@@ -1,32 +1,29 @@
 package loki.runtime.unit.function;
 
 import loki.execution.Execution;
-import loki.runtime.unit.LString;
-import loki.runtime.LType;
+import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.LErrors;
 
 public class LUse extends LUnit
 {
-	public static final String TYPE_NAME = "use";
-	public static final LType TYPE = new LType(TYPE_NAME, LUse.class);
-
-	public static final LUse INSTANCE = new LUse();
+	public static final LInstanceUnitDescriptor<LUse> DESCRIPTOR = new LInstanceUnitDescriptor<>("use", LUse.class);
 
 	private LUse()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
 		LUnit moduleFilePathnameAsUnit = checkCallParameter(parameters, 0);
-		LString moduleFilePathnameAsString = moduleFilePathnameAsUnit.asType(LString.TYPE);
+		LString moduleFilePathnameAsString = moduleFilePathnameAsUnit.asType(LString.DESCRIPTOR.getType());
 
 		if (moduleFilePathnameAsString == null)
 		{
-			LErrors.operandShouldHaveType(moduleFilePathnameAsUnit, LString.TYPE);
+			LErrors.operandShouldHaveType(moduleFilePathnameAsUnit, LString.DESCRIPTOR.getType());
 
 			return null;
 		}

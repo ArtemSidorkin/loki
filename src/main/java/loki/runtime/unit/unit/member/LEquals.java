@@ -1,20 +1,18 @@
 package loki.runtime.unit.unit.member;
 
-import loki.runtime.unit.bool.LBoolean;
+import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.member.LMember;
-import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LEquals extends LMember
 {
-	public static final String TYPE_NAME = "equals";
-	public static final LType TYPE = new LType(TYPE_NAME, LEquals.class);
-
-	public static final LEquals INSTANCE = new LEquals();
+	public static final LInstanceUnitDescriptor<LEquals> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("equals", LEquals.class);
 
 	private LEquals()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

@@ -1,19 +1,17 @@
 package loki.runtime.unit.unit.member;
 
 import loki.runtime.unit.member.LMember;
-import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LGetIndexedItem extends LMember
 {
-	public static final String TYPE_NAME = "getIndexedItem";
-	public static final LType TYPE = new LType(TYPE_NAME, LGetIndexedItem.class);
-
-	public static final LGetIndexedItem instance = new LGetIndexedItem();
+	public static final LInstanceUnitDescriptor<LGetIndexedItem> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("getIndexedItem", LGetIndexedItem.class);
 
 	private LGetIndexedItem()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

@@ -1,9 +1,14 @@
 package loki.runtime.context;
 
-import loki.runtime.unit.*;
-import loki.runtime.unit.bool.LBoolean;
+import loki.runtime.unit.data.LArray;
+import loki.runtime.unit.data.LMap;
+import loki.runtime.unit.data.LObject;
+import loki.runtime.unit.data.LString;
+import loki.runtime.unit.data.bool.LBoolean;
+import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.function.*;
-import loki.runtime.unit.number.LNumber;
+import loki.runtime.unit.singleton.LNone;
+import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 
 import java.util.Collections;
@@ -20,37 +25,36 @@ public class LBuiltins
 				{
 					{
 						initializePrototypes();
-						initializeObjects();
+						initializeValues();
 						initializeFunctions();
 					}
 
-					void initializeObjects()
+					void initializeValues()
 					{
-						put(LVoid.TYPE_NAME, () -> LVoid.INSTANCE);
-						put(LNone.TYPE_NAME, () -> LNone.INSTANCE);
+						put(LVoid.DESCRIPTOR.getType().getName(), LVoid.DESCRIPTOR::getInstance);
+						put(LNone.DESCRIPTOR.getType().getName(), LNone.DESCRIPTOR::getInstance);
 						put(LBoolean.TRUE_NAME, () -> LBoolean.TRUE);
 						put(LBoolean.FALSE_NAME, () -> LBoolean.FALSE);
-
 					}
 
 					void initializePrototypes()
 					{
 						put(LUnit.PROTOTYPE_NAME, LUnit::getPrototype);
-						put(LBoolean.PROTOTYPE_NAME, () -> LBoolean.PROTOTYPE);
-						put(LNumber.PROTOTYPE_NAME, () -> LNumber.PROTOTYPE);
-						put(LString.PROTOTYPE_NAME, () -> LString.PROTOTYPE);
-						put(LArray.PROTOTYPE_NAME, () -> LArray.PROTOTYPE);
-						put(LMap.PROTOTYPE_NAME, () -> LMap.PROTOTYPE);
-						put(LObject.PROTOTYPE_NAME, () -> LObject.PROTOTYPE);
+						put(LBoolean.DESCRIPTOR.getPrototypeType().getName(), LBoolean.DESCRIPTOR::getPrototype);
+						put(LNumber.DESCRIPTOR.getPrototypeType().getName(), LNumber.DESCRIPTOR::getPrototype);
+						put(LString.DESCRIPTOR.getPrototypeType().getName(), LString.DESCRIPTOR::getPrototype);
+						put(LArray.DESCRIPTOR.getPrototypeType().getName(), LArray.DESCRIPTOR::getPrototype);
+						put(LMap.DESCRIPTOR.getPrototypeType().getName(), LMap.DESCRIPTOR::getPrototype);
+						put(LObject.DESCRIPTOR.getPrototypeType().getName(), LObject.DESCRIPTOR::getPrototype);
 					}
 
 					void initializeFunctions()
 					{
-						put(LAssert.NAME, () -> LAssert.INSTANCE);
-						put(LUse.TYPE_NAME, () -> LUse.INSTANCE);
-						put(LLoop.TYPE_NAME, () -> LLoop.INSTANCE);
-						put(LTimeInNanoseconds.TYPE_NAME, () -> LTimeInNanoseconds.INSTANCE);
-						put(LPrintln.NAME, () -> LPrintln.INSTANCE);
+						put(LAssert.DESCRIPTOR.getType().getName(), LAssert.DESCRIPTOR::getInstance);
+						put(LUse.DESCRIPTOR.getType().getName(), LUse.DESCRIPTOR::getInstance);
+						put(LLoop.DESCRIPTOR.getType().getName(), LLoop.DESCRIPTOR::getInstance);
+						put(LTimeInNanoseconds.DESCRIPTOR.getType().getName(), LTimeInNanoseconds.DESCRIPTOR::getInstance);
+						put(LPrintln.DESCRIPTOR.getType().getName(), LPrintln.DESCRIPTOR::getInstance);
 					}
 				}
 			);

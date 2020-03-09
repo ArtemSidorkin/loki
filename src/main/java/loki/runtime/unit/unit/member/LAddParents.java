@@ -1,19 +1,17 @@
 package loki.runtime.unit.unit.member;
 
 import loki.runtime.unit.member.LMember;
-import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LAddParents extends LMember
 {
-	public static final String TYPE_NAME = "addParents";
-	public static final LType TYPE = new LType(TYPE_NAME, LAddParents.class);
-
-	public static final LAddParents INSTANCE = new LAddParents();
+	public static final LInstanceUnitDescriptor<LAddParents> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("addParents", LAddParents.class);
 
 	private LAddParents()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override

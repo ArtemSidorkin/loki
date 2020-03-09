@@ -1,8 +1,8 @@
 package loki.runtime.unit.member.operation;
 
-import loki.runtime.unit.LVoid;
-import loki.runtime.unit.member.LMember;
 import loki.runtime.LType;
+import loki.runtime.unit.member.LMember;
+import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
@@ -37,7 +37,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 		{
 			LErrors.operandsShouldHaveTypes(leftOperand, leftOperandType, rightOperand, rightOperandType);
 
-			return LVoid.INSTANCE;
+			return LVoid.DESCRIPTOR.getInstance();
 		}
 
 		return execute(leftOperand, rightOperand);

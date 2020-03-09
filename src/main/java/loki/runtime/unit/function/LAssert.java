@@ -1,21 +1,19 @@
 package loki.runtime.unit.function;
 
 import loki.execution.Execution;
-import loki.runtime.unit.LVoid;
-import loki.runtime.LType;
+import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.LAssertionException;
 
 public class LAssert extends LUnit
 {
-	public static final String NAME = "assert";
-	public static final LType TYPE = new LType(NAME, LAssert.class);
-
-	public static final LAssert INSTANCE = new LAssert();
+	public static final LInstanceUnitDescriptor<LAssert> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("assert", LAssert.class);
 
 	private LAssert()
 	{
-		super(TYPE);
+		super(DESCRIPTOR.getType());
 	}
 
 	@Override
@@ -37,6 +35,6 @@ public class LAssert extends LUnit
 			.outputPrintStream()
 			.println(String.format("%s[%s] equals to %s[%s]", actual, actual.getType(), expected, expected.getType()));
 
-		return LVoid.INSTANCE;
+		return LVoid.DESCRIPTOR.getInstance();
 	}
 }
