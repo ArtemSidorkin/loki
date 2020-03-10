@@ -43,7 +43,7 @@ public class LString extends LUnit
 	{
 		LString string = unit.asType(DESCRIPTOR.getType());
 
-		return string != null ? LBoolean.valueOf(value.equals(string.value)) : LBoolean.FALSE;
+		return string != null ? LBoolean.valueOf(value.equals(string.value)) : LBoolean.FALSE.getInstance();
 	}
 
 	@Override

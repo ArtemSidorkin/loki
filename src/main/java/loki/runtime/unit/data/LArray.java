@@ -65,7 +65,7 @@ public class LArray extends LUnit
 	{
 		LArray array = unit.asType(DESCRIPTOR.getType());
 
-		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE;
+		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE.getInstance();
 	}
 
 	@Override

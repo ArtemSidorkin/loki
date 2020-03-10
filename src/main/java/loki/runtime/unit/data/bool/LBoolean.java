@@ -7,14 +7,18 @@ import loki.runtime.unit.data.bool.member.operation.unary.LNegationBooleanUnaryO
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.unitdescriptor.LEnumerationUnitDescriptor;
 
 public class LBoolean extends LUnit
 {
 	public static final LDataUnitDescriptor<LBoolean> DESCRIPTOR =
 		new LDataUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class);
 
-	public static final LBoolean TRUE = new LBoolean(true);
-	public static final LBoolean FALSE = new LBoolean(false);
+	public static final LEnumerationUnitDescriptor<LBoolean> TRUE =
+		new LEnumerationUnitDescriptor<>("true", new LBoolean(true));
+
+	public static final LEnumerationUnitDescriptor<LBoolean> FALSE =
+		new LEnumerationUnitDescriptor<>("false", new LBoolean(false));
 
 	private boolean value;
 
@@ -36,12 +40,7 @@ public class LBoolean extends LUnit
 
 	public static LBoolean valueOf(boolean value)
 	{
-		return value ? TRUE : FALSE;
-	}
-
-	public String getName()
-	{
-		return String.valueOf(value);
+		return value ? TRUE.getInstance() : FALSE.getInstance();
 	}
 
 	public boolean getValue()
@@ -66,7 +65,7 @@ public class LBoolean extends LUnit
 	@Override
 	public LString _toString()
 	{
-		return new LString(getName());
+		return new LString(String.valueOf(value));
 	}
 
 	private void initializeBuiltins()

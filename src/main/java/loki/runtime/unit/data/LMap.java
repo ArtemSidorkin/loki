@@ -62,7 +62,7 @@ public class LMap extends LUnit
 	{
 		LMap map = unit.asType(DESCRIPTOR.getType());
 
-		return map != null ? LBoolean.valueOf(items.equals(map.items)) : LBoolean.FALSE;
+		return map != null ? LBoolean.valueOf(items.equals(map.items)) : LBoolean.FALSE.getInstance();
 	}
 
 	@Override
