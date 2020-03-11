@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class LBuiltins
 {
-	public static final Map<String, Supplier<LUnit>> VALUES =
+	private static final Map<String, Supplier<LUnit>> VALUES =
 		Collections
 			.unmodifiableMap(
 				new HashMap<String, Supplier<LUnit>>()
@@ -58,4 +58,14 @@ public class LBuiltins
 					}
 				}
 			);
+
+	public static boolean have(String name)
+	{
+		return VALUES.containsKey(name);
+	}
+
+	public static LUnit get(String name)
+	{
+		return VALUES.get(name).get();
+	}
 }

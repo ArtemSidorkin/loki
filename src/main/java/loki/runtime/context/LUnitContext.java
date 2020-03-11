@@ -31,8 +31,7 @@ public class LUnitContext
 	public LUnit getSuperVariable(String superVariableName)
 	{
 		if (frameUnitCapturedContext != null) return frameUnitCapturedContext.getVariable(superVariableName);
-		else if (LBuiltins.VALUES.containsKey(superVariableName))
-			return LBuiltins.VALUES.get(superVariableName).get();
+		else if (LBuiltins.have(superVariableName)) return LBuiltins.get(superVariableName);
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}
