@@ -1,13 +1,13 @@
 package loki.runtime.unit.member.operation;
 
 import loki.runtime.LType;
+import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.member.LMember;
-import loki.runtime.unit.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.LErrors;
 import loki.runtime.util.Nullable;
 
-public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit>	extends LMember
+public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit> extends LMember
 {
 	protected final @Nullable LType leftOperandType;
 	protected final @Nullable LType rightOperandType;

@@ -6,7 +6,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LOrBooleanBinaryOperation extends LBooleanBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LOrBooleanBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("||", LOrBooleanBinaryOperation.class);
+		new LInstanceUnitDescriptor<>("||", LOrBooleanBinaryOperation.class, LOrBooleanBinaryOperation::new);
 
 	private LOrBooleanBinaryOperation()
 	{

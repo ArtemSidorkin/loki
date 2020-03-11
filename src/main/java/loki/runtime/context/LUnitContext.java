@@ -1,8 +1,9 @@
 package loki.runtime.context;
 
 import loki.runtime.LSettings;
-import loki.runtime.unit.singleton.LVoid;
+import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.util.Compiler;
 import loki.runtime.util.Nullable;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +18,7 @@ public class LUnitContext
 	@Nullable private final LUnitContext frameUnitCapturedContext;
 	@Nullable private volatile ConcurrentMap<String, LUnit> variables;
 
+	@Compiler
 	public LUnitContext(LUnit frameUnit, LUnit host, @Nullable LUnit[] parameters)
 	{
 		this.frameUnit = frameUnit;
@@ -29,8 +31,8 @@ public class LUnitContext
 	public LUnit getSuperVariable(String superVariableName)
 	{
 		if (frameUnitCapturedContext != null) return frameUnitCapturedContext.getVariable(superVariableName);
-		else if (LBuiltins.BUILTINS.containsKey(superVariableName))
-			return LBuiltins.BUILTINS.get(superVariableName).get();
+		else if (LBuiltins.VALUES.containsKey(superVariableName))
+			return LBuiltins.VALUES.get(superVariableName).get();
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}

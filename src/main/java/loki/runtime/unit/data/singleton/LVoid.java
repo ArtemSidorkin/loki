@@ -1,4 +1,4 @@
-package loki.runtime.unit.singleton;
+package loki.runtime.unit.data.singleton;
 
 import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.unit.data.bool.LBoolean;
@@ -11,7 +11,8 @@ import java.util.function.Consumer;
 
 public class LVoid extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LVoid> DESCRIPTOR = new LInstanceUnitDescriptor<>("void", LVoid.class);
+	public static final LInstanceUnitDescriptor<LVoid> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("void", LVoid.class, LVoid::new);
 
 	private LVoid()
 	{

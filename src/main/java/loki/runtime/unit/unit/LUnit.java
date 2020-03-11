@@ -6,12 +6,14 @@ import loki.runtime.context.LUnitContext;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
-import loki.runtime.unit.singleton.LVoid;
+import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.util.Compiler;
-import loki.runtime.util.*;
+import loki.runtime.util.LErrors;
+import loki.runtime.util.Nullable;
+import loki.runtime.util.Polymorphic;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public abstract class LUnit
 {
 	public static final String PROTOTYPE_NAME = "UnitPrototype";
 
+	@Compiler
 	public static final LUnit[] EMPTY_UNIT_ARRAY = {};
 
 	private static volatile LUnit prototype;
@@ -53,13 +56,13 @@ public abstract class LUnit
 		this(null, capturedUnitContext);
 	}
 
+	@Compiler
 	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedUnitContext)
 	{
 		this.type = type;
 		this.capturedUnitContext = capturedUnitContext;
 	}
 
-	@Internal
 	@Polymorphic(COMMON)
 	public LUnit newInstance(LUnit[] parameters, @Nullable Consumer<LUnit> saver)
 	{
@@ -85,7 +88,6 @@ public abstract class LUnit
 		return newUnit;
 	}
 
-	@Internal
 	public static LUnit getPrototype()
 	{
 		initPrototypeIfNecessary();
@@ -93,7 +95,6 @@ public abstract class LUnit
 		return prototype;
 	}
 
-	@Internal
 	public LType getType()
 	{
 		return type;
@@ -110,7 +111,6 @@ public abstract class LUnit
 		return capturedUnitContext;
 	}
 
-	@Internal
 	public @Nullable Map<String, Integer> getParameterIndexes()
 	{
 		return parameterIndexes;
@@ -129,7 +129,6 @@ public abstract class LUnit
 		return getSuperMember(memberName);
 	}
 
-	@Internal
 	public void addMember(LUnit unitMember)
 	{
 		setMember(unitMember.getType().getName(), unitMember);
@@ -166,7 +165,6 @@ public abstract class LUnit
 		return this;
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LUnit _addParents(LUnit... parents)
 	{
@@ -176,7 +174,7 @@ public abstract class LUnit
 	}
 
 	@Compiler
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(@Compiler LUnit host, @Compiler LUnit[] parameters)
 	{
 		return LVoid.DESCRIPTOR.getInstance();
 	}
@@ -187,21 +185,18 @@ public abstract class LUnit
 		return getMember(memberName).call(this, parameters);
 	}
 
-	@Internal
 	@Polymorphic(ACCESS)
 	public LUnit getIndexedItem(LUnit index)
 	{
 		return callMember(LGetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 
-	@Internal
 	@Polymorphic(ACCESS)
 	public LUnit setIndexedItem(LUnit index, LUnit value)
 	{
@@ -210,7 +205,6 @@ public abstract class LUnit
 		return value;
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
@@ -230,7 +224,6 @@ public abstract class LUnit
 		return this;
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	@Override
 	public int hashCode()
@@ -247,14 +240,12 @@ public abstract class LUnit
 		return (int)hashCode.getValue();
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LNumber _hashCode()
 	{
 		return new LNumber(super.hashCode());
 	}
 
-	@Internal
 	@Polymorphic(ACCESS)
 	@Override
 	public boolean equals(@Nullable Object object)
@@ -264,7 +255,6 @@ public abstract class LUnit
 		return callMember(LEquals.DESCRIPTOR.getType().getName(), new LUnit[] {(LUnit)object}).toBoolean();
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LBoolean _equals(LUnit unit)
 	{
@@ -288,7 +278,6 @@ public abstract class LUnit
 		return string.getValue();
 	}
 
-	@Internal
 	@Polymorphic(DEFAULT)
 	public LString _toString()
 	{
@@ -305,13 +294,11 @@ public abstract class LUnit
 		return bool.getValue();
 	}
 
-	@Internal
 	public boolean isType(@Nullable LType type)
 	{
 		return asType(type) != null;
 	}
 
-	@Internal
 	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
 	{
 		if (type == null) return (TYPE)this;
@@ -328,7 +315,6 @@ public abstract class LUnit
 		return null;
 	}
 
-	@Internal
 	protected LUnit checkCallParameter(LUnit[] parameters, int parameterIndex)
 	{
 		if (parameterIndex < 0 || parameterIndex >= parameters.length)
@@ -337,7 +323,6 @@ public abstract class LUnit
 		return parameters[parameterIndex];
 	}
 
-	@Internal
 	private ConcurrentMap<String, LUnit> initMembersIfNecessary()
 	{
 		if (members == null) synchronized(this)
@@ -354,7 +339,6 @@ public abstract class LUnit
 		return members;
 	}
 
-	@Internal
 	protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
 	{
 		if (parents == null) synchronized(this)
@@ -370,7 +354,6 @@ public abstract class LUnit
 		return parents;
 	}
 
-	@Internal
 	private static void initPrototypeIfNecessary()
 	{
 		if (prototype == null) synchronized(LUnit.class)

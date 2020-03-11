@@ -8,11 +8,12 @@ import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
 import loki.runtime.unitdescriptor.LEnumerationUnitDescriptor;
+import loki.runtime.util.Prototype;
 
 public class LBoolean extends LUnit
 {
 	public static final LDataUnitDescriptor<LBoolean> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class);
+		new LDataUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
 
 	public static final LEnumerationUnitDescriptor<LBoolean> TRUE =
 		new LEnumerationUnitDescriptor<>("true", new LBoolean(true));
@@ -31,6 +32,7 @@ public class LBoolean extends LUnit
 		_addParents(DESCRIPTOR.getPrototype());
 	}
 
+	@Prototype
 	private LBoolean()
 	{
 		super(DESCRIPTOR.getPrototypeType());

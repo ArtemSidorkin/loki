@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LNegationNumberUnaryOperation extends LNumberUnaryOperation
 {
 	public static final LInstanceUnitDescriptor<LNegationNumberUnaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("-_", LNegationNumberUnaryOperation.class);
+		new LInstanceUnitDescriptor<>("-_", LNegationNumberUnaryOperation.class, LNegationNumberUnaryOperation::new);
 
 	private LNegationNumberUnaryOperation()
 	{

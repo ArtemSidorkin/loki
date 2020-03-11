@@ -7,7 +7,7 @@ import loki.runtime.LType
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.unit.data.number.LNumber
 import loki.runtime.unit.data.{LArray, LMap, LObject, LString}
-import loki.runtime.unit.singleton.LVoid
+import loki.runtime.unit.data.singleton.LVoid
 import loki.runtime.unit.unit.LUnit
 
 private[generation] object CommonBytecodeTemplate

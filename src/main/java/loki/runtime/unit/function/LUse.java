@@ -8,7 +8,8 @@ import loki.runtime.util.LErrors;
 
 public class LUse extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LUse> DESCRIPTOR = new LInstanceUnitDescriptor<>("use", LUse.class);
+	public static final LInstanceUnitDescriptor<LUse> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("use", LUse.class, LUse::new);
 
 	private LUse()
 	{

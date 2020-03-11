@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LToString extends LMember
 {
 	public static final LInstanceUnitDescriptor<LToString> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("toString", LToString.class);
+		new LInstanceUnitDescriptor<>("toString", LToString.class, LToString::new);
 
 	private LToString()
 	{

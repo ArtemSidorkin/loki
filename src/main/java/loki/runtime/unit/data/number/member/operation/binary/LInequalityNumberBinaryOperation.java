@@ -8,7 +8,9 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LInequalityNumberBinaryOperation extends LNumberBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LInequalityNumberBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("!=", LInequalityNumberBinaryOperation.class);
+		new LInstanceUnitDescriptor<>(
+			"!=", LInequalityNumberBinaryOperation.class, LInequalityNumberBinaryOperation::new
+		);
 
 	private LInequalityNumberBinaryOperation()
 	{

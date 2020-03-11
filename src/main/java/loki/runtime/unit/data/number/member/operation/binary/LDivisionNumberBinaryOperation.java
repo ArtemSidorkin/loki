@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LDivisionNumberBinaryOperation extends LNumberBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LDivisionNumberBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("/", LDivisionNumberBinaryOperation.class);
+		new LInstanceUnitDescriptor<>("/", LDivisionNumberBinaryOperation.class, LDivisionNumberBinaryOperation::new);
 
 	private LDivisionNumberBinaryOperation()
 	{

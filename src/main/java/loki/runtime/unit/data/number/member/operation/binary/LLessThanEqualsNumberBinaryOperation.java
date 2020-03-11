@@ -8,7 +8,9 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LLessThanEqualsNumberBinaryOperation extends LNumberBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LLessThanEqualsNumberBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("<=", LLessThanEqualsNumberBinaryOperation.class);
+		new LInstanceUnitDescriptor<>(
+			"<=", LLessThanEqualsNumberBinaryOperation.class, LLessThanEqualsNumberBinaryOperation::new
+		);
 
 	private LLessThanEqualsNumberBinaryOperation()
 	{

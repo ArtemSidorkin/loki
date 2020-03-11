@@ -1,5 +1,7 @@
 package loki.runtime;
 
+import loki.runtime.util.Compiler;
+
 public class LType
 {
 	private static class Anonymous
@@ -10,12 +12,14 @@ public class LType
 	private final String name;
 	private final String id;
 
+	@Compiler
 	public LType(String name, Class typeClass)
 	{
 		this.name = name;
 		this.id = typeClass.getName();
 	}
 
+	@Compiler
 	public static LType createAnonymous()
 	{
 		return new LType(Anonymous.NAME, Anonymous.class); // TODO: class should be unique

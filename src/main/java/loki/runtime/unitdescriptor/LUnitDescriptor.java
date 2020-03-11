@@ -1,49 +1,16 @@
 package loki.runtime.unitdescriptor;
 
-import loki.runtime.LType;
-import loki.runtime.unit.unit.LUnit;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-public class LUnitDescriptor<UNIT extends LUnit>
+public abstract class LUnitDescriptor
 {
-	private final Class<UNIT> typeClass;
-	private final LType type;
-	private volatile UNIT unit;
+	private final String name;
 
-	public LUnitDescriptor(String typeName, Class<UNIT> typeClass)
+	public LUnitDescriptor(String name)
 	{
-		this.typeClass = typeClass;
-		type = new LType(typeName, typeClass);
+		this.name = name;
 	}
 
-	public LType getType()
+	public String getName()
 	{
-		return type;
-	}
-
-	protected UNIT getUnit()
-	{
-		if (unit == null) synchronized (this)
-		{
-			if (unit == null) unit = createUnit(typeClass);
-		}
-
-		return unit;
-	}
-
-	private UNIT createUnit(Class<UNIT> typeClass)
-	{
-		try
-		{
-			Constructor<UNIT> constructor = typeClass.getDeclaredConstructor();
-			constructor.setAccessible(true);
-			return constructor.newInstance();
-		}
-		catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-		{
-			throw new RuntimeException("Unit should have default constructor", e);
-		}
+		return name;
 	}
 }

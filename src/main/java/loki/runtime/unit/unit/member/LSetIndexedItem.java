@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LSetIndexedItem extends LMember
 {
 	public static final LInstanceUnitDescriptor<LSetIndexedItem> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("setIndexedItem", LSetIndexedItem.class);
+		new LInstanceUnitDescriptor<>("setIndexedItem", LSetIndexedItem.class, LSetIndexedItem::new);
 
 	private LSetIndexedItem()
 	{

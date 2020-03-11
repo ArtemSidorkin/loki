@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LEqualityUnitBinaryOperation extends LUnitBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LEqualityUnitBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("==", LEqualityUnitBinaryOperation.class);
+		new LInstanceUnitDescriptor<>("==", LEqualityUnitBinaryOperation.class, LEqualityUnitBinaryOperation::new);
 
 	private LEqualityUnitBinaryOperation()
 	{

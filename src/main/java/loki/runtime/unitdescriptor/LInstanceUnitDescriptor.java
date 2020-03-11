@@ -2,11 +2,13 @@ package loki.runtime.unitdescriptor;
 
 import loki.runtime.unit.unit.LUnit;
 
-public class LInstanceUnitDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UNIT>
+import java.util.function.Supplier;
+
+public class LInstanceUnitDescriptor<UNIT extends LUnit> extends LTypeUnitDescriptor<UNIT>
 {
-	public LInstanceUnitDescriptor(String typeName, Class<UNIT> typeClass)
+	public LInstanceUnitDescriptor(String name, Class<UNIT> typeClass, Supplier<UNIT> creator)
 	{
-		super(typeName, typeClass);
+		super(name, typeClass, creator);
 	}
 
 	public UNIT getInstance()

@@ -2,10 +2,12 @@ package loki.runtime.unit.data;
 
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
-import loki.runtime.unit.singleton.LVoid;
+import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.util.Compiler;
 import loki.runtime.util.LErrors;
+import loki.runtime.util.Prototype;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +16,11 @@ import java.util.StringJoiner;
 public class LArray extends LUnit
 {
 	public static final LDataUnitDescriptor<LArray> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Array", "ArrayPrototype", LArray.class);
+		new LDataUnitDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
 
 	private final ArrayList<LUnit> items = new ArrayList<>();
 
+	@Compiler
 	public LArray(LUnit[] items)
 	{
 		super(DESCRIPTOR.getType());
@@ -27,6 +30,7 @@ public class LArray extends LUnit
 		this.items.addAll(Arrays.asList(items));
 	}
 
+	@Prototype
 	private LArray()
 	{
 		super(DESCRIPTOR.getPrototypeType());

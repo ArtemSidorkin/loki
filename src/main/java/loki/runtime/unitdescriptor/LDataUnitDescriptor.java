@@ -3,15 +3,25 @@ package loki.runtime.unitdescriptor;
 import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 
-public class LDataUnitDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UNIT>
+import java.util.function.Supplier;
+
+public class LDataUnitDescriptor<UNIT extends LUnit> extends LTypeUnitDescriptor<UNIT>
 {
+	private final String prototypeName;
 	private final LType prototypeType;
 
-	public LDataUnitDescriptor(String typeName, String prototypeName, Class<UNIT> typeClass)
+	public LDataUnitDescriptor(String name, String prototypeName, Class<UNIT> typeClass, Supplier<UNIT> creator)
 	{
-		super(typeName, typeClass);
+		super(name, typeClass, creator);
+
+		this.prototypeName = prototypeName;
 
 		prototypeType = new LType(prototypeName, typeClass);
+	}
+
+	public String getPrototypeName()
+	{
+		return prototypeName;
 	}
 
 	public LType getPrototypeType()

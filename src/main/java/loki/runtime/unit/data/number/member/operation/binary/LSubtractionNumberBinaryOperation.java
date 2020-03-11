@@ -7,7 +7,9 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LSubtractionNumberBinaryOperation extends LNumberBinaryOperation
 {
 	public static final LInstanceUnitDescriptor<LSubtractionNumberBinaryOperation> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("-", LSubtractionNumberBinaryOperation.class);
+		new LInstanceUnitDescriptor<>(
+			"-", LSubtractionNumberBinaryOperation.class, LSubtractionNumberBinaryOperation::new
+		);
 
 	private LSubtractionNumberBinaryOperation()
 	{

@@ -4,14 +4,17 @@ import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.util.Compiler;
+import loki.runtime.util.Prototype;
 
 public class LString extends LUnit
 {
 	public static final LDataUnitDescriptor<LString> DESCRIPTOR =
-		new LDataUnitDescriptor<>("String", "StringPrototype", LString.class);
+		new LDataUnitDescriptor<>("String", "StringPrototype", LString.class, LString::new);
 
 	private final String value;
 
+	@Compiler
 	public LString(String value)
 	{
 		super(DESCRIPTOR.getType());
@@ -21,6 +24,7 @@ public class LString extends LUnit
 		this.value = value;
 	}
 
+	@Prototype
 	private LString()
 	{
 		super(DESCRIPTOR.getPrototypeType());

@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LHashCode extends LMember
 {
 	public static final LInstanceUnitDescriptor<LHashCode> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("hashCode", LHashCode.class);
+		new LInstanceUnitDescriptor<>("hashCode", LHashCode.class, LHashCode::new);
 
 	private LHashCode()
 	{

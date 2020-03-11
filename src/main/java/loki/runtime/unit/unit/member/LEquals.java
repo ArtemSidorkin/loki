@@ -8,7 +8,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LEquals extends LMember
 {
 	public static final LInstanceUnitDescriptor<LEquals> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("equals", LEquals.class);
+		new LInstanceUnitDescriptor<>("equals", LEquals.class, LEquals::new);
 
 	private LEquals()
 	{

@@ -6,14 +6,17 @@ import loki.runtime.unit.data.number.member.operation.binary.*;
 import loki.runtime.unit.data.number.member.operation.unary.LNegationNumberUnaryOperation;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.util.Compiler;
+import loki.runtime.util.Prototype;
 
 public class LNumber extends LUnit
 {
 	public static final LDataUnitDescriptor<LNumber> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Number", "NumberPrototype", LNumber.class);
+		new LDataUnitDescriptor<>("Number", "NumberPrototype", LNumber.class, LNumber::new);
 
 	private final double value;
 
+	@Compiler
 	public LNumber(double value)
 	{
 		super(DESCRIPTOR.getType());
@@ -23,6 +26,7 @@ public class LNumber extends LUnit
 		_addParents(DESCRIPTOR.getPrototype());
 	}
 
+	@Prototype
 	private LNumber()
 	{
 		super(DESCRIPTOR.getPrototypeType());

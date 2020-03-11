@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LAddParents extends LMember
 {
 	public static final LInstanceUnitDescriptor<LAddParents> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("addParents", LAddParents.class);
+		new LInstanceUnitDescriptor<>("addParents", LAddParents.class, LAddParents::new);
 
 	private LAddParents()
 	{

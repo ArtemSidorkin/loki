@@ -7,7 +7,7 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 public class LTimeInNanoseconds extends LUnit
 {
 	public static final LInstanceUnitDescriptor<LTimeInNanoseconds> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("timeInNanoseconds", LTimeInNanoseconds.class);
+		new LInstanceUnitDescriptor<>("timeInNanoseconds", LTimeInNanoseconds.class, LTimeInNanoseconds::new);
 
 	private LTimeInNanoseconds()
 	{

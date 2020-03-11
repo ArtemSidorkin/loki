@@ -6,7 +6,8 @@ import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 public class LNew extends LMember
 {
-	public static final LInstanceUnitDescriptor<LNew> DESCRIPTOR = new LInstanceUnitDescriptor<>("new", LNew.class);
+	public static final LInstanceUnitDescriptor<LNew> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("new", LNew.class, LNew::new);
 
 	private LNew()
 	{

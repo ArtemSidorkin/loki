@@ -1,14 +1,15 @@
 package loki.runtime.unit.function;
 
 import loki.runtime.unit.data.number.LNumber;
-import loki.runtime.unit.singleton.LVoid;
+import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.LErrors;
 
 public class LLoop extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LLoop> DESCRIPTOR = new LInstanceUnitDescriptor<>("loop", LLoop.class);
+	public static final LInstanceUnitDescriptor<LLoop> DESCRIPTOR =
+		new LInstanceUnitDescriptor<>("loop", LLoop.class, LLoop::new);
 
 	private LLoop()
 	{
