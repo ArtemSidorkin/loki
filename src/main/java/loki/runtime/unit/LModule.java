@@ -9,6 +9,6 @@ public class LModule extends LUnit
 	@Compiler
 	public LModule(String moduleTypeName)
 	{
-		setType(new LType(String.format("module(%s)", moduleTypeName), getClass()));
+		setType(new LType(String.format("module<%s>", moduleTypeName), getClass()));
 	}
 }

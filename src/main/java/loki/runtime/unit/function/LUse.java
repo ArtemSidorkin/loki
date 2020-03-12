@@ -29,7 +29,7 @@ public class LUse extends LUnit
 			return null;
 		}
 
-		LUnit module = Execution.executor().getModuleInstance(moduleFilePathnameAsString.getValue());
+		LUnit module = Execution.executor().getModule(moduleFilePathnameAsString.getValue());
 
 		if (!host.isType(module.getType())) host.addParents(module);
 

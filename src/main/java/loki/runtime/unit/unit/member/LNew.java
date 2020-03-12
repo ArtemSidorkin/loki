@@ -17,6 +17,6 @@ public class LNew extends LMember
 	@Override
 	public LUnit call(LUnit host, LUnit[] parameters)
 	{
-		return host.newInstance(parameters, null);
+		return host.newInstance(parameters);
 	}
 }

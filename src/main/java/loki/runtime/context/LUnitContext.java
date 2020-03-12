@@ -1,6 +1,7 @@
 package loki.runtime.context;
 
 import loki.runtime.LSettings;
+import loki.runtime.unit.LModule;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.util.Compiler;
@@ -13,88 +14,101 @@ public class LUnitContext
 {
 	private final LUnit frameUnit;
 	private final LUnit host;
-	@Nullable private final LUnit[] parameters;
+	private final LUnit[] parameters;
 
-	@Nullable private final LUnitContext frameUnitCapturedContext;
-	@Nullable private volatile ConcurrentMap<String, LUnit> variables;
+	private volatile @Nullable ConcurrentMap<String, LUnit> localVariables;
 
 	@Compiler
-	public LUnitContext(LUnit frameUnit, LUnit host, @Nullable LUnit[] parameters)
+	public LUnitContext(LUnit frameUnit, LUnit host, LUnit[] parameters)
 	{
 		this.frameUnit = frameUnit;
 		this.host = host;
 		this.parameters = parameters;
+	}
 
-		frameUnitCapturedContext = this.frameUnit.getCapturedUnitContext();
+	@Compiler
+	public LUnit getVariable(String variableName)
+	{
+		LUnit variable;
+
+		variable = getLocalVariable(variableName);
+		if (variable != null) return variable;
+
+		variable = getParameter(variableName);
+		if (variable != null) return variable;
+
+		variable = getHostMember(variableName);
+		if (variable != null) return variable;
+
+		return getSuperVariable(variableName);
+	}
+
+	@Compiler
+	public LUnit setVariable(String variableName, LUnit variableValue)
+	{
+		initVariablesIfNecessary().put(variableName, variableValue);;
+
+		return variableValue;
 	}
 
 	public LUnit getSuperVariable(String superVariableName)
 	{
-		if (frameUnitCapturedContext != null) return frameUnitCapturedContext.getVariable(superVariableName);
+		if (frameUnit.getCapturedUnitContext() != null)
+			return frameUnit.getCapturedUnitContext().getVariable(superVariableName);
 		else if (LBuiltins.have(superVariableName)) return LBuiltins.get(superVariableName);
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 
-	public LUnit getVariable(String variableName)
+	private @Nullable LUnit getLocalVariable(String localVariableName)
 	{
-		LUnit variable;
+		if (localVariables == null) return null;
 
-		if (variables != null)
-		{
-			variable = variables.get(variableName);
-			if (variable != null) return variable;
-		}
+		LUnit variable = localVariables.get(localVariableName);
 
-		if (frameUnit != null)
-		{
-			if (frameUnit.getParameterIndexes() != null)
-			{
-				Integer parameterIndex = frameUnit.getParameterIndexes().get(variableName);
-				if (parameterIndex != null)
-				{
-					variable = checkParameter(parameterIndex);
-					if (variable != null) return variable;
-				}
-			}
+		if (variable == null) return null;
 
-			variable = frameUnit.getMember(variableName);
-			if (variable != LVoid.DESCRIPTOR.getInstance()) return variable;
-		}
-
-		if (frameUnit != host) //Is it check needed?
-		{
-			variable = host.getMember(variableName);
-			if (variable != LVoid.DESCRIPTOR.getInstance()) return variable;
-		}
-
-		return getSuperVariable(variableName);
+		return variable;
 	}
 
-	public LUnit setVariable(String variableName, LUnit variableValue)
+	private @Nullable LUnit getParameter(String parameterName)
 	{
-		initVariablesIfNeeded();
-		variables.put(variableName, variableValue);
-		return variableValue;
+		if (frameUnit.getParameterIndexes() == null) return null;
+
+		return checkParameter(frameUnit.getParameterIndexes().get(parameterName));
 	}
 
-	@Nullable
-	private LUnit checkParameter(int parameterIndex)
+	private @Nullable LUnit getHostMember(String hostMemberName)
 	{
-		if (parameterIndex >= 0 && parameterIndex < parameters.length) return parameters[parameterIndex];
-		return null;
+		if (host instanceof LModule && host != frameUnit) return null;
+
+		LUnit variable = host.getMember(hostMemberName);
+
+		if (variable == LVoid.DESCRIPTOR.getInstance()) return null;
+
+		return variable;
 	}
 
-	private void initVariablesIfNeeded()
+	private @Nullable LUnit checkParameter(@Nullable Integer parameterIndex)
 	{
-		if (variables == null) synchronized(this)
+		if (parameterIndex == null || parameterIndex < 0 || parameterIndex >= parameters.length) return null;
+
+		return parameters[parameterIndex];
+	}
+
+	private ConcurrentMap<String, LUnit> initVariablesIfNecessary()
+	{
+		if (localVariables == null) synchronized(this)
 		{
-			if (variables == null)
-				variables = new ConcurrentHashMap<> (
-					LSettings.CONTEXT_VARIABLES_INITIAL_CAPACITY,
-					LSettings.CONTEXT_VARIABLES_LOAD_FACTOR,
-					LSettings.CONTEXT_VARIABLES_CONCURRENCY_LEVEL
-				);
+			if (localVariables == null)
+				localVariables =
+					new ConcurrentHashMap<> (
+						LSettings.CONTEXT_VARIABLES_INITIAL_CAPACITY,
+						LSettings.CONTEXT_VARIABLES_LOAD_FACTOR,
+						LSettings.CONTEXT_VARIABLES_CONCURRENCY_LEVEL
+					);
 		}
+
+		return localVariables;
 	}
 }

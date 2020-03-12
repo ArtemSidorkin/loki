@@ -23,7 +23,7 @@ private[execution] class Executor(
 )
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
-	private val moduleInstances:collection.mutable.Map[String, LUnit] = new ConcurrentHashMap[String, LUnit]()
+
 	private val modulePaths = (
 		_modulePaths.view
 		map (_ replace ('\\' , '/'))
@@ -31,32 +31,18 @@ private[execution] class Executor(
 	)
 
 	//TODO: each module should have pathname to starting module. So class names of units will be fixed. $$$ nested folder. $$$$$ - outer folder.
-	def getModuleInstance(relativeModulePathname:String):LUnit =
-	{
-		val moduleName = getModuleName(relativeModulePathname)
-
-		if (moduleInstances containsKey moduleName unary_!) moduleInstances.synchronized
-		{
-			if (moduleInstances containsKey moduleName unary_!) (
-				getModule(relativeModulePathname)
-					newInstance(
-						LUnit.EMPTY_UNIT_ARRAY,
-						(unit:LUnit) => moduleInstances += moduleName -> unit
-					)
-			)
-		}
-
-		moduleInstances(moduleName)
-	}
-
-	private def getModule(relativeModulePathname:String):LModule =
+	def getModule(relativeModulePathname:String):LModule =
 	{
 		val moduleName = getModuleName(relativeModulePathname)
 
 		if (modules containsKey moduleName unary_!) modules.synchronized
 		{
 			if (modules containsKey moduleName unary_!)
-				modules += moduleName -> createModule(relativeModulePathname)
+			{
+				val module = createModule(relativeModulePathname)
+				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
+				modules += moduleName -> module
+			}
 		}
 
 		modules(moduleName)
@@ -104,13 +90,9 @@ private[execution] class Executor(
 	)
 
 	private def getModuleFilePathname(relativeModulePathname:String):String = (
-		(
 			modulePaths
-			find (modulePath => new File(s"$modulePath$relativeModulePathname").exists)
-			getOrElse(
-				throw new IllegalArgumentException(s"""Module file "$relativeModulePathname" not found""")
-			)
-		)
-			concat relativeModulePathname
+				find (modulePath => new File(s"$modulePath$relativeModulePathname").exists)
+				getOrElse (throw new IllegalArgumentException(s"""Module file "$relativeModulePathname" not found"""))
+				concat relativeModulePathname
 	)
 }

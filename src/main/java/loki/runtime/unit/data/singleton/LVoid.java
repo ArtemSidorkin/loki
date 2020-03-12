@@ -26,7 +26,7 @@ public class LVoid extends LUnit
 	}
 
 	@Override
-	public LUnit newInstance(LUnit[] parameters, Consumer<LUnit> saver)
+	public LUnit newInstance(LUnit[] parameters)
 	{
 		LErrors.actionIsNotAllowedForUnit("instantiating", this);
 

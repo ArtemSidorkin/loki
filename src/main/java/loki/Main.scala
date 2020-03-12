@@ -26,7 +26,7 @@ object Main extends App
 				if (arguments.keylessArguments.nonEmpty)
 				{
 					Execution.init(Array(new File(".").getAbsolutePath))
-					Execution.executor.getModuleInstance(arguments.keylessArguments.head)
+					Execution.executor.getModule(arguments.keylessArguments.head)
 				}
 			}
 		)

@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
-import java.util.function.Consumer;
 
 import static loki.runtime.util.Polymorphic.Type.*;
 
@@ -64,7 +63,7 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(COMMON)
-	public LUnit newInstance(LUnit[] parameters, @Nullable Consumer<LUnit> saver)
+	public LUnit newInstance(LUnit[] parameters)
 	{
 		LUnit newUnit = new LUnit(getCapturedUnitContext())
 		{
@@ -78,8 +77,6 @@ public abstract class LUnit
 				return LUnit.this.call(host, parameters);
 			}
 		};
-
-		if (saver != null) saver.accept(newUnit);
 
 		newUnit.addParents(this);
 
@@ -116,6 +113,11 @@ public abstract class LUnit
 		return parameterIndexes;
 	}
 
+	public void addMember(LUnit unitMember)
+	{
+		setMember(unitMember.getType().getName(), unitMember);
+	}
+
 	@Compiler
 	public LUnit getMember(String memberName)
 	{
@@ -127,11 +129,6 @@ public abstract class LUnit
 		}
 
 		return getSuperMember(memberName);
-	}
-
-	public void addMember(LUnit unitMember)
-	{
-		setMember(unitMember.getType().getName(), unitMember);
 	}
 
 	@Compiler
