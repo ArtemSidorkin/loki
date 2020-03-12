@@ -1,13 +1,12 @@
 package loki.runtime.unit.data.singleton;
 
-import loki.runtime.constant.LBinaryOperator;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
+import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.LErrors;
-
-import java.util.function.Consumer;
 
 public class LVoid extends LUnit
 {
@@ -76,10 +75,10 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit callMember(String memberName, LUnit[] parameters)
 	{
-		if (LBinaryOperator.EQUALS_EQUALS.symbol.equals(memberName))
+		if (LEqualityUnitBinaryOperation.DESCRIPTOR.getName().equals(memberName))
 			return LBoolean.valueOf(this == checkCallParameter(parameters, 0));
 
-		if (LBinaryOperator.BANG_EQUALS.symbol.equals(memberName))
+		if (LInequalityUnitBinaryOperation.DESCRIPTOR.getName().equals(memberName))
 			return LBoolean.valueOf(this != checkCallParameter(parameters, 0));
 
 		LErrors.actionIsNotAllowedForUnit(String.format("calling member \"%s\"", memberName), this);
