@@ -1,6 +1,6 @@
 # Loki programming language
 
-##Short examples
+## Short examples
  - [HelloWorld.loki](examples/HelloWorld.loki)
 
  - [Function.loki](examples/Function.loki)
@@ -9,11 +9,11 @@
 
  - [LinkedList.loki](examples/LinkedList.loki)
 
-##Compilation
+## Compilation
 
     mvn clean compile assembly:single
 
-##Running
+## Running
 
     java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld.loki
 

@@ -11,17 +11,15 @@ plugins
 	id 'java'
 	id 'scala'
 	id 'application'
-	id 'com.github.johnrengelman.shadow' version '5.2.0'
+	id 'com.github.johnrengelman.shadow' version "$shadowPluginVersion"
 }
 
-sourceSets {
-	main {
-		java {
-			srcDirs = []
-		}
-		scala {
-			srcDirs = ['src/main/java', 'src/main/java']
-		}
+sourceSets
+{
+	main
+	{
+		java {srcDirs = []}
+		scala {srcDirs = ['src/main/java', 'src/main/java']}
 	}
 }
 
@@ -29,8 +27,8 @@ mainClassName = "loki.Main"
 
 dependencies 
 {
-	compile 'org.ow2.asm:asm-all:5.0.4'
-	compile 'org.antlr:antlr4-runtime:4.5'
-	compile 'org.scala-lang:scala-library:2.12.8'
+	compile "org.ow2.asm:asm-all:$asmVersion"
+	compile "org.antlr:antlr4-runtime:$antlrVersion"
+	compile "org.scala-lang:scala-library:$scalaVersion"
 }
 
