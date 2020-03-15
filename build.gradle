@@ -1,0 +1,25 @@
+buildscript
+{
+	repositories
+	{
+		mavenCentral()
+	}
+}
+
+allprojects
+{
+	group = 'loki'
+}
+
+subprojects
+{
+//	apply plugin: 'java'
+//	apply plugin: 'scala'
+//	sourceCompatibility = 1.8
+//	targetCompatibility = 1.8
+
+	repositories
+	{
+		mavenCentral()
+	}
+}
