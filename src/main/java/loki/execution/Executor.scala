@@ -16,7 +16,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
 import scala.collection.JavaConversions._
 
 private[execution] class Executor(
-	_modulePaths:Seq[String],
+	val rootModulePathName:String,
 	val outputPrintStream:PrintStream = System.out,
 	val errorPrintStream:PrintStream = System.err,
 	protected val generatorFactory: String=>BytecodeGenerator
@@ -24,22 +24,28 @@ private[execution] class Executor(
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
 
-	private val modulePaths = (
-		_modulePaths.view
-		map (_ replace ('\\' , '/'))
-		map (modulePath => if (modulePath endsWith "/" unary_!) modulePath + "/" else modulePath)
+	private val rootModuleAbsolutePathName = new File(rootModulePathName).getAbsolutePath
+
+	private val rootModuleName = (
+		FileUtil
+			convertFileToClassName (
+				FileUtil.getAbsoluteFilePathname(rootModulePathName), FileUtil.workingDirectoryAbsolutePathname
+			)
 	)
 
-	//TODO: each module should have pathname to starting module. So class names of units will be fixed. $$$ nested folder. $$$$$ - outer folder.
-	def getModule(relativeModulePathname:String):LModule =
+	def getModule(moduleFilePathName:String):LModule =
 	{
-		val moduleName = getModuleName(relativeModulePathname)
+		val absoluteModuleFilePathName = FileUtil.getAbsoluteFilePathname(moduleFilePathName)
+
+		val moduleName =
+			if (absoluteModuleFilePathName == rootModuleAbsolutePathName) rootModuleName
+			else FileUtil convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName)
 
 		if (modules containsKey moduleName unary_!) modules.synchronized
 		{
 			if (modules containsKey moduleName unary_!)
 			{
-				val module = createModule(relativeModulePathname)
+				val module = createModule(moduleName, moduleFilePathName)
 				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
 				modules += moduleName -> module
 			}
@@ -48,29 +54,14 @@ private[execution] class Executor(
 		modules(moduleName)
 	}
 
-	private def createModule(relativeModulePathnameWithoutExtension:String) =
+	private def createModule(moduleName:String, moduleFilePathname:String) =
 	{
-		val moduleName = getModuleName(relativeModulePathnameWithoutExtension)
 		val generator = generatorFactory(moduleName)
 
-		generate(generator, relativeModulePathnameWithoutExtension)
-
-		(generator.classLoader getClass moduleName)
-			.getConstructors
-			.head
-			.newInstance()
-			.asInstanceOf[LModule]
-	}
-
-	private def generate(generator:BytecodeGenerator, relativeModulePathname:String)()
-	{
 		val antlrModuleInputStream =
 			new ANTLRInputStream(
 				new ByteArrayInputStream(
-					Preprocessor(
-						FileUtil readText getModuleFilePathname(relativeModulePathname)
-					)
-						getBytes StandardCharsets.UTF_8
+					Preprocessor(FileUtil readText moduleFilePathname) getBytes StandardCharsets.UTF_8
 				)
 			)
 
@@ -81,18 +72,12 @@ private[execution] class Executor(
 		val parseTreeWalker = new ParseTreeWalker
 
 		parseTreeWalker.walk(generator, moduleContext)
+
+		(generator.classLoader getClass moduleName)
+			.getConstructors
+			.head
+			.newInstance()
+			.asInstanceOf[LModule]
 	}
-
-	private def getModuleName(relativeModulePathname:String) = (
-		FileUtil
-			getFilePathnameWithoutExtension relativeModulePathname
-			replace ("/", "$")
-	)
-
-	private def getModuleFilePathname(relativeModulePathname:String):String = (
-			modulePaths
-				find (modulePath => new File(s"$modulePath$relativeModulePathname").exists)
-				getOrElse (throw new IllegalArgumentException(s"""Module file "$relativeModulePathname" not found"""))
-				concat relativeModulePathname
-	)
 }
+

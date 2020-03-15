@@ -1,11 +1,30 @@
 package loki.util
 
 import java.io._
+import java.net.URI
+import java.nio.file.Paths
 
 import scala.annotation.tailrec
 
 object FileUtil
 {
+	def workingDirectoryAbsolutePathname:String = new File(".").getAbsolutePath
+
+	def getAbsoluteFilePathname(filePathname:String):String = new File(filePathname).getAbsolutePath
+
+	def convertFileToClassName(file:String, rootFile:String):String =
+	{
+		val relativeFilePathName = (
+			Paths
+				get new File(rootFile).getAbsolutePath
+				relativize (Paths get new File(file).getAbsolutePath)
+				toString
+		)
+
+		relativeFilePathName replace(".", "") replace (s"..${File.separator}", "$") replace (File.separator, "$")
+	}
+
+
 	def getFilePathnameWithoutExtension(filePathname:String):String = (
 		filePathname
 			substring (0, {val index = filePathname lastIndexOf "."; if (index != -1) index else filePathname.length})

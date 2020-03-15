@@ -53,7 +53,7 @@ object Tester
 					)
 			)
 
-			Execution.init(modulePaths = new File(".").getAbsolutePath :: Nil, force = true)
+			Execution.init(testCase.sourceFilePathnames.head, force = true)
 			Execution.executor.getModule(new File(testCase.sourceFilePathnames.head).getName)
 
 			true

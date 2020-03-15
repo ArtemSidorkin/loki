@@ -1,7 +1,5 @@
 package loki
 
-import java.io.File
-
 import loki.execution.Execution
 import loki.system.SystemSettings
 import loki.test.Tester
@@ -11,7 +9,6 @@ object Main extends App
 {
 	private val TEST_KEY = "--test"
 	private val TRACE_PREPROCESSED_CODE = "--trace-preprocessed-code"
-
 
 	{
 		ConsoleCommander(
@@ -25,7 +22,7 @@ object Main extends App
 
 				if (arguments.keylessArguments.nonEmpty)
 				{
-					Execution.init(Array(new File(".").getAbsolutePath))
+					Execution.init(arguments.keylessArguments.head)
 					Execution.executor.getModule(arguments.keylessArguments.head)
 				}
 			}

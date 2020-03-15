@@ -12,7 +12,7 @@ object Execution
 	def executor:Executor = _executor
 
 	def init(
-		modulePaths:Seq[String],
+		rootModulePathname:String,
 		force:Boolean = false,
 		outputPrintStream:PrintStream = System.out,
 		errorPrintStream:PrintStream = System.err
@@ -20,6 +20,6 @@ object Execution
 		if (_executor == null || force) this.synchronized
 		{
 			if (_executor == null || force)
-				_executor = new Executor(modulePaths, outputPrintStream, errorPrintStream, new BytecodeGenerator(_))
+				_executor = new Executor(rootModulePathname, outputPrintStream, errorPrintStream, new BytecodeGenerator(_))
 		}
 }
