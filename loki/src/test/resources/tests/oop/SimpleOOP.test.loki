@@ -1,0 +1,11 @@
+Point x y:
+	$x = x
+	$y = y
+	$add point: Point.new(x + point.x, y + point.y)
+
+p1 = Point.new(1, 2)
+p2 = Point.new(10, 20)
+p3 = p1.add(p2)
+
+test(p3.x)
+test(p3.y)

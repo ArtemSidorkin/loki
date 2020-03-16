@@ -1,9 +1,0 @@
-array0 = []
-array1 = [1]
-array2 = [1, 2]
-array3 = [1, 2, 3]
-
-assert(array0.toString(), "[]")
-assert(array1.toString(), "[1]")
-assert(array2.toString(), "[1, 2]")
-assert(array3.toString(), "[1, 2, 3]")

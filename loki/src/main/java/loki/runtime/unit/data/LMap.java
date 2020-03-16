@@ -35,6 +35,11 @@ public class LMap extends LUnit
 		super(DESCRIPTOR.getPrototypeType());
 	}
 
+	public Map<LUnit, LUnit> getItems()
+	{
+		return items;
+	}
+
 	@Override
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{

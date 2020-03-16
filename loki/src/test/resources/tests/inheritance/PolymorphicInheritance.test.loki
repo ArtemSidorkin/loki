@@ -1,0 +1,19 @@
+UnitPrototypeAddParents = UnitPrototype.addParents
+
+UnitPrototype.addParents = \ parent :
+	$testData = 100
+	UnitPrototypeAddParents(parent)
+
+Point2D x y :
+	$x = x
+	$y = y
+
+Point3D x y z <- Point2D.new(x, y) :
+	$z = z
+
+point3D = Point3D.new(1, 2, 3)
+
+test(point3D.testData)
+test(point3D.x)
+test(point3D.y)
+test(point3D.z)

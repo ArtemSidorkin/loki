@@ -6,7 +6,7 @@ import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperati
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.Compiler;
-import loki.runtime.util.LErrors;
+import loki.runtime.error.LErrors;
 
 public class LVoid extends LUnit
 {

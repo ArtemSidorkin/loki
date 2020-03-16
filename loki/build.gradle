@@ -19,7 +19,12 @@ sourceSets
 	main
 	{
 		java {srcDirs = []}
-		scala {srcDirs = ['src/main/java', 'src/main/java']}
+		scala {srcDirs = ['src/main/java']}
+	}
+	test
+	{
+		java {srcDirs = []}
+		scala {srcDirs = ['src/test/java']}
 	}
 }
 
@@ -30,5 +35,14 @@ dependencies
 	compile "org.ow2.asm:asm-all:$asmVersion"
 	compile "org.antlr:antlr4-runtime:$antlrVersion"
 	compile "org.scala-lang:scala-library:$scalaVersion"
+
+	testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testCompile "org.junit.jupiter:junit-jupiter:$junitVersion"
 }
 
+test
+{
+	useJUnitPlatform()
+
+	test {forkEvery = 1}
+}

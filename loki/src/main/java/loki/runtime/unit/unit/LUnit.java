@@ -11,7 +11,7 @@ import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.util.Compiler;
-import loki.runtime.util.LErrors;
+import loki.runtime.error.LErrors;
 import loki.runtime.util.Nullable;
 import loki.runtime.util.Polymorphic;
 

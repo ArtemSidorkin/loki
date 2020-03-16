@@ -2,7 +2,6 @@ package loki
 
 import loki.execution.Execution
 import loki.system.SystemSettings
-import loki.test.Tester
 import loki.util.ConsoleCommander
 
 object Main extends App
@@ -17,8 +16,6 @@ object Main extends App
 			{
 				if (arguments.parameterlessKeys contains TRACE_PREPROCESSED_CODE)
 					SystemSettings.TRACE_PREPROCESSED_CODE = true
-
-				if (arguments.parameterlessKeys contains TEST_KEY) Tester()
 
 				if (arguments.keylessArguments.nonEmpty)
 				{

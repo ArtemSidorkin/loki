@@ -1,9 +1,0 @@
-t = time()
-
-i = 0
-s = 0
-while(i < 10000000)
-	s = s + i
-	i = i + 1
-
-println((time() - t)/1000000000)

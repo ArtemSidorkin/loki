@@ -4,7 +4,7 @@ import loki.execution.Execution;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.util.LErrors;
+import loki.runtime.error.LErrors;
 
 public class LUse extends LUnit
 {

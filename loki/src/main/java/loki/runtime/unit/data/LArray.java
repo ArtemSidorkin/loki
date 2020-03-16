@@ -6,7 +6,7 @@ import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
 import loki.runtime.util.Compiler;
-import loki.runtime.util.LErrors;
+import loki.runtime.error.LErrors;
 import loki.runtime.util.Prototype;
 
 import java.util.ArrayList;
@@ -34,6 +34,11 @@ public class LArray extends LUnit
 	private LArray()
 	{
 		super(DESCRIPTOR.getPrototypeType());
+	}
+
+	public ArrayList<LUnit> getItems()
+	{
+		return items;
 	}
 
 	@Override

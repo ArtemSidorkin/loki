@@ -1,0 +1,22 @@
+a = 1
+b = 2
+c = 3
+
+test(a)
+test(b)
+test(c)
+
+a = b = 1
+test(a)
+test(b)
+
+a = b = c = 2
+test(a)
+test(b)
+test(c)
+
+a = b = c = d = 3
+test(a)
+test(b)
+test(c)
+test(d)
