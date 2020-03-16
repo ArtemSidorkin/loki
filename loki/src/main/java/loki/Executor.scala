@@ -1,6 +1,6 @@
-package loki.execution
+package loki
 
-import java.io.{ByteArrayInputStream, File, PrintStream}
+import java.io.{ByteArrayInputStream, File}
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.ConcurrentHashMap
 
@@ -15,31 +15,34 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 import scala.collection.JavaConversions._
 
-private[execution] class Executor(
-	val rootModulePathName:String,
-	val outputPrintStream:PrintStream = System.out,
-	val errorPrintStream:PrintStream = System.err,
-	protected val generatorFactory: String=>BytecodeGenerator
-)
+object Executor
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
 
-	private val rootModuleAbsolutePathName = new File(rootModulePathName).getAbsolutePath
-
-	private val rootModuleName = (
-		FileUtil
-			convertFileToClassName (
-				FileUtil.getAbsoluteFilePathname(rootModulePathName), FileUtil.workingDirectoryAbsolutePathname
-			)
-	)
+	private var rootModulePathName:Option[String] = None
+	private var rootModuleAbsolutePathName:Option[String] = None
+	private var rootModuleName:Option[String] = None
 
 	def getModule(moduleFilePathName:String):LModule =
 	{
+		if (rootModulePathName.isEmpty) this.synchronized
+		{
+			if (rootModulePathName.isEmpty)
+			{
+				rootModulePathName = Some(moduleFilePathName)
+				rootModuleAbsolutePathName = Some(new File(rootModulePathName.get).getAbsolutePath)
+				rootModuleName = Some(FileUtil
+				convertFileToClassName (
+					FileUtil.getAbsoluteFilePathname(rootModulePathName.get), FileUtil.workingDirectoryAbsolutePathname
+				))
+			}
+		}
+
 		val absoluteModuleFilePathName = FileUtil.getAbsoluteFilePathname(moduleFilePathName)
 
 		val moduleName =
-			if (absoluteModuleFilePathName == rootModuleAbsolutePathName) rootModuleName
-			else FileUtil convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName)
+			if (absoluteModuleFilePathName == rootModuleAbsolutePathName.get) rootModuleName.get
+			else FileUtil convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName.get)
 
 		if (modules containsKey moduleName unary_!) modules.synchronized
 		{
@@ -56,7 +59,7 @@ private[execution] class Executor(
 
 	private def createModule(moduleName:String, moduleFilePathname:String) =
 	{
-		val generator = generatorFactory(moduleName)
+		val generator = new BytecodeGenerator(moduleName)
 
 		val antlrModuleInputStream =
 			new ANTLRInputStream(
@@ -80,4 +83,3 @@ private[execution] class Executor(
 			.asInstanceOf[LModule]
 	}
 }
-

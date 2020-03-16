@@ -2,7 +2,7 @@ package loki.endtoend
 
 import java.io.File
 
-import loki.execution.Execution
+import loki.Executor
 import loki.runtime.unit.data.number.LNumber
 import loki.runtime.unit.data.singleton.LVoid
 import loki.runtime.unit.data.{LArray, LMap, LString}
@@ -24,8 +24,7 @@ private[endtoend] abstract class EndToEndTest
 
 	protected def runTest(testSubfolder:String, testFileName:String)
 	{
-		Execution.init(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
-		Execution.executor.getModule(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
+		Executor.getModule(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
 	}
 
 	protected def void:LVoid = LVoid.DESCRIPTOR.getInstance

@@ -50,7 +50,6 @@ public class LBuiltins
 
 					void initializeFunctions()
 					{
-						put(LAssert.DESCRIPTOR.getName(), LAssert.DESCRIPTOR::getInstance);
 						put(LTest.DESCRIPTOR.getName(), LTest.DESCRIPTOR::getInstance);
 						put(LUse.DESCRIPTOR.getName(), LUse.DESCRIPTOR::getInstance);
 						put(LLoop.DESCRIPTOR.getName(), LLoop.DESCRIPTOR::getInstance);

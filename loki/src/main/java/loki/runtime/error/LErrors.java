@@ -1,6 +1,5 @@
 package loki.runtime.error;
 
-import loki.execution.Execution;
 import loki.runtime.LType;
 import loki.runtime.unit.unit.LUnit;
 

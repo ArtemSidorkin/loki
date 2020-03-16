@@ -1,6 +1,6 @@
 package loki.runtime.unit.function;
 
-import loki.execution.Execution;
+import loki.Executor;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
@@ -29,7 +29,7 @@ public class LUse extends LUnit
 			return null;
 		}
 
-		LUnit module = Execution.executor().getModule(moduleFilePathnameAsString.getValue());
+		LUnit module = Executor.getModule(moduleFilePathnameAsString.getValue());
 
 		if (!host.isType(module.getType())) host.addParents(module);
 

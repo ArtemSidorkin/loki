@@ -1,12 +1,10 @@
 package loki
 
-import loki.execution.Execution
 import loki.system.SystemSettings
 import loki.util.ConsoleCommander
 
 object Main extends App
 {
-	private val TEST_KEY = "--test"
 	private val TRACE_PREPROCESSED_CODE = "--trace-preprocessed-code"
 
 	{
@@ -18,10 +16,7 @@ object Main extends App
 					SystemSettings.TRACE_PREPROCESSED_CODE = true
 
 				if (arguments.keylessArguments.nonEmpty)
-				{
-					Execution.init(arguments.keylessArguments.head)
-					Execution.executor.getModule(arguments.keylessArguments.head)
-				}
+					Executor.getModule(arguments.keylessArguments.head)
 			}
 		)
 	}
