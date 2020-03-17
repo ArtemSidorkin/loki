@@ -21,45 +21,35 @@ object Executor
 {
 	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]().asScala
 
-	private var rootModulePathName:Option[String] = None
-	private var rootModuleAbsolutePathName:Option[String] = None
-	private var rootModuleName:Option[String] = None
+	@volatile private var rootModuleDescriptor:RootModuleDescriptor = _
 
-	private lazy val workingDirectoryAbsolutePathname:String = new File(".").getAbsolutePath
-
-	def getModule(moduleFilePathName:String):LModule =
+	def getModule(moduleFilePathname:String):LModule =
 	{
-		if (rootModulePathName.isEmpty) this.synchronized
+		createRootModuleDescriptorIfNotExists(moduleFilePathname)
+
+		val moduleClassName = getModuleClassName(moduleFilePathname)
+
+		createModuleIfNotExists(moduleClassName, moduleFilePathname)
+
+		modules(moduleClassName)
+	}
+
+	private def createRootModuleDescriptorIfNotExists(moduleFilePathname:String):Unit =
+		if (rootModuleDescriptor == null) modules.synchronized
 		{
-			if (rootModulePathName.isEmpty)
-			{
-				rootModulePathName = Some(moduleFilePathName)
-				rootModuleAbsolutePathName = Some(new File(rootModulePathName.get).getAbsolutePath)
-				rootModuleName = Some(
-				convertFileToClassName (
-					getAbsoluteFilePathname(rootModulePathName.get), workingDirectoryAbsolutePathname
-				))
-			}
+			if (rootModuleDescriptor == null) rootModuleDescriptor = new RootModuleDescriptor(moduleFilePathname)
 		}
 
-		val absoluteModuleFilePathName = getAbsoluteFilePathname(moduleFilePathName)
-
-		val moduleName =
-			if (absoluteModuleFilePathName == rootModuleAbsolutePathName.get) rootModuleName.get
-			else convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName.get)
-
+	private def createModuleIfNotExists(moduleName:String, moduleFilePathname:String):Unit =
 		if (modules contains moduleName unary_!) modules.synchronized
 		{
 			if (modules contains moduleName unary_!)
 			{
-				val module = createModule(moduleName, moduleFilePathName)
-				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
+				val module = createModule(moduleName, moduleFilePathname)
 				modules += moduleName -> module
+				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
 			}
 		}
-
-		modules(moduleName)
-	}
 
 	private def createModule(moduleName:String, moduleFilePathname:String) =
 	{
@@ -68,7 +58,8 @@ object Executor
 		val antlrModuleInputStream =
 			new ANTLRInputStream(
 				new ByteArrayInputStream(
-					Preprocessor(FileUtils.readFileToString(new File(moduleFilePathname), StandardCharsets.UTF_8)) getBytes StandardCharsets.UTF_8
+					Preprocessor(FileUtils.readFileToString(new File(moduleFilePathname), StandardCharsets.UTF_8))
+						.getBytes(StandardCharsets.UTF_8)
 				)
 			)
 
@@ -80,24 +71,35 @@ object Executor
 
 		parseTreeWalker.walk(generator, moduleContext)
 
-		(generator.classLoader getClass moduleName)
+		generator
+			.classLoader
+			.getClass(moduleName)
 			.getConstructors
 			.head
 			.newInstance()
 			.asInstanceOf[LModule]
 	}
 
-	private def convertFileToClassName(file:String, rootFile:String):String =
-	{
-		val relativeFilePathName = (
-			Paths
-				get new File(rootFile).getAbsolutePath
-				relativize (Paths get new File(file).getAbsolutePath)
-				toString
-			)
+	private def getModuleClassName(moduleFilePathname:String):String =
+		if (getAbsoluteFilePathname(moduleFilePathname) == rootModuleDescriptor.absoluteFilePathname)
+			rootModuleDescriptor.className
+		else getRegularModuleClassName(moduleFilePathname, rootModuleDescriptor.absoluteFilePathname)
 
-		relativeFilePathName replace(".", "") replace (s"..${File.separator}", "$") replace (File.separator, "$")
-	}
+	private def getRegularModuleClassName(moduleFilePathName:String, rootFilePathname:String):String =
+			Paths
+				.get(getAbsoluteFilePathname(rootFilePathname))
+				.relativize(Paths.get(getAbsoluteFilePathname(moduleFilePathName)))
+				.toString
+				.replace(s"..${File.separator}", "$")
+				.replace(".", "$$")
+				.tail
+				.replace(File.separator, "$")
 
 	private def getAbsoluteFilePathname(filePathname:String):String = new File(filePathname).getAbsolutePath
+
+	private class RootModuleDescriptor(filePathname:String)
+	{
+		val className:String = new File(filePathname).getName.replace(".", "$$")
+		val absoluteFilePathname:String = getAbsoluteFilePathname(filePathname)
+	}
 }
