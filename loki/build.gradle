@@ -37,9 +37,10 @@ mainClassName = "loki.Main"
 
 dependencies 
 {
-	implementation "org.ow2.asm:asm-all:$asmVersion"
-	implementation "org.antlr:antlr4-runtime:$antlrVersion"
 	implementation "org.scala-lang:scala-library:$scalaVersion"
+	implementation "org.antlr:antlr4-runtime:$antlrVersion"
+	implementation "org.ow2.asm:asm-all:$asmVersion"
+	implementation "commons-io:commons-io:$commonsioVersion"
 
 	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
 	testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"

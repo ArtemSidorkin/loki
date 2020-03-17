@@ -2,6 +2,7 @@ package loki
 
 import java.io.{ByteArrayInputStream, File}
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
 
 import loki.language.generation.BytecodeGenerator
@@ -9,9 +10,9 @@ import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.language.preprocessing.Preprocessor
 import loki.runtime.unit.LModule
 import loki.runtime.unit.unit.LUnit
-import loki.util.FileUtil
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree.ParseTreeWalker
+import org.apache.commons.io.FileUtils
 
 import scala.jdk.CollectionConverters._
 import scala.language.postfixOps
@@ -24,6 +25,8 @@ object Executor
 	private var rootModuleAbsolutePathName:Option[String] = None
 	private var rootModuleName:Option[String] = None
 
+	private lazy val workingDirectoryAbsolutePathname:String = new File(".").getAbsolutePath
+
 	def getModule(moduleFilePathName:String):LModule =
 	{
 		if (rootModulePathName.isEmpty) this.synchronized
@@ -32,18 +35,18 @@ object Executor
 			{
 				rootModulePathName = Some(moduleFilePathName)
 				rootModuleAbsolutePathName = Some(new File(rootModulePathName.get).getAbsolutePath)
-				rootModuleName = Some(FileUtil
+				rootModuleName = Some(
 				convertFileToClassName (
-					FileUtil.getAbsoluteFilePathname(rootModulePathName.get), FileUtil.workingDirectoryAbsolutePathname
+					getAbsoluteFilePathname(rootModulePathName.get), workingDirectoryAbsolutePathname
 				))
 			}
 		}
 
-		val absoluteModuleFilePathName = FileUtil.getAbsoluteFilePathname(moduleFilePathName)
+		val absoluteModuleFilePathName = getAbsoluteFilePathname(moduleFilePathName)
 
 		val moduleName =
 			if (absoluteModuleFilePathName == rootModuleAbsolutePathName.get) rootModuleName.get
-			else FileUtil convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName.get)
+			else convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName.get)
 
 		if (modules contains moduleName unary_!) modules.synchronized
 		{
@@ -65,7 +68,7 @@ object Executor
 		val antlrModuleInputStream =
 			new ANTLRInputStream(
 				new ByteArrayInputStream(
-					Preprocessor(FileUtil readText moduleFilePathname) getBytes StandardCharsets.UTF_8
+					Preprocessor(FileUtils.readFileToString(new File(moduleFilePathname), StandardCharsets.UTF_8)) getBytes StandardCharsets.UTF_8
 				)
 			)
 
@@ -83,4 +86,18 @@ object Executor
 			.newInstance()
 			.asInstanceOf[LModule]
 	}
+
+	private def convertFileToClassName(file:String, rootFile:String):String =
+	{
+		val relativeFilePathName = (
+			Paths
+				get new File(rootFile).getAbsolutePath
+				relativize (Paths get new File(file).getAbsolutePath)
+				toString
+			)
+
+		relativeFilePathName replace(".", "") replace (s"..${File.separator}", "$") replace (File.separator, "$")
+	}
+
+	private def getAbsoluteFilePathname(filePathname:String):String = new File(filePathname).getAbsolutePath
 }
