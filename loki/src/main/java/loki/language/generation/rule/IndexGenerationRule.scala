@@ -7,7 +7,7 @@ import loki.language.parsing.LokiParser.IndexContext
 private[generation] class IndexGenerationRule(indexContext:IndexContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(indexContext)
 {
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodGetIndexedItem()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodGetIndexedItem()
 }
 
 private[generation] object IndexGenerationRule

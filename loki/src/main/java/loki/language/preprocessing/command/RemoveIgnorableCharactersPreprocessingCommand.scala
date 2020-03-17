@@ -3,6 +3,7 @@ package loki.language.preprocessing.command
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 private[preprocessing] object RemoveIgnorableCharactersPreprocessingCommand extends PreprocessingCommand
 {
@@ -16,7 +17,7 @@ private[preprocessing] object RemoveIgnorableCharactersPreprocessingCommand exte
 
 	override def apply(code:StringBuilder):Unit =
 	{
-		val codeLines = code split CompilerTokens.NEW_LINE
+		val codeLines = code.toString split CompilerTokens.NEW_LINE
 		val newCode = new StringBuilder
 
 		codeLines

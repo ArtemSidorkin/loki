@@ -13,11 +13,11 @@ private[generation] class NumberGenerationRule
 
 	override protected def enterAction():Unit = (
 		topMethodCall
-			newNumber ()
-			dup ()
-			ldc number
-			invokeInitNumber ()
-			incrementObjectCounter ()
+			.newNumber()
+			.dup()
+			.ldc(number)
+			.invokeInitNumber()
+			.incrementObjectCounter()
 	)
 }
 

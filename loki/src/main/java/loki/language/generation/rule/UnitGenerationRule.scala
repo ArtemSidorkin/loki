@@ -12,6 +12,8 @@ import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.system.SystemSettings
 
+import scala.language.postfixOps
+
 //TODO: check & refactor
 private[generation] class UnitGenerationRule
 	(unitContext:UnitContext)(implicit generationContext:GenerationContext)
@@ -45,7 +47,7 @@ private[generation] class UnitGenerationRule
 
 		addReturnToUnitMethodCall(generationContext, unitLastInstruction)
 
-		generationContext.addPreExitRuleTask(unitLastInstruction, () => topMethodCall decrementObjectCounter ())
+		generationContext.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectCounter())
 
 		def addUnitMethodInit() =
 			topClassFrame.addMethodInit(PUBLIC, BytecodeMethodDescriptors UNIT_HEIR__METHOD__INIT_2)
@@ -53,17 +55,17 @@ private[generation] class UnitGenerationRule
 		def generateUnitMethodInit(methodInit:MethodBuilder) =
 		(
 			methodInit
-			aloadthis ()
-			aloadUnitHeirMethodInitParameterType ()
-			aloadUnitHeirMethodInitParameterUnitContext ()
-			invokeInitUnit ()
-			`return` ()
+				.aloadthis()
+				.aloadUnitHeirMethodInitParameterType()
+				.aloadUnitHeirMethodInitParameterUnitContext()
+				.invokeInitUnit()
+				.`return`()
 		)
 
 		def generateContainerForUnitSavingIfUnitIsNotAnonymousInPretopMethodCall():Unit = unitName foreach (untNm =>
 		{
-			if (isUnitModuleMember || isUnitUnitMember) preTopMethodCall aloadUnitMethodCallParameterHost ()
-			else preTopMethodCall aloadUnitMethodCallVariableUnitContext ()
+			if (isUnitModuleMember || isUnitUnitMember) preTopMethodCall.aloadUnitMethodCallParameterHost()
+			else preTopMethodCall.aloadUnitMethodCallVariableUnitContext()
 			preTopMethodCall ldc untNm
 		})
 
@@ -75,55 +77,45 @@ private[generation] class UnitGenerationRule
 			generateUnitInit()
 
 			def generateUnitCreation():Unit =
-			(
 				preTopMethodCall
-				`new` topClassFrame.internalName
-				dup ()
-			)
+					.`new`(topClassFrame.internalName)
+					.dup()
 
 			def generateUnitType():Unit = unitName map (untNm =>
 			(
 				preTopMethodCall
-				newType ()
-				dup ()
-				ldc untNm
-				aloadthis ()
-				invokeVirtualJavaObjectMethodGetClass () //TODO: wrong class. It is outer class, not current
-				invokeInitType ()
-			)) getOrElse
-			(
-				preTopMethodCall
-				invokestaticTypeMethodCreateAnonymous ()
-			)
+					.newType ()
+					.dup ()
+					.ldc(untNm)
+					.aloadthis()
+					.invokeVirtualJavaObjectMethodGetClass() //TODO: wrong class. It is outer class, not current
+					.invokeInitType()
+			)) getOrElse preTopMethodCall.invokestaticTypeMethodCreateAnonymous()
 
-			def generateUnitContext():Unit =
-			(
-				preTopMethodCall
-				aloadUnitMethodCallVariableUnitContext ()
-			)
+			def generateUnitContext():Unit = preTopMethodCall.aloadUnitMethodCallVariableUnitContext ()
 
-			def generateUnitInit():Unit = (
-					preTopMethodCall
-						aloadUnitMethodCallParameterParameters ()
-						invokeInit2UnitHeir (topClassFrame.internalName)
-					)
+			def generateUnitInit():Unit =
+				preTopMethodCall
+					.aloadUnitMethodCallParameterParameters()
+					.invokeInit2UnitHeir(topClassFrame.internalName)
+
 		}
 
 		def generateUnitSavingInPretopMethodCall():Unit = unitName foreach (_ =>
-			if (isUnitUnitMember || isUnitModuleMember) preTopMethodCall invokeVirtualUnitMethodSetMember ()
-			else preTopMethodCall invokeVirtualUnitContextMethodSetVariable ()
+			if (isUnitUnitMember || isUnitModuleMember) preTopMethodCall.invokeVirtualUnitMethodSetMember()
+			else preTopMethodCall.invokeVirtualUnitContextMethodSetVariable()
 		)
 
 		def generateUnitMethodCall() =
 		(
 			topMethodCall
-			newUnitContext ()
-			dup ()
-			aloadthis ()
-			aloadUnitMethodCallParameterHost ()
-			aloadUnitMethodCallParameterParameters ()
-			invokeInitUnitContext ()
-			astoreUnitMethodCallVariableUnitContext ()
+				.newUnitContext()
+				.dup()
+				.aloadthis()
+				.aloadUnitMethodCallParameterHost()
+				.aloadUnitMethodCallParameterParameters()
+				.invokeInitUnitContext()
+				.astoreUnitMethodCallVariableUnitContext()
 		)
 
 
@@ -131,30 +123,25 @@ private[generation] class UnitGenerationRule
 		{
 			(
 				preTopMethodCall
-				ldc unitParameterNames.size
-				anewarrayJavaString ()
+					.ldc(unitParameterNames.size)
+					.anewarrayJavaString()
 			)
 
 			for (i <- unitParameterNames.indices)
-			(
 				preTopMethodCall
-				dup ()
-				ldc i
-				ldc unitParameterNames(i)
-				aastore ()
-			)
+					.dup()
+					.ldc(i)
+					.ldc(unitParameterNames(i))
+					.aastore()
 
-			(
-				preTopMethodCall
-				invokeVirtualUnitMethodSetParameterNames ()
-			)
+			preTopMethodCall.invokeVirtualUnitMethodSetParameterNames()
 		}
 
 		def addReturnToUnitMethodCall(
 			generationContext:GenerationContext, unitContext:LokiParser.InstructionContext
 		):Unit =
 			if (unitContext.expression != null) //TODO: WTF?
-				generationContext.addPostExitRuleTask(unitContext.expression, () => topMethodCall aReturn ())
+				generationContext.addPostExitRuleTask(unitContext.expression, () => topMethodCall.aReturn())
 	}
 
 	override protected def exitAction()

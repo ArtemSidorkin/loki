@@ -5,6 +5,8 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.StringBytecodeTemplate.StringBytecodeTemplate
 import loki.language.parsing.LokiParser
 
+import scala.language.postfixOps
+
 private[generation] class StringGenerationRule
 	(stringContext:LokiParser.StringContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(stringContext)
@@ -16,11 +18,11 @@ private[generation] class StringGenerationRule
 	{
 		(
 			topMethodCall
-			newString ()
-			dup ()
-			ldc preparedString
-			invokeInitString ()
-			incrementObjectCounter ()
+				.newString()
+				.dup()
+				.ldc(preparedString)
+				.invokeInitString()
+				.incrementObjectCounter()
 		)
 
 		def preparedString = (if (isAcuteString) rawString else rawString split "\n" map (_ init) mkString "\n") tail

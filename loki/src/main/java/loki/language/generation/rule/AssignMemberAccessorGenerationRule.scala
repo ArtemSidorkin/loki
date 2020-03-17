@@ -12,13 +12,12 @@ private[generation] class AssignMemberAccessorGenerationRule
 
 	override protected def enterAction():Unit =
 		generationContext
-			.addPostExitRuleTask(memberNameExpressionContext, () => topMethodCall invokeVirtualUnitMethodToString ())
+			.addPostExitRuleTask(memberNameExpressionContext, () => topMethodCall.invokeVirtualUnitMethodToString())
 
-	override protected def exitAction():Unit = (
+	override protected def exitAction():Unit =
 		topMethodCall
-			invokeVirtualUnitMethodSetMember ()
-			decreaseObjectCounter 2
-	)
+			.invokeVirtualUnitMethodSetMember()
+			.decreaseObjectCounter(2)
 }
 
 private[generation] object AssignMemberAccessorGenerationRule

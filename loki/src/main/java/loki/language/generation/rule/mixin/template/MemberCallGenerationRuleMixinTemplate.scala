@@ -8,5 +8,5 @@ private[generation] trait MemberCallGenerationRuleMixinTemplate
 
 	protected val hostExpressionContext:ExpressionContext
 
-	protected val callParameterExpressionContexts:Seq[ExpressionContext]
+	protected val callParameterExpressionContexts:collection.Seq[ExpressionContext]
 }

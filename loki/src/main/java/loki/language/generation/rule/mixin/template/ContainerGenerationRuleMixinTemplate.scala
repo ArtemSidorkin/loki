@@ -7,5 +7,5 @@ private[generation] trait ContainerGenerationRuleMixinTemplate
 {
 	protected val containerClass:Class[_ <: LUnit]
 
-	protected val containerItemExpressionContexts:Seq[ExpressionContext]
+	protected val containerItemExpressionContexts:collection.Seq[ExpressionContext]
 }

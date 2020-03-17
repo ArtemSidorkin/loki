@@ -8,7 +8,7 @@ private[generation] class AssignIndexGenerationRule
 	(assignIndexContext:AssignIndexContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(assignIndexContext)
 {
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodSetIndexedItem()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodSetIndexedItem()
 }
 
 private[generation] object AssignIndexGenerationRule

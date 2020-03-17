@@ -13,6 +13,6 @@ private[generation] trait MemberCallGenerationRuleMixin
 
 	override protected val hostExpressionContext:LokiParser.ExpressionContext = ruleContext expression 0
 
-	override protected val callParameterExpressionContexts:Seq[LokiParser.ExpressionContext] =
+	override protected val callParameterExpressionContexts:collection.Seq[LokiParser.ExpressionContext] =
 		ruleContext.expression.asScala.tail
 }

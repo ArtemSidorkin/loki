@@ -12,10 +12,10 @@ private[generation] class SuperHostMemberGenerationRule
 
 	override protected def enterAction():Unit = (
 		topMethodCall
-			aloadUnitMethodCallParameterHost ()
-			ldc superMemberName
-			invokeVirtualUnitMethodGetSuperMember ()
-			incrementObjectCounter ()
+			.aloadUnitMethodCallParameterHost()
+			.ldc(superMemberName)
+			.invokeVirtualUnitMethodGetSuperMember()
+			.incrementObjectCounter()
 	)
 }
 

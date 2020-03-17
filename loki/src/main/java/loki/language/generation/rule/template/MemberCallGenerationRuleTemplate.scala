@@ -25,7 +25,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 						topMethodCall ldc memberName
 						if (callParameterExpressionContexts.nonEmpty)
 							topMethodCall anewarrayUnit callParameterExpressionContexts.size
-						else topMethodCall emptyUnitArray ()
+						else topMethodCall.emptyUnitArray()
 					}
 				)
 
@@ -48,25 +48,23 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 				generationContext.
 					addPreEnterRuleTask(
 						callParameterExpressionContexts(callParameterIndex),
-						() => (
+						() =>
 							topMethodCall
-								dup ()
-								ldc callParameterIndex
-						)
+								.dup()
+								.ldc(callParameterIndex)
 					)
 
 			def storeCallParameterAfterExitCallParameterExpressionContext(callParameterIndex:Int):Unit =
 				generationContext
 					.addPostExitRuleTask(
 						callParameterExpressionContexts(callParameterIndex),
-						() => (
+						() =>
 							topMethodCall
-								aastore ()
-								decrementObjectCounter()
-						)
+								.aastore()
+								.decrementObjectCounter()
 					)
 		}
 	}
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCallMember ()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodCallMember()
 }

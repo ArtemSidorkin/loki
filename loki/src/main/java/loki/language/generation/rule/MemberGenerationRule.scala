@@ -14,11 +14,10 @@ private[generation] class MemberGenerationRule
 		generationContext
 			.addPostExitRuleTask(
 				memberContext.expression,
-				() => (
+				() =>
 					topMethodCall
-						ldc memberName
-						invokeVirtualUnitMethodGetMember ()
-				)
+						.ldc(memberName)
+						.invokeVirtualUnitMethodGetMember()
 			)
 }
 

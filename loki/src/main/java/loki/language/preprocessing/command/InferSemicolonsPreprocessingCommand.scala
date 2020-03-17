@@ -3,6 +3,7 @@ package loki.language.preprocessing.command
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 private[preprocessing] object InferSemicolonsPreprocessingCommand extends PreprocessingCommand
 {
@@ -51,7 +52,7 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 	override def apply(code:StringBuilder):Unit =
 		if (code.nonEmpty)
 		{
-			val codeLines = code split CompilerTokens.NEW_LINE
+			val codeLines = code.toString split CompilerTokens.NEW_LINE
 			val newCode = new StringBuilder
 
 			for (i <- codeLines.indices)

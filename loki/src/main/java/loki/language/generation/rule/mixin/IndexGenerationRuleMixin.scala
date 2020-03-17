@@ -14,6 +14,6 @@ private[generation] trait IndexGenerationRuleMixin
 
 	override protected val hostExpressionContext:LokiParser.ExpressionContext = ruleContext.expression.asScala.head
 
-	override protected val callParameterExpressionContexts:Seq[LokiParser.ExpressionContext] =
+	override protected val callParameterExpressionContexts:collection.Seq[LokiParser.ExpressionContext] =
 		ruleContext.expression.asScala.tail
 }

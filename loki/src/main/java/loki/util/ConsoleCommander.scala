@@ -2,13 +2,14 @@ package loki.util
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scala.language.postfixOps
 
 object ConsoleCommander
 {
 	case class Arguments(
 		keylessArguments:Seq[String],
 		parameterlessKeys:Set[String],
-		parameterizedKeys:collection.Map[String, Seq[String]]
+		parameterizedKeys:collection.Map[String, collection.Seq[String]]
 	)
 
 	def apply(arguments:Array[String], handler:(Arguments)=>Unit):Unit =

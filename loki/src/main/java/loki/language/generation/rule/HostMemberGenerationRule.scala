@@ -13,10 +13,10 @@ private[generation] class HostMemberGenerationRule
 	override protected def enterAction():Unit =
 	(
 		topMethodCall
-			aloadUnitMethodCallParameterHost ()
-			ldc hostMemberName
-			invokeVirtualUnitMethodGetMember ()
-			incrementObjectCounter ()
+			.aloadUnitMethodCallParameterHost()
+			.ldc(hostMemberName)
+			.invokeVirtualUnitMethodGetMember()
+			.incrementObjectCounter()
 	)
 }
 

@@ -23,33 +23,31 @@ private[generation] class ModuleGenerationRule
 		def generateInit():Unit =
 		(
 			topClassFrame
-				addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
-				aloadthis ()
-				ldc moduleName
-				invokeInitModule ()
-				`return` ()
+				.addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
+				.aloadthis()
+				.ldc(moduleName)
+				.invokeInitModule()
+				.`return`()
 		)
 
 		def generateContextInTopMethodCall():Unit =
 		(
 			topMethodCall
-				newModuleContext ()
-				dup ()
-				aloadthis ()
-				aloadUnitMethodCallParameterHost ()
-				aloadUnitMethodCallParameterParameters ()
-				invokeInitModuleContext ()
-				astoreUnitMethodCallVariableUnitContext ()
+				.newModuleContext()
+				.dup()
+				.aloadthis()
+				.aloadUnitMethodCallParameterHost()
+				.aloadUnitMethodCallParameterParameters()
+				.invokeInitModuleContext()
+				.astoreUnitMethodCallVariableUnitContext()
 		)
 	}
 
 	override protected def exitAction():Unit =
 	{
-		(
 			topMethodCall
-			aloadthis ()
-			aReturn ()
-		)
+				.aloadthis()
+				.aReturn()
 
 		classLoader.setClassCode(
 			topClassFrame.internalName,

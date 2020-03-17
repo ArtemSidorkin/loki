@@ -5,6 +5,8 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 
+import scala.language.postfixOps
+
 private[generation] class CallGenerationRule(callContext:CallContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(callContext)
 {
@@ -22,9 +24,9 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 					callExpression,
 					() =>
 					{
-						topMethodCall aloadUnitMethodCallParameterHost ()
+						topMethodCall aloadUnitMethodCallParameterHost
 
-						if (callParameterCount == 0) topMethodCall emptyUnitArray ()
+						if (callParameterCount == 0) topMethodCall emptyUnitArray
 						else topMethodCall anewarrayUnit callParameterCount
 					}
 				)
@@ -37,8 +39,8 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 						getCallParameterExpression(parameterIndex),
 						() =>
 							topMethodCall
-								dup ()
-								ldc parameterIndex - 1
+								.dup()
+								.ldc(parameterIndex - 1)
 					)
 
 				generationContext
@@ -46,14 +48,14 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 						getCallParameterExpression(parameterIndex),
 						() =>
 							topMethodCall
-								aastore ()
-								decrementObjectCounter ()
+								.aastore()
+								.decrementObjectCounter()
 
 					)
 			}
 	}
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodCall ()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodCall()
 
 	private def getCallParameterExpression(parameterIndex:Int) = callContext expression parameterIndex
 }

@@ -14,11 +14,10 @@ private[generation] class AssignMemberGenerationRule
 	override protected def enterAction():Unit =
 		generationContext.addPostExitRuleTask(expressionContextToAssign, () => topMethodCall ldc memberName)
 
-	override protected def exitAction():Unit = (
+	override protected def exitAction():Unit =
 		topMethodCall
-			invokeVirtualUnitMethodSetMember ()
-			decrementObjectCounter ()
-	)
+			.invokeVirtualUnitMethodSetMember()
+			.decrementObjectCounter()
 }
 
 private[generation] object AssignMemberGenerationRule

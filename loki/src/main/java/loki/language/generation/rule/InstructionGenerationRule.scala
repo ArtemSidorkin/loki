@@ -7,8 +7,8 @@ private[generation] class InstructionGenerationRule
 	(instructionContext:InstructionContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(instructionContext)
 {
-	override protected def enterAction():Unit = topMethodCall pushFrame ()
-	override protected def exitAction():Unit = topMethodCall popFrame ()
+	override protected def enterAction():Unit = topMethodCall.pushFrame()
+	override protected def exitAction():Unit = topMethodCall.popFrame()
 }
 
 private[generation] object InstructionGenerationRule

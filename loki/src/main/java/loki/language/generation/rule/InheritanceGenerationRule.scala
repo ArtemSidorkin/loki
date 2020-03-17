@@ -16,11 +16,11 @@ private[generation] class InheritanceGenerationRule
 		loadThisAndCreateParentArray()
 		storeParentsInParentArray()
 
-		def loadThisAndCreateParentArray():Unit = (
+		def loadThisAndCreateParentArray():Unit =
 			topMethodCall
-				aloadthis()
-				anewarrayUnit parentCount
-		)
+				.aloadthis()
+				.anewarrayUnit(parentCount)
+
 
 		def storeParentsInParentArray():Unit =
 			for (parentIndex <- 0 until parentCount)
@@ -30,17 +30,17 @@ private[generation] class InheritanceGenerationRule
 						getParentExpression(parentIndex),
 						() =>
 							topMethodCall
-								dup ()
-								ldc parentIndex
-								decrementObjectCounter ()
+								.dup()
+								.ldc(parentIndex)
+								.decrementObjectCounter()
 					)
 
 				generationContext
-					.addPostExitRuleTask(getParentExpression(parentIndex), () => topMethodCall aastore ())
+					.addPostExitRuleTask(getParentExpression(parentIndex), () => topMethodCall.aastore())
 			}
 	}
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodAddParents ()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodAddParents()
 
 	private def getParentExpression(parentIndex:Int) = inheritanceContext expression parentIndex
 }

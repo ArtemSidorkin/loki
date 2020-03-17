@@ -1,10 +1,10 @@
 package loki.util
 
 import java.io._
-import java.net.URI
 import java.nio.file.Paths
 
 import scala.annotation.tailrec
+import scala.language.postfixOps
 
 object FileUtil
 {

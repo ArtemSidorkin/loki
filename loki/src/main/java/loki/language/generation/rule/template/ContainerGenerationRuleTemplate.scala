@@ -20,12 +20,11 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 
 		object CreateAndDuplicateContainerClass
 		{
-			def apply():Unit = (
+			def apply():Unit =
 				topMethodCall
-					`new` containerClass
-					dup ()
-					incrementObjectCounter ()
-			)
+					.`new`(containerClass)
+					.dup()
+					.incrementObjectCounter()
 		}
 
 		object CreateContainerClassConstructorParameter
@@ -33,7 +32,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 			def apply():Unit =
 				if (containerItemExpressionContexts.nonEmpty)
 					topMethodCall anewarrayUnit containerItemExpressionContexts.size
-				else topMethodCall emptyUnitArray ()
+				else topMethodCall.emptyUnitArray()
 		}
 
 		object StoreContainerItems
@@ -59,11 +58,10 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 								() => duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex)
 							)
 
-					private def duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex:Int):Unit = (
+					private def duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex:Int):Unit =
 						topMethodCall
-							dup ()
-							ldc itemIndex
-					)
+							.dup()
+							.ldc(itemIndex)
 				}
 
 				object StoreContainerItemAfterExitContainerItemExpressionContext
@@ -74,11 +72,10 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 								containerItemExpressionContexts(containerItemIndex), storeContainerItem
 							)
 
-					private def storeContainerItem():Unit = (
+					private def storeContainerItem():Unit =
 						topMethodCall
-							aastore ()
-							decrementObjectCounter ()
-					)
+							.aastore()
+							.decrementObjectCounter()
 				}
 			}
 		}

@@ -6,11 +6,10 @@ import loki.language.parsing.LokiParser.ThisContext
 private[generation] class ThisGenerationRule(thisContext:ThisContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(thisContext)
 {
-	override protected def enterAction():Unit = (
+	override protected def enterAction():Unit =
 		topMethodCall
-			aloadthis ()
-			incrementObjectCounter ()
-	)
+			.aloadthis()
+			.incrementObjectCounter()
 }
 
 private[generation] object ThisGenerationRule

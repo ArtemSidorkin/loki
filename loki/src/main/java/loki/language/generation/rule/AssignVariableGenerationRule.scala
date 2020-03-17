@@ -11,13 +11,12 @@ private[generation] class AssignVariableGenerationRule
 {
 	private def variableName = assignVariableContext.IDENTIFIER.getText
 
-	override protected def enterAction():Unit =	(
+	override protected def enterAction():Unit =
 		topMethodCall
-			aloadUnitMethodCallVariableUnitContext ()
-			ldc variableName
-	)
+			.aloadUnitMethodCallVariableUnitContext()
+			.ldc(variableName)
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitContextMethodSetVariable ()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitContextMethodSetVariable()
 }
 
 private[generation] object AssignVariableGenerationRule

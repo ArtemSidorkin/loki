@@ -10,13 +10,12 @@ private[generation] class AssignHostMemberGenerationRule
 {
 	private def hostMemberName = assignHostMemberContext.IDENTIFIER.getText
 
-	override protected def enterAction():Unit = (
+	override protected def enterAction():Unit =
 		topMethodCall
-			aloadUnitMethodCallParameterHost ()
-			ldc hostMemberName
-	)
+			.aloadUnitMethodCallParameterHost()
+			.ldc(hostMemberName)
 
-	override protected def exitAction():Unit = topMethodCall invokeVirtualUnitMethodSetMember ()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodSetMember()
 }
 
 private[generation] object AssignHostMemberGenerationRule

@@ -7,6 +7,8 @@ import loki.language.generation.constant.BytecodeCommon
 import loki.language.generation.rule.mixin.GenerationRuleMixin
 import org.antlr.v4.runtime.RuleContext
 
+import scala.language.postfixOps
+
 private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext]
 	(protected val ruleContext:RULE_CONTEXT)(implicit protected val generationContext:GenerationContext)
 	extends GenerationRuleMixin[RULE_CONTEXT]

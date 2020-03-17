@@ -27,12 +27,11 @@ private[generation] class WhileGenerationRule(whileContext:WhileContext)(implici
 			generationContext
 				.addPostExitRuleTask(
 					conditionalExpressionContext,
-					() => (
+					() =>
 						topMethodCall
-							invokeVirtualUnitMethodToBoolean ()
-							decrementObjectCounter ()
-							ifeq labels.end
-					)
+							.invokeVirtualUnitMethodToBoolean()
+							.decrementObjectCounter()
+							.ifeq(labels.end)
 				)
 	}
 
@@ -47,11 +46,10 @@ private[generation] class WhileGenerationRule(whileContext:WhileContext)(implici
 				label labels.end
 		)
 
-		def prepareResult():Unit = (
+		def prepareResult():Unit =
 			topMethodCall
-				void ()
-				incrementObjectCounter ()
-		)
+				.void()
+				.incrementObjectCounter()
 	}
 }
 

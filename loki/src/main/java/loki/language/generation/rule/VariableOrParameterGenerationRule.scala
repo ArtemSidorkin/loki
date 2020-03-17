@@ -11,13 +11,12 @@ private[generation] class VariableOrParameterGenerationRule
 {
 	private def variableOrParameterName:String = variableOrParameterContext.IDENTIFIER.getText
 
-	override protected def enterAction():Unit = (
+	override protected def enterAction():Unit =
 		topMethodCall
-			aloadUnitMethodCallVariableUnitContext ()
-			ldc variableOrParameterName
-			invokeVirtualUnitContextMethodGetVariable ()
-			incrementObjectCounter ()
-	)
+			.aloadUnitMethodCallVariableUnitContext()
+			.ldc(variableOrParameterName)
+			.invokeVirtualUnitContextMethodGetVariable()
+			.incrementObjectCounter()
 }
 
 private[generation] object VariableOrParameterGenerationRule

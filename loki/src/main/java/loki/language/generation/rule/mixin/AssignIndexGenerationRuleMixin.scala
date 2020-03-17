@@ -13,5 +13,5 @@ private[generation] trait AssignIndexGenerationRuleMixin
 
 	override protected val hostExpressionContext:ExpressionContext = ruleContext.expression.asScala.head
 
-	override protected val callParameterExpressionContexts: Seq[ExpressionContext] = ruleContext.expression.asScala.tail
+	override protected val callParameterExpressionContexts:collection.Seq[ExpressionContext] = ruleContext.expression.asScala.tail
 }

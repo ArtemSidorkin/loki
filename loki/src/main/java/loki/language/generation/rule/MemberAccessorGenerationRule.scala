@@ -10,12 +10,11 @@ private[generation] class MemberAccessorGenerationRule
 {
 	override protected def enterAction():Unit = ()
 
-	override protected def exitAction():Unit = (
+	override protected def exitAction():Unit =
 		topMethodCall
-			invokeVirtualUnitMethodToString ()
-			invokeVirtualUnitMethodGetMember ()
-			decrementObjectCounter ()
-	)
+			.invokeVirtualUnitMethodToString()
+			.invokeVirtualUnitMethodGetMember()
+			.decrementObjectCounter()
 }
 
 private[generation] object MemberAccessorGenerationRule

@@ -6,6 +6,8 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitByteco
 import loki.language.parsing.LokiParser.IfElseContext
 import org.objectweb.asm.tree.LabelNode
 
+import scala.language.postfixOps
+
 private[generation] class IfElseGenerationRule
 	(ifElseContext:IfElseContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(ifElseContext)
@@ -34,9 +36,9 @@ private[generation] class IfElseGenerationRule
 					conditionalExpressionContext,
 					() => (
 						topMethodCall
-							invokeVirtualUnitMethodToBoolean ()
-							ifeq falseConditionLabelNode
-							decrementObjectCounter ()
+							.invokeVirtualUnitMethodToBoolean ()
+							.ifeq(falseConditionLabelNode)
+							.decrementObjectCounter ()
 					)
 				)
 
@@ -56,16 +58,15 @@ private[generation] class IfElseGenerationRule
 			def gotoTrueConditionLabel():Unit = topMethodCall goto trueConditionLabelNode
 
 			def placeLabelsIfElseBranchIsNotPresent():Unit =
-				if (!isElsePresent) (
+				if (!isElsePresent)
 					topMethodCall
-						label falseConditionLabelNode
-						void ()
-						label trueConditionLabelNode
-				)
+						.label(falseConditionLabelNode)
+						.void()
+						.label(trueConditionLabelNode)
 
 			def saveLastIfValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall decrementObjectCounter ())
+					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementObjectCounter())
 		}
 
 		def handleElseBranchIfPresent()
@@ -87,10 +88,10 @@ private[generation] class IfElseGenerationRule
 
 			def saveLastElseValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall decrementObjectCounter ())
+					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall.decrementObjectCounter())
 		}
 
-		def unsaveConditionResult():Unit = topMethodCall incrementObjectCounter ()
+		def unsaveConditionResult():Unit = topMethodCall.incrementObjectCounter()
 	}
 }
 

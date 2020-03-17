@@ -13,11 +13,12 @@ import loki.util.FileUtil
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
-import scala.collection.JavaConversions._
+import scala.jdk.CollectionConverters._
+import scala.language.postfixOps
 
 object Executor
 {
-	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]()
+	private val modules:collection.mutable.Map[String, LModule] = new ConcurrentHashMap[String, LModule]().asScala
 
 	private var rootModulePathName:Option[String] = None
 	private var rootModuleAbsolutePathName:Option[String] = None
@@ -44,9 +45,9 @@ object Executor
 			if (absoluteModuleFilePathName == rootModuleAbsolutePathName.get) rootModuleName.get
 			else FileUtil convertFileToClassName (absoluteModuleFilePathName, rootModuleAbsolutePathName.get)
 
-		if (modules containsKey moduleName unary_!) modules.synchronized
+		if (modules contains moduleName unary_!) modules.synchronized
 		{
-			if (modules containsKey moduleName unary_!)
+			if (modules contains moduleName unary_!)
 			{
 				val module = createModule(moduleName, moduleFilePathName)
 				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
