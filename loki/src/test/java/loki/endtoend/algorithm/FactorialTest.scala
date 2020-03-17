@@ -6,7 +6,7 @@ import org.junit.jupiter.api.{Assertions, Test}
 private[endtoend] class FactorialTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("algorithm", "Factorial.test.loki")
 

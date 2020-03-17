@@ -6,7 +6,7 @@ import org.junit.jupiter.api.{Assertions, Test}
 private[endtoend] class LinkedListTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("algorithm", "LinkedList.test.loki")
 

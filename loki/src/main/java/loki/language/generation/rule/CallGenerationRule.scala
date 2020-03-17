@@ -13,7 +13,7 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 	private def callParameterCount:Int = callContext.expression.size - 1 //TODO: think is it worth to declare field for this, or maybe cast to scala and save thecollection
 	private def callExpression:ExpressionContext = callContext expression 0
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		loadHostAndCreateParameterArray()
 		storeParametersInParameterArray()

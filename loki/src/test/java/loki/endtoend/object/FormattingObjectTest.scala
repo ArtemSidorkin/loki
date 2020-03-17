@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 private[endtoend] class FormattingObjectTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("object", "FormattingObject.test.loki")
 	}

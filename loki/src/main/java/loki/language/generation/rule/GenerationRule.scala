@@ -20,14 +20,14 @@ private[generation] class GenerationRule[RULE_CONTEXT <: RuleContext]
 	protected def topMethodCall:MethodBuilder = topClassFrame.methodCall
 	protected def preTopMethodCall:MethodBuilder = preTopClassFrame.methodCall
 
-	def enter()
+	def enter():Unit =
 	{
 		generationContext.checkPreEnterRuleTasks(ruleContext)
 		enterAction()
 		generationContext.checkPostEnterRuleTasks(ruleContext)
 	}
 
-	def exit()
+	def exit():Unit =
 	{
 		generationContext.checkPreExitRuleTasks(ruleContext)
 		exitAction()

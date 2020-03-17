@@ -6,7 +6,7 @@ import org.junit.jupiter.api.{Assertions, Test}
 private[endtoend] class SimpleOOPTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("oop", "SimpleOOP.test.loki")
 

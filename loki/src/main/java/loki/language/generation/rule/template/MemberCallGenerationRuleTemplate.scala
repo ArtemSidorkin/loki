@@ -11,7 +11,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 	[RULE_CONTEXT <: RuleContext](ruleContext:RULE_CONTEXT)(implicit generationContext:GenerationContext)
 	extends GenerationRule(ruleContext) with MemberCallGenerationRuleMixinTemplate
 {
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		loadMemberNameAndCreateCallParameterArrayAfterExitHostExpressionContext()
 		storeCallParameters()
@@ -29,7 +29,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 					}
 				)
 
-		def storeCallParameters()
+		def storeCallParameters():Unit =
 		{
 			callParameterExpressionContexts
 				.indices

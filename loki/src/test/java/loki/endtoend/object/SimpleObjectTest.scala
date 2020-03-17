@@ -6,7 +6,7 @@ import org.junit.jupiter.api.{Assertions, Test}
 private[endtoend] class SimpleObjectTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("object", "SimpleObject.test.loki")
 

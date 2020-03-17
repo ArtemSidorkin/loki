@@ -37,6 +37,6 @@ object ConsoleCommander
 				)
 				._2
 
-		handler(Arguments(keylessArguments, parameterlessKeys.toSet, parameterizedKeys))
+		handler(Arguments(keylessArguments.toIndexedSeq, parameterlessKeys.toSet, parameterizedKeys))
 	}
 }

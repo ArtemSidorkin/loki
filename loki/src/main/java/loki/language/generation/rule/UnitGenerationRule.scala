@@ -13,6 +13,7 @@ import loki.language.parsing.{LokiLexer, LokiParser}
 import loki.system.SystemSettings
 
 import scala.language.postfixOps
+import scala.language.existentials
 
 //TODO: check & refactor
 private[generation] class UnitGenerationRule
@@ -32,7 +33,7 @@ private[generation] class UnitGenerationRule
 
 	private val unitLastInstruction:InstructionContext = unitContext instruction unitContext.instruction.size - 1
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		pushUnitFrame()
 
@@ -69,7 +70,7 @@ private[generation] class UnitGenerationRule
 			preTopMethodCall ldc untNm
 		})
 
-		def generateUnitCreationAndInitInPreTopMethodCall()
+		def generateUnitCreationAndInitInPreTopMethodCall():Unit =
 		{
 			generateUnitCreation()
 			generateUnitType()
@@ -144,7 +145,7 @@ private[generation] class UnitGenerationRule
 				generationContext.addPostExitRuleTask(unitContext.expression, () => topMethodCall.aReturn())
 	}
 
-	override protected def exitAction()
+	override protected def exitAction():Unit =
 	{
 		classLoader.setClassCode(
 			topClassFrame.internalName,

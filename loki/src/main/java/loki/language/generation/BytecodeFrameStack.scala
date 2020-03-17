@@ -4,11 +4,10 @@ import loki.language.generation.classbuilder.FrameClassBuilder
 import loki.util.IdGenerator
 
 import scala.collection.mutable
-;
 
 class BytecodeFrameStack
 {
-	protected val frames:mutable.ArrayStack[BytecodeFrame] = new mutable.ArrayStack[BytecodeFrame]()
+	protected val frames:mutable.Stack[BytecodeFrame] = new mutable.Stack[BytecodeFrame]()
 	private val frameIdGenerator = new IdGenerator
 
 	def apply(frameIndex:Int):BytecodeFrame = frames(frameIndex)
@@ -21,7 +20,7 @@ class BytecodeFrameStack
 
 	def push(classFrame:FrameClassBuilder):Unit = frames.push(new BytecodeFrame(classFrame, frameIdGenerator()))
 
-	def push(classFrameCreator: Long => FrameClassBuilder)
+	def push(classFrameCreator: Long => FrameClassBuilder):Unit =
 	{
 		val id = frameIdGenerator()
 

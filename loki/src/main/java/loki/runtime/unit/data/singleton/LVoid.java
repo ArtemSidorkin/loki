@@ -95,8 +95,6 @@ public class LVoid extends LUnit
 	@Override
 	public boolean equals(Object object)
 	{
-		if (object == null) return false;
-
 		return DESCRIPTOR.getInstance() == object;
 	}
 

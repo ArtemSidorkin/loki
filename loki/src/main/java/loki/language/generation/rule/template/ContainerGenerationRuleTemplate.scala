@@ -12,7 +12,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 	[RULE_CONTEXT <: RuleContext](ruleContext:RULE_CONTEXT)(implicit generationContext:GenerationContext)
 	extends GenerationRule(ruleContext) with ContainerGenerationRuleMixinTemplate
 {
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		CreateAndDuplicateContainerClass()
 		CreateContainerClassConstructorParameter()
@@ -81,7 +81,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 		}
 	}
 
-	override protected def exitAction()
+	override protected def exitAction():Unit =
 	{
 		InvokeInitContainer()
 

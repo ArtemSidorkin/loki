@@ -28,16 +28,21 @@ sourceSets
 	}
 }
 
+tasks.withType(ScalaCompile)
+{
+	scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
 mainClassName = "loki.Main"
 
 dependencies 
 {
-	compile "org.ow2.asm:asm-all:$asmVersion"
-	compile "org.antlr:antlr4-runtime:$antlrVersion"
-	compile "org.scala-lang:scala-library:$scalaVersion"
+	implementation "org.ow2.asm:asm-all:$asmVersion"
+	implementation "org.antlr:antlr4-runtime:$antlrVersion"
+	implementation "org.scala-lang:scala-library:$scalaVersion"
 
-	testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-	testCompile "org.junit.jupiter:junit-jupiter:$junitVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
 }
 
 test

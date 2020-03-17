@@ -6,7 +6,7 @@ import org.junit.jupiter.api.{Assertions, Test}
 private[endtoend] class ArrayCreationTest extends EndToEndTest
 {
 	@Test
-	def arrayCreationTest()
+	def test():Unit =
 	{
 		runTest("array", "ArrayCreation.test.loki")
 

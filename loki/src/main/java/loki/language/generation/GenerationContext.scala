@@ -6,7 +6,7 @@ import scala.collection.mutable
 
 class GenerationContext(val moduleName:String, val classLoader:GenerationClassLoader)
 {
-	private type RULE_TASKS = mutable.Map[RuleContext, mutable.ArrayStack[RULE_TASK]]
+	private type RULE_TASKS = mutable.Map[RuleContext, mutable.Stack[RULE_TASK]]
 	private type RULE_TASK = ()=>Unit
 
 	val frameStack:BytecodeFrameStack = new BytecodeFrameStack
@@ -48,7 +48,7 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 	def checkPostExitRuleTasks: RuleContext => Unit = applyRuleTasks(postExitRuleTasks, _:RuleContext)
 
 	private def addRuleTask(tasks:RULE_TASKS, ruleContext:RuleContext, ruleTask:RULE_TASK):Unit =
-		tasks.getOrElseUpdate(ruleContext, mutable.ArrayStack()) += ruleTask
+		tasks.getOrElseUpdate(ruleContext, mutable.Stack()) += ruleTask
 
 	private def applyRuleTasks(ruleTasks:RULE_TASKS, ruleContext:RuleContext):Unit = (
 		ruleTasks
@@ -61,5 +61,5 @@ class GenerationContext(val moduleName:String, val classLoader:GenerationClassLo
 			})
 	)
 
-	private def createRuleTasks = mutable.HashMap[RuleContext, mutable.ArrayStack[()=>Unit]]()
+	private def createRuleTasks = mutable.HashMap[RuleContext, mutable.Stack[()=>Unit]]()
 }

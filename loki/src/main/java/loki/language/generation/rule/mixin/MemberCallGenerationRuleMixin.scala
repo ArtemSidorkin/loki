@@ -4,7 +4,7 @@ import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixi
 import loki.language.parsing.LokiParser
 import loki.language.parsing.LokiParser.MemberCallContext
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 private[generation] trait MemberCallGenerationRuleMixin
 	extends GenerationRuleMixin[MemberCallContext] with MemberCallGenerationRuleMixinTemplate

@@ -46,7 +46,7 @@ public class LUnitContext
 	@Compiler
 	public LUnit setVariable(String variableName, LUnit variableValue)
 	{
-		initVariablesIfNecessary().put(variableName, variableValue);;
+		initVariablesIfNecessary().put(variableName, variableValue);
 
 		return variableValue;
 	}
@@ -64,11 +64,7 @@ public class LUnitContext
 	{
 		if (localVariables == null) return null;
 
-		LUnit variable = localVariables.get(localVariableName);
-
-		if (variable == null) return null;
-
-		return variable;
+		return localVariables.get(localVariableName);
 	}
 
 	private @Nullable LUnit getParameter(String parameterName)

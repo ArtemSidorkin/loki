@@ -30,14 +30,14 @@ object FileUtil
 			substring (0, {val index = filePathname lastIndexOf "."; if (index != -1) index else filePathname.length})
 	)
 
-	def writeText(filePathname:String, text:String)
+	def writeText(filePathname:String, text:String):Unit =
 	{
 		val bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathname)))
 		try {bufferedWriter.write(text)}
 		finally {bufferedWriter.close()}
 	}
 
-	def writeText(filePathname:String, textLines:Seq[String])
+	def writeText(filePathname:String, textLines:Seq[String]):Unit =
 	{
 		val bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathname)))
 

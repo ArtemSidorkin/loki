@@ -10,8 +10,8 @@ import loki.runtime.unit.function.LTest
 import loki.runtime.unit.unit.LUnit
 import org.junit.jupiter.api.BeforeEach
 
-import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable
+import scala.jdk.CollectionConverters._
 
 private[endtoend] abstract class EndToEndTest
 {
@@ -22,7 +22,7 @@ private[endtoend] abstract class EndToEndTest
 
 	protected def testValues:mutable.Seq[LUnit] = LTest.getValues.asScala
 
-	protected def runTest(testSubfolder:String, testFileName:String)
+	protected def runTest(testSubfolder:String, testFileName:String):Unit =
 	{
 		Executor.getModule(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
 	}

@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import static loki.runtime.util.Polymorphic.Type.*;
 
+@SuppressWarnings("unchecked")
 public abstract class LUnit
 {
 	public static final String PROTOTYPE_NAME = "UnitPrototype";

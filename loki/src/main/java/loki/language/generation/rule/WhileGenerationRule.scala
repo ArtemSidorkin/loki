@@ -12,7 +12,7 @@ private[generation] class WhileGenerationRule(whileContext:WhileContext)(implici
 {
 	private def conditionalExpressionContext:ExpressionContext = whileContext.expression
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		val labels = generationContext.setRuleContextVariable(whileContext, Labels(new LabelNode, new LabelNode))
 

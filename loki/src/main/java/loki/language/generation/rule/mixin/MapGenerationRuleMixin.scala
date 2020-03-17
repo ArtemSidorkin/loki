@@ -5,7 +5,7 @@ import loki.language.parsing.LokiParser.{ExpressionContext, MapContext}
 import loki.runtime.unit.data.LMap
 import loki.runtime.unit.unit.LUnit
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 private[generation] trait MapGenerationRuleMixin
 	extends GenerationRuleMixin[MapContext] with ContainerGenerationRuleMixinTemplate

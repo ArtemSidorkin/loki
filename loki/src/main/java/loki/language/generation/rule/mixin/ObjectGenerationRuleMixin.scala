@@ -5,7 +5,7 @@ import loki.language.parsing.LokiParser.{ExpressionContext, ObjectContext}
 import loki.runtime.unit.data.LObject
 import loki.runtime.unit.unit.LUnit
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 private[generation] trait ObjectGenerationRuleMixin
 	extends GenerationRuleMixin[ObjectContext] with ContainerGenerationRuleMixinTemplate

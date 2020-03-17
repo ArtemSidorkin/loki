@@ -20,7 +20,7 @@ private[generation] class IfElseGenerationRule
 	private def lastElseExpressionContext = lastElseInstructionContext expression
 	private def lastElseInstructionContext = ifElseContext.else_ instruction (ifElseContext.else_.instruction.size - 1)
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		val trueConditionLabelNode = new LabelNode
 		val falseConditionLabelNode = new LabelNode
@@ -69,7 +69,7 @@ private[generation] class IfElseGenerationRule
 					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementObjectCounter())
 		}
 
-		def handleElseBranchIfPresent()
+		def handleElseBranchIfPresent():Unit =
 		{
 			if (isElsePresent)
 			{

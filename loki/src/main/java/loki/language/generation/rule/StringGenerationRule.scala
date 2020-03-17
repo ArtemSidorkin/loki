@@ -14,7 +14,7 @@ private[generation] class StringGenerationRule
 	private def rawString:String = stringContext.getText
 	private def isAcuteString:Boolean = rawString startsWith "`"
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		(
 			topMethodCall

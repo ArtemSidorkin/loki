@@ -11,7 +11,7 @@ private[generation] class InheritanceGenerationRule
 {
 	private def parentCount:Int = inheritanceContext.expression.size
 
-	override protected def enterAction()
+	override protected def enterAction():Unit =
 	{
 		loadThisAndCreateParentArray()
 		storeParentsInParentArray()

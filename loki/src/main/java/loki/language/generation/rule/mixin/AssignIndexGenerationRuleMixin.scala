@@ -4,7 +4,7 @@ import loki.language.generation.constant.LanguageMembers
 import loki.language.generation.rule.mixin.template.MemberCallGenerationRuleMixinTemplate
 import loki.language.parsing.LokiParser.{AssignIndexContext, ExpressionContext}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 private[generation] trait AssignIndexGenerationRuleMixin
 	extends GenerationRuleMixin[AssignIndexContext] with MemberCallGenerationRuleMixinTemplate

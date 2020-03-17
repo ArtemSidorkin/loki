@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 private[endtoend] class FormattingMapTest extends EndToEndTest
 {
 	@Test
-	def test()
+	def test():Unit =
 	{
 		runTest("map", "FormattingMap.test.loki")
 	}
