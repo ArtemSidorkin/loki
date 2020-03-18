@@ -11,14 +11,14 @@
 
 ## Compilation
 
-    mvn clean compile assembly:single
+    ./gradlew assemble
 
-## Running
+## Run
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar HelloWorld.loki
+    java -jar ./loki/build/libs/loki-all.jar ./examples/HelloWorld.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Function.loki
+    java -jar ./loki/build/libs/loki-all.jar ./examples/Function.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar Class.loki
+    java -jar ./loki/build/libs/loki-all.jar ./examples/Class.loki
 
-    java -jar ./target/CLoki-0.0.1-jar-with-dependencies.jar LinkedList.loki
+    java -jar ./loki/build/libs/loki-all.jar ./examples/LinkedList.loki
