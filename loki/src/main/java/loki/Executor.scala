@@ -92,10 +92,10 @@ object Executor
 				.get(getAbsoluteFilePathname(rootFilePathname))
 				.relativize(Paths.get(getAbsoluteFilePathname(moduleFilePathName)))
 				.toString
-				.replace(s"..${File.separator}", "$")
+				.replace(s"../", "$")
 				.replace(".", "$$")
 				.tail
-				.replace(File.separator, "$")
+				.replace("/", "$")
 
 	private def getAbsoluteFilePathname(filePathname:String):String = new File(filePathname).getAbsolutePath
 
