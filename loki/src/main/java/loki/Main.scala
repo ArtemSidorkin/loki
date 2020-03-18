@@ -15,8 +15,7 @@ object Main extends App
 				if (arguments.parameterlessKeys contains TRACE_PREPROCESSED_CODE)
 					SystemSettings.TRACE_PREPROCESSED_CODE = true
 
-				if (arguments.keylessArguments.nonEmpty)
-					Executor.getModule(arguments.keylessArguments.head)
+				if (arguments.keylessArguments.nonEmpty) Executor(arguments.keylessArguments.head)
 			}
 		)
 	}

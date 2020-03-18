@@ -24,7 +24,7 @@ private[endtoend] abstract class EndToEndTest
 
 	protected def runTest(testSubfolder:String, testFileName:String):Unit =
 	{
-		Executor.getModule(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
+		Executor(s"$TEST_FOLDER_PATHNAME${File.separator}$testSubfolder${File.separator}$testFileName")
 	}
 
 	protected def void:LVoid = LVoid.DESCRIPTOR.getInstance

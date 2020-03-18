@@ -23,15 +23,10 @@ object Executor
 
 	@volatile private var rootModuleDescriptor:RootModuleDescriptor = _
 
-	def getModule(moduleFilePathname:String):LModule =
+	def apply(moduleFilePathname:String):LModule =
 	{
 		createRootModuleDescriptorIfNotExists(moduleFilePathname)
-
-		val moduleClassName = getModuleClassName(moduleFilePathname)
-
-		createModuleIfNotExists(moduleClassName, moduleFilePathname)
-
-		modules(moduleClassName)
+		getOrCreateModule(getModuleClassName(moduleFilePathname), moduleFilePathname)
 	}
 
 	private def createRootModuleDescriptorIfNotExists(moduleFilePathname:String):Unit =
@@ -40,22 +35,26 @@ object Executor
 			if (rootModuleDescriptor == null) rootModuleDescriptor = new RootModuleDescriptor(moduleFilePathname)
 		}
 
-	private def createModuleIfNotExists(moduleName:String, moduleFilePathname:String):Unit =
-		if (modules contains moduleName unary_!) modules.synchronized
+	private def getOrCreateModule(moduleClassName:String, moduleFilePathname:String):LModule =
+	{
+		if (!modules.contains(moduleClassName)) modules.synchronized
 		{
-			if (modules contains moduleName unary_!)
+			if (!modules.contains(moduleClassName))
 			{
-				val module = createModule(moduleName, moduleFilePathname)
-				modules += moduleName -> module
+				val module = createModule(moduleClassName, moduleFilePathname)
+				modules += moduleClassName -> module
 				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
 			}
 		}
 
-	private def createModule(moduleName:String, moduleFilePathname:String) =
-	{
-		val generator = new BytecodeGenerator(moduleName)
+		modules(moduleClassName)
+	}
 
-		val antlrModuleInputStream =
+	private def createModule(moduleClassName:String, moduleFilePathname:String) =
+	{
+		val bytecodeGenerator = new BytecodeGenerator(moduleClassName)
+
+		val moduleInputStream =
 			new ANTLRInputStream(
 				new ByteArrayInputStream(
 					Preprocessor(FileUtils.readFileToString(new File(moduleFilePathname), StandardCharsets.UTF_8))
@@ -63,17 +62,17 @@ object Executor
 				)
 			)
 
-		val lexer = new LokiLexer(antlrModuleInputStream)
+		val lexer = new LokiLexer(moduleInputStream)
 		val commonTokenStream = new CommonTokenStream(lexer)
 		val parser = new LokiParser(commonTokenStream)
 		val moduleContext = parser.module()
 		val parseTreeWalker = new ParseTreeWalker
 
-		parseTreeWalker.walk(generator, moduleContext)
+		parseTreeWalker.walk(bytecodeGenerator, moduleContext)
 
-		generator
+		bytecodeGenerator
 			.classLoader
-			.getClass(moduleName)
+			.getClass(moduleClassName)
 			.getConstructors
 			.head
 			.newInstance()
@@ -84,6 +83,9 @@ object Executor
 		if (getAbsoluteFilePathname(moduleFilePathname) == rootModuleDescriptor.absoluteFilePathname)
 			rootModuleDescriptor.className
 		else getRegularModuleClassName(moduleFilePathname, rootModuleDescriptor.absoluteFilePathname)
+
+	private def getRootModuleClassName(moduleFilePathname:String):String =
+		new File(moduleFilePathname).getName.replace(".", "$$")
 
 	private def getRegularModuleClassName(moduleFilePathName:String, rootFilePathname:String):String =
 			Paths
@@ -99,7 +101,7 @@ object Executor
 
 	private class RootModuleDescriptor(filePathname:String)
 	{
-		val className:String = new File(filePathname).getName.replace(".", "$$")
+		val className:String = getRootModuleClassName(filePathname)
 		val absoluteFilePathname:String = getAbsoluteFilePathname(filePathname)
 	}
 }
