@@ -41,7 +41,6 @@ object BytecodeMethodDescriptors
 	def UNIT_HEIR__METHOD__INIT_2 =
 		TypedMethodDescriptor(
 			(
-//				classOf[LType] ::
 				classOf[LUnitContext] ::
 				classOf[Array[LUnit]] ::
 				Nil

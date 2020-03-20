@@ -10,6 +10,7 @@ import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitByteco
 import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.LokiLexer
+import loki.runtime.LType
 import loki.system.SystemSettings
 
 private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit generationContext:GenerationContext)
@@ -25,21 +26,14 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 			case LokiLexer.BACKSLASH => None
 		}
 
-	private def unitParameterNames:Seq[String] =
-		for (i <- unitName.map(_ => 1).getOrElse(0) until unitContext.IDENTIFIER.size) yield getIdentifierName(i)
-
-	private def unitLastInstruction:InstructionContext = unitContext.instruction(unitContext.instruction.size - 1)
-
 	override protected def enterAction():Unit =
 	{
 		pushUnitFrame()
 
 		generateUnitMethodInit()
-		generateUnitSavingTarget()
-		generateUnitCreation()
-		generateUnitCallParameterNamesSaving()
-		generateUnitSaving()
+		generateUnit()
 		generateUnitCallMethodContext()
+
 		decrementObjectCounterForLastUnitInstruction()
 
 		def generateUnitMethodInit():Unit =
@@ -77,7 +71,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 						.newType()
 						.dup()
-						.ldc(unitName.getOrElse("\\"))
+						.ldc(unitName.getOrElse(LType.ANONYMOUS_TYPE_NAME))
 						.aloadthis()
 						.invokeVirtualJavaObjectMethodGetClass()
 						.invokeInitType()
@@ -87,48 +81,75 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 			}
 		}
 
-
-		def generateUnitSavingTarget():Unit =
-			unitName.foreach(_ =>
-				if (isUnitModuleMember || isUnitUnitMember) preTopMethodCall.aloadUnitMethodCallParameterHost()
-				else preTopMethodCall.aloadUnitMethodCallVariableUnitContext()
-			)
-
-		def generateUnitCreation():Unit =
+		def generateUnit():Unit =
+		{
 			preTopMethodCall
-				.`new`(topClassFrame.internalName)
-				.dup()
-				.aloadUnitMethodCallVariableUnitContext()
-				.aloadUnitMethodCallParameterParameters()
-				.invokeInit2UnitHeir(topClassFrame.internalName)
+				.generateUnitSavingTarget()
+				.generateUnitCreation()
+				.generateUnitCallParameterNamesSaving()
+				.generateUnitSaving()
 
-		def generateUnitCallParameterNamesSaving():Unit =
-			if (unitParameterNames.nonEmpty)
+			implicit class GenerateUnit(val methodBuilder:MethodBuilder)
 			{
-				preTopMethodCall
-					.ldc(unitParameterNames.size)
-					.anewarrayJavaString()
+				def generateUnitSavingTarget():methodBuilder.type =
+				{
+					unitName.foreach(_ =>
+						if (isUnitModuleMember || isUnitUnitMember) methodBuilder.aloadUnitMethodCallParameterHost()
+						else methodBuilder.aloadUnitMethodCallVariableUnitContext()
+					)
 
-				for (i <- unitParameterNames.indices)
-					preTopMethodCall
+					methodBuilder
+				}
+
+				def generateUnitCreation():methodBuilder.type =
+				{
+					methodBuilder
+						.`new`(topClassFrame.internalName)
 						.dup()
-						.ldc(i)
-						.ldc(unitParameterNames(i))
-						.aastore()
+						.aloadUnitMethodCallVariableUnitContext()
+						.aloadUnitMethodCallParameterParameters()
+						.invokeInit2UnitHeir(topClassFrame.internalName)
 
-				preTopMethodCall.invokeVirtualUnitMethodSetParameterNames()
+					methodBuilder
+				}
+
+				def generateUnitCallParameterNamesSaving():methodBuilder.type =
+				{
+					val unitParameterNames:Seq[String] =
+						for (i <- unitName.map(_ => 1).getOrElse(0) until unitContext.IDENTIFIER.size)
+							yield getIdentifierName(i)
+
+					if (unitParameterNames.nonEmpty)
+					{
+						preTopMethodCall
+							.ldc(unitParameterNames.size)
+							.anewarrayJavaString()
+
+						for (i <- unitParameterNames.indices)
+							preTopMethodCall
+								.dup()
+								.ldc(i)
+								.ldc(unitParameterNames(i))
+								.aastore()
+
+						preTopMethodCall.invokeVirtualUnitMethodSetParameterNames()
+					}
+
+					methodBuilder
+				}
+
+				def generateUnitSaving():Unit =
+					unitName.foreach(unitName =>
+					{
+						preTopMethodCall
+							.ldc(unitName)
+							.swap()
+
+						if (isUnitUnitMember || isUnitModuleMember) preTopMethodCall.invokeVirtualUnitMethodSetMember()
+						else preTopMethodCall.invokeVirtualUnitContextMethodSetVariable()
+					})
 			}
-
-		def generateUnitSaving():Unit =
-			unitName.foreach(unitName =>
-			{
-				preTopMethodCall
-					.ldc(unitName)
-					.swap()
-
-				if (isUnitUnitMember || isUnitModuleMember) preTopMethodCall.invokeVirtualUnitMethodSetMember()
-				else preTopMethodCall.invokeVirtualUnitContextMethodSetVariable()
-			})
+		}
 
 		def generateUnitCallMethodContext():Unit =
 			topMethodCall
@@ -141,7 +162,11 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 				.astoreUnitMethodCallVariableUnitContext()
 
 		def decrementObjectCounterForLastUnitInstruction():Unit =
+		{
+			val unitLastInstruction:InstructionContext = unitContext.instruction(unitContext.instruction.size - 1)
+
 			generationContext.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectStackCounter())
+		}
 	}
 
 	override protected def exitAction():Unit =
