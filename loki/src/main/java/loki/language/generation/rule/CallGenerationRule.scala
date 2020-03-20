@@ -49,7 +49,7 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 						() =>
 							topMethodCall
 								.aastore()
-								.decrementObjectCounter()
+								.decrementObjectStackCounter()
 
 					)
 			}

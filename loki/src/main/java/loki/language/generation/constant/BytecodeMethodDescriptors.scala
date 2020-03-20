@@ -36,12 +36,12 @@ object BytecodeMethodDescriptors
 
 	//TODO: unify unit and subunit !SUB_UNIT!
 	val UNIT__METHOD__INIT =
-		TypedMethodDescriptor((classOf[LType] :: classOf[LUnitContext] :: Nil) -> None)
+		TypedMethodDescriptor((classOf[LUnitContext] :: Nil) -> None)
 
 	def UNIT_HEIR__METHOD__INIT_2 =
 		TypedMethodDescriptor(
 			(
-				classOf[LType] ::
+//				classOf[LType] ::
 				classOf[LUnitContext] ::
 				classOf[Array[LUnit]] ::
 				Nil
@@ -49,6 +49,8 @@ object BytecodeMethodDescriptors
 		)
 	val UNIT__METHOD__GET_CAPTURED_ON_CREATION_UNIT_CONTEXT =
 		TypedMethodDescriptor((Nil) -> Some(classOf[LUnitContext]))
+	val UNIT__METHOD__SET_TYPE =
+		TypedMethodDescriptor((classOf[LType] :: Nil) -> None)
 	val UNIT__METHOD__ADD_PARENTS =
 		TypedMethodDescriptor((classOf[Array[LUnit]] :: Nil) -> Some(classOf[LUnit]))
 	val UNIT__METHOD__GET_SUPER_MEMBER =

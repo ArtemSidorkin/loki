@@ -9,7 +9,7 @@ private[generation] class ThisGenerationRule(thisContext:ThisContext)(implicit g
 	override protected def enterAction():Unit =
 		topMethodCall
 			.aloadthis()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 }
 
 private[generation] object ThisGenerationRule

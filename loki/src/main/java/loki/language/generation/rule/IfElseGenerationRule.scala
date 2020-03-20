@@ -38,7 +38,7 @@ private[generation] class IfElseGenerationRule
 						topMethodCall
 							.invokeVirtualUnitMethodToBoolean ()
 							.ifeq(falseConditionLabelNode)
-							.decrementObjectCounter ()
+							.decrementObjectStackCounter ()
 					)
 				)
 
@@ -66,7 +66,7 @@ private[generation] class IfElseGenerationRule
 
 			def saveLastIfValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementObjectCounter())
+					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementObjectStackCounter())
 		}
 
 		def handleElseBranchIfPresent():Unit =
@@ -88,10 +88,10 @@ private[generation] class IfElseGenerationRule
 
 			def saveLastElseValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall.decrementObjectCounter())
+					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall.decrementObjectStackCounter())
 		}
 
-		def unsaveConditionResult():Unit = topMethodCall.incrementObjectCounter()
+		def unsaveConditionResult():Unit = topMethodCall.incrementObjectStackCounter()
 	}
 }
 

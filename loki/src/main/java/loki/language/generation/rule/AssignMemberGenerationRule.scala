@@ -17,7 +17,7 @@ private[generation] class AssignMemberGenerationRule
 	override protected def exitAction():Unit =
 		topMethodCall
 			.invokeVirtualUnitMethodSetMember()
-			.decrementObjectCounter()
+			.decrementObjectStackCounter()
 }
 
 private[generation] object AssignMemberGenerationRule

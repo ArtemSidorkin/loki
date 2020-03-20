@@ -15,7 +15,7 @@ private[generation] class SuperHostMemberGenerationRule
 			.aloadUnitMethodCallParameterHost()
 			.ldc(superMemberName)
 			.invokeVirtualUnitMethodGetSuperMember()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 	)
 }
 

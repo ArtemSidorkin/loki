@@ -24,7 +24,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 				topMethodCall
 					.`new`(containerClass)
 					.dup()
-					.incrementObjectCounter()
+					.incrementObjectStackCounter()
 		}
 
 		object CreateContainerClassConstructorParameter
@@ -75,7 +75,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 					private def storeContainerItem():Unit =
 						topMethodCall
 							.aastore()
-							.decrementObjectCounter()
+							.decrementObjectStackCounter()
 				}
 			}
 		}

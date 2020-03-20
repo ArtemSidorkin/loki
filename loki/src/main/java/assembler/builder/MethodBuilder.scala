@@ -301,25 +301,25 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
-	def incrementObjectCounter():this.type =
+	def incrementObjectStackCounter():this.type =
 	{
 		objectStackCounter.increment()
 		this
 	}
 
-	def decrementObjectCounter():this.type =
+	def decrementObjectStackCounter():this.type =
 	{
 		objectStackCounter.decrement()
 		this
 	}
 
-	def increaseObjectCounter(count:Int):this.type =
+	def increaseObjectStackCounter(count:Int):this.type =
 	{
 		objectStackCounter.increase(count)
 		this
 	}
 
-	def decreaseObjectCounter(count:Int):this.type =
+	def decreaseObjectStackCounter(count:Int):this.type =
 	{
 		objectStackCounter.decrease(count)
 		this

@@ -16,7 +16,7 @@ private[generation] class VariableOrParameterGenerationRule
 			.aloadUnitMethodCallVariableUnitContext()
 			.ldc(variableOrParameterName)
 			.invokeVirtualUnitContextMethodGetVariable()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 }
 
 private[generation] object VariableOrParameterGenerationRule

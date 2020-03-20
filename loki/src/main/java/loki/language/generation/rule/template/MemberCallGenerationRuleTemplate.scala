@@ -61,7 +61,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 						() =>
 							topMethodCall
 								.aastore()
-								.decrementObjectCounter()
+								.decrementObjectStackCounter()
 					)
 		}
 	}

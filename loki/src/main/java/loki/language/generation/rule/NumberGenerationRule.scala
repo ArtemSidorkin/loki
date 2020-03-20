@@ -17,7 +17,7 @@ private[generation] class NumberGenerationRule
 			.dup()
 			.ldc(number)
 			.invokeInitNumber()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 	)
 }
 

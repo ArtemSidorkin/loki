@@ -10,7 +10,7 @@ private[generation] class HostGenerationRule(hostContext:HostContext)(implicit g
 	override protected def enterAction():Unit =
 		topMethodCall
 			.aloadUnitMethodCallParameterHost()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 }
 
 private[generation] object HostGenerationRule

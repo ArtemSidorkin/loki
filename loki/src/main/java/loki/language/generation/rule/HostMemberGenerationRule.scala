@@ -16,7 +16,7 @@ private[generation] class HostMemberGenerationRule
 			.aloadUnitMethodCallParameterHost()
 			.ldc(hostMemberName)
 			.invokeVirtualUnitMethodGetMember()
-			.incrementObjectCounter()
+			.incrementObjectStackCounter()
 	)
 }
 

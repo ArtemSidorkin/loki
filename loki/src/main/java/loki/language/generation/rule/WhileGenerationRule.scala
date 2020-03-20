@@ -30,7 +30,7 @@ private[generation] class WhileGenerationRule(whileContext:WhileContext)(implici
 					() =>
 						topMethodCall
 							.invokeVirtualUnitMethodToBoolean()
-							.decrementObjectCounter()
+							.decrementObjectStackCounter()
 							.ifeq(labels.end)
 				)
 	}
@@ -49,7 +49,7 @@ private[generation] class WhileGenerationRule(whileContext:WhileContext)(implici
 		def prepareResult():Unit =
 			topMethodCall
 				.void()
-				.incrementObjectCounter()
+				.incrementObjectStackCounter()
 	}
 }
 

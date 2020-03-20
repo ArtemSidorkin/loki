@@ -14,7 +14,7 @@ private[generation] class MemberAccessorGenerationRule
 		topMethodCall
 			.invokeVirtualUnitMethodToString()
 			.invokeVirtualUnitMethodGetMember()
-			.decrementObjectCounter()
+			.decrementObjectStackCounter()
 }
 
 private[generation] object MemberAccessorGenerationRule
