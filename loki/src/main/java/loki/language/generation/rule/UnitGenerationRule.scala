@@ -32,7 +32,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 		generateUnitMethodInit()
 		generateUnit()
-		generateUnitCallMethodContext()
+		generateUnitCallMethodUnitContext()
 
 		decrementObjectCounterForLastUnitInstruction()
 
@@ -151,7 +151,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 			}
 		}
 
-		def generateUnitCallMethodContext():Unit =
+		def generateUnitCallMethodUnitContext():Unit =
 			topMethodCall
 				.newUnitContext()
 				.dup()
