@@ -1,7 +1,7 @@
-package loki.runtime.compilerapi.unit;
+package loki.runtime.compilerapi.common;
 
 import assembler.methoddescriptor.DescribingMethodClass;
-import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.data.singleton.LVoid;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@DescribingMethodClass(LUnit.class)
-public @interface UnitSetIndexedItem {}
+@DescribingMethodClass(LVoid.class)
+public @interface VoidGetInstance {}

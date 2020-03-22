@@ -8,9 +8,5 @@ import loki.runtime.unit.LModule
 
 class ModuleFrameClassBuilder(name:String) extends FrameClassBuilder(name, classOf[LModule])
 {
-	val methodCall:MethodBuilder =
-		addMethod(
-			PUBLIC,
-			MethodDescriptorResolver(classOf[UnitCall]).methodName.get, MethodDescriptorResolver(classOf[UnitCall])
-		)
+	val methodCall:MethodBuilder = addMethod(PUBLIC, MethodDescriptorResolver(classOf[UnitCall]))
 }

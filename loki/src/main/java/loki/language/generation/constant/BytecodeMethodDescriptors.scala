@@ -1,16 +1,16 @@
 package loki.language.generation.constant
 
-import assembler.methoddescriptor.TypedMethodDescriptor
+import assembler.methoddescriptor.MethodDescriptor
 import loki.runtime.context.LUnitContext
 import loki.runtime.unit.unit.LUnit
 
 object BytecodeMethodDescriptors
 {
 	val MODULE_HEIR__METHOD__INIT =
-		TypedMethodDescriptor((Nil) -> None)
+		MethodDescriptor((Nil) -> None)
 
 	def UNIT_HEIR__METHOD__INIT_2 =
-		TypedMethodDescriptor(
+		MethodDescriptor(
 			(
 				classOf[LUnitContext] ::
 				classOf[Array[LUnit]] ::
@@ -18,5 +18,5 @@ object BytecodeMethodDescriptors
 			) -> None
 		)
 
-	val JAVA_OBJECT__METHOD__GET_CLASS = TypedMethodDescriptor(Nil -> Some(classOf[Class[_]]))
+	val JAVA_OBJECT__METHOD__GET_CLASS = MethodDescriptor(Nil -> Some(classOf[Class[_]]), Some("getClass"))
 }

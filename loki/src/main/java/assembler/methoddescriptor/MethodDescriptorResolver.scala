@@ -48,7 +48,7 @@ object MethodDescriptorResolver
 
 		val suitableMethod = suitableExecutables.headOption.filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method])
 
-		TypedMethodDescriptor(
+		MethodDescriptor(
 			parameterClasses.toSeq -> suitableMethod.map(_.getReturnType), suitableMethod.map(_.getName)
 		)
 	}

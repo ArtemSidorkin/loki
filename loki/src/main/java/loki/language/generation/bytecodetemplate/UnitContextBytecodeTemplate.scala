@@ -10,19 +10,12 @@ private[generation] object UnitContextBytecodeTemplate
 	implicit class UnitContextBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
 		def invokeVirtualUnitContextMethodGetVariable():methodBuilder.type =
-			methodBuilder.invokevirtual(
-				classOf[LUnitContext],
-				MethodDescriptorResolver(classOf[UnitContextGetVariable]).methodName.get,
-				MethodDescriptorResolver(classOf[UnitContextGetVariable])
-			)
+			methodBuilder
+				.invokevirtual(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextGetVariable]))
 
 		def invokeVirtualUnitContextMethodSetVariable():methodBuilder.type =
 			methodBuilder
-				.invokevirtual(
-					classOf[LUnitContext],
-					MethodDescriptorResolver(classOf[UnitContextSetVariable]).methodName.get,
-					MethodDescriptorResolver(classOf[UnitContextSetVariable])
-				)
+				.invokevirtual(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextSetVariable]))
 
 		def invokeInitUnitContext():methodBuilder.type =
 			methodBuilder.invokeinit(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextConstructor]))

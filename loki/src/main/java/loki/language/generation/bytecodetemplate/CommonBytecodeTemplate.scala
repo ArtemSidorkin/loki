@@ -1,9 +1,10 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
-import assembler.methoddescriptor.TypedMethodDescriptor
-import loki.language.generation.constant.{BytecodeMethodDescriptors, LanguageMembers}
+import assembler.methoddescriptor.{MethodDescriptor, MethodDescriptorResolver}
+import loki.language.generation.constant.BytecodeMethodDescriptors
 import loki.runtime.LType
+import loki.runtime.compilerapi.common.VoidGetInstance
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.unit.data.number.LNumber
 import loki.runtime.unit.data.{LArray, LMap, LObject, LString}
@@ -41,17 +42,10 @@ private[generation] object CommonBytecodeTemplate
 
 		def anewarrayUnit():methodBuilder.type = methodBuilder anewarray classOf[LUnit]
 
-//		//TODO: move instance to constants
-		def void():methodBuilder.type = (
-			methodBuilder
-				invokestatic
-				(classOf[LVoid], "getInstance", TypedMethodDescriptor(Nil -> Some(classOf[LVoid])))
-		)
+		def void():methodBuilder.type =
+			methodBuilder.invokestatic(classOf[LVoid], MethodDescriptorResolver(classOf[VoidGetInstance]))
 
-		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type = methodBuilder invokevirtual (
-			classOf[Object],
-			LanguageMembers.JAVA_OBJECT__METHOD__GET_CLASS,
-			BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS
-		)
+		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type =
+			methodBuilder.invokevirtual(classOf[Object], BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS)
 	}
 }

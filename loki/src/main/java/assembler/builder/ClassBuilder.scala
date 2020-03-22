@@ -57,9 +57,9 @@ class ClassBuilder(
 		this
 	}
 
-	def addMethod(modifier:Modifier, name:String, methodDescriptor:MethodDescriptor):MethodBuilder =
+	def addMethod(modifier:Modifier, methodDescriptor:MethodDescriptor):MethodBuilder =
 	{
-		val methodBuilder = new MethodBuilder(modifier, name, methodDescriptor)
+		val methodBuilder = new MethodBuilder(modifier, methodDescriptor)
 		classNode.methods.asInstanceOf[java.util.List[MethodNode]].add(methodBuilder.methodNode)
 		methodBuilder
 	}

@@ -2,8 +2,6 @@ package loki.language.generation.constant
 
 private[generation] object LanguageMembers
 {
-	val JAVA_OBJECT__METHOD__GET_CLASS = "getClass"
-
 	val UNARY_OPERATOR_BANG = "!_"
 	val UNARY_OPERATOR_MINUS = "-_"
 
