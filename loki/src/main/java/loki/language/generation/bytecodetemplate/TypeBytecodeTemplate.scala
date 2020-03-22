@@ -1,14 +1,15 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
-import loki.language.generation.constant.{BytecodeMethodDescriptors, LanguageMembers}
+import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.runtime.LType
+import loki.runtime.compilerapi.`type`.TypeConstructor
 
 private[generation] object TypeBytecodeTemplate
 {
 	implicit class TypeBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
 		def invokeInitType():methodBuilder.type =
-			methodBuilder invokeinit(classOf[LType], BytecodeMethodDescriptors.TYPE__METHOD__INIT)
+			methodBuilder.invokeinit(classOf[LType], MethodDescriptorResolver.apply(classOf[TypeConstructor]))
 	}
 }

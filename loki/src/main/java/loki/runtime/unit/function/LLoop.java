@@ -1,10 +1,10 @@
 package loki.runtime.unit.function;
 
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.error.LErrors;
 
 public class LLoop extends LUnit
 {

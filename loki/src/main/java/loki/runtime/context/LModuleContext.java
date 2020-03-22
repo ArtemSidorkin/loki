@@ -1,11 +1,11 @@
 package loki.runtime.context;
 
+import loki.runtime.compilerapi.modulecontext.ModuleContextConstructor;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.util.Compiler;
 
 public class LModuleContext extends LUnitContext
 {
-	@Compiler
+	@ModuleContextConstructor
 	public LModuleContext(LUnit moduleUnit, LUnit host, LUnit[] parameters)
 	{
 		super(moduleUnit, host, parameters);

@@ -1,10 +1,10 @@
 package loki.runtime.unit.function;
 
 import loki.Executor;
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.error.LErrors;
 
 public class LUse extends LUnit
 {

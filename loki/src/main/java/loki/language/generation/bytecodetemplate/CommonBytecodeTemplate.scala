@@ -50,7 +50,7 @@ private[generation] object CommonBytecodeTemplate
 
 		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type = methodBuilder invokevirtual (
 			classOf[Object],
-			LanguageMembers.JAVA_OBBJECT__METHOD__GET_CLASS,
+			LanguageMembers.JAVA_OBJECT__METHOD__GET_CLASS,
 			BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS
 		)
 	}

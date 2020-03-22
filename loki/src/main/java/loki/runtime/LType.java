@@ -1,6 +1,6 @@
 package loki.runtime;
 
-import loki.runtime.util.Compiler;
+import loki.runtime.compilerapi.type.TypeConstructor;
 
 public class LType
 {
@@ -9,7 +9,7 @@ public class LType
 	private final String name;
 	private final String id;
 
-	@Compiler
+	@TypeConstructor
 	public LType(String name, Class typeClass)
 	{
 		this.name = name;

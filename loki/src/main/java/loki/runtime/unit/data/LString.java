@@ -1,10 +1,10 @@
 package loki.runtime.unit.data;
 
+import loki.runtime.compilerapi.string.StringConstructor;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
-import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
 
 public class LString extends LUnit
@@ -14,7 +14,7 @@ public class LString extends LUnit
 
 	private final String value;
 
-	@Compiler
+	@StringConstructor
 	public LString(String value)
 	{
 		super(DESCRIPTOR.getType());

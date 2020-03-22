@@ -1,12 +1,12 @@
 package loki.runtime.unit.data.singleton;
 
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.Compiler;
-import loki.runtime.error.LErrors;
 
 public class LVoid extends LUnit
 {

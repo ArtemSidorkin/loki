@@ -1,12 +1,12 @@
 package loki.runtime.unit.data.number;
 
+import loki.runtime.compilerapi.number.NumberConstructor;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.member.operation.binary.*;
 import loki.runtime.unit.data.number.member.operation.unary.LNegationNumberUnaryOperation;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
-import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
 
 public class LNumber extends LUnit
@@ -16,7 +16,7 @@ public class LNumber extends LUnit
 
 	private final double value;
 
-	@Compiler
+	@NumberConstructor
 	public LNumber(double value)
 	{
 		super(DESCRIPTOR.getType());

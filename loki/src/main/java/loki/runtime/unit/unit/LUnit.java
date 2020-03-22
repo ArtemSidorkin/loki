@@ -2,7 +2,9 @@ package loki.runtime.unit.unit;
 
 import loki.runtime.LSettings;
 import loki.runtime.LType;
+import loki.runtime.compilerapi.unit.*;
 import loki.runtime.context.LUnitContext;
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
@@ -11,7 +13,6 @@ import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.util.Compiler;
-import loki.runtime.error.LErrors;
 import loki.runtime.util.Nullable;
 import loki.runtime.util.Polymorphic;
 
@@ -51,12 +52,12 @@ public abstract class LUnit
 		this(type, null);
 	}
 
+	@UnitConstructor
 	public LUnit(@Nullable LUnitContext capturedUnitContext)
 	{
 		this(null, capturedUnitContext);
 	}
 
-	@Compiler
 	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedUnitContext)
 	{
 		this.type = type;
@@ -98,12 +99,13 @@ public abstract class LUnit
 		return type;
 	}
 
+	@UnitSetType
 	public void setType(LType type)
 	{
 		this.type = type;
 	}
 
-	@Compiler
+	@UnitGetCapturedUnitContext
 	public @Nullable LUnitContext getCapturedUnitContext()
 	{
 		return capturedUnitContext;
@@ -119,7 +121,7 @@ public abstract class LUnit
 		setMember(unitMember.getType().getName(), unitMember);
 	}
 
-	@Compiler
+	@UnitGetMember
 	public LUnit getMember(String memberName)
 	{
 		if (members != null)
@@ -132,7 +134,7 @@ public abstract class LUnit
 		return getSuperMember(memberName);
 	}
 
-	@Compiler
+	@UnitSetMember
 	public LUnit setMember(String memberName, LUnit member)
 	{
 		initMembersIfNecessary().put(memberName, member);
@@ -140,7 +142,7 @@ public abstract class LUnit
 		return member;
 	}
 
-	@Compiler
+	@UnitGetSuperMember
 	public LUnit getSuperMember(String superMemberName)
 	{
 		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
@@ -154,8 +156,8 @@ public abstract class LUnit
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 
-	@Compiler
 	@Polymorphic(ACCESS)
+	@UnitAddParents
 	public LUnit addParents(LUnit... parents)
 	{
 		callMember(LAddParents.DESCRIPTOR.getType().getName(), parents);
@@ -171,19 +173,20 @@ public abstract class LUnit
 		return this;
 	}
 
-	@Compiler
+	@UnitCall
 	public LUnit call(@Compiler LUnit host, @Compiler LUnit[] parameters)
 	{
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 
-	@Compiler
+	@UnitCallMember
 	public LUnit callMember(String memberName, LUnit[] parameters)
 	{
 		return getMember(memberName).call(this, parameters);
 	}
 
 	@Polymorphic(ACCESS)
+	@UnitGetIndexedItem
 	public LUnit getIndexedItem(LUnit index)
 	{
 		return callMember(LGetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
@@ -196,6 +199,7 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(ACCESS)
+	@UnitSetIndexedItem
 	public LUnit setIndexedItem(LUnit index, LUnit value)
 	{
 		callMember(LSetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
@@ -209,7 +213,7 @@ public abstract class LUnit
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 
-	@Compiler
+	@UnitSetParameterNames
 	public LUnit setParameterNames(String[] parameterNames)
 	{
 		HashMap<String, Integer> parameterIndexes =
@@ -222,8 +226,8 @@ public abstract class LUnit
 		return this;
 	}
 
-	@Polymorphic(DEFAULT)
 	@Override
+	@Polymorphic(DEFAULT)
 	public int hashCode()
 	{
 		LNumber hashCode =
@@ -244,8 +248,8 @@ public abstract class LUnit
 		return new LNumber(super.hashCode());
 	}
 
-	@Polymorphic(ACCESS)
 	@Override
+	@Polymorphic(ACCESS)
 	public boolean equals(@Nullable Object object)
 	{
 		if (!(object instanceof LUnit)) return false;
@@ -259,9 +263,9 @@ public abstract class LUnit
 		return LBoolean.valueOf(super.equals(unit));
 	}
 
-	@Compiler
-	@Polymorphic(ACCESS)
 	@Override
+	@Polymorphic(ACCESS)
+	@UnitToString
 	public String toString()
 	{
 		LString string =
@@ -282,7 +286,7 @@ public abstract class LUnit
 		return new LString(getType().toString());
 	}
 
-	@Compiler
+	@UnitToBoolean
 	public boolean toBoolean()
 	{
 		LBoolean bool = asType(LBoolean.DESCRIPTOR.getType());

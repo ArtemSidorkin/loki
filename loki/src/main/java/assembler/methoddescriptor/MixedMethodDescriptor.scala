@@ -6,6 +6,8 @@ import org.objectweb.asm.Type
 case class MixedMethodDescriptor(mixedDescriptor:(Seq[Either[Class[_], String]], Option[Either[Class[_], String]]))
 	extends MethodDescriptor
 {
+	override val methodName: Option[String] = None
+
 	override private[assembler] val untypedDescriptor:String =
 		mixedDescriptor
 			._1

@@ -4,7 +4,7 @@ import assembler.builder.MethodBuilder
 import assembler.constant.PUBLIC
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
-import loki.language.generation.bytecodetemplate.ContextBytecodeTemplate.ContextBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitContextBytecodeTemplate.UnitContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.BytecodeMethodDescriptors

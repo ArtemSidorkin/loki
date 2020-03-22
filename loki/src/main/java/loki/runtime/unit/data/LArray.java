@@ -1,12 +1,12 @@
 package loki.runtime.unit.data;
 
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
 import loki.runtime.util.Compiler;
-import loki.runtime.error.LErrors;
 import loki.runtime.util.Prototype;
 
 import java.util.ArrayList;
