@@ -44,12 +44,13 @@ object MethodDescriptorResolver
 		if (suitableExecutables.isEmpty) throw new IllegalArgumentException("Suitable executables are not found")
 		if (suitableExecutables.size > 1) throw new IllegalArgumentException("Suitable executable must be only one")
 
-		val parameterClasses = suitableExecutables.head.getParameters.map(_.getType)
+		val suitableExecutable = suitableExecutables.head
 
-		val suitableMethod = suitableExecutables.headOption.filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method])
+		val parameterClasses = suitableExecutable.getParameters.map(_.getType)
 
-		MethodDescriptor(
-			parameterClasses.toSeq -> suitableMethod.map(_.getReturnType), suitableMethod.map(_.getName)
-		)
+		val returnClass =
+			Some(suitableExecutable).filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method].getReturnType)
+
+		MethodDescriptor(parameterClasses.toSeq -> returnClass, suitableExecutable.getName)
 	}
 }

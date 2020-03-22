@@ -10,13 +10,7 @@ object BytecodeMethodDescriptors
 		MethodDescriptor((Nil) -> None)
 
 	def UNIT_HEIR__METHOD__INIT_2 =
-		MethodDescriptor(
-			(
-				classOf[LUnitContext] ::
-				classOf[Array[LUnit]] ::
-				Nil
-			) -> None
-		)
+		MethodDescriptor((classOf[LUnitContext] :: classOf[Array[LUnit]] :: Nil) -> None)
 
-	val JAVA_OBJECT__METHOD__GET_CLASS = MethodDescriptor(Nil -> Some(classOf[Class[_]]), Some("getClass"))
+	val JAVA_OBJECT__METHOD__GET_CLASS = MethodDescriptor(Nil -> Some(classOf[Class[_]]), "getClass")
 }

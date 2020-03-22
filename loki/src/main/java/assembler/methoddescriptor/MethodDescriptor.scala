@@ -3,7 +3,7 @@ package assembler.methoddescriptor
 import assembler.constant.InternalDescriptors
 import org.objectweb.asm.Type
 
-case class MethodDescriptor(typedSignature:(Seq[Class[_]], Option[Class[_]]), name:Option[String] = None)
+case class MethodDescriptor(typedSignature:(Seq[Class[_]], Option[Class[_]]), name:String = "")
 {
 	private[assembler] val untypedSignature:String =
 		"(" +

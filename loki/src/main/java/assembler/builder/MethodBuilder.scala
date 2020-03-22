@@ -15,7 +15,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	private val objectStackCounter = new ObjectStackCounter(this)
 
 	private[assembler] def this(modifier:Modifier, methodDescriptor:MethodDescriptor) =
-		this(modifier, methodDescriptor.name.get, methodDescriptor.untypedSignature)
+		this(modifier, methodDescriptor.name, methodDescriptor.untypedSignature)
 
 	def aconstnull():this.type =
 	{
@@ -180,7 +180,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	def invokevirtual(methodOwnerClass:Class[_], methodDescriptor:MethodDescriptor):this.type =
 		invokevirtual(
 			Utils getClassInternalName methodOwnerClass,
-			methodDescriptor.name.get,
+			methodDescriptor.name,
 			methodDescriptor.untypedSignature,
 			methodOwnerClass.isInterface
 		)
@@ -190,7 +190,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	):this.type =
 		invokevirtual(
 			methodOwnerClassInternalName,
-			methodDescriptor.name.get,
+			methodDescriptor.name,
 			methodDescriptor.untypedSignature,
 			false
 		)
@@ -257,7 +257,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 
 	def invokestatic(methodOwnerClass:Class[_], methodDescriptor:MethodDescriptor):this.type =
 		invokestatic(
-			Utils.getClassInternalName(methodOwnerClass), methodDescriptor.name.get, methodDescriptor.untypedSignature
+			Utils.getClassInternalName(methodOwnerClass), methodDescriptor.name, methodDescriptor.untypedSignature
 		)
 
 	def invokestatic(methodOwnerClassInternalName:String, methodName:String, methodDescriptor:String):this.type =

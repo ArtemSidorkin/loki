@@ -1,12 +1,12 @@
 package loki.runtime.unit.data.singleton;
 
+import loki.runtime.compilerapi.common.VoidGetInstance;
 import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.util.Compiler;
 
 public class LVoid extends LUnit
 {
@@ -18,7 +18,7 @@ public class LVoid extends LUnit
 		super(DESCRIPTOR.getType());
 	}
 
-	@Compiler
+	@VoidGetInstance
 	public static LVoid getInstance()
 	{
 		return DESCRIPTOR.getInstance();
