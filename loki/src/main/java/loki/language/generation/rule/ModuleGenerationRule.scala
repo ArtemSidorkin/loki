@@ -6,7 +6,7 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.ModuleContextBytecodeTemplate.ModuleContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.ModuleBytecodeTemplate.ModuleBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
-import loki.language.generation.constant.BytecodeMethodDescriptors
+import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.ModuleContext
 import loki.system.SystemSettings
 
@@ -23,7 +23,7 @@ private[generation] class ModuleGenerationRule
 		def generateInit():Unit =
 		(
 			topClassFrame
-				.addMethodInit (PUBLIC, BytecodeMethodDescriptors.MODULE_HEIR__METHOD__INIT)
+				.addMethodInit (PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBMODULE_CONSTRUCTOR)
 				.aloadthis()
 				.ldc(moduleName)
 				.invokeInitModule()

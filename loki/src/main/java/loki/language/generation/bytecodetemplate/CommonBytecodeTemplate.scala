@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.{MethodDescriptor, MethodDescriptorResolver}
-import loki.language.generation.constant.BytecodeMethodDescriptors
+import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.runtime.LType
 import loki.runtime.compilerapi.common.VoidGetInstance
 import loki.runtime.context.{LModuleContext, LUnitContext}
@@ -45,6 +45,6 @@ private[generation] object CommonBytecodeTemplate
 		def void():methodBuilder.type = methodBuilder.invokestatic(MethodDescriptorResolver(classOf[VoidGetInstance]))
 
 		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type =
-			methodBuilder.invokevirtual(BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS)
+			methodBuilder.invokevirtual(DynamicallyUnresolvableMethodDescriptors.JAVA_OBJECT_GET_CLASS)
 	}
 }

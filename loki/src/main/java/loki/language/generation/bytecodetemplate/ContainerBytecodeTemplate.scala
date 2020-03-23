@@ -1,7 +1,7 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
-import loki.language.generation.constant.BytecodeContainerMethodDescriptors
+import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.runtime.unit.unit.LUnit
 
 private[generation] object ContainerBytecodeTemplate
@@ -9,6 +9,6 @@ private[generation] object ContainerBytecodeTemplate
 	implicit class ContainerBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
 		def invokeInitContainer(containerClass:Class[_ <: LUnit]):methodBuilder.type =
-			methodBuilder.invokeinit(BytecodeContainerMethodDescriptors.INIT(Some(containerClass)))
+			methodBuilder.invokeinit(DynamicallyUnresolvableMethodDescriptors.CONTAINER_CONSTRUCTOR(Some(Right(containerClass))))
 	}
 }

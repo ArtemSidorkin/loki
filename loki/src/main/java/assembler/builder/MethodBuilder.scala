@@ -179,7 +179,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 
 	def invokevirtual(methodDescriptor:MethodDescriptor):this.type =
 		invokevirtual(
-			Utils.getClassInternalName(methodDescriptor.ownerClass.get),
+			methodDescriptor.ownerClassInternalName.get,
 			methodDescriptor.name.get,
 			methodDescriptor.untypedSignature,
 			isInterfaceMethod = false
@@ -188,7 +188,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	def invokevirtual(
 		methodOwnerClassInternalName:String,
 		methodName:String,
-		methodDescriptor:String,
+		methodSignature:String,
 		isInterfaceMethod:Boolean
 	):this.type =
 	{
@@ -196,7 +196,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 			.instructions
 			.add(
 				new MethodInsnNode(
-					Opcodes.INVOKEVIRTUAL, methodOwnerClassInternalName, methodName, methodDescriptor, isInterfaceMethod
+					Opcodes.INVOKEVIRTUAL, methodOwnerClassInternalName, methodName, methodSignature, isInterfaceMethod
 				)
 			)
 
@@ -205,13 +205,10 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 
 	def invokeinit(initMethodDescriptor:MethodDescriptor):this.type =
 		invokeinit(
-			Utils.getClassInternalName(initMethodDescriptor.ownerClass.get), initMethodDescriptor.untypedSignature
+			initMethodDescriptor.ownerClassInternalName.get, initMethodDescriptor.untypedSignature
 		)
 
-	def invokeinit(initMethodOwnerClassInternalName:String, initMethodDescriptor:MethodDescriptor):this.type =
-		invokeinit(initMethodOwnerClassInternalName, initMethodDescriptor.untypedSignature)
-
-	def invokeinit(initMethodOwnerClassInternalName:String, initMethodDescriptor:String):this.type =
+	def invokeinit(initMethodOwnerClassInternalName:String, initMethodSignature:String):this.type =
 	{
 		methodNode
 			.instructions
@@ -220,7 +217,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 					Opcodes.INVOKESPECIAL,
 					initMethodOwnerClassInternalName,
 					InternalDescriptors.INIT_METHOD,
-					initMethodDescriptor,
+					initMethodSignature,
 					false
 				)
 			)
@@ -230,7 +227,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 
 	def invokestatic(methodDescriptor:MethodDescriptor):this.type =
 		invokestatic(
-			Utils.getClassInternalName(methodDescriptor.ownerClass.get),
+			methodDescriptor.ownerClassInternalName.get,
 			methodDescriptor.name.get,
 			methodDescriptor.untypedSignature
 		)

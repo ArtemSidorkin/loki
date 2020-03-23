@@ -7,7 +7,7 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.UnitContextBytecodeTemplate.UnitContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
-import loki.language.generation.constant.BytecodeMethodDescriptors
+import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
 import loki.language.parsing.LokiLexer
 import loki.runtime.LType
@@ -39,7 +39,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 		def generateUnitMethodInit():Unit =
 		{
 			topClassFrame
-				.addMethodInit(PUBLIC, BytecodeMethodDescriptors.UNIT_HEIR__METHOD__INIT_2)
+				.addMethodInit(PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(None))
 				.generateSuperConstructorCall()
 				.generateSettingType()
 				.`return`()

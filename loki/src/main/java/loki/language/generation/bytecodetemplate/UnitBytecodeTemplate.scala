@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
-import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, BytecodeMethodDescriptors, LanguageMembers}
+import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors, LanguageMembers}
 import loki.runtime.compilerapi.unit.{UnitAddParents, UnitCall, UnitCallMember, UnitConstructor, UnitGetCapturedUnitContext, UnitGetIndexedItem, UnitGetMember, UnitGetSuperMember, UnitSetIndexedItem, UnitSetMember, UnitSetParameterNames, UnitSetType, UnitToBoolean, UnitToString}
 import loki.runtime.unit.unit.LUnit
 
@@ -74,9 +74,8 @@ private[generation] object UnitBytecodeTemplate
 		def invokeInitUnit():methodBuilder.type =
 			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[UnitConstructor]))
 
-		def invokeInit2UnitHeir(initOwnerClassInternalName:String):methodBuilder.type = methodBuilder invokeinit (
-			initOwnerClassInternalName,
-			BytecodeMethodDescriptors.UNIT_HEIR__METHOD__INIT_2
-		)
+		def invokeInit2UnitHeir(initOwnerClassInternalName:String):methodBuilder.type =
+			methodBuilder
+				.invokeinit(DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(Some(Left(initOwnerClassInternalName))))
 	}
 }

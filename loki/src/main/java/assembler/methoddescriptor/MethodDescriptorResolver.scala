@@ -52,7 +52,7 @@ object MethodDescriptorResolver
 			Some(suitableExecutable).filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method].getReturnType)
 
 		MethodDescriptor(
-			parameterClasses.toSeq -> returnClass, Some(describingMethodClass), Some(suitableExecutable.getName)
+			parameterClasses.toSeq -> returnClass, Some(Right(describingMethodClass)), Some(suitableExecutable.getName)
 		)
 	}
 }
