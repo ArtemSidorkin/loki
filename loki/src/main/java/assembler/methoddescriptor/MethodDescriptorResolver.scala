@@ -51,6 +51,8 @@ object MethodDescriptorResolver
 		val returnClass =
 			Some(suitableExecutable).filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method].getReturnType)
 
-		MethodDescriptor(parameterClasses.toSeq -> returnClass, suitableExecutable.getName)
+		MethodDescriptor(
+			parameterClasses.toSeq -> returnClass, Some(describingMethodClass), Some(suitableExecutable.getName)
+		)
 	}
 }

@@ -33,47 +33,46 @@ private[generation] object UnitBytecodeTemplate
 
 		def invokeVirtualUnitMethodGetCapturedUnitContext(classInternalName:String):methodBuilder.type =
 			methodBuilder
-				.invokevirtual(classInternalName, MethodDescriptorResolver(classOf[UnitGetCapturedUnitContext]))
+				.invokevirtual(MethodDescriptorResolver(classOf[UnitGetCapturedUnitContext]))
 
 		def invokeVirtualUnitMethodSetType():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitSetType]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetType]))
 
 		def invokeVirtualUnitMethodAddParents():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitAddParents]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitAddParents]))
 
 		def invokeVirtualUnitMethodGetSuperMember():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitGetSuperMember]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetSuperMember]))
 
 		def invokeVirtualUnitMethodGetMember():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitGetMember]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetMember]))
 
 		def invokeVirtualUnitMethodSetMember():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitSetMember]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetMember]))
 
 		def invokeVirtualUnitMethodGetIndexedItem():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit],	MethodDescriptorResolver(classOf[UnitGetIndexedItem]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetIndexedItem]))
 
 		def invokeVirtualUnitMethodSetIndexedItem():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitSetIndexedItem]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetIndexedItem]))
 
 		def invokeVirtualUnitMethodSetParameterNames():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitSetParameterNames]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetParameterNames]))
 
 		def invokeVirtualUnitMethodCall():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitCall]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitCall]))
 
 		def invokeVirtualUnitMethodCallMember():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitCallMember]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitCallMember]))
 
 		def invokeVirtualUnitMethodToBoolean():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitToBoolean]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitToBoolean]))
 
 		def invokeVirtualUnitMethodToString():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[LUnit], MethodDescriptorResolver(classOf[UnitToString]))
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitToString]))
 
-		def invokeInitUnit():methodBuilder.type = methodBuilder invokeinit (
-			classOf[LUnit], MethodDescriptorResolver(classOf[UnitConstructor])
-		)
+		def invokeInitUnit():methodBuilder.type =
+			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[UnitConstructor]))
 
 		def invokeInit2UnitHeir(initOwnerClassInternalName:String):methodBuilder.type = methodBuilder invokeinit (
 			initOwnerClassInternalName,

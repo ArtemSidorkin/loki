@@ -3,7 +3,6 @@ package loki.language.generation.bytecodetemplate
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.runtime.compilerapi.unitcontext.{UnitContextConstructor, UnitContextGetVariable, UnitContextSetVariable}
-import loki.runtime.context.LUnitContext
 
 private[generation] object UnitContextBytecodeTemplate
 {
@@ -11,13 +10,13 @@ private[generation] object UnitContextBytecodeTemplate
 	{
 		def invokeVirtualUnitContextMethodGetVariable():methodBuilder.type =
 			methodBuilder
-				.invokevirtual(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextGetVariable]))
+				.invokevirtual(MethodDescriptorResolver(classOf[UnitContextGetVariable]))
 
 		def invokeVirtualUnitContextMethodSetVariable():methodBuilder.type =
 			methodBuilder
-				.invokevirtual(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextSetVariable]))
+				.invokevirtual(MethodDescriptorResolver(classOf[UnitContextSetVariable]))
 
 		def invokeInitUnitContext():methodBuilder.type =
-			methodBuilder.invokeinit(classOf[LUnitContext], MethodDescriptorResolver(classOf[UnitContextConstructor]))
+			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[UnitContextConstructor]))
 	}
 }

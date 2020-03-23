@@ -42,10 +42,9 @@ private[generation] object CommonBytecodeTemplate
 
 		def anewarrayUnit():methodBuilder.type = methodBuilder anewarray classOf[LUnit]
 
-		def void():methodBuilder.type =
-			methodBuilder.invokestatic(classOf[LVoid], MethodDescriptorResolver(classOf[VoidGetInstance]))
+		def void():methodBuilder.type = methodBuilder.invokestatic(MethodDescriptorResolver(classOf[VoidGetInstance]))
 
 		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type =
-			methodBuilder.invokevirtual(classOf[Object], BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS)
+			methodBuilder.invokevirtual(BytecodeMethodDescriptors.JAVA_OBJECT__METHOD__GET_CLASS)
 	}
 }
