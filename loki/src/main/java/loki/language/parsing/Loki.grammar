@@ -123,8 +123,8 @@ expression:
 
 
 
-	MINUS expression #UnaryOperation |
-	BANG expression #UnaryOperation |
+	operator=MINUS expression #UnaryOperation |
+	operator=BANG expression #UnaryOperation |
 
 
 
@@ -259,4 +259,4 @@ ACUTE : '`';
 
 
 
-SKIP : [ \t\r\n]+ -> skip;
+IGNORE : [ \t\r\n]+ -> skip;

@@ -1,4 +1,4 @@
-// Generated from ./src/main/java/loki/language/parsing/Loki.grammar by ANTLR 4.5
+// Generated from ./loki/src/main/java/loki/language/parsing/Loki.grammar by ANTLR 4.8
 
 package loki.language.parsing;
 

@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
-import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors, LanguageMembers}
+import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors}
 import loki.runtime.compilerapi.unit.{UnitAddParents, UnitCall, UnitCallMember, UnitConstructor, UnitGetCapturedUnitContext, UnitGetIndexedItem, UnitGetMember, UnitGetSuperMember, UnitSetIndexedItem, UnitSetMember, UnitSetParameterNames, UnitSetType, UnitToBoolean, UnitToString}
 import loki.runtime.unit.unit.LUnit
 
