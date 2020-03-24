@@ -5,7 +5,6 @@ private[preprocessing] object CompilerTokens
 	val BEGIN = "~{"
 	val END = "~}"
 
-	val LEFT_THIN_ARROW = "<-"
 	val PLUS = '+'
 	val MINUS = '-'
 	val STAR = '*'
@@ -15,6 +14,7 @@ private[preprocessing] object CompilerTokens
 	val DOT = '.'
 	val COMA = ','
 	val COLON = ':'
+	val DOUBLE_COLON = "::"
 	val SEMICOLON = ';'
 	val LEFT_PARENTHESIS = '('
 	val RIGHT_PARENTHESIS = ')'

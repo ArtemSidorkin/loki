@@ -2,7 +2,7 @@ Point2 x y :
 	$x = x
 	$y = y
 
-Point3 x y z <- Point2(x, y) :
+Point3 x y z :: Point2(x, y) :
 	$z = z
 
 point3 = Point3.new(1, 2, 3)

@@ -15,16 +15,16 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 
 	private val LEFT_TOKEN_EXCEPTIONS =
 		Array(
-			CompilerTokens.LEFT_THIN_ARROW,
 			CompilerTokens.PLUS.toString,
 			CompilerTokens.MINUS.toString,
 			CompilerTokens.STAR.toString,
-			CompilerTokens.SPACE.toString,
+			CompilerTokens.SLASH.toString,
 			CompilerTokens.BACK_SLASH.toString,
 			CompilerTokens.EQUALS.toString,
 			CompilerTokens.DOT.toString,
 			CompilerTokens.COMA.toString,
 			CompilerTokens.COLON.toString,
+			CompilerTokens.DOUBLE_COLON,
 			CompilerTokens.LEFT_PARENTHESIS.toString,
 			CompilerTokens.LEFT_BRACKET.toString,
 			CompilerTokens.LEFT_BRACE.toString,
@@ -33,15 +33,16 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 
 	private val RIGHT_TOKEN_EXCEPTIONS =
 		Array(
-			CompilerTokens.LEFT_THIN_ARROW,
+			CompilerTokens.DOUBLE_COLON,
 			CompilerTokens.PLUS.toString,
 			CompilerTokens.MINUS.toString,
 			CompilerTokens.STAR.toString,
-			CompilerTokens.SPACE.toString,
+			CompilerTokens.SLASH.toString,
 			CompilerTokens.BACK_SLASH.toString,
 			CompilerTokens.EQUALS.toString,
 			CompilerTokens.COMA.toString,
 			CompilerTokens.COLON.toString,
+			CompilerTokens.DOUBLE_COLON,
 			CompilerTokens.RIGHT_PARENTHESIS.toString,
 			CompilerTokens.RIGHT_BRACKET.toString,
 			CompilerTokens.RIGHT_BRACE.toString,

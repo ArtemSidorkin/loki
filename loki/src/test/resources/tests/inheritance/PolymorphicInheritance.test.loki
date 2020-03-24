@@ -8,7 +8,7 @@ Point2D x y :
 	$x = x
 	$y = y
 
-Point3D x y z <- Point2D.new(x, y) :
+Point3D x y z :: Point2D.new(x, y) :
 	$z = z
 
 point3D = Point3D.new(1, 2, 3)

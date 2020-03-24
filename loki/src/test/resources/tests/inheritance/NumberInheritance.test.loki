@@ -1,5 +1,5 @@
-A <- 1 : void
-B <- 2 : void
+A :: 1 : void
+B :: 2 : void
 
 test(A.new() + B.new())
 test(A.new() + 2)

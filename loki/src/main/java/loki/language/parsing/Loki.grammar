@@ -205,7 +205,7 @@ expression:
 
 
 
-inheritance : LEFT_THIN_ARROW expression | LEFT_THIN_ARROW (expression COMMA)+ expression;
+inheritance : DOUBLE_COLON expression | DOUBLE_COLON (expression COMMA)+ expression;
 
 
 
@@ -222,7 +222,6 @@ IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
 IDENTIFIER : ('_')*('A'..'Z' | 'a'..'z')+('A'..'Z' | 'a'..'z' | '0'..'9' | '_')*;
-LEFT_THIN_ARROW : '<-';
 DOLLAR : '$';
 AT : '@';
 CHARACTERS : '"' ( '\\"' | . )*? '"';
@@ -248,6 +247,7 @@ EQUALS : '=';
 DOT : '.';
 COMMA : ',';
 COLON : ':';
+DOUBLE_COLON : '::';
 SEMICOLON : ';';
 LEFT_PARENTHESIS : '(';
 RIGHT_PARENTHESIS : ')';
