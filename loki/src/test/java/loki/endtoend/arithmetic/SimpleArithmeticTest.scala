@@ -25,7 +25,14 @@ private[endtoend] class SimpleArithmeticTest extends EndToEndTest
 					number(2),
 					number(0.15),
 					number(0.00375),
-					number(-3)
+					number(-3),
+					number(8),
+					number(7),
+					boolean(true),
+					boolean(true),
+					boolean(true),
+					boolean(false),
+					boolean(false)
 				),
 				testValues
 			)

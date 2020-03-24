@@ -236,26 +236,6 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitUnaryOperation(this);
 		}
 	}
-	public static class MulDivContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode STAR() { return getToken(LokiParser.STAR, 0); }
-		public TerminalNode SLASH() { return getToken(LokiParser.SLASH, 0); }
-		public MulDivContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterMulDiv(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitMulDiv(this);
-		}
-	}
 	public static class IfElseContext extends ExpressionContext {
 		public TerminalNode IF() { return getToken(LokiParser.IF, 0); }
 		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
@@ -292,6 +272,36 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitIfElse(this);
+		}
+	}
+	public static class BinaryOperationContext extends ExpressionContext {
+		public Token operator;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode STAR() { return getToken(LokiParser.STAR, 0); }
+		public TerminalNode SLASH() { return getToken(LokiParser.SLASH, 0); }
+		public TerminalNode PLUS() { return getToken(LokiParser.PLUS, 0); }
+		public TerminalNode MINUS() { return getToken(LokiParser.MINUS, 0); }
+		public TerminalNode EQUALS_EQUALS() { return getToken(LokiParser.EQUALS_EQUALS, 0); }
+		public TerminalNode BANG_EQUALS() { return getToken(LokiParser.BANG_EQUALS, 0); }
+		public TerminalNode GREATER_THAN_EQUALS() { return getToken(LokiParser.GREATER_THAN_EQUALS, 0); }
+		public TerminalNode LESS_THAN_EQUALS() { return getToken(LokiParser.LESS_THAN_EQUALS, 0); }
+		public TerminalNode GREATER_THAN() { return getToken(LokiParser.GREATER_THAN, 0); }
+		public TerminalNode LESS_THAN() { return getToken(LokiParser.LESS_THAN, 0); }
+		public TerminalNode AMPERSAND_AMPERSAND() { return getToken(LokiParser.AMPERSAND_AMPERSAND, 0); }
+		public TerminalNode PIPE_PIPE() { return getToken(LokiParser.PIPE_PIPE, 0); }
+		public BinaryOperationContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterBinaryOperation(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitBinaryOperation(this);
 		}
 	}
 	public static class IndexContext extends ExpressionContext {
@@ -364,28 +374,6 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitUnit(this);
 		}
 	}
-	public static class GteLteGtLtContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode GREATER_THAN_EQUALS() { return getToken(LokiParser.GREATER_THAN_EQUALS, 0); }
-		public TerminalNode LESS_THAN_EQUALS() { return getToken(LokiParser.LESS_THAN_EQUALS, 0); }
-		public TerminalNode GREATER_THAN() { return getToken(LokiParser.GREATER_THAN, 0); }
-		public TerminalNode LESS_THAN() { return getToken(LokiParser.LESS_THAN, 0); }
-		public GteLteGtLtContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterGteLteGtLt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitGteLteGtLt(this);
-		}
-	}
 	public static class NumberContext extends ExpressionContext {
 		public TerminalNode FLOAT() { return getToken(LokiParser.FLOAT, 0); }
 		public TerminalNode INT() { return getToken(LokiParser.INT, 0); }
@@ -397,25 +385,6 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitNumber(this);
-		}
-	}
-	public static class AmpersandAmpersandContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode AMPERSAND_AMPERSAND() { return getToken(LokiParser.AMPERSAND_AMPERSAND, 0); }
-		public AmpersandAmpersandContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAmpersandAmpersand(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAmpersandAmpersand(this);
 		}
 	}
 	public static class MemberAccessorContext extends ExpressionContext {
@@ -557,26 +526,6 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitCall(this);
 		}
 	}
-	public static class AddSubContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode PLUS() { return getToken(LokiParser.PLUS, 0); }
-		public TerminalNode MINUS() { return getToken(LokiParser.MINUS, 0); }
-		public AddSubContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAddSub(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAddSub(this);
-		}
-	}
 	public static class ExpressionGroupContext extends ExpressionContext {
 		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
 		public ExpressionContext expression() {
@@ -657,26 +606,6 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitWhile(this);
-		}
-	}
-	public static class EqNeqContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode EQUALS_EQUALS() { return getToken(LokiParser.EQUALS_EQUALS, 0); }
-		public TerminalNode BANG_EQUALS() { return getToken(LokiParser.BANG_EQUALS, 0); }
-		public EqNeqContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterEqNeq(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitEqNeq(this);
 		}
 	}
 	public static class ArrayContext extends ExpressionContext {
@@ -852,25 +781,6 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignHostMember(this);
-		}
-	}
-	public static class PipePipeContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode PIPE_PIPE() { return getToken(LokiParser.PIPE_PIPE, 0); }
-		public PipePipeContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterPipePipe(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitPipePipe(this);
 		}
 	}
 	public static class MapContext extends ExpressionContext {
@@ -1944,15 +1854,15 @@ public class LokiParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,67,_ctx) ) {
 					case 1:
 						{
-						_localctx = new MulDivContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(317);
 						if (!(precpred(_ctx, 19))) throw new FailedPredicateException(this, "precpred(_ctx, 19)");
 						setState(318);
-						((MulDivContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==STAR || _la==SLASH) ) {
-							((MulDivContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1965,15 +1875,15 @@ public class LokiParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new AddSubContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(320);
 						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
 						setState(321);
-						((AddSubContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
-							((AddSubContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1986,15 +1896,15 @@ public class LokiParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new EqNeqContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(323);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(324);
-						((EqNeqContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==EQUALS_EQUALS || _la==BANG_EQUALS) ) {
-							((EqNeqContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2007,15 +1917,15 @@ public class LokiParser extends Parser {
 						break;
 					case 4:
 						{
-						_localctx = new GteLteGtLtContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(326);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(327);
-						((GteLteGtLtContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GREATER_THAN_EQUALS) | (1L << GREATER_THAN) | (1L << LESS_THAN_EQUALS) | (1L << LESS_THAN))) != 0)) ) {
-							((GteLteGtLtContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2028,15 +1938,15 @@ public class LokiParser extends Parser {
 						break;
 					case 5:
 						{
-						_localctx = new AmpersandAmpersandContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(329);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(330);
-						((AmpersandAmpersandContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==AMPERSAND_AMPERSAND) ) {
-							((AmpersandAmpersandContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2049,15 +1959,15 @@ public class LokiParser extends Parser {
 						break;
 					case 6:
 						{
-						_localctx = new PipePipeContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new BinaryOperationContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(332);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(333);
-						((PipePipeContext)_localctx).operator = _input.LT(1);
+						((BinaryOperationContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PIPE_PIPE) ) {
-							((PipePipeContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
+							((BinaryOperationContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;

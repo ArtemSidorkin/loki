@@ -138,54 +138,14 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 	override def exitUnaryOperation(unaryOperationContext:UnaryOperationContext):Unit =
 		(new MemberCallGenerationRuleTemplate(unaryOperationContext) with UnaryOperationGenerationRuleMixin).exit()
 
-	override def enterMulDiv(mulDivContext:MulDivContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](mulDivContext) with OperatorGenerationRuleMixin)
+	override def enterBinaryOperation(binaryOperationContext:BinaryOperationContext):Unit =
+		(new MemberCallGenerationRuleTemplate[BinaryOperationContext](binaryOperationContext)
+			with OperatorGenerationRuleMixin)
 			.enter()
 
-	override def exitMulDiv(mulDivContext:MulDivContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](mulDivContext) with OperatorGenerationRuleMixin).exit()
-
-	override def enterAddSub(addSubContext:AddSubContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](addSubContext) with OperatorGenerationRuleMixin)
-			.enter()
-	
-	override def exitAddSub(addSubContext:AddSubContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](addSubContext)	with OperatorGenerationRuleMixin).exit()
-
-	override def enterEqNeq(eqNeqContext:EqNeqContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](eqNeqContext) with OperatorGenerationRuleMixin).enter()
-	
-	override def exitEqNeq(eqNeqContext:EqNeqContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](eqNeqContext) with OperatorGenerationRuleMixin).exit()
-
-	override def enterGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](gteLteGtLtContext)	with OperatorGenerationRuleMixin)
-			.enter()
-	
-	override def exitGteLteGtLt(gteLteGtLtContext:GteLteGtLtContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](gteLteGtLtContext)	with OperatorGenerationRuleMixin)
-			.exit()
-
-	override def enterAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit =
-		(
-			new MemberCallGenerationRuleTemplate[ExpressionContext](ampersandAmpersandContext)
-				with OperatorGenerationRuleMixin
-		)
-			.enter()
-	
-	override def exitAmpersandAmpersand(ampersandAmpersandContext:AmpersandAmpersandContext):Unit =
-		(
-			new MemberCallGenerationRuleTemplate[ExpressionContext](ampersandAmpersandContext)
-				with OperatorGenerationRuleMixin
-		)
-			.exit()
-
-	override def enterPipePipe(pipePipeContext:PipePipeContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](pipePipeContext) with OperatorGenerationRuleMixin)
-			.enter()
-	
-	override def exitPipePipe(pipePipeContext:PipePipeContext):Unit =
-		(new MemberCallGenerationRuleTemplate[ExpressionContext](pipePipeContext) with OperatorGenerationRuleMixin)
+	override def exitBinaryOperation(binaryOperationContext:BinaryOperationContext):Unit =
+		(new MemberCallGenerationRuleTemplate[BinaryOperationContext](binaryOperationContext)
+			with OperatorGenerationRuleMixin)
 			.exit()
 
 	override def enterIfElse(ifElseContext:IfElseContext):Unit = IfElseGenerationRule.enter(ifElseContext)

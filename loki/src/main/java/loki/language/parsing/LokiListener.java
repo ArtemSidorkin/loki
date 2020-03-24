@@ -42,18 +42,6 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitUnaryOperation(LokiParser.UnaryOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMulDiv(LokiParser.MulDivContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMulDiv(LokiParser.MulDivContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code IfElse}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -65,6 +53,18 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfElse(LokiParser.IfElseContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BinaryOperation}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinaryOperation(LokiParser.BinaryOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BinaryOperation}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinaryOperation(LokiParser.BinaryOperationContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Index}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -102,18 +102,6 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitUnit(LokiParser.UnitContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code GteLteGtLt}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterGteLteGtLt(LokiParser.GteLteGtLtContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code GteLteGtLt}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitGteLteGtLt(LokiParser.GteLteGtLtContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Number}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -125,18 +113,6 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumber(LokiParser.NumberContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code AmpersandAmpersand}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code AmpersandAmpersand}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MemberAccessor}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -222,18 +198,6 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitCall(LokiParser.CallContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code AddSub}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddSub(LokiParser.AddSubContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code AddSub}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddSub(LokiParser.AddSubContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExpressionGroup}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -281,18 +245,6 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitWhile(LokiParser.WhileContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code EqNeq}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqNeq(LokiParser.EqNeqContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code EqNeq}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqNeq(LokiParser.EqNeqContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Array}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -377,18 +329,6 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssignHostMember(LokiParser.AssignHostMemberContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code PipePipe}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPipePipe(LokiParser.PipePipeContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code PipePipe}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPipePipe(LokiParser.PipePipeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Map}
 	 * labeled alternative in {@link LokiParser#expression}.

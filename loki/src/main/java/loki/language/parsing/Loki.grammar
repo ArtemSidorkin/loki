@@ -128,12 +128,12 @@ expression:
 
 
 
-	expression operator=(STAR | SLASH) expression #MulDiv |
-	expression operator=(PLUS | MINUS) expression #AddSub |
-	expression operator=(EQUALS_EQUALS | BANG_EQUALS) expression #EqNeq |
-	expression operator=(GREATER_THAN_EQUALS | LESS_THAN_EQUALS | GREATER_THAN | LESS_THAN) expression #GteLteGtLt |
-	expression operator=(AMPERSAND_AMPERSAND | AMPERSAND_AMPERSAND) expression #AmpersandAmpersand |
-	expression operator=(PIPE_PIPE | PIPE_PIPE) expression #PipePipe |
+	expression operator=(STAR | SLASH) expression #BinaryOperation |
+	expression operator=(PLUS | MINUS) expression #BinaryOperation |
+	expression operator=(EQUALS_EQUALS | BANG_EQUALS) expression #BinaryOperation |
+	expression operator=(GREATER_THAN_EQUALS | LESS_THAN_EQUALS | GREATER_THAN | LESS_THAN) expression #BinaryOperation |
+	expression operator=(AMPERSAND_AMPERSAND | AMPERSAND_AMPERSAND) expression #BinaryOperation |
+	expression operator=(PIPE_PIPE | PIPE_PIPE) expression #BinaryOperation |
 
 
 

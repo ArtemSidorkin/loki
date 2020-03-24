@@ -54,18 +54,6 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMulDiv(LokiParser.MulDivContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMulDiv(LokiParser.MulDivContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIfElse(LokiParser.IfElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -73,6 +61,18 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIfElse(LokiParser.IfElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBinaryOperation(LokiParser.BinaryOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinaryOperation(LokiParser.BinaryOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -114,18 +114,6 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGteLteGtLt(LokiParser.GteLteGtLtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGteLteGtLt(LokiParser.GteLteGtLtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNumber(LokiParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -133,18 +121,6 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumber(LokiParser.NumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAmpersandAmpersand(LokiParser.AmpersandAmpersandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -234,18 +210,6 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAddSub(LokiParser.AddSubContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddSub(LokiParser.AddSubContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpressionGroup(LokiParser.ExpressionGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -289,18 +253,6 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitWhile(LokiParser.WhileContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEqNeq(LokiParser.EqNeqContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEqNeq(LokiParser.EqNeqContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -385,18 +337,6 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAssignHostMember(LokiParser.AssignHostMemberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPipePipe(LokiParser.PipePipeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPipePipe(LokiParser.PipePipeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

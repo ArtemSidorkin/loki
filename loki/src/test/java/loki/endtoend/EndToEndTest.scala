@@ -3,6 +3,7 @@ package loki.endtoend
 import java.io.File
 
 import loki.Executor
+import loki.runtime.unit.data.bool.LBoolean
 import loki.runtime.unit.data.number.LNumber
 import loki.runtime.unit.data.singleton.LVoid
 import loki.runtime.unit.data.{LArray, LMap, LString}
@@ -28,6 +29,7 @@ private[endtoend] abstract class EndToEndTest
 	}
 
 	protected def void:LVoid = LVoid.DESCRIPTOR.getInstance
+	protected def boolean(value:Boolean) = LBoolean.valueOf(value)
 	protected def number(value:Double) = new LNumber(value)
 	protected def string(value:String) = new LString(value)
 	protected def array(values:LUnit*) = new LArray(values.toArray)
