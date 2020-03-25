@@ -39,11 +39,11 @@ expression:
 	(
 		(
 			BEGIN
-				expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
+				expression RIGHT_THIN_ARROW expression (COMMA expression RIGHT_THIN_ARROW expression)* (SEMICOLON)?
 			END
 		) |
-		(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?) |
-		(COLON)
+		(expression RIGHT_THIN_ARROW expression (COMMA expression RIGHT_THIN_ARROW expression)* (SEMICOLON)?) |
+		(MINUS)
 	)
 	RIGHT_BRACKET (SEMICOLON)? (END)?
 	#Map |
@@ -246,8 +246,9 @@ PIPE : '|';
 EQUALS : '=';
 DOT : '.';
 COMMA : ',';
-COLON : ':';
 DOUBLE_COLON : '::';
+COLON : ':';
+RIGHT_THIN_ARROW : '->';
 SEMICOLON : ';';
 LEFT_PARENTHESIS : '(';
 RIGHT_PARENTHESIS : ')';

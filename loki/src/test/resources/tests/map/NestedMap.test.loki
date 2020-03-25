@@ -1,11 +1,11 @@
-map1 = ["map1level1" : [:]]
+map1 = ["map1level1" -> [-]]
 test(map1)
 
-map2 = ["map1level1" : ["map1level2" : [:]]]
+map2 = ["map1level1" -> ["map1level2" -> [-]]]
 test(map2)
 
-map3 = ["map1level1" : [:], "map2level1" : [:]]
+map3 = ["map1level1" -> [-], "map2level1" -> [-]]
 test(map3)
 
-map4 = ["map1level1" : ["map1level2" : [:]], "map2level1" : ["map2level2" : [:]]]
+map4 = ["map1level1" -> ["map1level2" -> [-]], "map2level1" -> ["map2level2" -> [-]]]
 test(map4)

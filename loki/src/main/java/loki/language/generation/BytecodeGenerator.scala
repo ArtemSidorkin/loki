@@ -13,7 +13,7 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 
 	private implicit val generationContext:GenerationContext = new GenerationContext(moduleName, classLoader)
 
-	override def visitErrorNode(errorNode:ErrorNode):Unit = throw new IllegalStateException
+//	override def visitErrorNode(errorNode:ErrorNode):Unit = throw new IllegalStateException
 
 	override def enterModule(moduleContext:ModuleContext):Unit = ModuleGenerationRule.enter(moduleContext)
 	override def exitModule(moduleContext:ModuleContext):Unit = ModuleGenerationRule.exit(moduleContext)

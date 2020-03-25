@@ -1,29 +1,29 @@
-map0 = ["f1" : function1 : 1]
+map0 = ["f1" -> function1 : 1]
 test(map0["f1"]())
 
 map0 =
 [
-	"f1" : function1 : 1
+	"f1" -> function1 : 1
 ]
 test(map0["f1"](), 1)
 
 map0 =
 [
-	"f1" : function1 :
+	"f1" -> function1 :
 	1
 ]
 test(map0["f1"]())
 
 map0 =
 [
-	"f1" : function1 :
+	"f1" -> function1 :
 		1
 ]
 test(map0["f1"]())
 
 map1 =
 [
-	"f1" : function1 a b :
+	"f1" -> function1 a b :
 		$a = a
 		$b = b
 		$a + $b
