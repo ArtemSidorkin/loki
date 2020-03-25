@@ -17,6 +17,7 @@ private[preprocessing] object CompilerTokens
 	val DOUBLE_COLON = "::"
 	val SEMICOLON = ';'
 	val RIGHT_THIN_ARROW = "->"
+	val RIGHT_THICK_ARROW = "=>"
 	val LEFT_PARENTHESIS = '('
 	val RIGHT_PARENTHESIS = ')'
 	val LEFT_BRACKET = '['

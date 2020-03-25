@@ -50,16 +50,17 @@ expression:
 
 
 
-	LEFT_BRACE
+	LEFT_BRACKET
 	(
 		(
 			BEGIN
-				expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?
+				expression RIGHT_THICK_ARROW expression (COMMA expression RIGHT_THICK_ARROW expression)* (SEMICOLON)?
 			END
 		) |
-		(expression COLON expression (COMMA expression COLON expression)* (SEMICOLON)?)?
+		(expression RIGHT_THICK_ARROW expression (COMMA expression RIGHT_THICK_ARROW expression)* (SEMICOLON)?)? |
+		EQUALS
 	)
-	RIGHT_BRACE
+	RIGHT_BRACKET
 	#Object |
 
 
@@ -249,6 +250,7 @@ COMMA : ',';
 DOUBLE_COLON : '::';
 COLON : ':';
 RIGHT_THIN_ARROW : '->';
+RIGHT_THICK_ARROW : '=>';
 SEMICOLON : ';';
 LEFT_PARENTHESIS : '(';
 RIGHT_PARENTHESIS : ')';
