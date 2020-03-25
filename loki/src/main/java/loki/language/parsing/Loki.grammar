@@ -109,7 +109,7 @@ expression:
 	IDENTIFIER #VariableOrParameter |
 	expression DOT IDENTIFIER #Member |
 	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
-	expression LEFT_BRACE ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACE #MemberAccessor |
+	expression DOLLAR LEFT_BRACKET ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACKET #MemberAccessor |
 
 
 
@@ -169,9 +169,9 @@ expression:
 
 
 
-	expression LEFT_BRACE
+	expression DOLLAR LEFT_BRACKET
 	 	((BEGIN expression SEMICOLON END) | expression)
-	RIGHT_BRACE EQUALS ((BEGIN expression SEMICOLON END) | expression)?
+	RIGHT_BRACKET EQUALS ((BEGIN expression SEMICOLON END) | expression)?
 	#AssignMemberAccessor |
 
 

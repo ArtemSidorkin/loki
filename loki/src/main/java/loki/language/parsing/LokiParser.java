@@ -396,8 +396,9 @@ public class LokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode LEFT_BRACE() { return getToken(LokiParser.LEFT_BRACE, 0); }
-		public TerminalNode RIGHT_BRACE() { return getToken(LokiParser.RIGHT_BRACE, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
 		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
 		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
 		public TerminalNode END() { return getToken(LokiParser.END, 0); }
@@ -668,8 +669,9 @@ public class LokiParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode LEFT_BRACE() { return getToken(LokiParser.LEFT_BRACE, 0); }
-		public TerminalNode RIGHT_BRACE() { return getToken(LokiParser.RIGHT_BRACE, 0); }
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
 		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
 		public List<TerminalNode> BEGIN() { return getTokens(LokiParser.BEGIN); }
 		public TerminalNode BEGIN(int i) {
@@ -1833,7 +1835,7 @@ public class LokiParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(482);
+			setState(484);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,68,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1841,7 +1843,7 @@ public class LokiParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(480);
+					setState(482);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,67,_ctx) ) {
 					case 1:
@@ -2167,20 +2169,22 @@ public class LokiParser extends Parser {
 						setState(399);
 						if (!(precpred(_ctx, 24))) throw new FailedPredicateException(this, "precpred(_ctx, 24)");
 						setState(400);
-						match(LEFT_BRACE);
-						setState(407);
+						match(DOLLAR);
+						setState(401);
+						match(LEFT_BRACKET);
+						setState(408);
 						_errHandler.sync(this);
 						switch (_input.LA(1)) {
 						case BEGIN:
 							{
 							{
-							setState(401);
-							match(BEGIN);
 							setState(402);
-							expression(0);
+							match(BEGIN);
 							setState(403);
-							match(SEMICOLON);
+							expression(0);
 							setState(404);
+							match(SEMICOLON);
+							setState(405);
 							match(END);
 							}
 							}
@@ -2200,26 +2204,26 @@ public class LokiParser extends Parser {
 						case LEFT_BRACKET:
 						case ACUTE:
 							{
-							setState(406);
+							setState(407);
 							expression(0);
 							}
 							break;
 						default:
 							throw new NoViableAltException(this);
 						}
-						setState(409);
-						match(RIGHT_BRACE);
+						setState(410);
+						match(RIGHT_BRACKET);
 						}
 						break;
 					case 14:
 						{
 						_localctx = new CallContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(411);
-						if (!(precpred(_ctx, 23))) throw new FailedPredicateException(this, "precpred(_ctx, 23)");
 						setState(412);
-						match(LEFT_PARENTHESIS);
+						if (!(precpred(_ctx, 23))) throw new FailedPredicateException(this, "precpred(_ctx, 23)");
 						setState(413);
+						match(LEFT_PARENTHESIS);
+						setState(414);
 						match(RIGHT_PARENTHESIS);
 						}
 						break;
@@ -2227,59 +2231,59 @@ public class LokiParser extends Parser {
 						{
 						_localctx = new CallContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(414);
-						if (!(precpred(_ctx, 22))) throw new FailedPredicateException(this, "precpred(_ctx, 22)");
 						setState(415);
+						if (!(precpred(_ctx, 22))) throw new FailedPredicateException(this, "precpred(_ctx, 22)");
+						setState(416);
 						match(LEFT_PARENTHESIS);
-						setState(417);
+						setState(418);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==BEGIN) {
 							{
-							setState(416);
+							setState(417);
 							match(BEGIN);
 							}
 						}
 
-						setState(419);
+						setState(420);
 						expression(0);
-						setState(424);
+						setState(425);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						while (_la==COMMA) {
 							{
 							{
-							setState(420);
-							match(COMMA);
 							setState(421);
+							match(COMMA);
+							setState(422);
 							expression(0);
 							}
 							}
-							setState(426);
+							setState(427);
 							_errHandler.sync(this);
 							_la = _input.LA(1);
 						}
-						setState(428);
+						setState(429);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==SEMICOLON) {
 							{
-							setState(427);
+							setState(428);
 							match(SEMICOLON);
 							}
 						}
 
-						setState(431);
+						setState(432);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==END) {
 							{
-							setState(430);
+							setState(431);
 							match(END);
 							}
 						}
 
-						setState(433);
+						setState(434);
 						match(RIGHT_PARENTHESIS);
 						}
 						break;
@@ -2287,21 +2291,21 @@ public class LokiParser extends Parser {
 						{
 						_localctx = new AssignMemberContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(435);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(436);
-						match(DOT);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(437);
-						match(IDENTIFIER);
+						match(DOT);
 						setState(438);
-						match(EQUALS);
+						match(IDENTIFIER);
 						setState(439);
-						match(SEMICOLON);
+						match(EQUALS);
 						setState(440);
-						match(BEGIN);
+						match(SEMICOLON);
 						setState(441);
-						expression(0);
+						match(BEGIN);
 						setState(442);
+						expression(0);
+						setState(443);
 						match(END);
 						}
 						break;
@@ -2309,43 +2313,43 @@ public class LokiParser extends Parser {
 						{
 						_localctx = new AssignIndexContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(444);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(445);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(446);
 						match(LEFT_BRACKET);
-						setState(447);
+						setState(448);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==BEGIN) {
 							{
-							setState(446);
+							setState(447);
 							match(BEGIN);
 							}
 						}
 
-						setState(449);
+						setState(450);
 						expression(0);
-						setState(451);
+						setState(452);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==END) {
 							{
-							setState(450);
+							setState(451);
 							match(END);
 							}
 						}
 
-						setState(453);
-						match(RIGHT_BRACKET);
 						setState(454);
-						match(EQUALS);
+						match(RIGHT_BRACKET);
 						setState(455);
-						match(BEGIN);
+						match(EQUALS);
 						setState(456);
-						expression(0);
+						match(BEGIN);
 						setState(457);
-						match(SEMICOLON);
+						expression(0);
 						setState(458);
+						match(SEMICOLON);
+						setState(459);
 						match(END);
 						}
 						break;
@@ -2353,23 +2357,25 @@ public class LokiParser extends Parser {
 						{
 						_localctx = new AssignMemberAccessorContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(460);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(461);
-						match(LEFT_BRACE);
-						setState(468);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(462);
+						match(DOLLAR);
+						setState(463);
+						match(LEFT_BRACKET);
+						setState(470);
 						_errHandler.sync(this);
 						switch (_input.LA(1)) {
 						case BEGIN:
 							{
 							{
-							setState(462);
-							match(BEGIN);
-							setState(463);
-							expression(0);
 							setState(464);
-							match(SEMICOLON);
+							match(BEGIN);
 							setState(465);
+							expression(0);
+							setState(466);
+							match(SEMICOLON);
+							setState(467);
 							match(END);
 							}
 							}
@@ -2389,37 +2395,37 @@ public class LokiParser extends Parser {
 						case LEFT_BRACKET:
 						case ACUTE:
 							{
-							setState(467);
+							setState(469);
 							expression(0);
 							}
 							break;
 						default:
 							throw new NoViableAltException(this);
 						}
-						setState(470);
-						match(RIGHT_BRACE);
-						setState(471);
+						setState(472);
+						match(RIGHT_BRACKET);
+						setState(473);
 						match(EQUALS);
-						setState(478);
+						setState(480);
 						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,66,_ctx) ) {
 						case 1:
 							{
 							{
-							setState(472);
-							match(BEGIN);
-							setState(473);
-							expression(0);
 							setState(474);
-							match(SEMICOLON);
+							match(BEGIN);
 							setState(475);
+							expression(0);
+							setState(476);
+							match(SEMICOLON);
+							setState(477);
 							match(END);
 							}
 							}
 							break;
 						case 2:
 							{
-							setState(477);
+							setState(479);
 							expression(0);
 							}
 							break;
@@ -2429,7 +2435,7 @@ public class LokiParser extends Parser {
 					}
 					} 
 				}
-				setState(484);
+				setState(486);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,68,_ctx);
 			}
@@ -2477,24 +2483,24 @@ public class LokiParser extends Parser {
 		enterRule(_localctx, 6, RULE_inheritance);
 		try {
 			int _alt;
-			setState(497);
+			setState(499);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,70,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(485);
+				setState(487);
 				match(DOUBLE_COLON);
-				setState(486);
+				setState(488);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(487);
+				setState(489);
 				match(DOUBLE_COLON);
-				setState(491); 
+				setState(493); 
 				_errHandler.sync(this);
 				_alt = 1;
 				do {
@@ -2502,9 +2508,9 @@ public class LokiParser extends Parser {
 					case 1:
 						{
 						{
-						setState(488);
+						setState(490);
 						expression(0);
-						setState(489);
+						setState(491);
 						match(COMMA);
 						}
 						}
@@ -2512,11 +2518,11 @@ public class LokiParser extends Parser {
 					default:
 						throw new NoViableAltException(this);
 					}
-					setState(493); 
+					setState(495); 
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,69,_ctx);
 				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-				setState(495);
+				setState(497);
 				expression(0);
 				}
 				break;
@@ -2566,42 +2572,42 @@ public class LokiParser extends Parser {
 		enterRule(_localctx, 8, RULE_else_);
 		int _la;
 		try {
-			setState(512);
+			setState(514);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,72,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(499);
+				setState(501);
 				match(ELSE);
-				setState(500);
+				setState(502);
 				match(BEGIN);
-				setState(504); 
+				setState(506); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(501);
+					setState(503);
 					instruction();
-					setState(502);
+					setState(504);
 					match(SEMICOLON);
 					}
 					}
-					setState(506); 
+					setState(508); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << IF) | (1L << WHILE) | (1L << IDENTIFIER) | (1L << DOLLAR) | (1L << AT) | (1L << CHARACTERS) | (1L << FLOAT) | (1L << INT) | (1L << MINUS) | (1L << BACKSLASH) | (1L << BANG) | (1L << LEFT_PARENTHESIS) | (1L << LEFT_BRACKET) | (1L << ACUTE))) != 0) );
-				setState(508);
+				setState(510);
 				match(END);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(510);
+				setState(512);
 				match(ELSE);
-				setState(511);
+				setState(513);
 				instruction();
 				}
 				break;
@@ -2668,7 +2674,7 @@ public class LokiParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3-\u0205\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3-\u0207\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\2\6\2\20\n\2\r\2\16\2\21\3\3"+
 		"\3\3\3\4\3\4\3\4\5\4\31\n\4\3\4\3\4\5\4\35\n\4\3\4\5\4 \n\4\3\4\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\7\4)\n\4\f\4\16\4,\13\4\3\4\5\4/\n\4\3\4\3\4\3\4\3"+
@@ -2697,38 +2703,38 @@ public class LokiParser extends Parser {
 		"\n\4\3\4\3\4\3\4\7\4\u0174\n\4\f\4\16\4\u0177\13\4\3\4\5\4\u017a\n\4\3"+
 		"\4\5\4\u017d\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u0187\n\4\3\4\3\4"+
 		"\5\4\u018b\n\4\3\4\5\4\u018e\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\5\4\u019a\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u01a4\n\4\3\4\3\4"+
-		"\3\4\7\4\u01a9\n\4\f\4\16\4\u01ac\13\4\3\4\5\4\u01af\n\4\3\4\5\4\u01b2"+
-		"\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u01c2"+
-		"\n\4\3\4\3\4\5\4\u01c6\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\5\4\u01d7\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u01e1"+
-		"\n\4\7\4\u01e3\n\4\f\4\16\4\u01e6\13\4\3\5\3\5\3\5\3\5\3\5\3\5\6\5\u01ee"+
-		"\n\5\r\5\16\5\u01ef\3\5\3\5\5\5\u01f4\n\5\3\6\3\6\3\6\3\6\3\6\6\6\u01fb"+
-		"\n\6\r\6\16\6\u01fc\3\6\3\6\3\6\3\6\5\6\u0203\n\6\3\6\2\3\6\7\2\4\6\b"+
-		"\n\2\t\4\2\b\b\22\22\3\2\20\21\3\2\16\17\3\2\23\24\3\2\25\30\3\2\31\31"+
-		"\3\2\32\32\2\u0272\2\17\3\2\2\2\4\23\3\2\2\2\6\u013e\3\2\2\2\b\u01f3\3"+
-		"\2\2\2\n\u0202\3\2\2\2\f\r\5\4\3\2\r\16\7%\2\2\16\20\3\2\2\2\17\f\3\2"+
-		"\2\2\20\21\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\3\3\2\2\2\23\24\5\6"+
-		"\4\2\24\5\3\2\2\2\25\26\b\4\1\2\26\30\7&\2\2\27\31\7\3\2\2\30\27\3\2\2"+
-		"\2\30\31\3\2\2\2\31\32\3\2\2\2\32\34\5\6\4\2\33\35\7%\2\2\34\33\3\2\2"+
-		"\2\34\35\3\2\2\2\35\37\3\2\2\2\36 \7\4\2\2\37\36\3\2\2\2\37 \3\2\2\2 "+
-		"!\3\2\2\2!\"\7\'\2\2\"\u013f\3\2\2\2#?\7(\2\2$%\7\3\2\2%*\5\6\4\2&\'\7"+
-		" \2\2\')\5\6\4\2(&\3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2\2+.\3\2\2\2,*\3"+
-		"\2\2\2-/\7%\2\2.-\3\2\2\2./\3\2\2\2/\60\3\2\2\2\60\61\7\4\2\2\61@\3\2"+
-		"\2\2\62\67\5\6\4\2\63\64\7 \2\2\64\66\5\6\4\2\65\63\3\2\2\2\669\3\2\2"+
-		"\2\67\65\3\2\2\2\678\3\2\2\28;\3\2\2\29\67\3\2\2\2:<\7%\2\2;:\3\2\2\2"+
-		";<\3\2\2\2<>\3\2\2\2=\62\3\2\2\2=>\3\2\2\2>@\3\2\2\2?$\3\2\2\2?=\3\2\2"+
-		"\2@A\3\2\2\2AC\7)\2\2BD\7%\2\2CB\3\2\2\2CD\3\2\2\2DF\3\2\2\2EG\7\4\2\2"+
-		"FE\3\2\2\2FG\3\2\2\2G\u013f\3\2\2\2Hm\7(\2\2IJ\7\3\2\2JK\5\6\4\2KL\7#"+
-		"\2\2LT\5\6\4\2MN\7 \2\2NO\5\6\4\2OP\7#\2\2PQ\5\6\4\2QS\3\2\2\2RM\3\2\2"+
-		"\2SV\3\2\2\2TR\3\2\2\2TU\3\2\2\2UX\3\2\2\2VT\3\2\2\2WY\7%\2\2XW\3\2\2"+
-		"\2XY\3\2\2\2YZ\3\2\2\2Z[\7\4\2\2[n\3\2\2\2\\]\5\6\4\2]^\7#\2\2^f\5\6\4"+
-		"\2_`\7 \2\2`a\5\6\4\2ab\7#\2\2bc\5\6\4\2ce\3\2\2\2d_\3\2\2\2eh\3\2\2\2"+
-		"fd\3\2\2\2fg\3\2\2\2gj\3\2\2\2hf\3\2\2\2ik\7%\2\2ji\3\2\2\2jk\3\2\2\2"+
-		"kn\3\2\2\2ln\7\17\2\2mI\3\2\2\2m\\\3\2\2\2ml\3\2\2\2no\3\2\2\2oq\7)\2"+
-		"\2pr\7%\2\2qp\3\2\2\2qr\3\2\2\2rt\3\2\2\2su\7\4\2\2ts\3\2\2\2tu\3\2\2"+
-		"\2u\u013f\3\2\2\2v\u009d\7(\2\2wx\7\3\2\2xy\5\6\4\2yz\7$\2\2z\u0082\5"+
-		"\6\4\2{|\7 \2\2|}\5\6\4\2}~\7$\2\2~\177\5\6\4\2\177\u0081\3\2\2\2\u0080"+
+		"\4\3\4\5\4\u019b\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u01a5\n\4\3\4"+
+		"\3\4\3\4\7\4\u01aa\n\4\f\4\16\4\u01ad\13\4\3\4\5\4\u01b0\n\4\3\4\5\4\u01b3"+
+		"\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u01c3"+
+		"\n\4\3\4\3\4\5\4\u01c7\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\5\4\u01d9\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4"+
+		"\u01e3\n\4\7\4\u01e5\n\4\f\4\16\4\u01e8\13\4\3\5\3\5\3\5\3\5\3\5\3\5\6"+
+		"\5\u01f0\n\5\r\5\16\5\u01f1\3\5\3\5\5\5\u01f6\n\5\3\6\3\6\3\6\3\6\3\6"+
+		"\6\6\u01fd\n\6\r\6\16\6\u01fe\3\6\3\6\3\6\3\6\5\6\u0205\n\6\3\6\2\3\6"+
+		"\7\2\4\6\b\n\2\t\4\2\b\b\22\22\3\2\20\21\3\2\16\17\3\2\23\24\3\2\25\30"+
+		"\3\2\31\31\3\2\32\32\2\u0274\2\17\3\2\2\2\4\23\3\2\2\2\6\u013e\3\2\2\2"+
+		"\b\u01f5\3\2\2\2\n\u0204\3\2\2\2\f\r\5\4\3\2\r\16\7%\2\2\16\20\3\2\2\2"+
+		"\17\f\3\2\2\2\20\21\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\3\3\2\2\2\23"+
+		"\24\5\6\4\2\24\5\3\2\2\2\25\26\b\4\1\2\26\30\7&\2\2\27\31\7\3\2\2\30\27"+
+		"\3\2\2\2\30\31\3\2\2\2\31\32\3\2\2\2\32\34\5\6\4\2\33\35\7%\2\2\34\33"+
+		"\3\2\2\2\34\35\3\2\2\2\35\37\3\2\2\2\36 \7\4\2\2\37\36\3\2\2\2\37 \3\2"+
+		"\2\2 !\3\2\2\2!\"\7\'\2\2\"\u013f\3\2\2\2#?\7(\2\2$%\7\3\2\2%*\5\6\4\2"+
+		"&\'\7 \2\2\')\5\6\4\2(&\3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2\2+.\3\2\2"+
+		"\2,*\3\2\2\2-/\7%\2\2.-\3\2\2\2./\3\2\2\2/\60\3\2\2\2\60\61\7\4\2\2\61"+
+		"@\3\2\2\2\62\67\5\6\4\2\63\64\7 \2\2\64\66\5\6\4\2\65\63\3\2\2\2\669\3"+
+		"\2\2\2\67\65\3\2\2\2\678\3\2\2\28;\3\2\2\29\67\3\2\2\2:<\7%\2\2;:\3\2"+
+		"\2\2;<\3\2\2\2<>\3\2\2\2=\62\3\2\2\2=>\3\2\2\2>@\3\2\2\2?$\3\2\2\2?=\3"+
+		"\2\2\2@A\3\2\2\2AC\7)\2\2BD\7%\2\2CB\3\2\2\2CD\3\2\2\2DF\3\2\2\2EG\7\4"+
+		"\2\2FE\3\2\2\2FG\3\2\2\2G\u013f\3\2\2\2Hm\7(\2\2IJ\7\3\2\2JK\5\6\4\2K"+
+		"L\7#\2\2LT\5\6\4\2MN\7 \2\2NO\5\6\4\2OP\7#\2\2PQ\5\6\4\2QS\3\2\2\2RM\3"+
+		"\2\2\2SV\3\2\2\2TR\3\2\2\2TU\3\2\2\2UX\3\2\2\2VT\3\2\2\2WY\7%\2\2XW\3"+
+		"\2\2\2XY\3\2\2\2YZ\3\2\2\2Z[\7\4\2\2[n\3\2\2\2\\]\5\6\4\2]^\7#\2\2^f\5"+
+		"\6\4\2_`\7 \2\2`a\5\6\4\2ab\7#\2\2bc\5\6\4\2ce\3\2\2\2d_\3\2\2\2eh\3\2"+
+		"\2\2fd\3\2\2\2fg\3\2\2\2gj\3\2\2\2hf\3\2\2\2ik\7%\2\2ji\3\2\2\2jk\3\2"+
+		"\2\2kn\3\2\2\2ln\7\17\2\2mI\3\2\2\2m\\\3\2\2\2ml\3\2\2\2no\3\2\2\2oq\7"+
+		")\2\2pr\7%\2\2qp\3\2\2\2qr\3\2\2\2rt\3\2\2\2su\7\4\2\2ts\3\2\2\2tu\3\2"+
+		"\2\2u\u013f\3\2\2\2v\u009d\7(\2\2wx\7\3\2\2xy\5\6\4\2yz\7$\2\2z\u0082"+
+		"\5\6\4\2{|\7 \2\2|}\5\6\4\2}~\7$\2\2~\177\5\6\4\2\177\u0081\3\2\2\2\u0080"+
 		"{\3\2\2\2\u0081\u0084\3\2\2\2\u0082\u0080\3\2\2\2\u0082\u0083\3\2\2\2"+
 		"\u0083\u0086\3\2\2\2\u0084\u0082\3\2\2\2\u0085\u0087\7%\2\2\u0086\u0085"+
 		"\3\2\2\2\u0086\u0087\3\2\2\2\u0087\u0088\3\2\2\2\u0088\u0089\7\4\2\2\u0089"+
@@ -2798,19 +2804,19 @@ public class LokiParser extends Parser {
 		"\2\2\u013e\u00d3\3\2\2\2\u013e\u00d4\3\2\2\2\u013e\u00d6\3\2\2\2\u013e"+
 		"\u00d8\3\2\2\2\u013e\u00dc\3\2\2\2\u013e\u00e4\3\2\2\2\u013e\u00e7\3\2"+
 		"\2\2\u013e\u00ee\3\2\2\2\u013e\u00ff\3\2\2\2\u013e\u0118\3\2\2\2\u013e"+
-		"\u0127\3\2\2\2\u013f\u01e4\3\2\2\2\u0140\u0141\f\25\2\2\u0141\u0142\t"+
-		"\3\2\2\u0142\u01e3\5\6\4\26\u0143\u0144\f\24\2\2\u0144\u0145\t\4\2\2\u0145"+
-		"\u01e3\5\6\4\25\u0146\u0147\f\23\2\2\u0147\u0148\t\5\2\2\u0148\u01e3\5"+
-		"\6\4\24\u0149\u014a\f\22\2\2\u014a\u014b\t\6\2\2\u014b\u01e3\5\6\4\23"+
-		"\u014c\u014d\f\21\2\2\u014d\u014e\t\7\2\2\u014e\u01e3\5\6\4\22\u014f\u0150"+
-		"\f\20\2\2\u0150\u0151\t\b\2\2\u0151\u01e3\5\6\4\21\u0152\u0153\f\13\2"+
+		"\u0127\3\2\2\2\u013f\u01e6\3\2\2\2\u0140\u0141\f\25\2\2\u0141\u0142\t"+
+		"\3\2\2\u0142\u01e5\5\6\4\26\u0143\u0144\f\24\2\2\u0144\u0145\t\4\2\2\u0145"+
+		"\u01e5\5\6\4\25\u0146\u0147\f\23\2\2\u0147\u0148\t\5\2\2\u0148\u01e5\5"+
+		"\6\4\24\u0149\u014a\f\22\2\2\u014a\u014b\t\6\2\2\u014b\u01e5\5\6\4\23"+
+		"\u014c\u014d\f\21\2\2\u014d\u014e\t\7\2\2\u014e\u01e5\5\6\4\22\u014f\u0150"+
+		"\f\20\2\2\u0150\u0151\t\b\2\2\u0151\u01e5\5\6\4\21\u0152\u0153\f\13\2"+
 		"\2\u0153\u0154\7\37\2\2\u0154\u0155\7\b\2\2\u0155\u0156\7\36\2\2\u0156"+
-		"\u01e3\5\6\4\f\u0157\u0158\f\t\2\2\u0158\u015a\7(\2\2\u0159\u015b\7\3"+
+		"\u01e5\5\6\4\f\u0157\u0158\f\t\2\2\u0158\u015a\7(\2\2\u0159\u015b\7\3"+
 		"\2\2\u015a\u0159\3\2\2\2\u015a\u015b\3\2\2\2\u015b\u015c\3\2\2\2\u015c"+
 		"\u015e\5\6\4\2\u015d\u015f\7\4\2\2\u015e\u015d\3\2\2\2\u015e\u015f\3\2"+
 		"\2\2\u015f\u0160\3\2\2\2\u0160\u0161\7)\2\2\u0161\u0162\7\36\2\2\u0162"+
-		"\u0163\5\6\4\n\u0163\u01e3\3\2\2\2\u0164\u0165\f!\2\2\u0165\u0166\7\37"+
-		"\2\2\u0166\u0167\7\b\2\2\u0167\u0168\7&\2\2\u0168\u01e3\7\'\2\2\u0169"+
+		"\u0163\5\6\4\n\u0163\u01e5\3\2\2\2\u0164\u0165\f!\2\2\u0165\u0166\7\37"+
+		"\2\2\u0166\u0167\7\b\2\2\u0167\u0168\7&\2\2\u0168\u01e5\7\'\2\2\u0169"+
 		"\u016a\f \2\2\u016a\u016b\7\37\2\2\u016b\u016c\7\b\2\2\u016c\u016e\7&"+
 		"\2\2\u016d\u016f\7\3\2\2\u016e\u016d\3\2\2\2\u016e\u016f\3\2\2\2\u016f"+
 		"\u0170\3\2\2\2\u0170\u0175\5\6\4\2\u0171\u0172\7 \2\2\u0172\u0174\5\6"+
@@ -2818,59 +2824,60 @@ public class LokiParser extends Parser {
 		"\u0176\3\2\2\2\u0176\u0179\3\2\2\2\u0177\u0175\3\2\2\2\u0178\u017a\7%"+
 		"\2\2\u0179\u0178\3\2\2\2\u0179\u017a\3\2\2\2\u017a\u017c\3\2\2\2\u017b"+
 		"\u017d\7\4\2\2\u017c\u017b\3\2\2\2\u017c\u017d\3\2\2\2\u017d\u017e\3\2"+
-		"\2\2\u017e\u017f\7\'\2\2\u017f\u01e3\3\2\2\2\u0180\u0181\f\34\2\2\u0181"+
-		"\u0182\7\37\2\2\u0182\u01e3\7\b\2\2\u0183\u0184\f\33\2\2\u0184\u0186\7"+
+		"\2\2\u017e\u017f\7\'\2\2\u017f\u01e5\3\2\2\2\u0180\u0181\f\34\2\2\u0181"+
+		"\u0182\7\37\2\2\u0182\u01e5\7\b\2\2\u0183\u0184\f\33\2\2\u0184\u0186\7"+
 		"(\2\2\u0185\u0187\7\3\2\2\u0186\u0185\3\2\2\2\u0186\u0187\3\2\2\2\u0187"+
 		"\u0188\3\2\2\2\u0188\u018a\5\6\4\2\u0189\u018b\7%\2\2\u018a\u0189\3\2"+
 		"\2\2\u018a\u018b\3\2\2\2\u018b\u018d\3\2\2\2\u018c\u018e\7\4\2\2\u018d"+
 		"\u018c\3\2\2\2\u018d\u018e\3\2\2\2\u018e\u018f\3\2\2\2\u018f\u0190\7)"+
-		"\2\2\u0190\u01e3\3\2\2\2\u0191\u0192\f\32\2\2\u0192\u0199\7*\2\2\u0193"+
-		"\u0194\7\3\2\2\u0194\u0195\5\6\4\2\u0195\u0196\7%\2\2\u0196\u0197\7\4"+
-		"\2\2\u0197\u019a\3\2\2\2\u0198\u019a\5\6\4\2\u0199\u0193\3\2\2\2\u0199"+
-		"\u0198\3\2\2\2\u019a\u019b\3\2\2\2\u019b\u019c\7+\2\2\u019c\u01e3\3\2"+
-		"\2\2\u019d\u019e\f\31\2\2\u019e\u019f\7&\2\2\u019f\u01e3\7\'\2\2\u01a0"+
-		"\u01a1\f\30\2\2\u01a1\u01a3\7&\2\2\u01a2\u01a4\7\3\2\2\u01a3\u01a2\3\2"+
-		"\2\2\u01a3\u01a4\3\2\2\2\u01a4\u01a5\3\2\2\2\u01a5\u01aa\5\6\4\2\u01a6"+
-		"\u01a7\7 \2\2\u01a7\u01a9\5\6\4\2\u01a8\u01a6\3\2\2\2\u01a9\u01ac\3\2"+
-		"\2\2\u01aa\u01a8\3\2\2\2\u01aa\u01ab\3\2\2\2\u01ab\u01ae\3\2\2\2\u01ac"+
-		"\u01aa\3\2\2\2\u01ad\u01af\7%\2\2\u01ae\u01ad\3\2\2\2\u01ae\u01af\3\2"+
-		"\2\2\u01af\u01b1\3\2\2\2\u01b0\u01b2\7\4\2\2\u01b1\u01b0\3\2\2\2\u01b1"+
-		"\u01b2\3\2\2\2\u01b2\u01b3\3\2\2\2\u01b3\u01b4\7\'\2\2\u01b4\u01e3\3\2"+
-		"\2\2\u01b5\u01b6\f\n\2\2\u01b6\u01b7\7\37\2\2\u01b7\u01b8\7\b\2\2\u01b8"+
-		"\u01b9\7\36\2\2\u01b9\u01ba\7%\2\2\u01ba\u01bb\7\3\2\2\u01bb\u01bc\5\6"+
-		"\4\2\u01bc\u01bd\7\4\2\2\u01bd\u01e3\3\2\2\2\u01be\u01bf\f\b\2\2\u01bf"+
-		"\u01c1\7(\2\2\u01c0\u01c2\7\3\2\2\u01c1\u01c0\3\2\2\2\u01c1\u01c2\3\2"+
-		"\2\2\u01c2\u01c3\3\2\2\2\u01c3\u01c5\5\6\4\2\u01c4\u01c6\7\4\2\2\u01c5"+
-		"\u01c4\3\2\2\2\u01c5\u01c6\3\2\2\2\u01c6\u01c7\3\2\2\2\u01c7\u01c8\7)"+
-		"\2\2\u01c8\u01c9\7\36\2\2\u01c9\u01ca\7\3\2\2\u01ca\u01cb\5\6\4\2\u01cb"+
-		"\u01cc\7%\2\2\u01cc\u01cd\7\4\2\2\u01cd\u01e3\3\2\2\2\u01ce\u01cf\f\7"+
-		"\2\2\u01cf\u01d6\7*\2\2\u01d0\u01d1\7\3\2\2\u01d1\u01d2\5\6\4\2\u01d2"+
-		"\u01d3\7%\2\2\u01d3\u01d4\7\4\2\2\u01d4\u01d7\3\2\2\2\u01d5\u01d7\5\6"+
-		"\4\2\u01d6\u01d0\3\2\2\2\u01d6\u01d5\3\2\2\2\u01d7\u01d8\3\2\2\2\u01d8"+
-		"\u01d9\7+\2\2\u01d9\u01e0\7\36\2\2\u01da\u01db\7\3\2\2\u01db\u01dc\5\6"+
-		"\4\2\u01dc\u01dd\7%\2\2\u01dd\u01de\7\4\2\2\u01de\u01e1\3\2\2\2\u01df"+
-		"\u01e1\5\6\4\2\u01e0\u01da\3\2\2\2\u01e0\u01df\3\2\2\2\u01e0\u01e1\3\2"+
-		"\2\2\u01e1\u01e3\3\2\2\2\u01e2\u0140\3\2\2\2\u01e2\u0143\3\2\2\2\u01e2"+
-		"\u0146\3\2\2\2\u01e2\u0149\3\2\2\2\u01e2\u014c\3\2\2\2\u01e2\u014f\3\2"+
-		"\2\2\u01e2\u0152\3\2\2\2\u01e2\u0157\3\2\2\2\u01e2\u0164\3\2\2\2\u01e2"+
-		"\u0169\3\2\2\2\u01e2\u0180\3\2\2\2\u01e2\u0183\3\2\2\2\u01e2\u0191\3\2"+
-		"\2\2\u01e2\u019d\3\2\2\2\u01e2\u01a0\3\2\2\2\u01e2\u01b5\3\2\2\2\u01e2"+
-		"\u01be\3\2\2\2\u01e2\u01ce\3\2\2\2\u01e3\u01e6\3\2\2\2\u01e4\u01e2\3\2"+
-		"\2\2\u01e4\u01e5\3\2\2\2\u01e5\7\3\2\2\2\u01e6\u01e4\3\2\2\2\u01e7\u01e8"+
-		"\7!\2\2\u01e8\u01f4\5\6\4\2\u01e9\u01ed\7!\2\2\u01ea\u01eb\5\6\4\2\u01eb"+
-		"\u01ec\7 \2\2\u01ec\u01ee\3\2\2\2\u01ed\u01ea\3\2\2\2\u01ee\u01ef\3\2"+
-		"\2\2\u01ef\u01ed\3\2\2\2\u01ef\u01f0\3\2\2\2\u01f0\u01f1\3\2\2\2\u01f1"+
-		"\u01f2\5\6\4\2\u01f2\u01f4\3\2\2\2\u01f3\u01e7\3\2\2\2\u01f3\u01e9\3\2"+
-		"\2\2\u01f4\t\3\2\2\2\u01f5\u01f6\7\6\2\2\u01f6\u01fa\7\3\2\2\u01f7\u01f8"+
-		"\5\4\3\2\u01f8\u01f9\7%\2\2\u01f9\u01fb\3\2\2\2\u01fa\u01f7\3\2\2\2\u01fb"+
-		"\u01fc\3\2\2\2\u01fc\u01fa\3\2\2\2\u01fc\u01fd\3\2\2\2\u01fd\u01fe\3\2"+
-		"\2\2\u01fe\u01ff\7\4\2\2\u01ff\u0203\3\2\2\2\u0200\u0201\7\6\2\2\u0201"+
-		"\u0203\5\4\3\2\u0202\u01f5\3\2\2\2\u0202\u0200\3\2\2\2\u0203\13\3\2\2"+
-		"\2K\21\30\34\37*.\67;=?CFTXfjmqt\u0082\u0086\u0094\u0098\u009a\u009d\u00a8"+
-		"\u00ae\u00b2\u00b7\u00bd\u00c1\u00ca\u00f1\u00f5\u00f8\u00fd\u0102\u0106"+
-		"\u0109\u0112\u0116\u011b\u011f\u0122\u012a\u012e\u0131\u013a\u013e\u015a"+
-		"\u015e\u016e\u0175\u0179\u017c\u0186\u018a\u018d\u0199\u01a3\u01aa\u01ae"+
-		"\u01b1\u01c1\u01c5\u01d6\u01e0\u01e2\u01e4\u01ef\u01f3\u01fc\u0202";
+		"\2\2\u0190\u01e5\3\2\2\2\u0191\u0192\f\32\2\2\u0192\u0193\7\t\2\2\u0193"+
+		"\u019a\7(\2\2\u0194\u0195\7\3\2\2\u0195\u0196\5\6\4\2\u0196\u0197\7%\2"+
+		"\2\u0197\u0198\7\4\2\2\u0198\u019b\3\2\2\2\u0199\u019b\5\6\4\2\u019a\u0194"+
+		"\3\2\2\2\u019a\u0199\3\2\2\2\u019b\u019c\3\2\2\2\u019c\u019d\7)\2\2\u019d"+
+		"\u01e5\3\2\2\2\u019e\u019f\f\31\2\2\u019f\u01a0\7&\2\2\u01a0\u01e5\7\'"+
+		"\2\2\u01a1\u01a2\f\30\2\2\u01a2\u01a4\7&\2\2\u01a3\u01a5\7\3\2\2\u01a4"+
+		"\u01a3\3\2\2\2\u01a4\u01a5\3\2\2\2\u01a5\u01a6\3\2\2\2\u01a6\u01ab\5\6"+
+		"\4\2\u01a7\u01a8\7 \2\2\u01a8\u01aa\5\6\4\2\u01a9\u01a7\3\2\2\2\u01aa"+
+		"\u01ad\3\2\2\2\u01ab\u01a9\3\2\2\2\u01ab\u01ac\3\2\2\2\u01ac\u01af\3\2"+
+		"\2\2\u01ad\u01ab\3\2\2\2\u01ae\u01b0\7%\2\2\u01af\u01ae\3\2\2\2\u01af"+
+		"\u01b0\3\2\2\2\u01b0\u01b2\3\2\2\2\u01b1\u01b3\7\4\2\2\u01b2\u01b1\3\2"+
+		"\2\2\u01b2\u01b3\3\2\2\2\u01b3\u01b4\3\2\2\2\u01b4\u01b5\7\'\2\2\u01b5"+
+		"\u01e5\3\2\2\2\u01b6\u01b7\f\n\2\2\u01b7\u01b8\7\37\2\2\u01b8\u01b9\7"+
+		"\b\2\2\u01b9\u01ba\7\36\2\2\u01ba\u01bb\7%\2\2\u01bb\u01bc\7\3\2\2\u01bc"+
+		"\u01bd\5\6\4\2\u01bd\u01be\7\4\2\2\u01be\u01e5\3\2\2\2\u01bf\u01c0\f\b"+
+		"\2\2\u01c0\u01c2\7(\2\2\u01c1\u01c3\7\3\2\2\u01c2\u01c1\3\2\2\2\u01c2"+
+		"\u01c3\3\2\2\2\u01c3\u01c4\3\2\2\2\u01c4\u01c6\5\6\4\2\u01c5\u01c7\7\4"+
+		"\2\2\u01c6\u01c5\3\2\2\2\u01c6\u01c7\3\2\2\2\u01c7\u01c8\3\2\2\2\u01c8"+
+		"\u01c9\7)\2\2\u01c9\u01ca\7\36\2\2\u01ca\u01cb\7\3\2\2\u01cb\u01cc\5\6"+
+		"\4\2\u01cc\u01cd\7%\2\2\u01cd\u01ce\7\4\2\2\u01ce\u01e5\3\2\2\2\u01cf"+
+		"\u01d0\f\7\2\2\u01d0\u01d1\7\t\2\2\u01d1\u01d8\7(\2\2\u01d2\u01d3\7\3"+
+		"\2\2\u01d3\u01d4\5\6\4\2\u01d4\u01d5\7%\2\2\u01d5\u01d6\7\4\2\2\u01d6"+
+		"\u01d9\3\2\2\2\u01d7\u01d9\5\6\4\2\u01d8\u01d2\3\2\2\2\u01d8\u01d7\3\2"+
+		"\2\2\u01d9\u01da\3\2\2\2\u01da\u01db\7)\2\2\u01db\u01e2\7\36\2\2\u01dc"+
+		"\u01dd\7\3\2\2\u01dd\u01de\5\6\4\2\u01de\u01df\7%\2\2\u01df\u01e0\7\4"+
+		"\2\2\u01e0\u01e3\3\2\2\2\u01e1\u01e3\5\6\4\2\u01e2\u01dc\3\2\2\2\u01e2"+
+		"\u01e1\3\2\2\2\u01e2\u01e3\3\2\2\2\u01e3\u01e5\3\2\2\2\u01e4\u0140\3\2"+
+		"\2\2\u01e4\u0143\3\2\2\2\u01e4\u0146\3\2\2\2\u01e4\u0149\3\2\2\2\u01e4"+
+		"\u014c\3\2\2\2\u01e4\u014f\3\2\2\2\u01e4\u0152\3\2\2\2\u01e4\u0157\3\2"+
+		"\2\2\u01e4\u0164\3\2\2\2\u01e4\u0169\3\2\2\2\u01e4\u0180\3\2\2\2\u01e4"+
+		"\u0183\3\2\2\2\u01e4\u0191\3\2\2\2\u01e4\u019e\3\2\2\2\u01e4\u01a1\3\2"+
+		"\2\2\u01e4\u01b6\3\2\2\2\u01e4\u01bf\3\2\2\2\u01e4\u01cf\3\2\2\2\u01e5"+
+		"\u01e8\3\2\2\2\u01e6\u01e4\3\2\2\2\u01e6\u01e7\3\2\2\2\u01e7\7\3\2\2\2"+
+		"\u01e8\u01e6\3\2\2\2\u01e9\u01ea\7!\2\2\u01ea\u01f6\5\6\4\2\u01eb\u01ef"+
+		"\7!\2\2\u01ec\u01ed\5\6\4\2\u01ed\u01ee\7 \2\2\u01ee\u01f0\3\2\2\2\u01ef"+
+		"\u01ec\3\2\2\2\u01f0\u01f1\3\2\2\2\u01f1\u01ef\3\2\2\2\u01f1\u01f2\3\2"+
+		"\2\2\u01f2\u01f3\3\2\2\2\u01f3\u01f4\5\6\4\2\u01f4\u01f6\3\2\2\2\u01f5"+
+		"\u01e9\3\2\2\2\u01f5\u01eb\3\2\2\2\u01f6\t\3\2\2\2\u01f7\u01f8\7\6\2\2"+
+		"\u01f8\u01fc\7\3\2\2\u01f9\u01fa\5\4\3\2\u01fa\u01fb\7%\2\2\u01fb\u01fd"+
+		"\3\2\2\2\u01fc\u01f9\3\2\2\2\u01fd\u01fe\3\2\2\2\u01fe\u01fc\3\2\2\2\u01fe"+
+		"\u01ff\3\2\2\2\u01ff\u0200\3\2\2\2\u0200\u0201\7\4\2\2\u0201\u0205\3\2"+
+		"\2\2\u0202\u0203\7\6\2\2\u0203\u0205\5\4\3\2\u0204\u01f7\3\2\2\2\u0204"+
+		"\u0202\3\2\2\2\u0205\13\3\2\2\2K\21\30\34\37*.\67;=?CFTXfjmqt\u0082\u0086"+
+		"\u0094\u0098\u009a\u009d\u00a8\u00ae\u00b2\u00b7\u00bd\u00c1\u00ca\u00f1"+
+		"\u00f5\u00f8\u00fd\u0102\u0106\u0109\u0112\u0116\u011b\u011f\u0122\u012a"+
+		"\u012e\u0131\u013a\u013e\u015a\u015e\u016e\u0175\u0179\u017c\u0186\u018a"+
+		"\u018d\u019a\u01a4\u01ab\u01af\u01b2\u01c2\u01c6\u01d8\u01e2\u01e4\u01e6"+
+		"\u01f1\u01f5\u01fe\u0204";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
