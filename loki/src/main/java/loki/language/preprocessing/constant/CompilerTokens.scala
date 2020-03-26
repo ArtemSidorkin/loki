@@ -2,9 +2,6 @@ package loki.language.preprocessing.constant
 
 private[preprocessing] object CompilerTokens
 {
-	val BEGIN = "~{"
-	val END = "~}"
-
 	val PLUS = '+'
 	val MINUS = '-'
 	val STAR = '*'
@@ -30,4 +27,7 @@ private[preprocessing] object CompilerTokens
 	val NEW_LINE_CARET = '\r'
 	val TAB = '\t'
 	val SPACE = ' '
+
+	val BEGIN:Char = LEFT_BRACE
+	val END:Char = RIGHT_BRACE
 }

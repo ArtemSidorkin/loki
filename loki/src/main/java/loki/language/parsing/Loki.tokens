@@ -41,8 +41,6 @@ LEFT_BRACE=40
 RIGHT_BRACE=41
 ACUTE=42
 IGNORE=43
-'~{'=1
-'~}'=2
 'if'=3
 'else'=4
 'while'=5

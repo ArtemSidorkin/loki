@@ -29,7 +29,6 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.RIGHT_THICK_ARROW,
 			CompilerTokens.LEFT_PARENTHESIS.toString,
 			CompilerTokens.LEFT_BRACKET.toString,
-			CompilerTokens.LEFT_BRACE.toString,
 			CompilerTokens.BEGIN.toString
 		)
 
@@ -48,7 +47,6 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.RIGHT_THICK_ARROW,
 			CompilerTokens.RIGHT_PARENTHESIS.toString,
 			CompilerTokens.RIGHT_BRACKET.toString,
-			CompilerTokens.RIGHT_BRACE.toString,
 			CompilerTokens.ELSE.toString,
 			CompilerTokens.BEGIN.toString
 		)

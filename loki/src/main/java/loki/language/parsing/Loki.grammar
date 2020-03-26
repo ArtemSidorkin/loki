@@ -214,8 +214,8 @@ else_ : ELSE BEGIN (instruction SEMICOLON)+ END | ELSE instruction;
 
 
 
-BEGIN : '~{';
-END : '~}';
+BEGIN : LEFT_BRACE;
+END : RIGHT_BRACE;
 
 
 
