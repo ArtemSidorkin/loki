@@ -48,8 +48,9 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.RIGHT_PARENTHESIS.toString,
 			CompilerTokens.RIGHT_BRACKET.toString,
 			CompilerTokens.ELSE.toString,
-			CompilerTokens.BEGIN.toString
-		)
+			CompilerTokens.BEGIN.toString,
+			CompilerTokens.DOT.toString
+	)
 
 	override def apply(code:StringBuilder):Unit =
 		if (code.nonEmpty)
