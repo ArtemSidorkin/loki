@@ -1,39 +1,106 @@
-variable = 0
-if (true) variable = 1
-test(variable)
+if (true) test(1)
 
-variable = 0
-if (false) variable = 1
-test(variable)
+if (false) test(2)
 
-variable = 0
+
+
 if (true)
-	variable = 1
-	variable = variable + 1
-test(variable)
+	test(3)
+	test(4)
 
-variable = 0
 if (false)
-	variable = 1
-	variable = variable + 1
-test(variable)
+	test(5)
+	test(6)
 
-variable = 0
+
+
 if (true)
-	if (true) variable = 1
-test(variable)
+	if (true) test(7)
 
-variable = 0
+if (false)
+	if (true) test(8)
+
 if (true)
-	if (false) variable = 1
-test(variable)
+	if (false) (test9)
 
-variable = 0
 if (false)
-	if (true) variable = 1
-test(variable)
+	if (false) test(10)
 
-variable = 0
+
+
+if (true)
+	if (true) test(11)
+	if (true) test(12)
+
+if (true)
+	if (true) test(13)
+	if (false) test(14)
+
+if (true)
+	if (false) test(15)
+	if (true) test(16)
+
+if (true)
+	if (false) test(17)
+	if (false) test(18)
+
 if (false)
-	if (false) variable = 1
-test(variable)
+	if (true) test(19)
+	if (true) test(20)
+
+if (false)
+	if (false) test(21)
+	if (false) test(22)
+
+
+
+
+
+
+if (true)
+	if (true)
+		test(23)
+		test(24)
+	if (true)
+		test(25)
+		test(26)
+
+if (true)
+	if (true)
+		test(27)
+		test(28)
+	if (false)
+		test(29)
+		test(30)
+
+if (true)
+	if (false)
+		test(31)
+		test(32)
+	if (true)
+		test(33)
+		test(34)
+
+if (true)
+	if (false)
+		test(35)
+		test(36)
+	if (false)
+		test(37)
+		test(38)
+
+if (false)
+	if (true)
+		test(35)
+		test(36)
+	if (true)
+		test(37)
+		test(38)
+
+if (false)
+	if (false)
+		test(39)
+		test(40)
+	if (false)
+		test(41)
+		test(42)

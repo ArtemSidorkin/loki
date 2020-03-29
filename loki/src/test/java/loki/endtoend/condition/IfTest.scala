@@ -12,7 +12,29 @@ private[endtoend] class IfTest extends EndToEndTest
 
 		Assertions
 			.assertEquals(
-				List(number(1), number(0), number(2), number(0), number(1), number(0), number(0), number(0)), testValues
+				List(
+					number(1),
+
+					number(3),
+					number(4),
+
+					number(7),
+
+					number(11),
+					number(12),
+					number(13),
+					number(16),
+
+					number(23),
+					number(24),
+					number(25),
+					number(26),
+					number(27),
+					number(28),
+					number(33),
+					number(34)
+				),
+				testValues
 			)
 	}
 }

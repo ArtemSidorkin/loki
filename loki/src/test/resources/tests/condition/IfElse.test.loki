@@ -1,7 +1,44 @@
-variable = 0
-if (true) variable = 1 else variable = -1
-test(variable)
+if (true) test(1) else test(2)
 
-variable = 0
-if (false) variable = 1 else variable = -1
-test(variable)
+if (false) test(3) else test(4)
+
+if (true) test(5)
+else test(6)
+
+if (false) test(7)
+else test(8)
+
+
+if (true)
+	test(9)
+	test(10)
+else test(11)
+
+if (false)
+	test(12)
+	test(13)
+else test(14)
+
+if (true) test(15)
+else
+	test(16)
+	test(17)
+
+if (false) test(18)
+else
+	test(19)
+	test(20)
+
+if (true)
+	test(21)
+	test(22)
+else
+	test(23)
+	test(24)
+
+if (false)
+	test(25)
+	test(26)
+else
+	test(27)
+	test(28)
