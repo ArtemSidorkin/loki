@@ -1,5 +1,6 @@
 package loki.language.generation.rule.template
 
+import assembler.builder.MethodBuilder
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
 import loki.language.generation.bytecodetemplate.ContainerBytecodeTemplate.ContainerBytecodeTemplate
@@ -13,81 +14,80 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 	extends GenerationRule(ruleContext) with ContainerGenerationRuleMixinTemplate
 {
 	override protected def enterAction():Unit =
+		topMethodCall
+			.createContainerInstance()
+			.createContainerItems()
+
+	override protected def exitAction():Unit = topMethodCall.initContainer()
+
+	implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 	{
-		CreateAndDuplicateContainerClass()
-		CreateContainerClassConstructorParameter()
-		StoreContainerItems()
-
-		object CreateAndDuplicateContainerClass
+		def createContainerInstance():methodBuilder.type =
 		{
-			def apply():Unit =
-				topMethodCall
-					.`new`(containerClass)
-					.dup()
-					.incrementObjectStackCounter()
+			methodBuilder
+				.`new`(containerClass)
+				.dup()
+				.incrementObjectStackCounter()
+
+			methodBuilder
 		}
 
-		object CreateContainerClassConstructorParameter
+		def createContainerItems():methodBuilder.type =
 		{
-			def apply():Unit =
-				if (containerItemExpressionContexts.nonEmpty)
-					topMethodCall anewarrayUnit containerItemExpressionContexts.size
-				else topMethodCall.emptyUnitArray()
+			methodBuilder.createContainerParameterArray()
+
+			containerItemExpressionContexts
+				.indices
+				.foreach(containerItemExpressionContextIndex =>
+					topMethodCall
+						.loadContainerItemIndex(containerItemExpressionContextIndex)
+						.storeContainerItem(containerItemExpressionContextIndex)
+				)
+
+			methodBuilder
 		}
 
-		object StoreContainerItems
+		def createContainerParameterArray():methodBuilder.type =
 		{
-			def apply():Unit =
-			{
-				containerItemExpressionContexts
-					.indices
-					.foreach(containerItemExpressionContextIndex =>
-					{
-						DuplicateContainerItemArrayAndLoadContainerItemIndexBeforeEnterContainerItemExpressionContext(
-							containerItemExpressionContextIndex
-						)
-						StoreContainerItemAfterExitContainerItemExpressionContext(containerItemExpressionContextIndex)
-					})
+			if (containerItemExpressionContexts.nonEmpty)
+				methodBuilder.anewarrayUnit(containerItemExpressionContexts.size)
+			else methodBuilder.emptyUnitArray()
 
-				object DuplicateContainerItemArrayAndLoadContainerItemIndexBeforeEnterContainerItemExpressionContext
-				{
-					def apply(itemIndex:Int):Unit =
-						generationContext
-							.addPreEnterRuleTask(
-								containerItemExpressionContexts(itemIndex),
-								() => duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex)
-							)
+			methodBuilder
+		}
 
-					private def duplicateContainerItemArrayAndLoadContainerItemIndex(itemIndex:Int):Unit =
-						topMethodCall
+		def loadContainerItemIndex(itemIndex:Int):methodBuilder.type =
+		{
+			generationContext
+				.addPreEnterRuleTask(
+					containerItemExpressionContexts(itemIndex),
+					() =>
+						methodBuilder
 							.dup()
 							.ldc(itemIndex)
-				}
+				)
 
-				object StoreContainerItemAfterExitContainerItemExpressionContext
-				{
-					def apply(containerItemIndex:Int):Unit =
-						generationContext
-							.addPostExitRuleTask(
-								containerItemExpressionContexts(containerItemIndex), storeContainerItem
-							)
+			methodBuilder
+		}
 
-					private def storeContainerItem():Unit =
-						topMethodCall
+		def storeContainerItem(containerItemIndex:Int):methodBuilder.type =
+		{
+			generationContext
+				.addPostExitRuleTask(
+					containerItemExpressionContexts(containerItemIndex), () =>
+						methodBuilder
 							.aastore()
 							.decrementObjectStackCounter()
-				}
-			}
+				)
+
+			methodBuilder
 		}
-	}
 
-	override protected def exitAction():Unit =
-	{
-		InvokeInitContainer()
-
-		object InvokeInitContainer
+		def initContainer():methodBuilder.type =
 		{
-			def apply():Unit = topMethodCall invokeInitContainer containerClass
+			topMethodCall.invokeInitContainer(containerClass)
+
+			methodBuilder
 		}
 	}
 }
