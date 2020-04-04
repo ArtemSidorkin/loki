@@ -1,6 +1,6 @@
 UnitPrototypeAddParents = UnitPrototype.addParents
 
-UnitPrototype.addParents = \ parent :
+UnitPrototype.addParents = _ parent :
 	$testData = 100
 	UnitPrototypeAddParents(parent)
 

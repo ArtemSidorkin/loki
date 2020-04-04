@@ -122,17 +122,17 @@ o$[
 
 
 
-[`f => \: 1]
+[`f => _: 1]
 
 
-[`f => \ a b : a + b]
+[`f => _ a b : a + b]
 
 [
-	`f => \ a b : a + b
+	`f => _ a b : a + b
 ]
 
 [
-	`f => \ a b :
+	`f => _ a b :
 		a = a * a
 		b = b * b
 		a + b
@@ -143,54 +143,54 @@ o$[
 
 
 [
-	`f1 => \ a b :
+	`f1 => _ a b :
 		x =
 		[
-			`f1 => \ a b :
+			`f1 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 			,
-			`f2 => \ a b :
+			`f2 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 		]
 		y =
 		[
-			`f1 => \ a b :
+			`f1 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 			,
-			`f2 => \ a b :
+			`f2 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 		]
 		a + b
 	,
-	`f2 => \ a b :
+	`f2 => _ a b :
 		x =
 		[
-			`f1 => \ a b :
+			`f1 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 			,
-			`f2 => \ a b :
+			`f2 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 		]
 		y =
 		[
-			`f1 => \ a b :
+			`f1 => _ a b :
 				a = a * a
 				b = b * b
 				a + b
 			,
-			`f2 => \ a b :
+			`f2 => _ a b :
 				a = a * a
 				b = b * b
 				a + b

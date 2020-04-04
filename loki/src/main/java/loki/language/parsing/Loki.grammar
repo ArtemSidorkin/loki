@@ -83,15 +83,16 @@ expression:
 
 
 
-	(DOLLAR)? head=(IDENTIFIER | BACKSLASH) (IDENTIFIER)* (inheritance)? COLON instruction  #Unit |
-
-	(DOLLAR)? head=(IDENTIFIER | BACKSLASH) (IDENTIFIER)* (inheritance)? COLON
-		BEGIN
-			(instruction SEMICOLON)+
-		END
+	(((DOLLAR)? head=(IDENTIFIER | UNDERSCORE) (IDENTIFIER)* (inheritance)? COLON) | BACKSLASH)
+	(
+		instruction |
+		(
+			BEGIN
+				(instruction SEMICOLON)+
+			END
+		)
+	)
 	#Unit |
-
-
 
 	expression DOT IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS #MemberCall |
 
@@ -106,7 +107,7 @@ expression:
 
 	DOLLAR DOLLAR IDENTIFIER #SuperHostMember |
 	DOLLAR IDENTIFIER #HostMember |
-	IDENTIFIER #VariableOrParameter |
+	(IDENTIFIER | UNDERSCORE) #VariableOrParameter |
 	expression DOT IDENTIFIER #Member |
 	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
 	expression DOLLAR LEFT_BRACKET ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACKET #MemberAccessor |
@@ -223,6 +224,7 @@ IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
 IDENTIFIER : ('_')*('A'..'Z' | 'a'..'z')+('A'..'Z' | 'a'..'z' | '0'..'9' | '_')*;
+UNDERSCORE : '_';
 DOLLAR : '$';
 AT : '@';
 CHARACTERS : '"' ( '\\"' | . )*? '"';

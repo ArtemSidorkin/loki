@@ -20,11 +20,14 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.DOLLAR != null
 
 	private def unitName:Option[String] =
-		unitContext.head.getType match
-		{
-			case LokiLexer.IDENTIFIER => Some(getIdentifierName(0))
-			case LokiLexer.BACKSLASH => None
-		}
+		Option(unitContext.head)
+			.map(_.getType)
+			.flatMap(
+			{
+				case LokiLexer.IDENTIFIER => Some(getIdentifierName(0))
+				case LokiLexer.UNDERSCORE => None
+			})
+
 
 	override protected def enterAction():Unit =
 	{

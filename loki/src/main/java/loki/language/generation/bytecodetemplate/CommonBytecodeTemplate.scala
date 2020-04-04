@@ -1,14 +1,14 @@
 package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
-import assembler.methoddescriptor.{MethodDescriptor, MethodDescriptorResolver}
+import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.runtime.LType
 import loki.runtime.compilerapi.common.VoidGetInstance
 import loki.runtime.context.{LModuleContext, LUnitContext}
+import loki.runtime.unit.data.array.LArray
 import loki.runtime.unit.data.number.LNumber
-import loki.runtime.unit.data.{LArray, LMap, LObject, LString}
-import loki.runtime.unit.data.singleton.LVoid
+import loki.runtime.unit.data.{LMap, LObject, LString}
 import loki.runtime.unit.unit.LUnit
 
 private[generation] object CommonBytecodeTemplate

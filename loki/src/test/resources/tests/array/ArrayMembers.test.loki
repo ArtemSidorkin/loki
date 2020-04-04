@@ -1,0 +1,8 @@
+array = [-2, -1, 0, 1, 2]
+
+test(array.filter(filter item : item > 0))
+test(array.filter(_ item : item > 0))
+test(array.filter(_ : _ > 0))
+test(array.filter(\ _ > 0))
+
+test([1, 10, 100, 1000, 1000, 10000, 100000, 1000000].filter(\ _ > 1000))

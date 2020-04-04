@@ -1,12 +1,11 @@
 package loki.endtoend
 
-import java.io.File
-
 import loki.Executor
+import loki.runtime.unit.data.array.LArray
 import loki.runtime.unit.data.bool.LBoolean
 import loki.runtime.unit.data.number.LNumber
 import loki.runtime.unit.data.singleton.LVoid
-import loki.runtime.unit.data.{LArray, LMap, LString}
+import loki.runtime.unit.data.{LMap, LString}
 import loki.runtime.unit.function.LTest
 import loki.runtime.unit.unit.LUnit
 import org.junit.jupiter.api.BeforeEach

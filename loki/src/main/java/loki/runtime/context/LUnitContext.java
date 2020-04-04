@@ -11,12 +11,17 @@ import loki.runtime.util.Nullable;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LUnitContext
 {
+	public static final String ANONYMOUS_PARAMETER_NAME = "_";
+
 	private final LUnit frameUnit;
 	private final LUnit host;
 	private final LUnit[] parameters;
+
+	private final AtomicInteger anonymousParameterIndex = new AtomicInteger(0);
 
 	private volatile @Nullable ConcurrentMap<String, LUnit> localVariables;
 
@@ -32,6 +37,13 @@ public class LUnitContext
 	public LUnit getVariable(String variableName)
 	{
 		LUnit variable;
+
+		if (ANONYMOUS_PARAMETER_NAME.equals(variableName))
+		{
+			variable = checkParameter(anonymousParameterIndex.getAndIncrement());
+
+			return variable != null ? variable : LVoid.DESCRIPTOR.getInstance();
+		}
 
 		variable = getLocalVariable(variableName);
 		if (variable != null) return variable;
@@ -57,7 +69,7 @@ public class LUnitContext
 	{
 		if (frameUnit.getCapturedUnitContext() != null)
 			return frameUnit.getCapturedUnitContext().getVariable(superVariableName);
-		else if (LBuiltins.have(superVariableName)) return LBuiltins.get(superVariableName);
+		else if (LBuiltins.contain(superVariableName)) return LBuiltins.get(superVariableName);
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}

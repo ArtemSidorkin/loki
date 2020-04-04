@@ -1,7 +1,7 @@
 package loki.runtime.compilerapi.array;
 
 import assembler.methoddescriptor.DescribingMethodClass;
-import loki.runtime.unit.data.LArray;
+import loki.runtime.unit.data.array.LArray;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

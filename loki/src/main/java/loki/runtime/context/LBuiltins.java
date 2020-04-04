@@ -1,6 +1,6 @@
 package loki.runtime.context;
 
-import loki.runtime.unit.data.LArray;
+import loki.runtime.unit.data.array.LArray;
 import loki.runtime.unit.data.LMap;
 import loki.runtime.unit.data.LObject;
 import loki.runtime.unit.data.LString;
@@ -59,7 +59,7 @@ public class LBuiltins
 				}
 			);
 
-	public static boolean have(String name)
+	public static boolean contain(String name)
 	{
 		return VALUES.containsKey(name);
 	}

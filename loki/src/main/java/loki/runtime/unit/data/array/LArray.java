@@ -1,6 +1,8 @@
-package loki.runtime.unit.data;
+package loki.runtime.unit.data.array;
 
 import loki.runtime.error.LErrors;
+import loki.runtime.unit.data.LString;
+import loki.runtime.unit.data.array.member.LFilter;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
@@ -9,16 +11,14 @@ import loki.runtime.unitdescriptor.LDataUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class LArray extends LUnit
 {
 	public static final LDataUnitDescriptor<LArray> DESCRIPTOR =
 		new LDataUnitDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
 
-	private final ArrayList<LUnit> items = new ArrayList<>();
+	private final ArrayList<LUnit> items;
 
 	@Compiler
 	public LArray(LUnit[] items)
@@ -27,13 +27,26 @@ public class LArray extends LUnit
 
 		_addParents(DESCRIPTOR.getPrototype());
 
-		this.items.addAll(Arrays.asList(items));
+		this.items = new ArrayList<>(Arrays.asList(items));
+	}
+
+	public LArray(ArrayList<LUnit> items)
+	{
+		super(DESCRIPTOR.getType());
+
+		_addParents(DESCRIPTOR.getPrototype());
+
+		this.items = items;
 	}
 
 	@Prototype
 	private LArray()
 	{
 		super(DESCRIPTOR.getPrototypeType());
+
+		items = new ArrayList<>(0);
+
+		initBuiltins();
 	}
 
 	public ArrayList<LUnit> getItems()
@@ -101,5 +114,10 @@ public class LArray extends LUnit
 		if (index < 0) index = items.size() - Math.abs(index);
 
 		return index;
+	}
+
+	private void initBuiltins()
+	{
+		addMember(LFilter.DESCRIPTOR.getInstance());
 	}
 }
