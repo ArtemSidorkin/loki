@@ -1,4 +1,4 @@
-grammar Loki; //TODO: ╣╠  begin & end for the future
+grammar Loki;
 
 
 
@@ -30,9 +30,9 @@ expression:
 				expression (COMMA expression)* (SEMICOLON)?
 			END
 		) |
-		(expression (COMMA expression)* (SEMICOLON)?)?
+		(expression (COMMA expression)*)?
 	)
-	RIGHT_BRACKET (SEMICOLON)? (END)?
+	RIGHT_BRACKET
 	#Array |
 
 	LEFT_BRACKET
