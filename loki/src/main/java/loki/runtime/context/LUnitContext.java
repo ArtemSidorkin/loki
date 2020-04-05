@@ -2,6 +2,7 @@ package loki.runtime.context;
 
 import loki.runtime.LSettings;
 import loki.runtime.compilerapi.unitcontext.UnitContextConstructor;
+import loki.runtime.compilerapi.unitcontext.UnitContextGetAnonymousParameter;
 import loki.runtime.compilerapi.unitcontext.UnitContextGetVariable;
 import loki.runtime.compilerapi.unitcontext.UnitContextSetVariable;
 import loki.runtime.unit.LModule;
@@ -15,8 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class LUnitContext
 {
-	public static final String ANONYMOUS_PARAMETER_NAME = "_";
-
 	private final LUnit frameUnit;
 	private final LUnit host;
 	private final LUnit[] parameters;
@@ -33,17 +32,18 @@ public class LUnitContext
 		this.parameters = parameters;
 	}
 
+	@UnitContextGetAnonymousParameter
+	public LUnit getAnonymousParameter()
+	{
+		LUnit anonymousParameter = checkParameter(anonymousParameterIndex.getAndIncrement());
+
+		return anonymousParameter != null ? anonymousParameter : LVoid.DESCRIPTOR.getInstance();
+	}
+
 	@UnitContextGetVariable
 	public LUnit getVariable(String variableName)
 	{
 		LUnit variable;
-
-		if (ANONYMOUS_PARAMETER_NAME.equals(variableName))
-		{
-			variable = checkParameter(anonymousParameterIndex.getAndIncrement());
-
-			return variable != null ? variable : LVoid.DESCRIPTOR.getInstance();
-		}
 
 		variable = getLocalVariable(variableName);
 		if (variable != null) return variable;

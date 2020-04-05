@@ -1,24 +1,36 @@
 package loki.language.generation.rule
 
+import assembler.builder.MethodBuilder
 import loki.language.generation.GenerationContext
-import loki.language.generation.bytecodetemplate.UnitContextBytecodeTemplate.UnitContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
+import loki.language.generation.bytecodetemplate.UnitContextBytecodeTemplate.UnitContextBytecodeTemplate
 import loki.language.parsing.LokiParser.VariableOrParameterContext
-import loki.runtime.context.LUnitContext
 
 private[generation] class VariableOrParameterGenerationRule
 	(variableOrParameterContext:VariableOrParameterContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(variableOrParameterContext)
 {
-	private def variableOrParameterName:String =
-		Option(variableOrParameterContext.IDENTIFIER).map(_.getText).getOrElse(LUnitContext.ANONYMOUS_PARAMETER_NAME)
+	private def variableOrParameterName:Option[String] = Option(variableOrParameterContext.IDENTIFIER).map(_.getText)
 
 	override protected def enterAction():Unit =
 		topMethodCall
 			.aloadUnitMethodCallVariableUnitContext()
-			.ldc(variableOrParameterName)
-			.invokeVirtualUnitContextMethodGetVariable()
+			.loadVariableOrParameter()
 			.incrementObjectStackCounter()
+
+	private implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
+	{
+		def loadVariableOrParameter():methodBuilder.type =
+		{
+			if (variableOrParameterName.isDefined)
+				topMethodCall
+					.ldc(variableOrParameterName.get)
+					.invokeVirtualUnitContextMethodGetVariable()
+			else topMethodCall.invokeVirtualUnitContextMethodGetAnonymousParameter()
+
+			methodBuilder
+		}
+	}
 }
 
 private[generation] object VariableOrParameterGenerationRule
