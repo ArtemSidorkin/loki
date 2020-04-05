@@ -23,17 +23,7 @@ expression:
 
 
 
-	LEFT_BRACKET
-	(
-		(
-			BEGIN
-				expression (COMMA expression)* (SEMICOLON)?
-			END
-		) |
-		(expression (COMMA expression)*)?
-	)
-	RIGHT_BRACKET
-	#Array |
+	LEFT_BRACKET (expression (COMMA expression)*)? RIGHT_BRACKET #Array |
 
 	LEFT_BRACKET
 	(
