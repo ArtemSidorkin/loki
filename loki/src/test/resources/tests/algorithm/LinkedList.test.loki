@@ -11,20 +11,20 @@ List:
 
 	$add value:
 		nwNd = Node.new(value, none)
-		if ($__root == none) $__root = nwNd
+		if $__root == none: $__root = nwNd
 		else
 			itrtrNd = $__root
-			while(itrtrNd.next != none) itrtrNd = itrtrNd.next
+			while itrtrNd.next != none : itrtrNd = itrtrNd.next
 			itrtrNd.next = nwNd
 		$__size = $__size + 1
 
 	$removeByIndex index:
-		if (index >= 0 && index < $__size)
-			if (index == 0) $__root = $__root.next
+		if index >= 0 && index < $__size :
+			if index == 0 : $__root = $__root.next
 			else
 				itrtrNd = $__root
 				i = 0
-				while(i < index - 1)
+				while i < index - 1:
 					itrtrNd = itrtrNd.next
 					i = i + 1
 				itrtrNd.next = itrtrNd.next.next
@@ -33,7 +33,7 @@ List:
 	$get index:
 		itrtrNd = $__root
 		i = 0
-		while(i < index)
+		while i < index :
 			itrtrNd = itrtrNd.next
 			i = i + 1
 		itrtrNd.value

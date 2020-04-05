@@ -176,13 +176,13 @@ expression:
 	#AssignMemberAccessor |
 
 
-	IF LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS instruction (else_)? #IfElse |
+	IF (BEGIN)? expression (SEMICOLON)? (END)? COLON instruction (else_)? #IfElse |
 
-	IF LEFT_PARENTHESIS
+	IF
 		(BEGIN)?
 			expression (SEMICOLON)?
 		(END)?
-	RIGHT_PARENTHESIS
+	COLON
 		BEGIN
 			(instruction SEMICOLON)+
 		END
@@ -191,13 +191,13 @@ expression:
 
 
 
-	WHILE LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS instruction #While |
+	WHILE (BEGIN)? expression (SEMICOLON)? (END)? COLON instruction #While |
 
-	WHILE LEFT_PARENTHESIS
+	WHILE
 		(BEGIN)?
 			expression (SEMICOLON)?
 		(END)?
-	RIGHT_PARENTHESIS
+	COLON
 		BEGIN
 			(instruction SEMICOLON)+
 		END

@@ -1,106 +1,106 @@
-if (true) test(1)
+if true: test(1)
 
-if (false) test(2)
+if false: test(2)
 
 
 
-if (true)
+if true :
 	test(3)
 	test(4)
 
-if (false)
+if false :
 	test(5)
 	test(6)
 
 
 
-if (true)
-	if (true) test(7)
+if true :
+	if true : test(7)
 
-if (false)
-	if (true) test(8)
+if false :
+	if true : test(8)
 
-if (true)
-	if (false) (test9)
+if true :
+	if false : test(9)
 
-if (false)
-	if (false) test(10)
-
-
-
-if (true)
-	if (true) test(11)
-	if (true) test(12)
-
-if (true)
-	if (true) test(13)
-	if (false) test(14)
-
-if (true)
-	if (false) test(15)
-	if (true) test(16)
-
-if (true)
-	if (false) test(17)
-	if (false) test(18)
-
-if (false)
-	if (true) test(19)
-	if (true) test(20)
-
-if (false)
-	if (false) test(21)
-	if (false) test(22)
+if false :
+	if false : test(10)
 
 
+
+if true :
+	if true : test(11)
+	if true : test(12)
+
+if true :
+	if true : test(13)
+	if false : test(14)
+
+if true :
+	if false : test(15)
+	if true : test(16)
+
+if true :
+	if false : test(17)
+	if false : test(18)
+
+if false :
+	if true : test(19)
+	if true : test(20)
+
+if false :
+	if false : test(21)
+	if false : test(22)
 
 
 
 
-if (true)
-	if (true)
+
+
+if true :
+	if true :
 		test(23)
 		test(24)
-	if (true)
+	if true :
 		test(25)
 		test(26)
 
-if (true)
-	if (true)
+if true :
+	if true :
 		test(27)
 		test(28)
-	if (false)
+	if false :
 		test(29)
 		test(30)
 
-if (true)
-	if (false)
+if true :
+	if false :
 		test(31)
 		test(32)
-	if (true)
+	if true :
 		test(33)
 		test(34)
 
-if (true)
-	if (false)
+if true :
+	if false :
 		test(35)
 		test(36)
-	if (false)
+	if false:
 		test(37)
 		test(38)
 
-if (false)
-	if (true)
+if false :
+	if true :
 		test(35)
 		test(36)
-	if (true)
+	if true :
 		test(37)
 		test(38)
 
-if (false)
-	if (false)
+if false :
+	if false :
 		test(39)
 		test(40)
-	if (false)
+	if false :
 		test(41)
 		test(42)
