@@ -19,11 +19,11 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand exten
 
 				if (tabCountInCurrentLine > previousLineTabCount)
 					newCode ++=
-						s"${CompilerTokens.NEW_LINE}${CompilerTokens.BEGIN}" *
+						s"${CompilerTokens.NEW_LINE}${CompilerTokens.LEFT_BRACE}" *
 						(tabCountInCurrentLine - previousLineTabCount)
 				else if (tabCountInCurrentLine < previousLineTabCount)
 					newCode ++=
-						s"${CompilerTokens.NEW_LINE}${CompilerTokens.END}" *
+						s"${CompilerTokens.NEW_LINE}${CompilerTokens.RIGHT_BRACE}" *
 						(previousLineTabCount - tabCountInCurrentLine)
 
 				if (newCode.nonEmpty) newCode += CompilerTokens.NEW_LINE
@@ -31,7 +31,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand exten
 				tabCountInCurrentLine
 			})
 
-		newCode ++= s"${CompilerTokens.NEW_LINE}${CompilerTokens.END}" * lastCodeLineTabCount
+		newCode ++= s"${CompilerTokens.NEW_LINE}${CompilerTokens.RIGHT_BRACE}" * lastCodeLineTabCount
 		code.clear()
 		code ++= newCode
 	}

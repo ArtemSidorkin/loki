@@ -19,17 +19,17 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.MINUS.toString,
 			CompilerTokens.STAR.toString,
 			CompilerTokens.SLASH.toString,
-			CompilerTokens.BACK_SLASH.toString,
+			CompilerTokens.BACKSLASH.toString,
 			CompilerTokens.EQUALS.toString,
 			CompilerTokens.DOT.toString,
-			CompilerTokens.COMA.toString,
+			CompilerTokens.COMMA.toString,
 			CompilerTokens.COLON.toString,
 			CompilerTokens.DOUBLE_COLON,
 			CompilerTokens.RIGHT_THIN_ARROW,
 			CompilerTokens.RIGHT_THICK_ARROW,
 			CompilerTokens.LEFT_PARENTHESIS.toString,
 			CompilerTokens.LEFT_BRACKET.toString,
-			CompilerTokens.BEGIN.toString
+			CompilerTokens.LEFT_BRACE.toString
 		)
 
 	private val RIGHT_TOKEN_EXCEPTIONS =
@@ -39,16 +39,16 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.MINUS.toString,
 			CompilerTokens.STAR.toString,
 			CompilerTokens.SLASH.toString,
-			CompilerTokens.BACK_SLASH.toString,
+			CompilerTokens.BACKSLASH.toString,
 			CompilerTokens.EQUALS.toString,
-			CompilerTokens.COMA.toString,
+			CompilerTokens.COMMA.toString,
 			CompilerTokens.COLON.toString,
 			CompilerTokens.DOUBLE_COLON,
 			CompilerTokens.RIGHT_THICK_ARROW,
 			CompilerTokens.RIGHT_PARENTHESIS.toString,
 			CompilerTokens.RIGHT_BRACKET.toString,
 			CompilerTokens.ELSE.toString,
-			CompilerTokens.BEGIN.toString,
+			CompilerTokens.LEFT_BRACE.toString,
 			CompilerTokens.DOT.toString
 	)
 
@@ -75,7 +75,7 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 							)
 							unary_!
 					)
-				) newCode += CompilerTokens.SEMICOLON
+				) newCode ++= CompilerTokens.SEMICOLON
 
 				if (i < codeLines.length - 1) newCode += CompilerTokens.NEW_LINE
 			}
