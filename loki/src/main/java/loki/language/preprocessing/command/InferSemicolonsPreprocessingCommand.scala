@@ -1,11 +1,13 @@
 package loki.language.preprocessing.command
 
+import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
-private[preprocessing] object InferSemicolonsPreprocessingCommand extends PreprocessingCommand
+private[preprocessing] object InferSemicolonsPreprocessingCommand
 {
 	private val IGNORABLE_TOKENS:collection.Set[Char] =
 		mutable.HashSet(
@@ -77,37 +79,38 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand extends Prepro
 			CompilerTokens.LEFT_BRACE,
 	)
 
-	override def apply(code:StringBuilder):Unit =
-		if (code.nonEmpty)
+	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] =
+	{
+		val codeLines = ArrayBuffer[CodeLine]()
+
+		code.filter(!_.ignore).foreach(cl =>
 		{
-			val codeLines = code.toString split CompilerTokens.NEW_LINE
-			val newCode = new StringBuilder
+			codeLines += cl
 
-			for (i <- codeLines.indices)
-			{
-				newCode ++= codeLines(i)
-				val currentCodeLineWithoutIgnorableTokens = excludeIgnorableTokens(codeLines(i))
-				val nextCodeLineWithoutIgnorableTokens =
-					if (i + 1 < codeLines.length) Some(excludeIgnorableTokens(codeLines(i + 1))) else None
+			cl.additionalLines.foreach(al => codeLines += al)
+		})
 
-				if
+		for (i <- codeLines.indices)
+		{
+			val currentCodeLineWithoutIgnorableTokens = excludeIgnorableTokens(codeLines(i).trimmed)
+			val nextCodeLineWithoutIgnorableTokens =
+				if (i + 1 < codeLines.length) Some(excludeIgnorableTokens(codeLines(i + 1).trimmed)) else None
+
+			if
+			(
+				(LEFT_TOKEN_EXCEPTIONS exists currentCodeLineWithoutIgnorableTokens.endsWith unary_!) &&
 				(
-					(LEFT_TOKEN_EXCEPTIONS exists currentCodeLineWithoutIgnorableTokens.endsWith unary_!) &&
-					(
-						RIGHT_TOKEN_EXCEPTIONS
-							exists (rghtTknExcptn =>
-								nextCodeLineWithoutIgnorableTokens exists (_ startsWith rghtTknExcptn)
-							)
-							unary_!
-					)
-				) newCode ++= CompilerTokens.SEMICOLON
-
-				if (i < codeLines.length - 1) newCode += CompilerTokens.NEW_LINE
-			}
-
-			code.clear()
-			code ++= newCode
+					RIGHT_TOKEN_EXCEPTIONS
+						exists (rghtTknExcptn =>
+							nextCodeLineWithoutIgnorableTokens exists (_ startsWith rghtTknExcptn)
+						)
+						unary_!
+				)
+			) codeLines(i).semicolon = true
 		}
+
+		code
+	}
 
 	private def excludeIgnorableTokens(code:String) = code filter (IGNORABLE_TOKENS contains _ unary_!)
 }

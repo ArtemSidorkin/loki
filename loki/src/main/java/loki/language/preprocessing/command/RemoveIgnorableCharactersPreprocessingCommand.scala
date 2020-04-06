@@ -1,11 +1,13 @@
 package loki.language.preprocessing.command
 
+import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
-private[preprocessing] object RemoveIgnorableCharactersPreprocessingCommand extends PreprocessingCommand
+private[preprocessing] object RemoveIgnorableCharactersPreprocessingCommand
 {
 	private val IGNORABLE_TOKENS:collection.Set[Char] =
 		mutable.HashSet(
@@ -15,26 +17,24 @@ private[preprocessing] object RemoveIgnorableCharactersPreprocessingCommand exte
 			CompilerTokens.SPACE
 		)
 
-	override def apply(code:StringBuilder):Unit =
+	def apply(code:String):collection.Seq[CodeLine] =
 	{
 		val codeLines = code.toString split CompilerTokens.NEW_LINE
-		val newCode = new StringBuilder
+		val newCode = new ArrayBuffer[CodeLine]
 
 		codeLines
 			.foldLeft(0)((i, codeLine) =>
 			{
-				if (codeLine exists (IGNORABLE_TOKENS contains _ unary_!))
+				if (codeLine.exists(!IGNORABLE_TOKENS.contains(_)))
 				{
 					val ignorableTokenCount = (codeLine.reverse takeWhile IGNORABLE_TOKENS.contains length)
-					newCode ++= codeLine take codeLine.length - ignorableTokenCount
-
-					if (i < codeLines.length - 1) newCode += CompilerTokens.NEW_LINE
+					newCode += new CodeLine(codeLine, codeLine take codeLine.length - ignorableTokenCount, false, ArrayBuffer())
 				}
+				else newCode += new CodeLine(codeLine, "", true, ArrayBuffer())
 
 				i + 1
 			})
 
-		code.clear()
-		code ++= newCode
+		newCode
 	}
 }

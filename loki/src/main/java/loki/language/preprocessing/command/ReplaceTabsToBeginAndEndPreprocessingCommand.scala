@@ -1,62 +1,56 @@
 package loki.language.preprocessing.command
 
+import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
-private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand extends PreprocessingCommand
+private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 {
-	override def apply(code:StringBuilder):Unit =
+	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] =
 	{
 		val tabStack = mutable.Stack[Int]()
 
-		val codeLines = code.toString.split(CompilerTokens.NEW_LINE)
-		val newCode = new StringBuilder
-
 		val lastCodeLine =
-			codeLines.foldLeft("")((previousLine, codeLine) =>
+			code.filter(!_.ignore).foldLeft(new CodeLine("", "", false, ArrayBuffer()))((previousLine, codeLine) =>
 			{
-				val previousLineTabCount = countTabsInCodeLine(previousLine)
+				val previousLineTabCount = countTabsInCodeLine(previousLine.trimmed)
 
-				val tabCountInCurrentLine = countTabsInCodeLine(codeLine)
-				val lineWithoutTab = codeLine filter CompilerTokens.TAB.!=
+				val tabCountInCurrentLine = countTabsInCodeLine(codeLine.trimmed)
 
 				if (tabCountInCurrentLine > previousLineTabCount)
 				{
-					if (previousLine.endsWith(":") || previousLine.endsWith("else") || previousLine.endsWith("\\"))
+					if (previousLine.trimmed.endsWith(":") || previousLine.trimmed.endsWith("else") || previousLine.trimmed.endsWith("\\"))
 					{
-						for (_ <- 0 until tabCountInCurrentLine - previousLineTabCount) tabStack.push(1)
-
-						newCode ++=
-							s"${CompilerTokens.NEW_LINE}${CompilerTokens.LEFT_BRACE}" *
-								(tabCountInCurrentLine - previousLineTabCount)
+						for (_ <- 0 until tabCountInCurrentLine - previousLineTabCount)
+						{
+							tabStack.push(1)
+							previousLine.additionalLines += new CodeLine(CompilerTokens.LEFT_BRACE, CompilerTokens.LEFT_BRACE, false, ArrayBuffer())
+						}
 					}
 					else
 					{
 						for (_ <- 0 until tabCountInCurrentLine - previousLineTabCount) tabStack.push(0)
 					}
 				}
-
 				else if (tabCountInCurrentLine < previousLineTabCount)
 				{
 					for (_ <- 0 until previousLineTabCount - tabCountInCurrentLine)
 					{
-						if (tabStack.pop() == 1) newCode ++= s"${CompilerTokens.NEW_LINE}${CompilerTokens.RIGHT_BRACE}"
+						if (tabStack.pop() == 1) previousLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE, CompilerTokens.RIGHT_BRACE, false, ArrayBuffer())
 					}
 				}
-
-				if (newCode.nonEmpty) newCode += CompilerTokens.NEW_LINE
-				newCode ++= lineWithoutTab
 
 				codeLine
 			})
 
-		val lastCodeLineTabCount = countTabsInCodeLine(lastCodeLine)
+		while (tabStack.nonEmpty)
+			if (tabStack.pop() == 1)
+				lastCodeLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE, CompilerTokens.RIGHT_BRACE, false, ArrayBuffer())
 
-		newCode ++= s"${CompilerTokens.NEW_LINE}${CompilerTokens.RIGHT_BRACE}" * lastCodeLineTabCount
-		code.clear()
-		code ++= newCode
+		code
 	}
 
 	private def countTabsInCodeLine(string:String):Int = string takeWhile (_ == '\t') length
