@@ -4,7 +4,6 @@ import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.constant.CompilerTokens
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
 private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
@@ -14,7 +13,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 		val tabStack = mutable.Stack[Int]()
 
 		val lastCodeLine =
-			code.filter(!_.ignore).foldLeft(new CodeLine("", "", false, ArrayBuffer()))((previousLine, codeLine) =>
+			code.filter(!_.ignore).foldLeft(new CodeLine(""))((previousLine, codeLine) =>
 			{
 				val previousLineTabCount = countTabsInCodeLine(previousLine.trimmed)
 
@@ -27,7 +26,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 						for (_ <- 0 until tabCountInCurrentLine - previousLineTabCount)
 						{
 							tabStack.push(1)
-							previousLine.additionalLines += new CodeLine(CompilerTokens.LEFT_BRACE, CompilerTokens.LEFT_BRACE, false, ArrayBuffer())
+							previousLine.additionalLines += new CodeLine(CompilerTokens.LEFT_BRACE)
 						}
 					}
 					else
@@ -39,7 +38,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 				{
 					for (_ <- 0 until previousLineTabCount - tabCountInCurrentLine)
 					{
-						if (tabStack.pop() == 1) previousLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE, CompilerTokens.RIGHT_BRACE, false, ArrayBuffer())
+						if (tabStack.pop() == 1) previousLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE)
 					}
 				}
 
@@ -48,7 +47,7 @@ private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 
 		while (tabStack.nonEmpty)
 			if (tabStack.pop() == 1)
-				lastCodeLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE, CompilerTokens.RIGHT_BRACE, false, ArrayBuffer())
+				lastCodeLine.additionalLines += new CodeLine(CompilerTokens.RIGHT_BRACE)
 
 		code
 	}
