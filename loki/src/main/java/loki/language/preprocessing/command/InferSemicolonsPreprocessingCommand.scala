@@ -1,7 +1,7 @@
 package loki.language.preprocessing.command
 
 import loki.language.preprocessing.CodeLine
-import loki.language.preprocessing.constant.CompilerTokens
+import loki.language.preprocessing.constant.{CompilerTokens, IgnoredCharacters}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -11,8 +11,8 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 {
 	private val IGNORABLE_TOKENS:collection.Set[Char] =
 		mutable.HashSet(
-			CompilerTokens.TAB,
-			CompilerTokens.SPACE
+			IgnoredCharacters.TAB,
+			IgnoredCharacters.SPACE
 		)
 
 	private val LEFT_TOKEN_EXCEPTIONS =
@@ -83,7 +83,7 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 	{
 		val codeLines = ArrayBuffer[CodeLine]()
 
-		code.filter(!_.ignore).foreach(cl =>
+		code.filter(!_.isEmpty).foreach(cl =>
 		{
 			codeLines += cl
 
@@ -92,9 +92,9 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 
 		for (i <- codeLines.indices)
 		{
-			val currentCodeLineWithoutIgnorableTokens = excludeIgnorableTokens(codeLines(i).trimmed)
+			val currentCodeLineWithoutIgnorableTokens = codeLines(i).cleanedUp
 			val nextCodeLineWithoutIgnorableTokens =
-				if (i + 1 < codeLines.length) Some(excludeIgnorableTokens(codeLines(i + 1).trimmed)) else None
+				if (i + 1 < codeLines.length) Some(codeLines(i + 1).cleanedUp) else None
 
 			if
 			(
@@ -111,6 +111,4 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 
 		code
 	}
-
-	private def excludeIgnorableTokens(code:String) = code filter (IGNORABLE_TOKENS contains _ unary_!)
 }

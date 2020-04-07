@@ -8,12 +8,19 @@ import scala.language.postfixOps
 
 private[preprocessing] object ReplaceTabsToBeginAndEndPreprocessingCommand
 {
+	final val BLOCK_TOKENS:collection.Seq[String] =
+		Array(
+			CompilerTokens.ELSE,
+			CompilerTokens.COLON,
+			CompilerTokens.BACKSLASH
+		)
+
 	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] =
 	{
 		val tabStack = mutable.Stack[Int]()
 
 		val lastCodeLine =
-			code.filter(!_.ignore).foldLeft(new CodeLine(""))((previousLine, codeLine) =>
+			code.filter(!_.isEmpty).foldLeft(new CodeLine(""))((previousLine, codeLine) =>
 			{
 				val previousLineTabCount = countTabsInCodeLine(previousLine.trimmed)
 

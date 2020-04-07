@@ -39,9 +39,4 @@ private[preprocessing] object CompilerTokens
 	val LEFT_BRACE = "{"
 	val RIGHT_BRACE = "}"
 	val ACUTE = "`"
-
-	val NEW_LINE = '\n'
-	val NEW_LINE_CARET = '\r'
-	val TAB = '\t'
-	val SPACE = ' '
 }
