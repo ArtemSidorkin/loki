@@ -9,7 +9,7 @@ object Preprocessor
 	{
 		val _code = new StringBuilder()
 
-		val codeLines = InferSemicolonsPreprocessingCommand(ReplaceTabsToBeginAndEndPreprocessingCommand(code.split("\n").map(new CodeLine(_))))
+		val codeLines = InferSemicolonsPreprocessingCommand(CodeBlockInference(code.split("\n").map(new CodeLine(_))))
 
 		codeLines.foreach(cl =>
 		{
