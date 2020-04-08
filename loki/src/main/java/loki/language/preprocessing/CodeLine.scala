@@ -5,7 +5,7 @@ import loki.language.preprocessing.constant.IgnoredCharacters
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-class CodeLine(val raw:String)
+class CodeLine(val raw:String = "")
 {
 	var semicolon:Boolean = false
 
@@ -15,5 +15,7 @@ class CodeLine(val raw:String)
 
 	val cleanedUp:String = raw.filter(!IgnoredCharacters.VALUES.contains(_))
 
-	def isEmpty:Boolean = trimmed.isEmpty
+	val indentCount:Int = raw.takeWhile(_ == IgnoredCharacters.TAB).length
+
+	val isEmpty:Boolean = trimmed.isEmpty
 }
