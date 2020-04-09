@@ -38,16 +38,13 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 			CODE_BLOCK_INDICATOR_TOKENS.exists(previousCodeLine.trimmedRight.endsWith)
 
 		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference)
-		{
 			if (previousCodeLineEndsWithCodeBlockIndicatorToken)
 			{
 				previousCodeLine.inferredLines += new CodeLine(CompilerTokens.LEFT_BRACE)
 
 				indentationToCodeLineReplacements.push(new CodeLine(CompilerTokens.RIGHT_BRACE))
 			}
-
-			indentationToCodeLineReplacements.push(new CodeLine())
-		}
+			else indentationToCodeLineReplacements.push(new CodeLine())
 	}
 
 	def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
