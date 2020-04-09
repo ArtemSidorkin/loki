@@ -27,7 +27,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 		if (currentAndPreviousCodeLineIndentationDifference > 0)
 			inferBegin(previousCodeLine, currentAndPreviousCodeLineIndentationDifference)
 		else if (currentAndPreviousCodeLineIndentationDifference < 0)
-			inferEnd(previousCodeLine, currentAndPreviousCodeLineIndentationDifference)
+			inferEnd(previousCodeLine, Math.abs(currentAndPreviousCodeLineIndentationDifference))
 
 		currentCodeLine
 	}
@@ -49,7 +49,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 
 	def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
 	{
-		for (_ <- 0 until Math.abs(currentAndPreviousCodeLineIndentationDifference))
+		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference)
 			previousCodeLine.inferredLines += indentationToCodeLineReplacements.pop()
 	}
 }

@@ -1,20 +1,42 @@
 package loki.language.preprocessing.command
 
 import loki.language.preprocessing.CodeLine
-import loki.language.preprocessing.constant.{CompilerTokens, IgnoredCharacters}
+import loki.language.preprocessing.command.SemicolonReasoner.{LEFT_TOKEN_EXCEPTIONS, RIGHT_TOKEN_EXCEPTIONS}
+import loki.language.preprocessing.constant.CompilerTokens
 
-import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
-private[preprocessing] object InferSemicolonsPreprocessingCommand
+private[preprocessing] class SemicolonReasoner(code:collection.Seq[CodeLine])
 {
-	private val IGNORABLE_TOKENS:collection.Set[Char] =
-		mutable.HashSet(
-			IgnoredCharacters.TAB,
-			IgnoredCharacters.SPACE
-		)
+	def apply():collection.Seq[CodeLine] =
+	{
+		val codeLines = code.filter(!_.isEmpty).flatMap(_.mergeWithInferredLines)
 
+		for (i <- codeLines.indices)
+		{
+			val currentCodeLineWithoutIgnorableTokens = codeLines(i).cleanedUp
+			val nextCodeLineWithoutIgnorableTokens =
+				if (i + 1 < codeLines.length) Some(codeLines(i + 1).cleanedUp) else None
+
+			if
+			(
+				(LEFT_TOKEN_EXCEPTIONS exists currentCodeLineWithoutIgnorableTokens.endsWith unary_!) &&
+				(
+					RIGHT_TOKEN_EXCEPTIONS
+						exists (rghtTknExcptn =>
+							nextCodeLineWithoutIgnorableTokens exists (_ startsWith rghtTknExcptn)
+						)
+						unary_!
+				)
+			) codeLines(i).semicolon = true
+		}
+
+		code
+	}
+}
+
+private[preprocessing] object SemicolonReasoner
+{
 	private val LEFT_TOKEN_EXCEPTIONS =
 		Array(
 			CompilerTokens.IF,
@@ -77,38 +99,7 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 			CompilerTokens.RIGHT_PARENTHESIS,
 			CompilerTokens.RIGHT_BRACKET,
 			CompilerTokens.LEFT_BRACE,
-	)
+		)
 
-	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] =
-	{
-		val codeLines = ArrayBuffer[CodeLine]()
-
-		code.filter(!_.isEmpty).foreach(cl =>
-		{
-			codeLines += cl
-
-			cl.inferredLines.foreach(al => codeLines += al)
-		})
-
-		for (i <- codeLines.indices)
-		{
-			val currentCodeLineWithoutIgnorableTokens = codeLines(i).cleanedUp
-			val nextCodeLineWithoutIgnorableTokens =
-				if (i + 1 < codeLines.length) Some(codeLines(i + 1).cleanedUp) else None
-
-			if
-			(
-				(LEFT_TOKEN_EXCEPTIONS exists currentCodeLineWithoutIgnorableTokens.endsWith unary_!) &&
-				(
-					RIGHT_TOKEN_EXCEPTIONS
-						exists (rghtTknExcptn =>
-							nextCodeLineWithoutIgnorableTokens exists (_ startsWith rghtTknExcptn)
-						)
-						unary_!
-				)
-			) codeLines(i).semicolon = true
-		}
-
-		code
-	}
+	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] = new SemicolonReasoner(code)()
 }

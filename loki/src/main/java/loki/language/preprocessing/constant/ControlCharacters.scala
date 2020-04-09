@@ -1,6 +1,6 @@
 package loki.language.preprocessing.constant
 
-private[preprocessing] object IgnoredCharacters
+private[preprocessing] object ControlCharacters
 {
 	final val NEW_LINE = '\n'
 	final val NEW_LINE_CARET = '\r'
