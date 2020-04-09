@@ -87,7 +87,7 @@ private[preprocessing] object InferSemicolonsPreprocessingCommand
 		{
 			codeLines += cl
 
-			cl.additionalLines.foreach(al => codeLines += al)
+			cl.inferredLines.foreach(al => codeLines += al)
 		})
 
 		for (i <- codeLines.indices)

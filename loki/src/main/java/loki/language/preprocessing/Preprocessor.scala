@@ -9,7 +9,7 @@ object Preprocessor
 	{
 		val _code = new StringBuilder()
 
-		val codeLines = InferSemicolonsPreprocessingCommand(CodeBlockInference(code.split("\n").map(new CodeLine(_))))
+		val codeLines = InferSemicolonsPreprocessingCommand(CodeBlockReasoner(code.split("\n").map(new CodeLine(_))))
 
 		codeLines.foreach(cl =>
 		{
@@ -17,7 +17,7 @@ object Preprocessor
 
 			if (cl.semicolon) _code ++= ";"
 
-			cl.additionalLines.foreach(al1 =>
+			cl.inferredLines.foreach(al1 =>
 			{
 				_code ++= al1.raw
 
