@@ -4,8 +4,6 @@ import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.command.SemicolonReasoner.{LEFT_TOKEN_EXCEPTIONS, RIGHT_TOKEN_EXCEPTIONS}
 import loki.language.preprocessing.constant.CompilerTokens
 
-import scala.language.postfixOps
-
 private[preprocessing] class SemicolonReasoner(code:collection.Seq[CodeLine])
 {
 	def apply():collection.Seq[CodeLine] =
@@ -14,21 +12,10 @@ private[preprocessing] class SemicolonReasoner(code:collection.Seq[CodeLine])
 
 		for (i <- codeLines.indices)
 		{
-			val currentCodeLineWithoutIgnorableTokens = codeLines(i).cleanedUp
-			val nextCodeLineWithoutIgnorableTokens =
-				if (i + 1 < codeLines.length) Some(codeLines(i + 1).cleanedUp) else None
+			def leftTokenException = !LEFT_TOKEN_EXCEPTIONS.exists(codeLines(i).cleanedUp.endsWith)
+			def rightTokenException = i + 1 >= codeLines.length || !RIGHT_TOKEN_EXCEPTIONS.exists(codeLines(i + 1).cleanedUp.startsWith)
 
-			if
-			(
-				(LEFT_TOKEN_EXCEPTIONS exists currentCodeLineWithoutIgnorableTokens.endsWith unary_!) &&
-				(
-					RIGHT_TOKEN_EXCEPTIONS
-						exists (rghtTknExcptn =>
-							nextCodeLineWithoutIgnorableTokens exists (_ startsWith rghtTknExcptn)
-						)
-						unary_!
-				)
-			) codeLines(i).semicolon = true
+			if (leftTokenException && rightTokenException) codeLines(i).semicolon = true
 		}
 
 		code
