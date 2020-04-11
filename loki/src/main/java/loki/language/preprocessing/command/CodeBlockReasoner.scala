@@ -2,7 +2,7 @@ package loki.language.preprocessing.command
 
 import loki.language.preprocessing.CodeLine
 import loki.language.preprocessing.command.CodeBlockReasoner.CODE_BLOCK_INDICATOR_TOKENS
-import loki.language.preprocessing.constant.CompilerTokens
+import loki.language.preprocessing.constant.FixedTokens
 
 import scala.collection.mutable
 
@@ -40,9 +40,9 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference)
 			if (previousCodeLineEndsWithCodeBlockIndicatorToken)
 			{
-				previousCodeLine.inferredLines += new CodeLine(CompilerTokens.LEFT_BRACE)
+				previousCodeLine.inferredLines += new CodeLine(FixedTokens.LEFT_BRACE)
 
-				indentationToCodeLineReplacements.push(new CodeLine(CompilerTokens.RIGHT_BRACE))
+				indentationToCodeLineReplacements.push(new CodeLine(FixedTokens.RIGHT_BRACE))
 			}
 			else indentationToCodeLineReplacements.push(new CodeLine())
 	}
@@ -57,7 +57,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 private[preprocessing] object CodeBlockReasoner
 {
 	final val CODE_BLOCK_INDICATOR_TOKENS:collection.Seq[String] =
-		Array(CompilerTokens.ELSE, CompilerTokens.COLON, CompilerTokens.BACKSLASH)
+		Array(FixedTokens.ELSE, FixedTokens.COLON, FixedTokens.BACKSLASH)
 
 	def apply(codeLines:collection.Seq[CodeLine]):collection.Seq[CodeLine] = new CodeBlockReasoner(codeLines)()
 }

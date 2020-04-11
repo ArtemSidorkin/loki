@@ -1,6 +1,6 @@
 package loki.language.preprocessing.constant
 
-private[preprocessing] object CompilerTokens
+private[preprocessing] object FixedTokens
 {
 	val IF = "if"
 	val ELSE = "else"

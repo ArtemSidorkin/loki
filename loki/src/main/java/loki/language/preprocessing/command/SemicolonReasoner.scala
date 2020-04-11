@@ -1,91 +1,98 @@
 package loki.language.preprocessing.command
 
 import loki.language.preprocessing.CodeLine
-import loki.language.preprocessing.command.SemicolonReasoner.{LEFT_TOKEN_EXCEPTIONS, RIGHT_TOKEN_EXCEPTIONS}
-import loki.language.preprocessing.constant.CompilerTokens
+import loki.language.preprocessing.command.SemicolonReasoner.{CURRENT_LINE_CONTINUE_TOKENS, NEXT_LINE_CONTINUE_TOKENS}
+import loki.language.preprocessing.constant.FixedTokens
 
-private[preprocessing] class SemicolonReasoner(code:collection.Seq[CodeLine])
+private[preprocessing] class SemicolonReasoner(codeLines:collection.Seq[CodeLine])
 {
 	def apply():collection.Seq[CodeLine] =
 	{
-		val codeLines = code.filter(!_.isEmpty).flatMap(_.mergeWithInferredLines)
+		val nonEmptyCodeLinesMergedWithInferredCodeLines =
+			codeLines.filter(!_.isEmpty).flatMap(_.mergeWithInferredLines)
 
-		for (i <- codeLines.indices)
+		for (i <- nonEmptyCodeLinesMergedWithInferredCodeLines.indices)
 		{
-			def leftTokenException = !LEFT_TOKEN_EXCEPTIONS.exists(codeLines(i).cleanedUp.endsWith)
-			def rightTokenException = i + 1 >= codeLines.length || !RIGHT_TOKEN_EXCEPTIONS.exists(codeLines(i + 1).cleanedUp.startsWith)
+			def currentLineContinuePresent =
+				CURRENT_LINE_CONTINUE_TOKENS.exists(nonEmptyCodeLinesMergedWithInferredCodeLines(i).cleanedUp.endsWith)
 
-			if (leftTokenException && rightTokenException) codeLines(i).semicolon = true
+			def nextLineContinuePresent =
+				i + 1 < nonEmptyCodeLinesMergedWithInferredCodeLines.length &&
+					NEXT_LINE_CONTINUE_TOKENS
+						.exists(nonEmptyCodeLinesMergedWithInferredCodeLines(i + 1).cleanedUp.startsWith)
+
+			if (!currentLineContinuePresent && !nextLineContinuePresent)
+				nonEmptyCodeLinesMergedWithInferredCodeLines(i).semicolon = true
 		}
 
-		code
+		codeLines
 	}
 }
 
 private[preprocessing] object SemicolonReasoner
 {
-	private val LEFT_TOKEN_EXCEPTIONS =
+	private val CURRENT_LINE_CONTINUE_TOKENS =
 		Array(
-			CompilerTokens.IF,
-			CompilerTokens.ELSE,
-			CompilerTokens.WHILE,
-			CompilerTokens.PLUS,
-			CompilerTokens.MINUS,
-			CompilerTokens.STAR,
-			CompilerTokens.SLASH,
-			CompilerTokens.BACKSLASH,
-			CompilerTokens.EQUALS_EQUALS,
-			CompilerTokens.BANG_EQUALS,
-			CompilerTokens.GREATER_THAN_EQUALS,
-			CompilerTokens.GREATER_THAN,
-			CompilerTokens.LESS_THAN_EQUALS,
-			CompilerTokens.LESS_THAN,
-			CompilerTokens.AMPERSAND_AMPERSAND,
-			CompilerTokens.PIPE_PIPE,
-			CompilerTokens.BANG,
-			CompilerTokens.AMPERSAND,
-			CompilerTokens.PIPE,
-			CompilerTokens.EQUALS,
-			CompilerTokens.DOT,
-			CompilerTokens.COMMA,
-			CompilerTokens.DOUBLE_COLON,
-			CompilerTokens.COLON,
-			CompilerTokens.RIGHT_THIN_ARROW,
-			CompilerTokens.RIGHT_THICK_ARROW,
-			CompilerTokens.SEMICOLON,
-			CompilerTokens.LEFT_PARENTHESIS,
-			CompilerTokens.LEFT_BRACKET,
-			CompilerTokens.LEFT_BRACE,
-			CompilerTokens.ACUTE
+			FixedTokens.IF,
+			FixedTokens.ELSE,
+			FixedTokens.WHILE,
+			FixedTokens.PLUS,
+			FixedTokens.MINUS,
+			FixedTokens.STAR,
+			FixedTokens.SLASH,
+			FixedTokens.BACKSLASH,
+			FixedTokens.EQUALS_EQUALS,
+			FixedTokens.BANG_EQUALS,
+			FixedTokens.GREATER_THAN_EQUALS,
+			FixedTokens.GREATER_THAN,
+			FixedTokens.LESS_THAN_EQUALS,
+			FixedTokens.LESS_THAN,
+			FixedTokens.AMPERSAND_AMPERSAND,
+			FixedTokens.PIPE_PIPE,
+			FixedTokens.BANG,
+			FixedTokens.AMPERSAND,
+			FixedTokens.PIPE,
+			FixedTokens.EQUALS,
+			FixedTokens.DOT,
+			FixedTokens.COMMA,
+			FixedTokens.DOUBLE_COLON,
+			FixedTokens.COLON,
+			FixedTokens.RIGHT_THIN_ARROW,
+			FixedTokens.RIGHT_THICK_ARROW,
+			FixedTokens.SEMICOLON,
+			FixedTokens.LEFT_PARENTHESIS,
+			FixedTokens.LEFT_BRACKET,
+			FixedTokens.LEFT_BRACE,
+			FixedTokens.ACUTE
 		)
 
-	private val RIGHT_TOKEN_EXCEPTIONS =
+	private val NEXT_LINE_CONTINUE_TOKENS =
 		Array(
-			CompilerTokens.ELSE,
-			CompilerTokens.PLUS,
-			CompilerTokens.MINUS,
-			CompilerTokens.STAR,
-			CompilerTokens.SLASH,
-			CompilerTokens.EQUALS_EQUALS,
-			CompilerTokens.BANG_EQUALS,
-			CompilerTokens.GREATER_THAN_EQUALS,
-			CompilerTokens.GREATER_THAN,
-			CompilerTokens.LESS_THAN_EQUALS,
-			CompilerTokens.LESS_THAN,
-			CompilerTokens.AMPERSAND_AMPERSAND,
-			CompilerTokens.PIPE_PIPE,
-			CompilerTokens.AMPERSAND,
-			CompilerTokens.PIPE,
-			CompilerTokens.EQUALS,
-			CompilerTokens.DOT,
-			CompilerTokens.COMMA,
-			CompilerTokens.DOUBLE_COLON,
-			CompilerTokens.COLON,
-			CompilerTokens.RIGHT_THIN_ARROW,
-			CompilerTokens.RIGHT_THICK_ARROW,
-			CompilerTokens.RIGHT_PARENTHESIS,
-			CompilerTokens.RIGHT_BRACKET,
-			CompilerTokens.LEFT_BRACE,
+			FixedTokens.ELSE,
+			FixedTokens.PLUS,
+			FixedTokens.MINUS,
+			FixedTokens.STAR,
+			FixedTokens.SLASH,
+			FixedTokens.EQUALS_EQUALS,
+			FixedTokens.BANG_EQUALS,
+			FixedTokens.GREATER_THAN_EQUALS,
+			FixedTokens.GREATER_THAN,
+			FixedTokens.LESS_THAN_EQUALS,
+			FixedTokens.LESS_THAN,
+			FixedTokens.AMPERSAND_AMPERSAND,
+			FixedTokens.PIPE_PIPE,
+			FixedTokens.AMPERSAND,
+			FixedTokens.PIPE,
+			FixedTokens.EQUALS,
+			FixedTokens.DOT,
+			FixedTokens.COMMA,
+			FixedTokens.DOUBLE_COLON,
+			FixedTokens.COLON,
+			FixedTokens.RIGHT_THIN_ARROW,
+			FixedTokens.RIGHT_THICK_ARROW,
+			FixedTokens.RIGHT_PARENTHESIS,
+			FixedTokens.RIGHT_BRACKET,
+			FixedTokens.LEFT_BRACE,
 		)
 
 	def apply(code:collection.Seq[CodeLine]):collection.Seq[CodeLine] = new SemicolonReasoner(code)()
