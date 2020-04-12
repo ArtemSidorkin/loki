@@ -9,7 +9,7 @@ private[preprocessing] class SemicolonReasoner(codeLines:collection.Seq[CodeLine
 	def apply():collection.Seq[CodeLine] =
 	{
 		val nonEmptyCodeLinesMergedWithInferredCodeLines =
-			codeLines.filter(!_.isEmpty).flatMap(_.mergeWithInferredLines)
+			codeLines.filter(!_.isEmpty).flatMap(_.mergedWithInferredLines)
 
 		for (i <- nonEmptyCodeLinesMergedWithInferredCodeLines.indices)
 		{

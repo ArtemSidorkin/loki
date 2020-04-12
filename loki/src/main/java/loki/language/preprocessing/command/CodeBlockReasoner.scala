@@ -44,7 +44,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 
 				indentationToCodeLineReplacements.push(new CodeLine(FixedTokens.RIGHT_BRACE))
 			}
-			else indentationToCodeLineReplacements.push(new CodeLine())
+			else indentationToCodeLineReplacements.push(new CodeLine)
 	}
 
 	def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =

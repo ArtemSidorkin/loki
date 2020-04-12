@@ -1,6 +1,6 @@
 package loki.language.preprocessing
 
-import loki.language.preprocessing.constant.ControlCharacters
+import loki.language.preprocessing.constant.{ControlCharacters, FixedTokens}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -19,5 +19,10 @@ class CodeLine(val raw:String = "")
 
 	val isEmpty:Boolean = trimmedRight.isEmpty
 
-	def mergeWithInferredLines:collection.Seq[CodeLine] = this :: inferredLines.toList
+	def mergedWithInferredLines:collection.Seq[CodeLine] = this :: inferredLines.toList
+
+	override def toString:String =
+		mergedWithInferredLines
+			.map(codeLine => if (codeLine.semicolon) s"${codeLine.raw}${FixedTokens.SEMICOLON}" else codeLine.raw)
+			.mkString
 }

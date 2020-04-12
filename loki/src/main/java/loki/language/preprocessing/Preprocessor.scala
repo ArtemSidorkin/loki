@@ -1,34 +1,19 @@
 package loki.language.preprocessing
 
 import loki.language.preprocessing.command._
+import loki.language.preprocessing.constant.ControlCharacters
 import loki.system.SystemSettings
 
 object Preprocessor
 {
     def apply(code:String):String =
 	{
-		val _code = new StringBuilder()
+		val preprocessedCode =
+			SemicolonReasoner(CodeBlockReasoner(code.split(ControlCharacters.NEW_LINE).map(new CodeLine(_))))
+				.mkString(ControlCharacters.NEW_LINE.toString)
 
-		val codeLines = SemicolonReasoner(CodeBlockReasoner(code.split("\n").map(new CodeLine(_))))
+		if (SystemSettings.TRACE_PREPROCESSED_CODE) println(preprocessedCode)
 
-		codeLines.foreach(cl =>
-		{
-			_code ++= cl.raw
-
-			if (cl.semicolon) _code ++= ";"
-
-			cl.inferredLines.foreach(al1 =>
-			{
-				_code ++= al1.raw
-
-				if (al1.semicolon) _code ++= ";"
-			})
-
-			_code ++= "\n"
-		})
-
-		if (SystemSettings.TRACE_PREPROCESSED_CODE) println(_code)
-
-		_code.toString
+		preprocessedCode
 	}
 }
