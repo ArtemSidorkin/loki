@@ -181,13 +181,9 @@ expression:
 
 
 
-	WHILE (BEGIN)? expression (SEMICOLON)? (END)? COLON instruction #While |
+	WHILE expression COLON instruction #While |
 
-	WHILE
-		(BEGIN)?
-			expression (SEMICOLON)?
-		(END)?
-	COLON
+	WHILE expression COLON
 		BEGIN
 			(instruction SEMICOLON)+
 		END
