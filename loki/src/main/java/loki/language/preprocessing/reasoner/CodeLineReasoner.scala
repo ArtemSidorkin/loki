@@ -4,7 +4,7 @@ import loki.language.preprocessing.constant.ControlCharacters
 
 private[preprocessing] class CodeLineReasoner(code:String) extends Reasoner
 {
-	override def apply():Seq[CodeLine] = code.split(ControlCharacters.NEW_LINE).map(new CodeLine(_))
+	override def apply():collection.Seq[CodeLine] = code.split(ControlCharacters.NEW_LINE).map(new CodeLine(_))
 }
 
 private[preprocessing] object CodeLineReasoner
