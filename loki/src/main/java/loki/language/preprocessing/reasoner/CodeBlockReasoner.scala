@@ -1,12 +1,12 @@
-package loki.language.preprocessing.command
+package loki.language.preprocessing.reasoner
 
 import loki.language.preprocessing.CodeLine
-import loki.language.preprocessing.command.CodeBlockReasoner.CODE_BLOCK_INDICATOR_TOKENS
 import loki.language.preprocessing.constant.FixedTokens
+import loki.language.preprocessing.reasoner.CodeBlockReasoner.CODE_BLOCK_INDICATOR_TOKENS
 
 import scala.collection.mutable
 
-private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine])
+private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine]) extends Reasoner
 {
 	private val indentationToCodeLineReplacements = mutable.Stack[CodeLine]()
 

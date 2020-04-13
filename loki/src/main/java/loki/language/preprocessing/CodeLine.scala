@@ -5,7 +5,7 @@ import loki.language.preprocessing.constant.{ControlCharacters, FixedTokens}
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-class CodeLine(val raw:String = "")
+private[preprocessing] class CodeLine(val raw:String = "")
 {
 	var semicolon:Boolean = false
 

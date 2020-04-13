@@ -1,10 +1,10 @@
-package loki.language.preprocessing.command
+package loki.language.preprocessing.reasoner
 
 import loki.language.preprocessing.CodeLine
-import loki.language.preprocessing.command.SemicolonReasoner.{CURRENT_LINE_CONTINUE_TOKENS, NEXT_LINE_CONTINUE_TOKENS}
 import loki.language.preprocessing.constant.FixedTokens
+import loki.language.preprocessing.reasoner.SemicolonReasoner.{CURRENT_LINE_CONTINUE_TOKENS, NEXT_LINE_CONTINUE_TOKENS}
 
-private[preprocessing] class SemicolonReasoner(codeLines:collection.Seq[CodeLine])
+private[preprocessing] class SemicolonReasoner(codeLines:collection.Seq[CodeLine]) extends Reasoner
 {
 	def apply():collection.Seq[CodeLine] =
 	{
