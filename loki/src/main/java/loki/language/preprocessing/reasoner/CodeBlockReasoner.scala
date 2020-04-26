@@ -49,7 +49,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 	private def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
 		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference) replaceIndent(previousCodeLine)
 
-	private def replaceIndent(codeLine:CodeLine)
+	private def replaceIndent(codeLine:CodeLine):Unit =
 	{
 		val indentReplacement = indentationReplacementStack.pop()
 
