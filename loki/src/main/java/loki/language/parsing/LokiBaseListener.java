@@ -373,6 +373,18 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitElse_(LokiParser.Else_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnitParameter(LokiParser.UnitParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnitParameter(LokiParser.UnitParameterContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

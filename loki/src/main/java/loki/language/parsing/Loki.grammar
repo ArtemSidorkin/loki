@@ -61,7 +61,8 @@ expression:
 
 
 
-	(((DOLLAR)? head=(IDENTIFIER | UNDERSCORE) (IDENTIFIER)* (inheritance)? COLON) | BACKSLASH)
+
+	(((((member=DOLLAR)? name=IDENTIFIER) | (UNDERSCORE)) (unitParameter)* (inheritance)? COLON) | BACKSLASH)
 		(instruction | (BEGIN (instruction SEMICOLON)+ END))
 	#Unit |
 
@@ -142,11 +143,15 @@ expression:
 
 
 
-inheritance : DOUBLE_COLON (expression (COMMA expression)*)? ;
+inheritance : DOUBLE_COLON (expression (COMMA expression)*)?;
 
 
 
 else_ : ELSE BEGIN (instruction SEMICOLON)+ END | ELSE instruction;
+
+
+
+unitParameter: (DOLLAR)? IDENTIFIER;
 
 
 

@@ -1,0 +1,78 @@
+Point1 $x $y : void
+
+p1 = Point1.new(1, 2)
+
+test(p1.x)
+test(p1.y)
+
+
+
+Point2 x $y : void
+
+p2 = Point2.new(3, 4)
+
+test(p2.x)
+test(p2.y)
+
+
+
+Point3 $x y : void
+
+p3 = Point3.new(5, 6)
+
+test(p3.x)
+test(p3.y)
+
+
+
+$Point4 $x $y : void
+
+p4 = Point4.new(7, 8)
+
+test(p4.x)
+test(p4.y)
+
+
+
+$Point5 x $y : void
+
+p5 = Point5.new(9, 10)
+
+test(p5.x)
+test(p5.y)
+
+
+
+$Point6 $x y : void
+
+p6 = Point6.new(11, 12)
+
+test(p6.x)
+test(p6.y)
+
+
+
+Point7 = _ $x $y : void
+
+p7 = Point7.new(13, 14)
+
+test(p7.x)
+test(p7.y)
+
+
+
+Point8 = _ x $y : void
+
+p8 = Point8.new(15, 16)
+
+test(p8.x)
+test(p8.y)
+
+
+
+Point9 = _ $x y : void
+
+p9 = Point9.new(17, 18)
+
+test(p9.x)
+test(p9.y)

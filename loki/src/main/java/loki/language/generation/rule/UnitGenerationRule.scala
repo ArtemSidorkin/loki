@@ -16,18 +16,10 @@ import loki.system.SystemSettings
 private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(unitContext)
 {
-	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.DOLLAR != null
-	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.DOLLAR != null
+	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.member != null
+	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.member != null
 
-	private def unitName:Option[String] =
-		Option(unitContext.head)
-			.map(_.getType)
-			.flatMap(
-			{
-				case LokiLexer.IDENTIFIER => Some(getIdentifierName(0))
-				case LokiLexer.UNDERSCORE => None
-			})
-
+	private def unitName:Option[String] = Option(unitContext.name).map(_.getText)
 
 	override protected def enterAction():Unit =
 	{
@@ -36,6 +28,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 		generateUnitMethodInit()
 		generateUnit()
 		generateUnitCallMethodUnitContext()
+		generateEmbeddedMembers()
 
 		decrementObjectCounterForLastUnitInstruction()
 
@@ -119,8 +112,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 				def generateUnitCallParameterNamesSaving():methodBuilder.type =
 				{
 					val unitParameterNames:Seq[String] =
-						for (i <- unitName.map(_ => 1).getOrElse(0) until unitContext.IDENTIFIER.size)
-							yield getIdentifierName(i)
+						for (i <- 0 until unitContext.unitParameter().size)
+							yield unitContext.unitParameter(i).IDENTIFIER().getText
 
 					if (unitParameterNames.nonEmpty)
 					{
@@ -164,6 +157,17 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 				.invokeInitUnitContext()
 				.astoreUnitMethodCallVariableUnitContext()
 
+		def generateEmbeddedMembers():Unit =
+			for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
+				topMethodCall
+					.aloadUnitMethodCallParameterHost()
+					.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
+					.aloadUnitMethodCallVariableUnitContext()
+					.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
+					.invokeVirtualUnitContextMethodGetVariable()
+					.invokeVirtualUnitMethodSetMember()
+					.pop()
+
 		def decrementObjectCounterForLastUnitInstruction():Unit =
 		{
 			val unitLastInstruction:InstructionContext = unitContext.instruction(unitContext.instruction.size - 1)
@@ -184,8 +188,6 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 		popFrame()
 	}
-
-	private def getIdentifierName(identifierIndex:Int) = unitContext.IDENTIFIER(identifierIndex).getText
 }
 
 private[generation] object UnitGenerationRule
