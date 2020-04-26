@@ -19,37 +19,23 @@ instruction : expression;
 
 expression:
 
-	LEFT_PARENTHESIS (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_PARENTHESIS #ExpressionGroup |
+	LEFT_PARENTHESIS expression RIGHT_PARENTHESIS #ExpressionGroup |
 
 
 
 	LEFT_BRACKET (expression (COMMA expression)*)? RIGHT_BRACKET #Array |
 
+
+
 	LEFT_BRACKET
-	(
-		(
-			BEGIN
-				expression RIGHT_THIN_ARROW expression (COMMA expression RIGHT_THIN_ARROW expression)* (SEMICOLON)?
-			END
-		) |
-		(expression RIGHT_THIN_ARROW expression (COMMA expression RIGHT_THIN_ARROW expression)* (SEMICOLON)?) |
-		(MINUS)
-	)
-	RIGHT_BRACKET (SEMICOLON)? (END)?
+		((expression RIGHT_THIN_ARROW expression (COMMA expression RIGHT_THIN_ARROW expression)*) | MINUS)
+	RIGHT_BRACKET
 	#Map |
 
 
 
 	LEFT_BRACKET
-	(
-		(
-			BEGIN
-				expression RIGHT_THICK_ARROW expression (COMMA expression RIGHT_THICK_ARROW expression)* (SEMICOLON)?
-			END
-		) |
-		(expression RIGHT_THICK_ARROW expression (COMMA expression RIGHT_THICK_ARROW expression)* (SEMICOLON)?)? |
-		EQUALS
-	)
+		((expression RIGHT_THICK_ARROW expression (COMMA expression RIGHT_THICK_ARROW expression)*) | EQUALS)
 	RIGHT_BRACKET
 	#Object |
 
@@ -63,55 +49,53 @@ expression:
 
 
 
-	CHARACTERS #String |
-	ACUTE IDENTIFIER #String |
+	(CHARACTERS | ACUTE IDENTIFIER) #String |
 
 
 
 	FLOAT #Number |
+
+
+
 	INT #Number |
 
 
 
 	(((DOLLAR)? head=(IDENTIFIER | UNDERSCORE) (IDENTIFIER)* (inheritance)? COLON) | BACKSLASH)
-	(
-		instruction |
-		(
-			BEGIN
-				(instruction SEMICOLON)+
-			END
-		)
-	)
+		(instruction | (BEGIN (instruction SEMICOLON)+ END))
 	#Unit |
 
-	expression DOT IDENTIFIER LEFT_PARENTHESIS RIGHT_PARENTHESIS #MemberCall |
 
-	expression DOT IDENTIFIER LEFT_PARENTHESIS
-		(BEGIN)?
-			expression (COMMA expression)* (SEMICOLON)?
-		(END)?
-	RIGHT_PARENTHESIS
-	#MemberCall |
+
+	expression DOT IDENTIFIER LEFT_PARENTHESIS (expression (COMMA expression)*)? RIGHT_PARENTHESIS #MemberCall |
 
 
 
 	DOLLAR DOLLAR IDENTIFIER #SuperHostMember |
+
+
+
 	DOLLAR IDENTIFIER #HostMember |
+
+
+
 	(IDENTIFIER | UNDERSCORE) #VariableOrParameter |
+
+
+
 	expression DOT IDENTIFIER #Member |
+
+
+
 	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
+
+
+
 	expression DOLLAR LEFT_BRACKET ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACKET #MemberAccessor |
 
 
 
-	expression LEFT_PARENTHESIS RIGHT_PARENTHESIS #Call |
-
-	expression LEFT_PARENTHESIS
-		(BEGIN)?
-			expression (COMMA expression)* (SEMICOLON)?
-		(END)?
-	RIGHT_PARENTHESIS
-	#Call |
+	expression LEFT_PARENTHESIS (expression (COMMA expression)*)? RIGHT_PARENTHESIS #Call |
 
 
 
@@ -130,70 +114,35 @@ expression:
 
 
 	DOLLAR IDENTIFIER EQUALS expression #AssignHostMember |
-	DOLLAR IDENTIFIER EQUALS BEGIN expression SEMICOLON END #AssignHostMember |
 
 
 
 	IDENTIFIER EQUALS expression #AssignVariable |
-	IDENTIFIER EQUALS BEGIN expression SEMICOLON END #AssignVariable |
 
 
 
 	expression DOT IDENTIFIER EQUALS expression #AssignMember |
-	expression DOT IDENTIFIER EQUALS SEMICOLON BEGIN expression END #AssignMember |
 
 
 
-	expression LEFT_BRACKET
-		(BEGIN)?
-			expression
-		(END)?
-	RIGHT_BRACKET EQUALS expression
-	#AssignIndex |
-
-	expression LEFT_BRACKET
-		(BEGIN)?
-			expression
-		(END)?
-	RIGHT_BRACKET EQUALS BEGIN expression SEMICOLON END
-	#AssignIndex |
+	expression LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignIndex |
 
 
 
-	expression DOLLAR LEFT_BRACKET
-	 	((BEGIN expression SEMICOLON END) | expression)
-	RIGHT_BRACKET EQUALS ((BEGIN expression SEMICOLON END) | expression)?
-	#AssignMemberAccessor |
-
-
-	IF (BEGIN)? expression (SEMICOLON)? (END)? COLON instruction (else_)? #IfElse |
-
-	IF
-		(BEGIN)?
-			expression (SEMICOLON)?
-		(END)?
-	COLON
-		BEGIN
-			(instruction SEMICOLON)+
-		END
-	(else_)?
-	#IfElse |
+	expression DOLLAR LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignMemberAccessor |
 
 
 
-	WHILE expression COLON instruction #While |
+	IF expression COLON (instruction | (BEGIN (instruction SEMICOLON)+ END)) (else_)? #IfElse |
 
-	WHILE expression COLON
-		BEGIN
-			(instruction SEMICOLON)+
-		END
-	#While
 
+
+	WHILE expression COLON (instruction | (BEGIN (instruction SEMICOLON)+ END)) #While
 ;
 
 
 
-inheritance : DOUBLE_COLON expression | DOUBLE_COLON (expression COMMA)+ expression;
+inheritance : DOUBLE_COLON (expression (COMMA expression)*)? ;
 
 
 

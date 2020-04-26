@@ -19,6 +19,8 @@ private[preprocessing] class CodeLine(val raw:String = "")
 
 	val isEmpty:Boolean = trimmedRight.isEmpty
 
+	val nonEmpty:Boolean = trimmedRight.nonEmpty
+
 	def mergedWithInferredLines:collection.Seq[CodeLine] = this :: inferredLines.toList
 
 	override def toString:String =

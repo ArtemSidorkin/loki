@@ -8,19 +8,18 @@ import scala.collection.mutable
 
 private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine]) extends Reasoner
 {
-	private val indentationToCodeLineReplacements = mutable.Stack[CodeLine]()
+	private val indentationReplacementStack = mutable.Stack[CodeLine]()
 
 	def apply():collection.Seq[CodeLine] =
 	{
 		val lastCodeLine = codeLines.filter(!_.isEmpty).foldLeft(new CodeLine)(inferBeginAndEndBetweenCodeLines)
 
-		while (indentationToCodeLineReplacements.nonEmpty)
-			lastCodeLine.inferredLines += indentationToCodeLineReplacements.pop()
+		while (indentationReplacementStack.nonEmpty) replaceIndent(lastCodeLine)
 
 		codeLines
 	}
 
-	def inferBeginAndEndBetweenCodeLines(previousCodeLine:CodeLine, currentCodeLine:CodeLine):CodeLine =
+	private def inferBeginAndEndBetweenCodeLines(previousCodeLine:CodeLine, currentCodeLine:CodeLine):CodeLine =
 	{
 		val currentAndPreviousCodeLineIndentationDifference = currentCodeLine.indentCount - previousCodeLine.indentCount
 
@@ -32,7 +31,7 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 		currentCodeLine
 	}
 
-	def inferBegin(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
+	private def inferBegin(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
 	{
 		val previousCodeLineEndsWithCodeBlockIndicatorToken =
 			CODE_BLOCK_INDICATOR_TOKENS.exists(previousCodeLine.trimmedRight.endsWith)
@@ -42,21 +41,25 @@ private[preprocessing] class CodeBlockReasoner(codeLines:collection.Seq[CodeLine
 			{
 				previousCodeLine.inferredLines += new CodeLine(FixedTokens.LEFT_BRACE)
 
-				indentationToCodeLineReplacements.push(new CodeLine(FixedTokens.RIGHT_BRACE))
+				indentationReplacementStack.push(new CodeLine(FixedTokens.RIGHT_BRACE))
 			}
-			else indentationToCodeLineReplacements.push(new CodeLine)
+			else indentationReplacementStack.push(new CodeLine)
 	}
 
-	def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
+	private def inferEnd(previousCodeLine:CodeLine, currentAndPreviousCodeLineIndentationDifference:Int):Unit =
+		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference) replaceIndent(previousCodeLine)
+
+	private def replaceIndent(codeLine:CodeLine)
 	{
-		for (_ <- 0 until currentAndPreviousCodeLineIndentationDifference)
-			previousCodeLine.inferredLines += indentationToCodeLineReplacements.pop()
+		val indentReplacement = indentationReplacementStack.pop()
+
+		if (indentReplacement.nonEmpty) codeLine.inferredLines += indentReplacement
 	}
 }
 
 private[preprocessing] object CodeBlockReasoner
 {
-	final val CODE_BLOCK_INDICATOR_TOKENS:collection.Seq[String] =
+	private final val CODE_BLOCK_INDICATOR_TOKENS:collection.Seq[String] =
 		Array(FixedTokens.ELSE, FixedTokens.COLON, FixedTokens.BACKSLASH)
 
 	def apply(codeLines:collection.Seq[CodeLine]):collection.Seq[CodeLine] = new CodeBlockReasoner(codeLines)()
