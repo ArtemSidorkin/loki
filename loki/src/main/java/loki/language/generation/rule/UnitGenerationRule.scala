@@ -28,8 +28,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 		generateUnitMethodInit()
 		generateUnit()
 		generateUnitCallMethodUnitContext()
+		generateUnitBody()
 		generateEmbeddedMembers()
-
 		decrementObjectCounterForLastUnitInstruction()
 
 		def generateUnitMethodInit():Unit =
@@ -157,6 +157,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 				.invokeInitUnitContext()
 				.astoreUnitMethodCallVariableUnitContext()
 
+		def generateUnitBody():Unit = if (unitContext.unitBody() == null) topMethodCall.void()
+
 		def generateEmbeddedMembers():Unit =
 			for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
 				topMethodCall
@@ -169,11 +171,14 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					.pop()
 
 		def decrementObjectCounterForLastUnitInstruction():Unit =
-		{
-			val unitLastInstruction:InstructionContext = unitContext.instruction(unitContext.instruction.size - 1)
+			if (unitContext.unitBody() != null)
+			{
+				val unitLastInstruction:InstructionContext =
+					unitContext.unitBody().instruction(unitContext.unitBody().instruction().size - 1)
 
-			generationContext.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectStackCounter())
-		}
+				generationContext
+					.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectStackCounter())
+			}
 	}
 
 	override protected def exitAction():Unit =

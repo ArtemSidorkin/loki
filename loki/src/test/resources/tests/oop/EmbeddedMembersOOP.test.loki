@@ -76,3 +76,86 @@ p9 = Point9.new(17, 18)
 
 test(p9.x)
 test(p9.y)
+
+
+
+
+
+:Point10 $x $y
+
+p10 = Point10.new(19, 20)
+
+test(p10.x)
+test(p10.y)
+
+
+
+:Point11 x $y
+
+p11 = Point11.new(21, 22)
+
+test(p11.x)
+test(p11.y)
+
+
+
+:Point12 $x y
+
+p12 = Point12.new(23, 24)
+
+test(p12.x)
+test(p12.y)
+
+
+
+:$Point13 $x $y
+
+p13 = Point13.new(25, 26)
+
+test(p13.x)
+test(p13.y)
+
+
+
+: $Point14 x $y
+
+p14 = Point14.new(27, 28)
+
+test(p14.x)
+test(p14.y)
+
+
+
+: $Point15 $x y
+
+p15 = Point15.new(29, 30)
+
+test(p15.x)
+test(p15.y)
+
+
+
+Point16 = : _ $x $y
+
+p16 = Point16.new(31, 32)
+
+test(p16.x)
+test(p16.y)
+
+
+
+Point17 = : _ x $y
+
+p17 = Point17.new(33, 34)
+
+test(p17.x)
+test(p17.y)
+
+
+
+Point18 = : _ $x y
+
+p18 = Point18.new(35, 36)
+
+test(p18.x)
+test(p18.y)

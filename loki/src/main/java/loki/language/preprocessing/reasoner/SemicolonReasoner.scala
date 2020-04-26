@@ -87,7 +87,6 @@ private[preprocessing] object SemicolonReasoner
 			FixedTokens.DOT,
 			FixedTokens.COMMA,
 			FixedTokens.DOUBLE_COLON,
-			FixedTokens.COLON,
 			FixedTokens.RIGHT_THIN_ARROW,
 			FixedTokens.RIGHT_THICK_ARROW,
 			FixedTokens.RIGHT_PARENTHESIS,

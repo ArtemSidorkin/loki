@@ -61,9 +61,10 @@ expression:
 
 
 
+	COLON (((member=DOLLAR)? name=IDENTIFIER) | (UNDERSCORE)) (unitParameter)* (inheritance)? #Unit |
 
 	((((((member=DOLLAR)? name=IDENTIFIER) | (UNDERSCORE)) (unitParameter)* (inheritance)? COLON)) | BACKSLASH)
-		(instruction | (BEGIN (instruction SEMICOLON)+ END))
+		unitBody
 	#Unit |
 
 
@@ -152,7 +153,7 @@ else_ : ELSE BEGIN (instruction SEMICOLON)+ END | ELSE instruction;
 
 
 unitParameter: (DOLLAR)? IDENTIFIER;
-
+unitBody: (instruction | (BEGIN (instruction SEMICOLON)+ END));
 
 
 BEGIN : LEFT_BRACE;
