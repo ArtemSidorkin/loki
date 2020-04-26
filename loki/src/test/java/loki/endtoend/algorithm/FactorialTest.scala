@@ -10,6 +10,6 @@ private[endtoend] class FactorialTest extends EndToEndTest
 	{
 		runTest("algorithm", "Factorial.test.loki")
 
-		Assertions.assertEquals(number(3628800), testValues.head)
+		Assertions.assertEquals(List(number(3628800), number(3628800)), testValues)
 	}
 }

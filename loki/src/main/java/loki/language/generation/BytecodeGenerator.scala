@@ -124,7 +124,7 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 	override def exitHost(hostContext:HostContext):Unit = HostGenerationRule.exit(hostContext)
 
 	override def enterThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(thisContext)
-	override def exitThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(thisContext)
+	override def exitThis(thisContext:ThisContext):Unit = ThisGenerationRule.exit(thisContext)
 
 	override def enterString(stringContext:StringContext):Unit = StringGenerationRule.enter(stringContext)
 	override def exitString(stringContext:StringContext):Unit =	StringGenerationRule.exit(stringContext)
