@@ -62,7 +62,7 @@ expression:
 
 
 
-	(((((member=DOLLAR)? name=IDENTIFIER) | (UNDERSCORE)) (unitParameter)* (inheritance)? COLON) | BACKSLASH)
+	((((((member=DOLLAR)? name=IDENTIFIER) | (UNDERSCORE)) (unitParameter)* (inheritance)? COLON)) | BACKSLASH)
 		(instruction | (BEGIN (instruction SEMICOLON)+ END))
 	#Unit |
 

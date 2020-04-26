@@ -345,9 +345,13 @@ public class LokiParser extends Parser {
 		public InstructionContext instruction(int i) {
 			return getRuleContext(InstructionContext.class,i);
 		}
-		public TerminalNode COLON() { return getToken(LokiParser.COLON, 0); }
 		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
 		public TerminalNode END() { return getToken(LokiParser.END, 0); }
+		public TerminalNode COLON() { return getToken(LokiParser.COLON, 0); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
+		public TerminalNode SEMICOLON(int i) {
+			return getToken(LokiParser.SEMICOLON, i);
+		}
 		public List<UnitParameterContext> unitParameter() {
 			return getRuleContexts(UnitParameterContext.class);
 		}
@@ -356,10 +360,6 @@ public class LokiParser extends Parser {
 		}
 		public InheritanceContext inheritance() {
 			return getRuleContext(InheritanceContext.class,0);
-		}
-		public List<TerminalNode> SEMICOLON() { return getTokens(LokiParser.SEMICOLON); }
-		public TerminalNode SEMICOLON(int i) {
-			return getToken(LokiParser.SEMICOLON, i);
 		}
 		public TerminalNode UNDERSCORE() { return getToken(LokiParser.UNDERSCORE, 0); }
 		public TerminalNode IDENTIFIER() { return getToken(LokiParser.IDENTIFIER, 0); }
@@ -1026,6 +1026,7 @@ public class LokiParser extends Parser {
 				case DOLLAR:
 					{
 					{
+					{
 					setState(88);
 					_errHandler.sync(this);
 					switch (_input.LA(1)) {
@@ -1085,6 +1086,7 @@ public class LokiParser extends Parser {
 
 					setState(99);
 					match(COLON);
+					}
 					}
 					}
 					break;
