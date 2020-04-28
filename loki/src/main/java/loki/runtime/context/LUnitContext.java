@@ -101,9 +101,17 @@ public class LUnitContext
 
 	private @Nullable LUnit checkParameter(@Nullable Integer parameterIndex)
 	{
-		if (parameterIndex == null || parameterIndex < 0 || parameterIndex >= parameters.length) return null;
+		if (parameterIndex == null || parameterIndex < 0) return null;
 
-		return parameters[parameterIndex];
+		if (parameterIndex < parameters.length)	return parameters[parameterIndex];
+
+		if (
+			frameUnit.getParameterDefaultValues() != null &&
+			parameterIndex < frameUnit.getParameterDefaultValues().length
+		)
+			return frameUnit.getParameterDefaultValues()[parameterIndex];
+
+		return null;
 	}
 
 	private ConcurrentMap<String, LUnit> initVariablesIfNecessary()

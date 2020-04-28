@@ -41,6 +41,7 @@ public abstract class LUnit
 	private volatile @Nullable ConcurrentLinkedDeque<LUnit> parents;
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
 	private volatile @Nullable Map<String, Integer> parameterIndexes;
+	private volatile @Nullable LUnit[] parameterDefaultValues;
 
 	public LUnit()
 	{
@@ -114,6 +115,11 @@ public abstract class LUnit
 	public @Nullable Map<String, Integer> getParameterIndexes()
 	{
 		return parameterIndexes;
+	}
+
+	public @Nullable LUnit[] getParameterDefaultValues()
+	{
+		return parameterDefaultValues;
 	}
 
 	public void addMember(LUnit unitMember)
@@ -224,6 +230,14 @@ public abstract class LUnit
 		this.parameterIndexes = parameterIndexes;
 
 		return this;
+	}
+
+	@UnitSetParameterDefaultValue
+	public void setParameterDefaultValue(int parameterIndex, LUnit parameterDefaultValue)
+	{
+		if (parameterDefaultValues == null) parameterDefaultValues = new LUnit[parameterIndexes.size()];
+
+		parameterDefaultValues[parameterIndex] = parameterDefaultValue;
 	}
 
 	@Override

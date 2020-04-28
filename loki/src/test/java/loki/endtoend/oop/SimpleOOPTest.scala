@@ -10,6 +10,14 @@ private[endtoend] class SimpleOOPTest extends EndToEndTest
 	{
 		runTest("oop", "SimpleOOP.test.loki")
 
-		Assertions.assertEquals(List(number(11), number(22)), testValues)
+		Assertions
+			.assertEquals(
+				List(
+					number(11), number(22),
+
+					number(0), number(5), number(10)
+				),
+				testValues
+			)
 	}
 }

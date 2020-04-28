@@ -9,7 +9,6 @@ import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeByteco
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
-import loki.language.parsing.LokiLexer
 import loki.runtime.LType
 import loki.system.SystemSettings
 
@@ -29,6 +28,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 		generateUnit()
 		generateUnitCallMethodUnitContext()
 		generateUnitBody()
+		generateDefaultUnitParameters()
 		generateEmbeddedMembers()
 		decrementObjectCounterForLastUnitInstruction()
 
@@ -159,7 +159,61 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 		def generateUnitBody():Unit = if (unitContext.unitBody() == null) topMethodCall.void()
 
+		def generateDefaultUnitParameters():Unit =
+			for (i <- 0 until unitContext.unitParameter().size)
+			{
+				if (unitContext.unitParameter(i).unitDefaultParameterValue != null)
+				{
+					generationContext
+						.addPreEnterRuleTask(
+							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
+							() =>
+							{
+								topMethodCall
+									.aloadthis()
+									.ldc(i)
+							}
+						)
+
+					generationContext
+						.addPostExitRuleTask(
+							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
+							() =>
+							{
+								topMethodCall
+									.invokeVirtualUnitMethodSetParameterDefaultValue()
+									.decrementObjectStackCounter()
+							}
+						)
+				}
+			}
+
 		def generateEmbeddedMembers():Unit =
+		{
+			for (i <- unitContext.unitParameter().size - 1 to 0 by -1)
+			{
+				if (unitContext.unitParameter(i).unitDefaultParameterValue != null)
+				{
+					generationContext
+						.addPostExitRuleTask(
+							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
+							() =>
+							{
+								for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
+									topMethodCall
+										.aloadUnitMethodCallParameterHost()
+										.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
+										.aloadUnitMethodCallVariableUnitContext()
+										.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
+										.invokeVirtualUnitContextMethodGetVariable()
+										.invokeVirtualUnitMethodSetMember()
+										.pop()
+							}
+						)
+					return
+				}
+			}
+
 			for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
 				topMethodCall
 					.aloadUnitMethodCallParameterHost()
@@ -169,6 +223,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					.invokeVirtualUnitContextMethodGetVariable()
 					.invokeVirtualUnitMethodSetMember()
 					.pop()
+		}
+
 
 		def decrementObjectCounterForLastUnitInstruction():Unit =
 			if (unitContext.unitBody() != null)

@@ -152,7 +152,8 @@ else_ : ELSE BEGIN (instruction SEMICOLON)+ END | ELSE instruction;
 
 
 
-unitParameter: (DOLLAR)? IDENTIFIER;
+unitParameter: DOLLAR? IDENTIFIER unitDefaultParameterValue?;
+unitDefaultParameterValue: EQUALS LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
 unitBody: (instruction | (BEGIN (instruction SEMICOLON)+ END));
 
 

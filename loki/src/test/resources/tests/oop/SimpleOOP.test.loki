@@ -9,3 +9,13 @@ p3 = p1.add(p2)
 
 test(p3.x)
 test(p3.y)
+
+
+
+: Point3D $x = (0) $y = (1 + 2 * 2) $z = (if true: 10 else 0)
+
+p3d = Point3D.new()
+
+test(p3d.x)
+test(p3d.y)
+test(p3d.z)

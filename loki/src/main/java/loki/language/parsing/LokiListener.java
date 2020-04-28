@@ -372,6 +372,16 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitUnitParameter(LokiParser.UnitParameterContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LokiParser#unitDefaultParameterValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnitDefaultParameterValue(LokiParser.UnitDefaultParameterValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LokiParser#unitDefaultParameterValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnitDefaultParameterValue(LokiParser.UnitDefaultParameterValueContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LokiParser#unitBody}.
 	 * @param ctx the parse tree
 	 */

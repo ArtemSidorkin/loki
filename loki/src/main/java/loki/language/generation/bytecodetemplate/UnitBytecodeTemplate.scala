@@ -3,7 +3,7 @@ package loki.language.generation.bytecodetemplate
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors}
-import loki.runtime.compilerapi.unit.{UnitAddParents, UnitCall, UnitCallMember, UnitConstructor, UnitGetCapturedUnitContext, UnitGetIndexedItem, UnitGetMember, UnitGetSuperMember, UnitSetIndexedItem, UnitSetMember, UnitSetParameterNames, UnitSetType, UnitToBoolean, UnitToString}
+import loki.runtime.compilerapi.unit._
 import loki.runtime.unit.unit.LUnit
 
 private[generation] object UnitBytecodeTemplate
@@ -58,6 +58,9 @@ private[generation] object UnitBytecodeTemplate
 
 		def invokeVirtualUnitMethodSetParameterNames():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetParameterNames]))
+
+		def invokeVirtualUnitMethodSetParameterDefaultValue():methodBuilder.type =
+			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetParameterDefaultValue]))
 
 		def invokeVirtualUnitMethodCall():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitCall]))
