@@ -20,29 +20,29 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 	private def unitName:Option[String] = Option(unitContext.name).map(_.getText)
 
+	private def unitParameters = for (i <- 0 until unitContext.unitParameter.size) yield unitContext.unitParameter(i)
+
 	override protected def enterAction():Unit =
 	{
 		pushUnitFrame()
 
-		generateUnitMethodInit()
-		generateUnit()
-		generateUnitCallMethodUnitContext()
-		generateUnitBody()
-		generateDefaultUnitParameters()
-		generateEmbeddedMembers()
+		createUnitConstructor()
+		createAndSaveUnitClassInstance()
+		createUnitCallPrelude()
+
 		decrementObjectCounterForLastUnitInstruction()
 
-		def generateUnitMethodInit():Unit =
+		def createUnitConstructor():Unit =
 		{
 			topClassFrame
 				.addMethodInit(PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(None))
-				.generateSuperConstructorCall()
-				.generateSettingType()
+				.callSuperConstructor()
+				.setUnitType()
 				.`return`()
 
-			implicit class GenerateUnitMethodInit(val methodBuilder:MethodBuilder)
+			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
-				def generateSuperConstructorCall():methodBuilder.type =
+				def callSuperConstructor():methodBuilder.type =
 				{
 					methodBuilder
 						.aloadthis()
@@ -52,17 +52,17 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 				}
 
-				def generateSettingType():methodBuilder.type =
+				def setUnitType():methodBuilder.type =
 				{
 					methodBuilder
 						.aloadthis()
-						.generateUnitTypeCreation()
+						.createUnitType()
 						.invokeVirtualUnitMethodSetType()
 
 					methodBuilder
 				}
 
-				def generateUnitTypeCreation():methodBuilder.type =
+				def createUnitType():methodBuilder.type =
 				{
 					methodBuilder
 						.newType()
@@ -77,17 +77,17 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 			}
 		}
 
-		def generateUnit():Unit =
+		def createAndSaveUnitClassInstance():Unit =
 		{
 			preTopMethodCall
-				.generateUnitSavingTarget()
-				.generateUnitCreation()
-				.generateUnitCallParameterNamesSaving()
-				.generateUnitSaving()
+				.createUnitSavingTarget()
+				.createUnitClassInstance()
+				.saveUnitCallParameterNames()
+				.saveUnitClassInstance()
 
-			implicit class GenerateUnit(val methodBuilder:MethodBuilder)
+			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
-				def generateUnitSavingTarget():methodBuilder.type =
+				def createUnitSavingTarget():methodBuilder.type =
 				{
 					unitName.foreach(_ =>
 						if (isUnitModuleMember || isUnitUnitMember) methodBuilder.aloadUnitMethodCallParameterHost()
@@ -97,7 +97,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 				}
 
-				def generateUnitCreation():methodBuilder.type =
+				def createUnitClassInstance():methodBuilder.type =
 				{
 					methodBuilder
 						.`new`(topClassFrame.internalName)
@@ -109,7 +109,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 				}
 
-				def generateUnitCallParameterNamesSaving():methodBuilder.type =
+				def saveUnitCallParameterNames():methodBuilder.type =
 				{
 					val unitParameterNames:Seq[String] =
 						for (i <- 0 until unitContext.unitParameter().size)
@@ -117,114 +117,142 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 					if (unitParameterNames.nonEmpty)
 					{
-						preTopMethodCall
+						methodBuilder
 							.ldc(unitParameterNames.size)
 							.anewarrayJavaString()
 
 						for (i <- unitParameterNames.indices)
-							preTopMethodCall
+							methodBuilder
 								.dup()
 								.ldc(i)
 								.ldc(unitParameterNames(i))
 								.aastore()
 
-						preTopMethodCall.invokeVirtualUnitMethodSetParameterNames()
+						methodBuilder.invokeVirtualUnitMethodSetParameterNames()
 					}
 
 					methodBuilder
 				}
 
-				def generateUnitSaving():Unit =
+				def saveUnitClassInstance():methodBuilder.type =
+				{
 					unitName.foreach(unitName =>
 					{
-						preTopMethodCall
+						methodBuilder
 							.ldc(unitName)
 							.swap()
 
-						if (isUnitUnitMember || isUnitModuleMember) preTopMethodCall.invokeVirtualUnitMethodSetMember()
-						else preTopMethodCall.invokeVirtualUnitContextMethodSetVariable()
+						if (isUnitUnitMember || isUnitModuleMember) methodBuilder.invokeVirtualUnitMethodSetMember()
+						else methodBuilder.invokeVirtualUnitContextMethodSetVariable()
 					})
+
+					methodBuilder
+				}
 			}
 		}
 
-		def generateUnitCallMethodUnitContext():Unit =
-			topMethodCall
-				.newUnitContext()
-				.dup()
-				.aloadthis()
-				.aloadUnitMethodCallParameterHost()
-				.aloadUnitMethodCallParameterParameters()
-				.invokeInitUnitContext()
-				.astoreUnitMethodCallVariableUnitContext()
-
-		def generateUnitBody():Unit = if (unitContext.unitBody() == null) topMethodCall.void()
-
-		def generateDefaultUnitParameters():Unit =
-			for (i <- 0 until unitContext.unitParameter().size)
-			{
-				if (unitContext.unitParameter(i).unitDefaultParameterValue != null)
-				{
-					generationContext
-						.addPreEnterRuleTask(
-							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
-							() =>
-							{
-								topMethodCall
-									.aloadthis()
-									.ldc(i)
-							}
-						)
-
-					generationContext
-						.addPostExitRuleTask(
-							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
-							() =>
-							{
-								topMethodCall
-									.invokeVirtualUnitMethodSetParameterDefaultValue()
-									.decrementObjectStackCounter()
-							}
-						)
-				}
-			}
-
-		def generateEmbeddedMembers():Unit =
+		def createUnitCallPrelude():Unit =
 		{
-			for (i <- unitContext.unitParameter().size - 1 to 0 by -1)
+			topMethodCall
+				.createUnitCallMethodUnitContext()
+				.createUnitBody()
+				.createDefaultUnitParameters()
+				.createEmbeddedUnitMembers()
+
+			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
-				if (unitContext.unitParameter(i).unitDefaultParameterValue != null)
+				def createUnitCallMethodUnitContext():methodBuilder.type =
 				{
-					generationContext
-						.addPostExitRuleTask(
-							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
-							() =>
-							{
-								for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
-									topMethodCall
-										.aloadUnitMethodCallParameterHost()
-										.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
-										.aloadUnitMethodCallVariableUnitContext()
-										.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
-										.invokeVirtualUnitContextMethodGetVariable()
-										.invokeVirtualUnitMethodSetMember()
-										.pop()
-							}
+					methodBuilder
+						.newUnitContext()
+						.dup()
+						.aloadthis()
+						.aloadUnitMethodCallParameterHost()
+						.aloadUnitMethodCallParameterParameters()
+						.invokeInitUnitContext()
+						.astoreUnitMethodCallVariableUnitContext()
+
+					methodBuilder
+				}
+
+				def createUnitBody():methodBuilder.type =
+				{
+					if (unitContext.unitBody() == null) methodBuilder.void()
+
+					methodBuilder
+				}
+
+				def createDefaultUnitParameters():methodBuilder.type =
+				{
+					for (i <- 0 until unitContext.unitParameter().size)
+					{
+						if (unitContext.unitParameter(i).unitDefaultParameterValue != null)
+						{
+							generationContext
+								.addPreEnterRuleTask(
+									unitContext.unitParameter(i).unitDefaultParameterValue.expression,
+									() =>
+									{
+										methodBuilder
+											.aloadthis()
+											.ldc(i)
+									}
+								)
+
+							generationContext
+								.addPostExitRuleTask(
+									unitContext.unitParameter(i).unitDefaultParameterValue.expression,
+									() =>
+									{
+										methodBuilder
+											.invokeVirtualUnitMethodSetParameterDefaultValue()
+											.decrementObjectStackCounter()
+									}
+								)
+						}
+					}
+
+					methodBuilder
+				}
+
+				def createEmbeddedUnitMembers():methodBuilder.type =
+				{
+					unitParameters
+						.map(_.unitDefaultParameterValue)
+						.flatMap(Option(_))
+						.lastOption
+						.map(unitDefaultParameterValue =>
+							generationContext
+								.addPostExitRuleTask(
+									unitDefaultParameterValue.expression, methodBuilder.getAndSaveEmbeddedUnitMember
+								)
 						)
-					return
+						.getOrElse(methodBuilder.getAndSaveEmbeddedUnitMember())
+
+					methodBuilder
+				}
+
+				def getAndSaveEmbeddedUnitMember():methodBuilder.type =
+				{
+					unitParameters
+						.filter(_.DOLLAR != null)
+						.map(_.IDENTIFIER.getText)
+						.foreach(identifier =>
+						{
+							methodBuilder
+								.aloadUnitMethodCallParameterHost()
+								.ldc(identifier)
+								.aloadUnitMethodCallVariableUnitContext()
+								.ldc(identifier)
+								.invokeVirtualUnitContextMethodGetVariable()
+								.invokeVirtualUnitMethodSetMember()
+								.pop()
+						})
+
+					methodBuilder
 				}
 			}
-
-			for (i <- 0 until unitContext.unitParameter().size if unitContext.unitParameter(i).DOLLAR != null)
-				topMethodCall
-					.aloadUnitMethodCallParameterHost()
-					.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
-					.aloadUnitMethodCallVariableUnitContext()
-					.ldc(unitContext.unitParameter(i).IDENTIFIER().getText)
-					.invokeVirtualUnitContextMethodGetVariable()
-					.invokeVirtualUnitMethodSetMember()
-					.pop()
 		}
-
 
 		def decrementObjectCounterForLastUnitInstruction():Unit =
 			if (unitContext.unitBody() != null)
