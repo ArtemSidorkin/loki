@@ -1,0 +1,26 @@
+Point1 x = (0) y = (0) z = (0):
+	test(x)
+	test(y)
+	test(z)
+
+Point1()
+
+
+
+Point2 x = (1) y = (2) z = (3):
+	test(x)
+	test(y)
+	test(z)
+
+Point2()
+
+
+
+Point3 x = (1) y z = (3):
+	test(x)
+	test(y)
+	test(z)
+
+Point3()
+Point3(10)
+Point3(10, 20)

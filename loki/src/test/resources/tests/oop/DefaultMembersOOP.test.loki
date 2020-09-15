@@ -1,0 +1,39 @@
+:Point1 $x = (0) $y = (0) $z = (0)
+
+p1 = Point1.new()
+
+test(p1.x)
+test(p1.y)
+test(p1.z)
+
+
+
+:Point2 $x = (1) $y = (2) $z = (3)
+
+p2 = Point2.new()
+
+test(p2.x)
+test(p2.y)
+test(p2.z)
+
+
+
+:Point3 $x = (1) $y $z = (3)
+
+p3 = Point3.new()
+
+test(p3.x)
+test(p3.y)
+test(p3.z)
+
+p3 = Point3.new(10)
+
+test(p3.x)
+test(p3.y)
+test(p3.z)
+
+p3 = Point3.new(10, 20)
+
+test(p3.x)
+test(p3.y)
+test(p3.z)
