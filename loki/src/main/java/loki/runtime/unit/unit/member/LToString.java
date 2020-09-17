@@ -15,7 +15,7 @@ public class LToString extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		return host._toString();
 	}

@@ -15,7 +15,7 @@ public class LPrintln extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		if (parameters.length > 0)
 			for (LUnit parameter : parameters) System.out.println(parameter);

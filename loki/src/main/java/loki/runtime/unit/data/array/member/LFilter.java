@@ -7,6 +7,7 @@ import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static loki.runtime.error.LErrors.callbackOperationResultHasWrongType;
@@ -25,7 +26,7 @@ public class LFilter extends LMember
 	}
 
 	@Override
-	public LArray call(LUnit host, LUnit[] parameters)
+	public LArray call(LUnit host, LUnit... parameters)
 	{
 		return
 			new LArray(

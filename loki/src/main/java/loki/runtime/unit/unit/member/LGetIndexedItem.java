@@ -15,7 +15,7 @@ public class LGetIndexedItem extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		return host._getIndexedItem(parameters);
 	}

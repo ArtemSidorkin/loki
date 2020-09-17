@@ -43,7 +43,7 @@ object Executor
 			{
 				val module = createModule(moduleClassName, moduleFilePathname)
 				modules += moduleClassName -> module
-				module.call(module, LUnit.EMPTY_UNIT_ARRAY)
+				module.call(module)
 			}
 		}
 

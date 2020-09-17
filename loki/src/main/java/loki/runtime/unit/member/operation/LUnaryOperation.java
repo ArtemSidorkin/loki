@@ -17,7 +17,7 @@ public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		OPERAND operand = host.asType(operandType);
 

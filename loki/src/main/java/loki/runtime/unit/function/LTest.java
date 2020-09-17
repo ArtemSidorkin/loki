@@ -16,7 +16,7 @@ public class LTest extends LUnit
 	private static final List<LUnit> values = Collections.synchronizedList(new ArrayList<>());
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		values.add(checkCallParameter(parameters, 0));
 		return LVoid.DESCRIPTOR.getInstance();

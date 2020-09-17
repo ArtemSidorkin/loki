@@ -77,7 +77,7 @@ public abstract class LUnit
 			}
 
 			@Override
-			public LUnit call(LUnit host, LUnit[] parameters)
+			public LUnit call(LUnit host, LUnit... parameters)
 			{
 				return LUnit.this.call(host, parameters);
 			}
@@ -181,13 +181,8 @@ public abstract class LUnit
 		return this;
 	}
 
-	public LUnit call(LUnit host, LUnit parameter)
-	{
-		return call(host, new LUnit[] {parameter});
-	}
-
 	@UnitCall
-	public LUnit call(@Compiler LUnit host, @Compiler LUnit[] parameters)
+	public LUnit call(@Compiler LUnit host, @Compiler LUnit... parameters)
 	{
 		return LVoid.DESCRIPTOR.getInstance();
 	}

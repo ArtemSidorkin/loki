@@ -15,7 +15,7 @@ public class LAddParents extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		host._addParents(parameters);
 

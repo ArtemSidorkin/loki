@@ -16,7 +16,7 @@ public class LEquals extends LMember
 	}
 
 	@Override
-	public LBoolean call(LUnit host, LUnit[] parameters)
+	public LBoolean call(LUnit host, LUnit... parameters)
 	{
 		return host._equals(checkCallParameter(parameters, 0));
 	}

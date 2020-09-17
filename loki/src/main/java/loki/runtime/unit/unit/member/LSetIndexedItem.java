@@ -15,7 +15,7 @@ public class LSetIndexedItem extends LMember
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		return host._setIndexedItem(parameters);
 	}

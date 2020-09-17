@@ -65,7 +65,7 @@ public class LVoid extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LErrors.actionIsNotAllowedForUnit("calling", this);
 

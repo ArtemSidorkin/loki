@@ -17,7 +17,7 @@ public class LLoop extends LUnit
 	}
 
 	@Override
-	public LUnit call(LUnit host, LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LUnit iterationCountAsUnit = checkCallParameter(parameters, 0);
 		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LNumber.DESCRIPTOR.getType());

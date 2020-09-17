@@ -28,7 +28,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 	}
 
 	@Override
-	public LUnit call(LUnit host, @Nullable LUnit[] parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LEFT_OPERAND leftOperand = host.asType(leftOperandType);
 		RIGHT_OPERAND rightOperand = checkCallParameter(parameters, 0).asType(rightOperandType);
