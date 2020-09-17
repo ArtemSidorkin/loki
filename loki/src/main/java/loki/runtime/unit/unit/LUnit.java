@@ -12,6 +12,7 @@ import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.member.*;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
+import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Nullable;
 import loki.runtime.util.Polymorphic;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BiConsumer;
 
 import static loki.runtime.util.Polymorphic.Type.*;
 
@@ -179,6 +181,11 @@ public abstract class LUnit
 		return this;
 	}
 
+	public LUnit call(LUnit host, LUnit parameter)
+	{
+		return call(host, new LUnit[] {parameter});
+	}
+
 	@UnitCall
 	public LUnit call(@Compiler LUnit host, @Compiler LUnit[] parameters)
 	{
@@ -249,7 +256,7 @@ public abstract class LUnit
 
 		if (hashCode == null)
 			LErrors
-				.resultOfOperationOfUnitShouldHaveType(
+				.unitOperationResultShouldHaveType(
 					LHashCode.DESCRIPTOR.getType(), this, LNumber.DESCRIPTOR.getType()
 				);
 
@@ -287,7 +294,7 @@ public abstract class LUnit
 
 		if (string == null)
 			LErrors
-				.resultOfOperationOfUnitShouldHaveType(
+				.unitOperationResultShouldHaveType(
 					LToString.DESCRIPTOR.getType(), this, LString.DESCRIPTOR.getType()
 				);
 
@@ -313,6 +320,17 @@ public abstract class LUnit
 	public boolean isType(@Nullable LType type)
 	{
 		return asType(type) != null;
+	}
+
+	public @Nullable <TYPE extends LUnit> TYPE asType(
+		LTypeUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LTypeUnitDescriptor<TYPE>> callbackOnFail
+	)
+	{
+		TYPE type = asType(typeDescriptor.getType());
+
+		if (type == null) callbackOnFail.accept(this, typeDescriptor);
+
+		return type;
 	}
 
 	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
