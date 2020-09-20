@@ -7,11 +7,11 @@ import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static loki.runtime.error.LErrors.callbackOperationResultHasWrongType;
-import static loki.runtime.error.LErrors.hostOperandHasWrongType;
+import static loki.runtime.error.LErrors.callbackResultHasWrongType;
+import static loki.runtime.error.LErrors.hostHasWrongType;
+
 
 public class LFilter extends LMember
 {
@@ -30,7 +30,7 @@ public class LFilter extends LMember
 	{
 		return
 			new LArray(
-				filterItems(host, hostToItems(host), checkCallParameter(parameters, INDEX_OF_PREDICATE_IN_PARAMETERS))
+				filterItems(host, hostToItems(host), getParameter(parameters, INDEX_OF_PREDICATE_IN_PARAMETERS))
 			);
 	}
 
@@ -50,13 +50,13 @@ public class LFilter extends LMember
 				.call(host, item)
 				.asType(
 					LBoolean.DESCRIPTOR,
-					callbackOperationResultHasWrongType(host, DESCRIPTOR, INDEX_OF_PREDICATE_IN_PARAMETERS)
+					callbackResultHasWrongType(host, DESCRIPTOR, INDEX_OF_PREDICATE_IN_PARAMETERS)
 				)
 				.getValue();
 	}
 
 	private ArrayList<LUnit> hostToItems(LUnit host)
 	{
-		return host.asType(LArray.DESCRIPTOR, hostOperandHasWrongType(DESCRIPTOR)).getItems();
+		return host.asType(LArray.DESCRIPTOR, hostHasWrongType(DESCRIPTOR)).getItems();
 	}
 }

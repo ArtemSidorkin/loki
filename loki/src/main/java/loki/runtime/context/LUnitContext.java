@@ -1,6 +1,5 @@
 package loki.runtime.context;
 
-import loki.runtime.LSettings;
 import loki.runtime.compilerapi.unitcontext.UnitContextConstructor;
 import loki.runtime.compilerapi.unitcontext.UnitContextGetAnonymousParameter;
 import loki.runtime.compilerapi.unitcontext.UnitContextGetVariable;
@@ -16,6 +15,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class LUnitContext
 {
+	private static final int LOCAL_VARIABLES_INITIAL_CAPACITY = 8;
+	private static final float LOCAL_VARIABLES_LOAD_FACTOR = 0.75f;
+	private static final int LOCAL_VARIABLES_CONCURRENCY_LEVEL = 1;
+
 	private final LUnit frameUnit;
 	private final LUnit host;
 	private final LUnit[] parameters;
@@ -121,9 +124,7 @@ public class LUnitContext
 			if (localVariables == null)
 				localVariables =
 					new ConcurrentHashMap<> (
-						LSettings.CONTEXT_VARIABLES_INITIAL_CAPACITY,
-						LSettings.CONTEXT_VARIABLES_LOAD_FACTOR,
-						LSettings.CONTEXT_VARIABLES_CONCURRENCY_LEVEL
+						LOCAL_VARIABLES_INITIAL_CAPACITY, LOCAL_VARIABLES_LOAD_FACTOR, LOCAL_VARIABLES_CONCURRENCY_LEVEL
 					);
 		}
 

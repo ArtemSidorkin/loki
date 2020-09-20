@@ -1,37 +1,68 @@
 package loki.runtime.unit.unit;
 
-import loki.runtime.LSettings;
 import loki.runtime.LType;
-import loki.runtime.compilerapi.unit.*;
+import loki.runtime.compilerapi.unit.UnitAddParents;
+import loki.runtime.compilerapi.unit.UnitCall;
+import loki.runtime.compilerapi.unit.UnitCallMember;
+import loki.runtime.compilerapi.unit.UnitConstructor;
+import loki.runtime.compilerapi.unit.UnitGetCapturedUnitContext;
+import loki.runtime.compilerapi.unit.UnitGetIndexedItem;
+import loki.runtime.compilerapi.unit.UnitGetMember;
+import loki.runtime.compilerapi.unit.UnitGetSuperMember;
+import loki.runtime.compilerapi.unit.UnitSetIndexedItem;
+import loki.runtime.compilerapi.unit.UnitSetMember;
+import loki.runtime.compilerapi.unit.UnitSetParameterDefaultValue;
+import loki.runtime.compilerapi.unit.UnitSetParameterNames;
+import loki.runtime.compilerapi.unit.UnitSetType;
+import loki.runtime.compilerapi.unit.UnitToBoolean;
+import loki.runtime.compilerapi.unit.UnitToString;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
-import loki.runtime.unit.unit.member.*;
+import loki.runtime.unit.unit.member.LAddParents;
+import loki.runtime.unit.unit.member.LEquals;
+import loki.runtime.unit.unit.member.LGetIndexedItem;
+import loki.runtime.unit.unit.member.LHashCode;
+import loki.runtime.unit.unit.member.LNew;
+import loki.runtime.unit.unit.member.LSetIndexedItem;
+import loki.runtime.unit.unit.member.LToString;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Nullable;
 import loki.runtime.util.Polymorphic;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 
-import static loki.runtime.util.Polymorphic.Type.*;
+import static loki.runtime.error.LErrors.methodIsNotAllowedForUnit;
+import static loki.runtime.error.LErrors.methodResultHasWrongType;
+import static loki.runtime.error.LErrors.parameterIsMissedForUnit;
+import static loki.runtime.error.LErrors.unitHasNoMember;
+import static loki.runtime.util.Polymorphic.Type.ACCESS;
+import static loki.runtime.util.Polymorphic.Type.COMMON;
+import static loki.runtime.util.Polymorphic.Type.DEFAULT;
 
 @SuppressWarnings("unchecked")
 public abstract class LUnit
 {
 	public static final String PROTOTYPE_NAME = "UnitPrototype";
+
+	public static final int MEMBERS_INITIAL_CAPACITY = 8;
+	public static final float MEMBERS_LOAD_FACTOR = 0.75f;
+	public static final int MEMBERS_CONCURRENCY_LEVEL = 1;
 
 	@Compiler
 	public static final LUnit[] EMPTY_UNIT_ARRAY = {};
@@ -70,18 +101,19 @@ public abstract class LUnit
 	@Polymorphic(COMMON)
 	public LUnit newInstance(LUnit[] parameters)
 	{
-		LUnit newUnit = new LUnit(getCapturedUnitContext())
-		{
+		LUnit newUnit =
+			new LUnit(getCapturedUnitContext())
 			{
-				setType(LUnit.this.getType());
-			}
+				{
+					setType(LUnit.this.getType());
+				}
 
-			@Override
-			public LUnit call(LUnit host, LUnit... parameters)
-			{
-				return LUnit.this.call(host, parameters);
-			}
-		};
+				@Override
+				public LUnit call(LUnit host, LUnit... parameters)
+				{
+					return LUnit.this.call(host, parameters);
+				}
+			};
 
 		newUnit.addParents(this);
 
@@ -92,7 +124,7 @@ public abstract class LUnit
 
 	public static LUnit getPrototype()
 	{
-		initPrototypeIfNecessary();
+		initPrototype();
 
 		return prototype;
 	}
@@ -124,6 +156,11 @@ public abstract class LUnit
 		return parameterDefaultValues;
 	}
 
+	public void addMember(LInstanceUnitDescriptor<?> memberDescriptor)
+	{
+		addMember(memberDescriptor.getInstance());
+	}
+
 	public void addMember(LUnit unitMember)
 	{
 		setMember(unitMember.getType().getName(), unitMember);
@@ -132,20 +169,16 @@ public abstract class LUnit
 	@UnitGetMember
 	public LUnit getMember(String memberName)
 	{
-		if (members != null)
-		{
-			LUnit member = members.get(memberName);
-
-			if (member != null) return member;
-		}
-
-		return getSuperMember(memberName);
+		return Optional
+			.ofNullable(members)
+			.flatMap(members -> Optional.ofNullable(members.get(memberName)))
+			.orElseGet(() -> getSuperMember(memberName));
 	}
 
 	@UnitSetMember
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		initMembersIfNecessary().put(memberName, member);
+		initMembers().put(memberName, member);
 
 		return member;
 	}
@@ -153,22 +186,21 @@ public abstract class LUnit
 	@UnitGetSuperMember
 	public LUnit getSuperMember(String superMemberName)
 	{
-		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initParents().descendingIterator(); parentIterator.hasNext();)
 		{
-			LUnit parent = parentIterator.next();
-			LUnit member = parent.getMember(superMemberName);
+			LUnit member = parentIterator.next().getMember(superMemberName);
 
-			if (member != LVoid.DESCRIPTOR.getInstance()) return member;
+			if (!LVoid.hasInstance(member)) return member;
 		}
 
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
 	}
 
 	@Polymorphic(ACCESS)
 	@UnitAddParents
 	public LUnit addParents(LUnit... parents)
 	{
-		callMember(LAddParents.DESCRIPTOR.getType().getName(), parents);
+		callMember(LAddParents.DESCRIPTOR, parents);
 
 		return this;
 	}
@@ -176,7 +208,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _addParents(LUnit... parents)
 	{
-		initParentsIfNecessary().addAll(Arrays.asList(parents));
+		initParents().addAll(Arrays.asList(parents));
 
 		return this;
 	}
@@ -184,20 +216,29 @@ public abstract class LUnit
 	@UnitCall
 	public LUnit call(@Compiler LUnit host, @Compiler LUnit... parameters)
 	{
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
+	}
+
+	public LUnit callMember(LTypeUnitDescriptor<?> memberDescriptor, LUnit... parameters)
+	{
+		return callMember(memberDescriptor.getType().getName(), parameters);
 	}
 
 	@UnitCallMember
-	public LUnit callMember(String memberName, LUnit[] parameters)
+	public LUnit callMember(String memberName, LUnit... parameters)
 	{
-		return getMember(memberName).call(this, parameters);
+		LUnit member = getMember(memberName);
+
+		if (LVoid.hasInstance(member)) unitHasNoMember(this, memberName);
+
+		return member.call(this, parameters);
 	}
 
 	@Polymorphic(ACCESS)
 	@UnitGetIndexedItem
 	public LUnit getIndexedItem(LUnit index)
 	{
-		return callMember(LGetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
+		return callMember(LGetIndexedItem.DESCRIPTOR, index);
 	}
 
 	@Polymorphic(DEFAULT)
@@ -210,7 +251,7 @@ public abstract class LUnit
 	@UnitSetIndexedItem
 	public LUnit setIndexedItem(LUnit index, LUnit value)
 	{
-		callMember(LSetIndexedItem.DESCRIPTOR.getType().getName(), new LUnit[] {index});
+		callMember(LSetIndexedItem.DESCRIPTOR, index);
 
 		return value;
 	}
@@ -224,12 +265,11 @@ public abstract class LUnit
 	@UnitSetParameterNames
 	public LUnit setParameterNames(String[] parameterNames)
 	{
-		HashMap<String, Integer> parameterIndexes =
-			new HashMap<>(LSettings.UNIT_PARAMETER_NAMES_INITIAL_CAPACITY, LSettings.UNIT_PARAMETER_NAMES_LOAD_FACTOR);
+		Map.Entry<String, Integer>[] entries = new Map.Entry[parameterNames.length];
 
-		for (int i = 0; i < parameterNames.length; i++) parameterIndexes.put(parameterNames[i], i);
+		for (int i = 0; i < parameterNames.length; i++) entries[i] = new AbstractMap.SimpleImmutableEntry<>(parameterNames[i], i);
 
-		this.parameterIndexes = parameterIndexes;
+		this.parameterIndexes = Map.ofEntries(entries);
 
 		return this;
 	}
@@ -246,16 +286,10 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public int hashCode()
 	{
-		LNumber hashCode =
-			callMember(LHashCode.DESCRIPTOR.getType().getName(), EMPTY_UNIT_ARRAY).asType(LNumber.DESCRIPTOR.getType());
-
-		if (hashCode == null)
-			LErrors
-				.unitOperationResultShouldHaveType(
-					LHashCode.DESCRIPTOR.getType(), this, LNumber.DESCRIPTOR.getType()
-				);
-
-		return (int)hashCode.getValue();
+		return (int)
+			callMember(LHashCode.DESCRIPTOR)
+				.asType(LNumber.DESCRIPTOR, methodResultHasWrongType(this, LHashCode.DESCRIPTOR))
+				.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
@@ -270,7 +304,10 @@ public abstract class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return callMember(LEquals.DESCRIPTOR.getType().getName(), new LUnit[] {(LUnit)object}).toBoolean();
+		return
+			callMember(LEquals.DESCRIPTOR, (LUnit)object)
+				.asType(LBoolean.DESCRIPTOR, methodResultHasWrongType(this, LEquals.DESCRIPTOR))
+				.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
@@ -284,32 +321,22 @@ public abstract class LUnit
 	@UnitToString
 	public String toString()
 	{
-		LString string =
-			callMember(LToString.DESCRIPTOR.getType().getName(), EMPTY_UNIT_ARRAY).asType(LString.DESCRIPTOR.getType());
-
-		if (string == null)
-			LErrors
-				.unitOperationResultShouldHaveType(
-					LToString.DESCRIPTOR.getType(), this, LString.DESCRIPTOR.getType()
-				);
-
-		return string.getValue();
+		return
+			callMember(LToString.DESCRIPTOR)
+				.asType(LString.DESCRIPTOR, methodResultHasWrongType(this, LToString.DESCRIPTOR))
+				.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
 	public LString _toString()
 	{
-		return new LString(getType().toString());
+		return new LString(getType().getFullName());
 	}
 
 	@UnitToBoolean
 	public boolean toBoolean()
 	{
-		LBoolean bool = asType(LBoolean.DESCRIPTOR.getType());
-
-		if (bool == null) LErrors.operandShouldHaveType(this, LNumber.DESCRIPTOR.getType());
-
-		return bool.getValue();
+		return asType(LBoolean.DESCRIPTOR, LErrors::unitHasWrongType).getValue();
 	}
 
 	public boolean isType(@Nullable LType type)
@@ -334,7 +361,7 @@ public abstract class LUnit
 
 		if (getType() == type) return (TYPE)this;
 
-		for (Iterator<LUnit> parentIterator = initParentsIfNecessary().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parentAsType = parentIterator.next().asType(type);
 
@@ -344,38 +371,33 @@ public abstract class LUnit
 		return null;
 	}
 
-	protected LUnit checkCallParameter(LUnit[] parameters, int parameterIndex)
+	protected LUnit getParameter(LUnit[] parameters, int parameterIndex)
 	{
-		if (parameterIndex < 0 || parameterIndex >= parameters.length)
-			LErrors.parameterIsMissedForUnit(parameterIndex, this);
+		if (parameterIndex < 0 || parameterIndex >= parameters.length) parameterIsMissedForUnit(this, parameterIndex);
 
 		return parameters[parameterIndex];
 	}
 
-	private ConcurrentMap<String, LUnit> initMembersIfNecessary()
+	private ConcurrentMap<String, LUnit> initMembers()
 	{
 		if (members == null) synchronized(this)
 		{
 			if (members == null)
 				members =
-					new ConcurrentHashMap<>(
-						LSettings.UNIT_MEMBERS_INITIAL_CAPACITY,
-						LSettings.UNIT_MEMBERS_LOAD_FACTOR,
-						LSettings.UNIT_MEMBERS_CONCURRENCY_LEVEL
-					);
+					new ConcurrentHashMap<>(MEMBERS_INITIAL_CAPACITY, MEMBERS_LOAD_FACTOR, MEMBERS_CONCURRENCY_LEVEL);
 		}
 
 		return members;
 	}
 
-	protected ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+	protected ConcurrentLinkedDeque<LUnit> initParents()
 	{
 		if (parents == null) synchronized(this)
 		{
 			if (parents == null)
 			{
 				parents = new ConcurrentLinkedDeque<>();
-				initPrototypeIfNecessary();
+				initPrototype();
 				_addParents(prototype);
 			}
 		}
@@ -383,7 +405,7 @@ public abstract class LUnit
 		return parents;
 	}
 
-	private static void initPrototypeIfNecessary()
+	private static void initPrototype()
 	{
 		if (prototype == null) synchronized(LUnit.class)
 		{
@@ -400,23 +422,23 @@ public abstract class LUnit
 						@Override
 						public LUnit getSuperMember(String superMemberName)
 						{
-							return LVoid.DESCRIPTOR.getInstance();
+							return LVoid.getInstance();
 						}
 
 						@Override
 						public LUnit addParents(LUnit... parents)
 						{
-							LErrors.actionIsNotAllowedForUnit("adding parents", this);
+							methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
 
-							return LVoid.DESCRIPTOR.getInstance();
+							return LVoid.getInstance();
 						}
 
 						@Override
 						public LUnit _addParents(LUnit... parents)
 						{
-							LErrors.actionIsNotAllowedForUnit("adding parents", this);
+							methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
 
-							return LVoid.DESCRIPTOR.getInstance();
+							return LVoid.getInstance();
 						}
 
 						@Override
@@ -428,22 +450,22 @@ public abstract class LUnit
 						}
 
 						@Override
-						protected @Nullable ConcurrentLinkedDeque<LUnit> initParentsIfNecessary()
+						protected @Nullable ConcurrentLinkedDeque<LUnit> initParents()
 						{
 							return null;
 						}
 
 						private void initializeBuiltins()
 						{
-							addMember(LNew.DESCRIPTOR.getInstance());
-							addMember(LAddParents.DESCRIPTOR.getInstance());
-							addMember(LGetIndexedItem.DESCRIPTOR.getInstance());
-							addMember(LSetIndexedItem.DESCRIPTOR.getInstance());
-							addMember(LToString.DESCRIPTOR.getInstance());
-							addMember(LHashCode.DESCRIPTOR.getInstance());
-							addMember(LEquals.DESCRIPTOR.getInstance());
-							addMember(LEqualityUnitBinaryOperation.DESCRIPTOR.getInstance());
-							addMember(LInequalityUnitBinaryOperation.DESCRIPTOR.getInstance());
+							addMember(LNew.DESCRIPTOR);
+							addMember(LAddParents.DESCRIPTOR);
+							addMember(LGetIndexedItem.DESCRIPTOR);
+							addMember(LSetIndexedItem.DESCRIPTOR);
+							addMember(LToString.DESCRIPTOR);
+							addMember(LHashCode.DESCRIPTOR);
+							addMember(LEquals.DESCRIPTOR);
+							addMember(LEqualityUnitBinaryOperation.DESCRIPTOR);
+							addMember(LInequalityUnitBinaryOperation.DESCRIPTOR);
 						}
 					};
 		}

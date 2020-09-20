@@ -18,7 +18,7 @@ public class LTest extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		values.add(checkCallParameter(parameters, 0));
+		values.add(getParameter(parameters, 0));
 		return LVoid.DESCRIPTOR.getInstance();
 	}
 

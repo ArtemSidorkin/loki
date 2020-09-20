@@ -1,14 +1,18 @@
 package loki.runtime.unit.data.bool;
 
+import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.member.operation.binary.LAndBooleanBinaryOperation;
 import loki.runtime.unit.data.bool.member.operation.binary.LOrBooleanBinaryOperation;
 import loki.runtime.unit.data.bool.member.operation.unary.LNegationBooleanUnaryOperation;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.unit.member.LEquals;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
 import loki.runtime.unitdescriptor.LEnumerationUnitDescriptor;
 import loki.runtime.util.Prototype;
+
+import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LBoolean extends LUnit
 {
@@ -57,11 +61,17 @@ public class LBoolean extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit object)
 	{
-		LBoolean boolean_ = valueOf(unit.toBoolean());
+		boolean objectAsBoolean =
+			object
+				.asType(
+					LBoolean.DESCRIPTOR,
+					methodParameterHasWrongType(this, LEquals.DESCRIPTOR, LEquals.INDEX_OF_OBJECT_IN_PARAMETERS)
+				)
+				.getValue();
 
-		return LBoolean.valueOf(value == boolean_.value);
+		return LBoolean.valueOf(value == objectAsBoolean);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LEFT_OPERAND leftOperand = host.asType(leftOperandType);
-		RIGHT_OPERAND rightOperand = checkCallParameter(parameters, 0).asType(rightOperandType);
+		RIGHT_OPERAND rightOperand = getParameter(parameters, 0).asType(rightOperandType);
 
 		if (leftOperand == null || rightOperand == null)
 		{

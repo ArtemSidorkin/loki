@@ -10,6 +10,8 @@ public class LEquals extends LMember
 	public static final LInstanceUnitDescriptor<LEquals> DESCRIPTOR =
 		new LInstanceUnitDescriptor<>("equals", LEquals.class, LEquals::new);
 
+	public static final int INDEX_OF_OBJECT_IN_PARAMETERS = 0;
+
 	private LEquals()
 	{
 		super(DESCRIPTOR.getType());
@@ -18,6 +20,6 @@ public class LEquals extends LMember
 	@Override
 	public LBoolean call(LUnit host, LUnit... parameters)
 	{
-		return host._equals(checkCallParameter(parameters, 0));
+		return host._equals(getParameter(parameters, INDEX_OF_OBJECT_IN_PARAMETERS));
 	}
 }

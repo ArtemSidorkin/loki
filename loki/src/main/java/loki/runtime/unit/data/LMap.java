@@ -43,7 +43,7 @@ public class LMap extends LUnit
 	@Override
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		LUnit key = checkCallParameter(parameters, 0);
+		LUnit key = getParameter(parameters, 0);
 		LUnit item = items.get(key);
 
 		return item != null ? item : LVoid.DESCRIPTOR.getInstance();
@@ -52,8 +52,8 @@ public class LMap extends LUnit
 	@Override
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		LUnit key = checkCallParameter(parameters, 0);
-		LUnit value = checkCallParameter(parameters, 1);
+		LUnit key = getParameter(parameters, 0);
+		LUnit value = getParameter(parameters, 1);
 
 		items.put(key, value);
 

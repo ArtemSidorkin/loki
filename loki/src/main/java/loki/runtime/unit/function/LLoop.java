@@ -19,7 +19,7 @@ public class LLoop extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LUnit iterationCountAsUnit = checkCallParameter(parameters, 0);
+		LUnit iterationCountAsUnit = getParameter(parameters, 0);
 		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LNumber.DESCRIPTOR.getType());
 
 		if (iterationCountAsNumber == null)
@@ -29,9 +29,9 @@ public class LLoop extends LUnit
 			return null;
 		}
 
-		LUnit action = checkCallParameter(parameters, 1);
+		LUnit action = getParameter(parameters, 1);
 
-		for (int i = 0; i < iterationCountAsNumber.getValue(); i++) action.call(host, EMPTY_UNIT_ARRAY);
+		for (int i = 0; i < iterationCountAsNumber.getValue(); i++) action.call(host);
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}

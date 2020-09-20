@@ -10,7 +10,7 @@ public class LType
 	private final String id;
 
 	@TypeConstructor
-	public LType(String name, Class typeClass)
+	public LType(String name, Class<?> typeClass)
 	{
 		this.name = name;
 		this.id = typeClass.getName();

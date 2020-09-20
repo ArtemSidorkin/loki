@@ -19,7 +19,7 @@ public class LUse extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LUnit moduleFilePathnameAsUnit = checkCallParameter(parameters, 0);
+		LUnit moduleFilePathnameAsUnit = getParameter(parameters, 0);
 		LString moduleFilePathnameAsString = moduleFilePathnameAsUnit.asType(LString.DESCRIPTOR.getType());
 
 		if (moduleFilePathnameAsString == null)
