@@ -1,17 +1,24 @@
 package loki.runtime.unit.data.array;
 
-import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.array.member.LFilter;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.unit.member.LGetIndexedItem;
+import loki.runtime.unit.unit.member.LSetIndexedItem;
 import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.unitdescriptor.LUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringJoiner;
+
+import static loki.runtime.error.LErrors.methodParameterHasWrongType;
+import static loki.runtime.error.LErrors.unitHasNoIndexedItem;
 
 public class LArray extends LUnit
 {
@@ -57,7 +64,7 @@ public class LArray extends LUnit
 	@Override
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		int index = getIndexFromCallParameters(parameters);
+		int index = getIndexFromCallParameters(parameters, LGetIndexedItem.DESCRIPTOR);
 
 		return index >= 0 && index < items.size() ? items.get(index) : LVoid.DESCRIPTOR.getInstance();
 	}
@@ -65,9 +72,9 @@ public class LArray extends LUnit
 	@Override
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		int index = getIndexFromCallParameters(parameters);
+		int index = getIndexFromCallParameters(parameters, LSetIndexedItem.DESCRIPTOR);
 
-		if (index < 0 || index >= items.size()) LErrors.unitDoesNotHaveItemWithIndex(this, parameters[0]);
+		if (index < 0 || index >= items.size()) unitHasNoIndexedItem(this, parameters[0]);
 
 		LUnit item = getParameter(parameters, 1);
 
@@ -102,12 +109,12 @@ public class LArray extends LUnit
 		return new LString(stringJoiner.toString());
 	}
 
-	private int getIndexFromCallParameters(LUnit[] parameters)
+	private int getIndexFromCallParameters(LUnit[] parameters, LUnitDescriptor methodDescriptor)
 	{
 		LUnit unitIndex = getParameter(parameters, 0);
-		LNumber numberIndex = unitIndex.asType(LNumber.DESCRIPTOR.getType());
 
-		if (numberIndex == null) LErrors.operandShouldHaveType(unitIndex, LNumber.DESCRIPTOR.getType());
+		LNumber numberIndex =
+			unitIndex.asType(LNumber.DESCRIPTOR, methodParameterHasWrongType(this, methodDescriptor, 0));
 
 		int index = (int)numberIndex.getValue();
 
@@ -118,6 +125,6 @@ public class LArray extends LUnit
 
 	private void initBuiltins()
 	{
-		addMember(LFilter.DESCRIPTOR.getInstance());
+		addMember(LFilter.DESCRIPTOR);
 	}
 }

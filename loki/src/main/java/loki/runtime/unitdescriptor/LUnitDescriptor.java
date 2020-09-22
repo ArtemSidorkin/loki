@@ -1,5 +1,7 @@
 package loki.runtime.unitdescriptor;
 
+import java.util.Objects;
+
 public abstract class LUnitDescriptor
 {
 	private final String name;
@@ -12,5 +14,10 @@ public abstract class LUnitDescriptor
 	public String getName()
 	{
 		return name;
+	}
+
+	public boolean hasName(String name)
+	{
+		return Objects.equals(this.name, name);
 	}
 }

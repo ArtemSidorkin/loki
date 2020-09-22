@@ -11,7 +11,7 @@ public class LNegationNumberUnaryOperation extends LNumberUnaryOperation
 
 	private LNegationNumberUnaryOperation()
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR);
 	}
 
 	@Override

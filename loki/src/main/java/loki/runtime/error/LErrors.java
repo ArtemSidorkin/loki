@@ -1,25 +1,30 @@
 package loki.runtime.error;
 
 import loki.runtime.LType;
+import loki.runtime.unit.member.operation.LOperandPosition;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 public class LErrors
 {
-	public static void unitHasWrongType(LUnit unit, LTypeUnitDescriptor<?> expectedUnitTypeDescriptor)
+	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> hostHasWrongType(LUnitDescriptor method)
 	{
-		unitHasWrongType(unit, expectedUnitTypeDescriptor.getType());
+		return (hostOperand, expectedType) -> hostHasWrongType(hostOperand, method, expectedType);
 	}
 
-
-	public static void unitHasWrongType(LUnit unit, LType expectedUnitType)
+	public static void hostHasWrongType(LUnit host, LUnitDescriptor method, LTypeUnitDescriptor<?> expectedType)
 	{
-		throwException(
-			String.format("Unit has wrong type: unit - '%s', expected unit type - '%s'", unit, expectedUnitType)
-		);
+		hostHasWrongType(host, method.getName(), expectedType.getType());
+	}
+
+	public static void hostHasWrongType(LUnit host, String method, LType expectedType)
+	{
+		throwException("Host has a wrong type", "host", host, "method", method, "expected type", expectedType);
 	}
 
 	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> methodParameterHasWrongType(
@@ -30,7 +35,7 @@ public class LErrors
 	{
 		return
 			(parameterValue, expectedParameterType) ->
-				callbackResultHasWrongType(
+				methodParameterHasWrongType(
 					host, methodDescriptor, parameterIndex, parameterValue, expectedParameterType
 				);
 	}
@@ -53,20 +58,48 @@ public class LErrors
 	)
 	{
 		throwException(
-			String
-				.format(
-					"Method parameter has wrong type: " +
-					"host - '%s', " +
-					"method name - '%s', " +
-					"parameter index - '%s', " +
-					"parameter value - '%s', " +
-					"expected parameter type - '%s'",
-					host,
-					methodName,
-					parameterIndex,
-					parameterValue,
-					expectedParameterType
-				)
+			"Method parameter has a wrong type",
+			"host", host,
+			"method name", methodName,
+			"parameter index", parameterIndex,
+			"parameter value", parameterValue,
+			"expected parameter type", expectedParameterType
+		);
+	}
+
+	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> callbackResultHasWrongType(
+		LUnit host, LUnitDescriptor method, int indexOfCallbackInOperationParameters
+	)
+	{
+		return
+			(result, expectedType) ->
+				callbackResultHasWrongType(host, method, indexOfCallbackInOperationParameters, result, expectedType);
+	}
+
+	public static void callbackResultHasWrongType(
+		LUnit host,
+		LUnitDescriptor method,
+		int indexOfCallbackInOperationParameters,
+		LUnit result,
+		LTypeUnitDescriptor<?> expectedType
+	)
+	{
+		callbackResultHasWrongType(
+			host, method.getName(), indexOfCallbackInOperationParameters, result, expectedType.getType()
+		);
+	}
+
+	public static void callbackResultHasWrongType(
+		LUnit host, String method, int indexOfCallbackInOperationParameters, LUnit result, LType expectedType
+	)
+	{
+		throwException(
+			"Callback result has a wrong type",
+			"host", host,
+			"method", method,
+			"index of callback in method parameters", indexOfCallbackInOperationParameters,
+			"result", result,
+			"expected type", expectedType
 		);
 	}
 
@@ -92,147 +125,110 @@ public class LErrors
 	public static void methodResultHasWrongType(LUnit host, String methodName, LUnit result, LType expectedResultType)
 	{
 		throwException(
-			String
-				.format(
-					"Method result has wrong type: " +
-					"host - '%s', " +
-					"method name - '%s', " +
-					"result - '%s', " +
-					"expected result type - '%s'",
-					host,
-					methodName,
-					result,
-					expectedResultType
-				)
+			"Method result has a wrong type",
+			"host", host,
+			"method name", methodName,
+			"result", result,
+			"expected result type", expectedResultType
 		);
 	}
 
-
-	public static void unitHasNoMember(LUnit unit, String memberName)
-	{
-		throwException(
-			String
-				.format(
-					"Unit has no member: unit - '%s', member name - '%s'",
-					unit,
-					memberName
-				)
-		);
-	}
-
-	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> hostHasWrongType(LUnitDescriptor method)
-	{
-		return (hostOperand, expectedType) -> hostHasWrongType(hostOperand, method, expectedType);
-	}
-
-	public static void hostHasWrongType(LUnit host, LUnitDescriptor method, LTypeUnitDescriptor<?> expectedType)
-	{
-		hostHasWrongType(host, method.getName(), expectedType.getType());
-	}
-
-	public static void hostHasWrongType(LUnit host, String method, LType expectedType)
-	{
-		throwException(
-			String
-				.format(
-					"Host has wrong type: host - '%s', method - '%s', expected type - '%s'", host, method, expectedType
-				)
-		);
-	}
-
-	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> callbackResultHasWrongType(
-		LUnit host, LUnitDescriptor method, int indexOfCallbackInOperationParameters
+	public static <T extends LUnit> BiConsumer<LUnit, LTypeUnitDescriptor<T>> operandHasWrongType(
+		LUnit host, LUnitDescriptor operationDescriptor, LOperandPosition operandPosition
 	)
 	{
 		return
-			(result, expectedType) ->
-				callbackResultHasWrongType(
-					host, method, indexOfCallbackInOperationParameters, result, expectedType
-				);
+			(parameterValue, expectedParameterType) ->
+				operandHasWrongType(host, operationDescriptor, operandPosition, parameterValue, expectedParameterType);
 	}
 
-	public static void callbackResultHasWrongType(
+	public static void operandHasWrongType(
 		LUnit host,
-		LUnitDescriptor method,
-		int indexOfCallbackInOperationParameters,
-		LUnit result,
-		LTypeUnitDescriptor<?> expectedType
+		LUnitDescriptor operationDescriptor,
+		LOperandPosition operandPosition,
+		LUnit operandValue,
+		LTypeUnitDescriptor<?> expectedOperandType
 	)
 	{
-		callbackResultHasWrongType(
-			host, method.getName(), indexOfCallbackInOperationParameters, result, expectedType.getType()
+		operandHasWrongType(
+			host, operationDescriptor.getName(), operandPosition, operandValue, expectedOperandType.getType()
 		);
 	}
 
-	public static void callbackResultHasWrongType(
-		LUnit host, String method, int indexOfCallbackInOperationParameters, LUnit result, LType expectedType
-	)
-	{
-		throwException(
-			String
-				.format(
-					"Callback result has wrong type: " +
-					"host - '%s', " +
-					"method - '%s', " +
-					"index of callback in method parameters - '%s', " +
-					"result - '%s', " +
-					"expected type - '%s'",
-					host,
-					method,
-					indexOfCallbackInOperationParameters,
-					result,
-					expectedType
-				)
-		);
-	}
-
-	public static void operandShouldHaveType(Object unit, LType type)
-	{
-		throwException(String.format("Unit \"%s\" should have type \"%s\"", unit, type));
-	}
-
-	public static void operandsShouldHaveTypes(
-		LUnit leftOperand,
-		LType leftOperandType,
-		LUnit rightOperand,
-		LType rightOperandType
+	public static void operandHasWrongType(
+		LUnit host,
+		String operationName,
+		LOperandPosition operandPosition,
+		LUnit operandValue,
+		LType expectedOperandType
 	)
 	{
 		throwException(
-			String
-				.format("Left operand %s should have type %s, right operand %s should have type %s",
-					leftOperand,
-					leftOperandType,
-					rightOperand,
-					rightOperandType
-				)
+			"Operand has a wrong type",
+			"host", host,
+			"operation name", operationName,
+			"operand position", operandPosition,
+			"operand value", operandValue,
+			"expected operand type", expectedOperandType
 		);
+	}
+
+	public static void unitHasWrongType(LUnit unit, LTypeUnitDescriptor<?> expectedUnitTypeDescriptor)
+	{
+		unitHasWrongType(unit, expectedUnitTypeDescriptor.getType());
+	}
+
+	public static void unitHasWrongType(LUnit unit, LType expectedUnitType)
+	{
+		throwException("Unit has a wrong type", "unit", unit, "expected unit type", expectedUnitType);
+	}
+
+	public static void unitHasNoMember(LUnit unit, String memberName)
+	{
+		throwException("Unit has no member", "unit", unit, "member name", memberName);
+	}
+
+	public static void unitHasNoIndexedItem(LUnit unit, Object index)
+	{
+		throwException("Unit has no indexed item", "unit", unit, "index", index);
 	}
 
 	public static void parameterIsMissedForUnit(LUnit unit, int parameterIndex)
 	{
-		throwException(
-			String.format("Parameter is missed for unit: unit - '%s', parameter index - '%s'", unit, parameterIndex)
-		);
+		throwException("Parameter is missed for unit", "unit", unit, "parameter index", parameterIndex);
 	}
 
-	public static void unitDoesNotHaveItemWithIndex(LUnit unit, Object index)
-	{
-		throwException(String.format("Unit \"%s\" does not have item with index \"%s\"", unit, index));
-	}
-
-	public static void methodIsNotAllowedForUnit(LUnit unit, LUnitDescriptor methodDescriptor)
+	public static <NULL> NULL methodIsNotAllowedForUnit(LUnit unit, LUnitDescriptor methodDescriptor)
 	{
 		methodIsNotAllowedForUnit(unit, methodDescriptor.getName());
+
+		return null;
 	}
 
-	public static void methodIsNotAllowedForUnit(LUnit unit, String method)
+	public static <NULL> NULL methodIsNotAllowedForUnit(LUnit unit, String method)
 	{
-		throwException(String.format("Method is not allowed for unit: unit - '%s', method - '%s'", unit, method));
+		throwException("Method is not allowed for unit", "unit", unit, "method", method);
+
+		return null;
 	}
 
-	private static void throwException(String error)
+	private static void throwException(String error, Object... keysAndValues)
 	{
-		throw new LLokiErrorException(error);
+		throwException(generateExceptionMessage(error, keysAndValues));
+	}
+
+	private static String generateExceptionMessage(String error, Object... keysAndValues)
+	{
+		List<String> parameterDescriptions = new ArrayList<>();
+
+		for (int i = 0; i < keysAndValues.length; i += 2)
+			parameterDescriptions.add(String.format("%s : \"%s\"", keysAndValues[i], keysAndValues[i + 1]));
+
+		return String.format("%s - %s", error, String.join(", ", parameterDescriptions));
+	}
+
+	private static void throwException(String exceptionMessage)
+	{
+		throw new LLokiErrorException(exceptionMessage);
 	}
 }

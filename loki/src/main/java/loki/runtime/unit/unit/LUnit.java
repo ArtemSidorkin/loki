@@ -158,21 +158,17 @@ public abstract class LUnit
 
 	public void addMember(LInstanceUnitDescriptor<?> memberDescriptor)
 	{
-		addMember(memberDescriptor.getInstance());
-	}
-
-	public void addMember(LUnit unitMember)
-	{
-		setMember(unitMember.getType().getName(), unitMember);
+		setMember(memberDescriptor.getName(), memberDescriptor.getInstance());
 	}
 
 	@UnitGetMember
 	public LUnit getMember(String memberName)
 	{
-		return Optional
-			.ofNullable(members)
-			.flatMap(members -> Optional.ofNullable(members.get(memberName)))
-			.orElseGet(() -> getSuperMember(memberName));
+		return
+			Optional
+				.ofNullable(members)
+				.flatMap(members -> Optional.ofNullable(members.get(memberName)))
+				.orElseGet(() -> getSuperMember(memberName));
 	}
 
 	@UnitSetMember
@@ -267,7 +263,8 @@ public abstract class LUnit
 	{
 		Map.Entry<String, Integer>[] entries = new Map.Entry[parameterNames.length];
 
-		for (int i = 0; i < parameterNames.length; i++) entries[i] = new AbstractMap.SimpleImmutableEntry<>(parameterNames[i], i);
+		for (int i = 0; i < parameterNames.length; i++)
+			entries[i] = new AbstractMap.SimpleImmutableEntry<>(parameterNames[i], i);
 
 		this.parameterIndexes = Map.ofEntries(entries);
 
@@ -345,10 +342,10 @@ public abstract class LUnit
 	}
 
 	public @Nullable <TYPE extends LUnit> TYPE asType(
-		LTypeUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LTypeUnitDescriptor<TYPE>> callbackOnFail
+		@Nullable LTypeUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LTypeUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
-		TYPE type = asType(typeDescriptor.getType());
+		TYPE type = asType(typeDescriptor != null ? typeDescriptor.getType() : null);
 
 		if (type == null) callbackOnFail.accept(this, typeDescriptor);
 

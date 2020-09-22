@@ -1,13 +1,16 @@
 package loki.runtime.unit.data.singleton;
 
 import loki.runtime.compilerapi.common.VoidGetInstance;
-import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.bool.LBoolean;
+import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.LAddParents;
+import loki.runtime.unit.unit.member.LHashCode;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+
+import static loki.runtime.error.LErrors.methodIsNotAllowedForUnit;
 
 public class LVoid extends LUnit
 {
@@ -33,63 +36,51 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit newInstance(LUnit[] parameters)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, "newInstance");
-
-		return null;
+		return methodIsNotAllowedForUnit(this, "newInstance");
 	}
 
 	@Override
 	public LUnit getMember(String memberName)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, "getMember");
-
-		return null;
+		return methodIsNotAllowedForUnit(this, "getMember");
 	}
 
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, "setMember");
-
-		return null;
+		return methodIsNotAllowedForUnit(this, "setMember");
 	}
 
 	@Override
 	public LUnit getSuperMember(String superMemberName)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, "getSuperMember");
-
-		return null;
+		return methodIsNotAllowedForUnit(this, "getSuperMember");
 	}
 
 	@Override
 	public LUnit addParents(LUnit... parents)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
-
-		return null;
+		return methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LErrors.methodIsNotAllowedForUnit(this, "call");
-
-		return null;
+		return methodIsNotAllowedForUnit(this, "call");
 	}
 
 	@Override
 	public LUnit callMember(String memberName, LUnit... parameters)
 	{
-		if (LEqualityUnitBinaryOperation.DESCRIPTOR.getName().equals(memberName))
-			return LBoolean.valueOf(this == getParameter(parameters, 0));
+		if (LEqualityUnitBinaryOperation.DESCRIPTOR.hasName(memberName))
+			return LBoolean.valueOf(hasInstance(getParameter(parameters, 0)));
 
-		if (LInequalityUnitBinaryOperation.DESCRIPTOR.getName().equals(memberName))
-			return LBoolean.valueOf(this != getParameter(parameters, 0));
+		if (LInequalityUnitBinaryOperation.DESCRIPTOR.hasName(memberName))
+			return LBoolean.valueOf(!hasInstance(getParameter(parameters, 0)));
 
-		LErrors.methodIsNotAllowedForUnit(this, "callMember");
+		if (LHashCode.DESCRIPTOR.hasName(memberName)) return new LNumber(hashCode());
 
-		return null;
+		return methodIsNotAllowedForUnit(this, "callMember");
 	}
 
 	@Override

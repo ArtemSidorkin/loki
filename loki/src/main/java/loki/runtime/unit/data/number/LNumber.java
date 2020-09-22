@@ -63,16 +63,16 @@ public class LNumber extends LUnit
 
 	private void initBuiltins()
 	{
-		addMember(LNegationNumberUnaryOperation.DESCRIPTOR.getInstance());
-		addMember(LMultiplicationNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LDivisionNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LAdditionNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LSubtractionNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LEqualityNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LInequalityNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LGreaterThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LLessThanEqualsNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LGreaterThanNumberBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LLessThanNumberBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LNegationNumberUnaryOperation.DESCRIPTOR);
+		addMember(LMultiplicationNumberBinaryOperation.DESCRIPTOR);
+		addMember(LDivisionNumberBinaryOperation.DESCRIPTOR);
+		addMember(LAdditionNumberBinaryOperation.DESCRIPTOR);
+		addMember(LSubtractionNumberBinaryOperation.DESCRIPTOR);
+		addMember(LEqualityNumberBinaryOperation.DESCRIPTOR);
+		addMember(LInequalityNumberBinaryOperation.DESCRIPTOR);
+		addMember(LGreaterThanEqualsNumberBinaryOperation.DESCRIPTOR);
+		addMember(LLessThanEqualsNumberBinaryOperation.DESCRIPTOR);
+		addMember(LGreaterThanNumberBinaryOperation.DESCRIPTOR);
+		addMember(LLessThanNumberBinaryOperation.DESCRIPTOR);
 	}
 }

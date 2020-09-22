@@ -1,6 +1,5 @@
 package loki.runtime.unit.data.bool;
 
-import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.member.operation.binary.LAndBooleanBinaryOperation;
 import loki.runtime.unit.data.bool.member.operation.binary.LOrBooleanBinaryOperation;
@@ -82,8 +81,8 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		addMember(LNegationBooleanUnaryOperation.DESCRIPTOR.getInstance());
-		addMember(LAndBooleanBinaryOperation.DESCRIPTOR.getInstance());
-		addMember(LOrBooleanBinaryOperation.DESCRIPTOR.getInstance());
+		addMember(LNegationBooleanUnaryOperation.DESCRIPTOR);
+		addMember(LAndBooleanBinaryOperation.DESCRIPTOR);
+		addMember(LOrBooleanBinaryOperation.DESCRIPTOR);
 	}
 }

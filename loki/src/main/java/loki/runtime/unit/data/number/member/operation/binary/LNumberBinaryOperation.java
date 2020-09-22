@@ -8,6 +8,6 @@ public abstract class LNumberBinaryOperation extends LBinaryOperation<LNumber, L
 {
 	protected LNumberBinaryOperation(LType type)
 	{
-		super(type, LNumber.DESCRIPTOR.getType(), LNumber.DESCRIPTOR.getType());
+		super(type, LNumber.DESCRIPTOR, LNumber.DESCRIPTOR);
 	}
 }

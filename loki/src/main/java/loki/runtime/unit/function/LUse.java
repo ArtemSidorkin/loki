@@ -1,10 +1,11 @@
 package loki.runtime.unit.function;
 
 import loki.Executor;
-import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+
+import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LUse extends LUnit
 {
@@ -20,14 +21,8 @@ public class LUse extends LUnit
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LUnit moduleFilePathnameAsUnit = getParameter(parameters, 0);
-		LString moduleFilePathnameAsString = moduleFilePathnameAsUnit.asType(LString.DESCRIPTOR.getType());
-
-		if (moduleFilePathnameAsString == null)
-		{
-			LErrors.operandShouldHaveType(moduleFilePathnameAsUnit, LString.DESCRIPTOR.getType());
-
-			return null;
-		}
+		LString moduleFilePathnameAsString =
+			moduleFilePathnameAsUnit.asType(LString.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, 0));
 
 		LUnit module = Executor.apply(moduleFilePathnameAsString.getValue());
 

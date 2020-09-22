@@ -8,6 +8,6 @@ public abstract class LBooleanBinaryOperation extends LBinaryOperation<LBoolean,
 {
 	protected LBooleanBinaryOperation(LType type)
 	{
-		super(type, LBoolean.DESCRIPTOR.getType(), LBoolean.DESCRIPTOR.getType());
+		super(type, LBoolean.DESCRIPTOR, LBoolean.DESCRIPTOR);
 	}
 }

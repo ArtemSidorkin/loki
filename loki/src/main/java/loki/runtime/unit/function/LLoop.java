@@ -1,10 +1,11 @@
 package loki.runtime.unit.function;
 
-import loki.runtime.error.LErrors;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+
+import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LLoop extends LUnit
 {
@@ -20,14 +21,8 @@ public class LLoop extends LUnit
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LUnit iterationCountAsUnit = getParameter(parameters, 0);
-		LNumber iterationCountAsNumber = iterationCountAsUnit.asType(LNumber.DESCRIPTOR.getType());
-
-		if (iterationCountAsNumber == null)
-		{
-			LErrors.operandShouldHaveType(iterationCountAsUnit, LNumber.DESCRIPTOR.getType());
-
-			return null;
-		}
+		LNumber iterationCountAsNumber =
+			iterationCountAsUnit.asType(LNumber.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, 0));
 
 		LUnit action = getParameter(parameters, 1);
 
