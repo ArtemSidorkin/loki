@@ -4,7 +4,7 @@ import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
 
@@ -14,8 +14,8 @@ import java.util.StringJoiner;
 
 public class LMap extends LUnit
 {
-	public static final LDataUnitDescriptor<LMap> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Map", "MapPrototype", LMap.class, LMap::new);
+	public static final LPrototypeUnitDescriptor<LMap> DESCRIPTOR =
+		new LPrototypeUnitDescriptor<>("Map", "MapPrototype", LMap.class, LMap::new);
 
 	private final Map<LUnit, LUnit> items = new LinkedHashMap<>();
 

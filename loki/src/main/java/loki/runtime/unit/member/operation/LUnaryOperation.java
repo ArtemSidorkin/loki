@@ -2,28 +2,28 @@ package loki.runtime.unit.member.operation;
 
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
+import loki.runtime.unitdescriptor.LUnitDescriptor;
 
 import static loki.runtime.error.LErrors.operandHasWrongType;
 import static loki.runtime.unit.member.operation.LOperandPosition.SOLE;
 
 public abstract class LUnaryOperation<OPERAND extends LUnit> extends LMember
 {
-	private LTypeUnitDescriptor<?> typeDescriptor;
-	private LTypeUnitDescriptor<OPERAND> operandTypeDescriptor;
+	private LUnitDescriptor<?> unitDescriptor;
+	private LUnitDescriptor<OPERAND> operandTypeDescriptor;
 
-	protected LUnaryOperation(LTypeUnitDescriptor<?> typeDescriptor, LTypeUnitDescriptor<OPERAND> operandTypeDescriptor)
+	protected LUnaryOperation(LUnitDescriptor<?> unitDescriptor, LUnitDescriptor<OPERAND> operandTypeDescriptor)
 	{
-		super(typeDescriptor.getType());
+		super(unitDescriptor.getType());
 
-		this.typeDescriptor = typeDescriptor;
+		this.unitDescriptor = unitDescriptor;
 		this.operandTypeDescriptor = operandTypeDescriptor;
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		return execute(host.asType(operandTypeDescriptor, operandHasWrongType(host, typeDescriptor, SOLE)));
+		return execute(host.asType(operandTypeDescriptor, operandHasWrongType(host, unitDescriptor, SOLE)));
 	}
 
 	protected abstract LUnit execute(OPERAND operand);

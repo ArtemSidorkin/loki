@@ -10,6 +10,8 @@ import loki.runtime.unit.data.singleton.LNone;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.function.*;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,46 +20,7 @@ import java.util.function.Supplier;
 
 public class LBuiltins
 {
-	private static final Map<String, Supplier<LUnit>> VALUES =
-		Collections
-			.unmodifiableMap(
-				new HashMap<String, Supplier<LUnit>>()
-				{
-					{
-						initializePrototypes();
-						initializeValues();
-						initializeFunctions();
-					}
-
-					void initializeValues()
-					{
-						put(LVoid.DESCRIPTOR.getName(), LVoid.DESCRIPTOR::getInstance);
-						put(LNone.DESCRIPTOR.getName(), LNone.DESCRIPTOR::getInstance);
-						put(LBoolean.TRUE.getName(), LBoolean.TRUE::getInstance);
-						put(LBoolean.FALSE.getName(), LBoolean.FALSE::getInstance);
-					}
-
-					void initializePrototypes()
-					{
-						put(LUnit.PROTOTYPE_NAME, LUnit::getPrototype);
-						put(LBoolean.DESCRIPTOR.getPrototypeName(), LBoolean.DESCRIPTOR::getPrototype);
-						put(LNumber.DESCRIPTOR.getPrototypeName(), LNumber.DESCRIPTOR::getPrototype);
-						put(LString.DESCRIPTOR.getPrototypeName(), LString.DESCRIPTOR::getPrototype);
-						put(LArray.DESCRIPTOR.getPrototypeName(), LArray.DESCRIPTOR::getPrototype);
-						put(LMap.DESCRIPTOR.getPrototypeName(), LMap.DESCRIPTOR::getPrototype);
-						put(LObject.DESCRIPTOR.getPrototypeName(), LObject.DESCRIPTOR::getPrototype);
-					}
-
-					void initializeFunctions()
-					{
-						put(LTest.DESCRIPTOR.getName(), LTest.DESCRIPTOR::getInstance);
-						put(LUse.DESCRIPTOR.getName(), LUse.DESCRIPTOR::getInstance);
-						put(LLoop.DESCRIPTOR.getName(), LLoop.DESCRIPTOR::getInstance);
-						put(LTimeInNanoseconds.DESCRIPTOR.getName(), LTimeInNanoseconds.DESCRIPTOR::getInstance);
-						put(LPrintln.DESCRIPTOR.getName(), LPrintln.DESCRIPTOR::getInstance);
-					}
-				}
-			);
+	private static final Map<String, Supplier<LUnit>> VALUES = Collections.unmodifiableMap(new Container());
 
 	public static boolean contain(String name)
 	{
@@ -67,5 +30,63 @@ public class LBuiltins
 	public static LUnit get(String name)
 	{
 		return VALUES.get(name).get();
+	}
+
+	private static class Container extends HashMap<String, Supplier<LUnit>>
+	{
+		{
+			initializePrototypes();
+			initializeInstances();
+		}
+
+		void initializePrototypes()
+		{
+			put(LUnit.PROTOTYPE_NAME, LUnit::getPrototype);
+
+			initializePrototype(LBoolean.DESCRIPTOR);
+			initializePrototype(LNumber.DESCRIPTOR);
+			initializePrototype(LString.DESCRIPTOR);
+			initializePrototype(LArray.DESCRIPTOR);
+			initializePrototype(LMap.DESCRIPTOR);
+			initializePrototype(LObject.DESCRIPTOR);
+		}
+
+		void initializeInstances()
+		{
+			initializeSingletons();
+			initializeEnumerations();
+			initializeFunctions();
+		}
+
+		void initializeSingletons()
+		{
+			initializeInstance(LVoid.DESCRIPTOR);
+			initializeInstance(LNone.DESCRIPTOR);
+		}
+
+		void initializeEnumerations()
+		{
+			initializeInstance(LBoolean.TRUE);
+			initializeInstance(LBoolean.FALSE);
+		}
+
+		void initializeFunctions()
+		{
+			initializeInstance(LTest.DESCRIPTOR);
+			initializeInstance(LUse.DESCRIPTOR);
+			initializeInstance(LLoop.DESCRIPTOR);
+			initializeInstance(LTimeInNanoseconds.DESCRIPTOR);
+			initializeInstance(LPrintln.DESCRIPTOR);
+		}
+
+		void initializePrototype(LPrototypeUnitDescriptor<?> prototypeUnitDescriptor)
+		{
+			put(prototypeUnitDescriptor.getPrototypeName(), prototypeUnitDescriptor::getPrototype);
+		}
+
+		void initializeInstance(LInstanceUnitDescriptor<?> instanceUnitDescriptor)
+		{
+			put(instanceUnitDescriptor.getName(), instanceUnitDescriptor::getInstance);
+		}
 	}
 }

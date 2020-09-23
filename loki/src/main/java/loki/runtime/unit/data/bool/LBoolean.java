@@ -7,22 +7,19 @@ import loki.runtime.unit.data.bool.member.operation.unary.LNegationBooleanUnaryO
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.LEquals;
-import loki.runtime.unitdescriptor.LDataUnitDescriptor;
-import loki.runtime.unitdescriptor.LEnumerationUnitDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
+import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 import loki.runtime.util.Prototype;
 
 import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LBoolean extends LUnit
 {
-	public static final LDataUnitDescriptor<LBoolean> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
+	public static final LPrototypeUnitDescriptor<LBoolean> DESCRIPTOR =
+		new LPrototypeUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
 
-	public static final LEnumerationUnitDescriptor<LBoolean> TRUE =
-		new LEnumerationUnitDescriptor<>("true", new LBoolean(true));
-
-	public static final LEnumerationUnitDescriptor<LBoolean> FALSE =
-		new LEnumerationUnitDescriptor<>("false", new LBoolean(false));
+	public static final LInstanceUnitDescriptor<LBoolean> TRUE = createInstanceDescriptor(true);
+	public static final LInstanceUnitDescriptor<LBoolean> FALSE = createInstanceDescriptor(false);
 
 	private boolean value;
 
@@ -46,6 +43,11 @@ public class LBoolean extends LUnit
 	public static LBoolean valueOf(boolean value)
 	{
 		return value ? TRUE.getInstance() : FALSE.getInstance();
+	}
+
+	private static LInstanceUnitDescriptor<LBoolean> createInstanceDescriptor(boolean value)
+	{
+		return new LInstanceUnitDescriptor<>(String.valueOf(value), LBoolean.class, () -> new LBoolean(value));
 	}
 
 	public boolean getValue()

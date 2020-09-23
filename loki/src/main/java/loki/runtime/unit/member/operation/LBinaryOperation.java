@@ -3,7 +3,7 @@ package loki.runtime.unit.member.operation;
 import loki.runtime.LType;
 import loki.runtime.unit.member.LMember;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
+import loki.runtime.unitdescriptor.LUnitDescriptor;
 import loki.runtime.util.Nullable;
 
 import static loki.runtime.error.LErrors.operandHasWrongType;
@@ -12,8 +12,8 @@ import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
 
 public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit> extends LMember
 {
-	protected final @Nullable LTypeUnitDescriptor<LEFT_OPERAND> leftOperandTypeDescriptor;
-	protected final @Nullable LTypeUnitDescriptor<RIGHT_OPERAND> rightOperandTypeDescriptor;
+	protected final @Nullable LUnitDescriptor<LEFT_OPERAND> leftOperandUnitDescriptor;
+	protected final @Nullable LUnitDescriptor<RIGHT_OPERAND> rightOperandUnitDescriptor;
 
 	protected LBinaryOperation(LType type)
 	{
@@ -22,24 +22,24 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 
 	protected LBinaryOperation(
 		LType type,
-		@Nullable LTypeUnitDescriptor<LEFT_OPERAND> leftOperandTypeDescriptor,
-		@Nullable LTypeUnitDescriptor<RIGHT_OPERAND> rightOperandTypeDescriptor
+		@Nullable LUnitDescriptor<LEFT_OPERAND> leftOperandUnitDescriptor,
+		@Nullable LUnitDescriptor<RIGHT_OPERAND> rightOperandUnitDescriptor
 	)
 	{
 		super(type);
-		this.leftOperandTypeDescriptor = leftOperandTypeDescriptor;
-		this.rightOperandTypeDescriptor = rightOperandTypeDescriptor;
+		this.leftOperandUnitDescriptor = leftOperandUnitDescriptor;
+		this.rightOperandUnitDescriptor = rightOperandUnitDescriptor;
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		LEFT_OPERAND leftOperand =
-			host.asType(leftOperandTypeDescriptor, operandHasWrongType(host, leftOperandTypeDescriptor, LEFT));
+			host.asType(leftOperandUnitDescriptor, operandHasWrongType(host, leftOperandUnitDescriptor, LEFT));
 
 		RIGHT_OPERAND rightOperand =
 			getParameter(parameters, 0)
-				.asType(rightOperandTypeDescriptor, operandHasWrongType(host, rightOperandTypeDescriptor, RIGHT));
+				.asType(rightOperandUnitDescriptor, operandHasWrongType(host, rightOperandUnitDescriptor, RIGHT));
 
 		return execute(leftOperand, rightOperand);
 	}

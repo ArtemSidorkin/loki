@@ -32,7 +32,7 @@ import loki.runtime.unit.unit.member.LToString;
 import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.unitdescriptor.LTypeUnitDescriptor;
+import loki.runtime.unitdescriptor.LUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Nullable;
 import loki.runtime.util.Polymorphic;
@@ -47,9 +47,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 
-import static loki.runtime.error.LErrors.methodIsNotAllowedForUnit;
 import static loki.runtime.error.LErrors.methodResultHasWrongType;
-import static loki.runtime.error.LErrors.parameterIsMissedForUnit;
+import static loki.runtime.error.LErrors.unitHasNoParameter;
 import static loki.runtime.error.LErrors.unitHasNoMember;
 import static loki.runtime.util.Polymorphic.Type.ACCESS;
 import static loki.runtime.util.Polymorphic.Type.COMMON;
@@ -215,7 +214,7 @@ public abstract class LUnit
 		return LVoid.getInstance();
 	}
 
-	public LUnit callMember(LTypeUnitDescriptor<?> memberDescriptor, LUnit... parameters)
+	public LUnit callMember(LUnitDescriptor<?> memberDescriptor, LUnit... parameters)
 	{
 		return callMember(memberDescriptor.getType().getName(), parameters);
 	}
@@ -342,7 +341,7 @@ public abstract class LUnit
 	}
 
 	public @Nullable <TYPE extends LUnit> TYPE asType(
-		@Nullable LTypeUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LTypeUnitDescriptor<TYPE>> callbackOnFail
+		@Nullable LUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
 		TYPE type = asType(typeDescriptor != null ? typeDescriptor.getType() : null);
@@ -370,7 +369,7 @@ public abstract class LUnit
 
 	protected LUnit getParameter(LUnit[] parameters, int parameterIndex)
 	{
-		if (parameterIndex < 0 || parameterIndex >= parameters.length) parameterIsMissedForUnit(this, parameterIndex);
+		if (parameterIndex < 0 || parameterIndex >= parameters.length) unitHasNoParameter(this, parameterIndex);
 
 		return parameters[parameterIndex];
 	}
@@ -425,7 +424,7 @@ public abstract class LUnit
 						@Override
 						public LUnit addParents(LUnit... parents)
 						{
-							methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
+							unitHasNoMember(this, LAddParents.DESCRIPTOR);
 
 							return LVoid.getInstance();
 						}
@@ -433,7 +432,7 @@ public abstract class LUnit
 						@Override
 						public LUnit _addParents(LUnit... parents)
 						{
-							methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
+							unitHasNoMember(this, LAddParents.DESCRIPTOR);
 
 							return LVoid.getInstance();
 						}

@@ -10,7 +10,7 @@ import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperati
 import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
 import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
 
-import static loki.runtime.error.LErrors.methodIsNotAllowedForUnit;
+import static loki.runtime.error.LErrors.unitHasNoMember;
 
 public class LVoid extends LUnit
 {
@@ -36,37 +36,37 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit newInstance(LUnit[] parameters)
 	{
-		return methodIsNotAllowedForUnit(this, "newInstance");
+		return unitHasNoMember(this, "newInstance");
 	}
 
 	@Override
 	public LUnit getMember(String memberName)
 	{
-		return methodIsNotAllowedForUnit(this, "getMember");
+		return unitHasNoMember(this, "getMember");
 	}
 
 	@Override
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		return methodIsNotAllowedForUnit(this, "setMember");
+		return unitHasNoMember(this, "setMember");
 	}
 
 	@Override
 	public LUnit getSuperMember(String superMemberName)
 	{
-		return methodIsNotAllowedForUnit(this, "getSuperMember");
+		return unitHasNoMember(this, "getSuperMember");
 	}
 
 	@Override
 	public LUnit addParents(LUnit... parents)
 	{
-		return methodIsNotAllowedForUnit(this, LAddParents.DESCRIPTOR);
+		return unitHasNoMember(this, LAddParents.DESCRIPTOR);
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		return methodIsNotAllowedForUnit(this, "call");
+		return unitHasNoMember(this, "call");
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class LVoid extends LUnit
 
 		if (LHashCode.DESCRIPTOR.hasName(memberName)) return new LNumber(hashCode());
 
-		return methodIsNotAllowedForUnit(this, "callMember");
+		return unitHasNoMember(this, "callMember");
 	}
 
 	@Override

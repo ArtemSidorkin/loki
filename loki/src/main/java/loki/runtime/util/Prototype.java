@@ -7,5 +7,4 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.CONSTRUCTOR})
-public @interface Prototype
-{}
+public @interface Prototype {}

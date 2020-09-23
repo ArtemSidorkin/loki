@@ -5,12 +5,12 @@ import loki.runtime.unit.unit.LUnit;
 
 import java.util.function.Supplier;
 
-public class LDataUnitDescriptor<UNIT extends LUnit> extends LTypeUnitDescriptor<UNIT>
+public class LPrototypeUnitDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UNIT>
 {
 	private final String prototypeName;
 	private final LType prototypeType;
 
-	public LDataUnitDescriptor(String name, String prototypeName, Class<UNIT> typeClass, Supplier<UNIT> creator)
+	public LPrototypeUnitDescriptor(String name, String prototypeName, Class<UNIT> typeClass, Supplier<UNIT> creator)
 	{
 		super(name, typeClass, creator);
 

@@ -8,7 +8,7 @@ import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.LGetIndexedItem;
 import loki.runtime.unit.unit.member.LSetIndexedItem;
-import loki.runtime.unitdescriptor.LDataUnitDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
 import loki.runtime.util.Compiler;
 import loki.runtime.util.Prototype;
@@ -22,8 +22,8 @@ import static loki.runtime.error.LErrors.unitHasNoIndexedItem;
 
 public class LArray extends LUnit
 {
-	public static final LDataUnitDescriptor<LArray> DESCRIPTOR =
-		new LDataUnitDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
+	public static final LPrototypeUnitDescriptor<LArray> DESCRIPTOR =
+		new LPrototypeUnitDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
 
 	private final ArrayList<LUnit> items;
 

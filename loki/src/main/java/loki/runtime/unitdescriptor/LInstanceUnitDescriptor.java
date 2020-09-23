@@ -4,7 +4,7 @@ import loki.runtime.unit.unit.LUnit;
 
 import java.util.function.Supplier;
 
-public class LInstanceUnitDescriptor<UNIT extends LUnit> extends LTypeUnitDescriptor<UNIT>
+public class LInstanceUnitDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UNIT>
 {
 	public LInstanceUnitDescriptor(String name, Class<UNIT> typeClass, Supplier<UNIT> creator)
 	{
