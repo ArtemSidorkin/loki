@@ -18,7 +18,19 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.member != null
 	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.member != null
 
-	private def unitName:Option[String] = Option(unitContext.name).map(_.getText)
+	private def unitName:String =
+	{
+		Option(unitContext.name)
+			.map(_.getText)
+			.orElse(
+				Option(unitContext.UNDERSCORE())
+					.map(_.getText)
+					.orElse(Option(unitContext.BACKSLASH()).map(_.getText))
+			)
+			.get
+	}
+
+	private def isAnonymous:Boolean = unitContext.UNDERSCORE != null || unitContext.BACKSLASH != null
 
 	private def unitParameters = for (i <- 0 until unitContext.unitParameter.size) yield unitContext.unitParameter(i)
 
@@ -67,7 +79,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 						.newType()
 						.dup()
-						.ldc(unitName.getOrElse(LType.ANONYMOUS_TYPE_NAME))
+						.ldc(unitName)
 						.aloadthis()
 						.invokeVirtualJavaObjectMethodGetClass()
 						.invokeInitType()
@@ -89,10 +101,9 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 			{
 				def createUnitSavingTarget():methodBuilder.type =
 				{
-					unitName.foreach(_ =>
+					if (!isAnonymous)
 						if (isUnitModuleMember || isUnitUnitMember) methodBuilder.aloadUnitMethodCallParameterHost()
 						else methodBuilder.aloadUnitMethodCallVariableUnitContext()
-					)
 
 					methodBuilder
 				}
@@ -136,7 +147,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 				def saveUnitClassInstance():methodBuilder.type =
 				{
-					unitName.foreach(unitName =>
+					if (!isAnonymous)
 					{
 						methodBuilder
 							.ldc(unitName)
@@ -144,7 +155,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 						if (isUnitUnitMember || isUnitModuleMember) methodBuilder.invokeVirtualUnitMethodSetMember()
 						else methodBuilder.invokeVirtualUnitContextMethodSetVariable()
-					})
+					}
+
 
 					methodBuilder
 				}

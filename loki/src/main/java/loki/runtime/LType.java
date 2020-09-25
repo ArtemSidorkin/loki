@@ -4,8 +4,6 @@ import loki.runtime.compilerapi.type.TypeConstructor;
 
 public class LType
 {
-	public static final String ANONYMOUS_TYPE_NAME = "\\";
-
 	private final String name;
 	private final String id;
 

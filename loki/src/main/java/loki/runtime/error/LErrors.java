@@ -48,18 +48,18 @@ public class LErrors
 		LUnit host,
 		LUnitDescriptor<?> methodDescriptor,
 		int parameterIndex,
-		LUnit parameterValue,
+		LUnit parameter,
 		LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
 		return
 			methodParameterHasWrongType(
-				host, methodDescriptor.getName(), parameterIndex, parameterValue, expectedTypeDescriptor.getType()
+				host, methodDescriptor.getName(), parameterIndex, parameter, expectedTypeDescriptor.getType()
 			);
 	}
 
 	public static LUnit methodParameterHasWrongType(
-		LUnit host, String methodName, int parameterIndex, LUnit parameterValue, LType expectedType
+		LUnit host, String methodName, int parameterIndex, LUnit parameter, LType expectedType
 	)
 	{
 		return
@@ -68,7 +68,7 @@ public class LErrors
 				"host", host,
 				"method name", methodName,
 				"parameter index", parameterIndex,
-				"parameter value", parameterValue,
+				"parameter", parameter,
 				"expected type", expectedType
 			);
 	}
@@ -123,11 +123,10 @@ public class LErrors
 	}
 
 	public static LUnit methodResultHasWrongType(
-		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnit methodResult, LUnitDescriptor<?> expectedTypeDescriptor
+		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnit result, LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return
-			methodResultHasWrongType(host, methodDescriptor.getName(), methodResult, expectedTypeDescriptor.getType());
+		return methodResultHasWrongType(host, methodDescriptor.getName(), result, expectedTypeDescriptor.getType());
 	}
 
 	public static LUnit methodResultHasWrongType(LUnit host, String methodName, LUnit result, LType expectedType)
@@ -155,18 +154,18 @@ public class LErrors
 		LUnit host,
 		LUnitDescriptor<?> operationDescriptor,
 		LOperandPosition operandPosition,
-		LUnit operandValue,
+		LUnit operand,
 		LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
 		return
 			operandHasWrongType(
-				host, operationDescriptor.getName(), operandPosition, operandValue, expectedTypeDescriptor.getType()
+				host, operationDescriptor.getName(), operandPosition, operand, expectedTypeDescriptor.getType()
 			);
 	}
 
 	public static LUnit operandHasWrongType(
-		LUnit host, String operationName, LOperandPosition operandPosition, LUnit operandValue, LType expectedType
+		LUnit host, String operationName, LOperandPosition operandPosition, LUnit operand, LType expectedType
 	)
 	{
 		return
@@ -175,7 +174,7 @@ public class LErrors
 				"host", host,
 				"operation name", operationName,
 				"operand position", operandPosition,
-				"operand value", operandValue,
+				"operand", operand,
 				"expected type", expectedType
 			);
 	}

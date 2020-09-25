@@ -18,8 +18,8 @@ public class LBoolean extends LUnit
 	public static final LPrototypeUnitDescriptor<LBoolean> DESCRIPTOR =
 		new LPrototypeUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
 
-	public static final LInstanceUnitDescriptor<LBoolean> TRUE = createInstanceDescriptor(true);
-	public static final LInstanceUnitDescriptor<LBoolean> FALSE = createInstanceDescriptor(false);
+	public static final LInstanceUnitDescriptor<LBoolean> TRUE = createInstanceUnitDescriptor(true);
+	public static final LInstanceUnitDescriptor<LBoolean> FALSE = createInstanceUnitDescriptor(false);
 
 	private boolean value;
 
@@ -45,7 +45,7 @@ public class LBoolean extends LUnit
 		return value ? TRUE.getInstance() : FALSE.getInstance();
 	}
 
-	private static LInstanceUnitDescriptor<LBoolean> createInstanceDescriptor(boolean value)
+	private static LInstanceUnitDescriptor<LBoolean> createInstanceUnitDescriptor(boolean value)
 	{
 		return new LInstanceUnitDescriptor<>(String.valueOf(value), LBoolean.class, () -> new LBoolean(value));
 	}

@@ -100,11 +100,13 @@ public abstract class LUnit
 	@Polymorphic(COMMON)
 	public LUnit newInstance(LUnit[] parameters)
 	{
-		LUnit newUnit =
+		return
 			new LUnit(getCapturedUnitContext())
 			{
 				{
 					setType(LUnit.this.getType());
+					addParents(LUnit.this);
+					call(this, parameters);
 				}
 
 				@Override
@@ -113,19 +115,11 @@ public abstract class LUnit
 					return LUnit.this.call(host, parameters);
 				}
 			};
-
-		newUnit.addParents(this);
-
-		call(newUnit, parameters);
-
-		return newUnit;
 	}
 
 	public static LUnit getPrototype()
 	{
-		initPrototype();
-
-		return prototype;
+		return initPrototype();
 	}
 
 	public LType getType()
@@ -158,6 +152,15 @@ public abstract class LUnit
 	public void addMember(LInstanceUnitDescriptor<?> memberDescriptor)
 	{
 		setMember(memberDescriptor.getName(), memberDescriptor.getInstance());
+	}
+
+	public LUnit getMember(String memberName, BiConsumer<LUnit, String> callbackOnFail)
+	{
+		LUnit member = getMember(memberName);
+
+		if (LVoid.hasInstance(member)) callbackOnFail.accept(this, memberName);
+
+		return member;
 	}
 
 	@UnitGetMember
@@ -214,7 +217,7 @@ public abstract class LUnit
 		return LVoid.getInstance();
 	}
 
-	public LUnit callMember(LUnitDescriptor<?> memberDescriptor, LUnit... parameters)
+	public LUnit callMember(LInstanceUnitDescriptor<?> memberDescriptor, LUnit... parameters)
 	{
 		return callMember(memberDescriptor.getType().getName(), parameters);
 	}
@@ -222,11 +225,7 @@ public abstract class LUnit
 	@UnitCallMember
 	public LUnit callMember(String memberName, LUnit... parameters)
 	{
-		LUnit member = getMember(memberName);
-
-		if (LVoid.hasInstance(member)) unitHasNoMember(this, memberName);
-
-		return member.call(this, parameters);
+		return getMember(memberName, LErrors::unitHasNoMember).call(this, parameters);
 	}
 
 	@Polymorphic(ACCESS)
@@ -239,7 +238,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _getIndexedItem(LUnit[] parameters)
 	{
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
 	}
 
 	@Polymorphic(ACCESS)
@@ -254,7 +253,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
 	}
 
 	@UnitSetParameterNames
@@ -374,6 +373,20 @@ public abstract class LUnit
 		return parameters[parameterIndex];
 	}
 
+	protected ConcurrentLinkedDeque<LUnit> initParents()
+	{
+		if (parents == null) synchronized(this)
+		{
+			if (parents == null)
+			{
+				parents = new ConcurrentLinkedDeque<>();
+				_addParents(initPrototype());
+			}
+		}
+
+		return parents;
+	}
+
 	private ConcurrentMap<String, LUnit> initMembers()
 	{
 		if (members == null) synchronized(this)
@@ -386,22 +399,7 @@ public abstract class LUnit
 		return members;
 	}
 
-	protected ConcurrentLinkedDeque<LUnit> initParents()
-	{
-		if (parents == null) synchronized(this)
-		{
-			if (parents == null)
-			{
-				parents = new ConcurrentLinkedDeque<>();
-				initPrototype();
-				_addParents(prototype);
-			}
-		}
-
-		return parents;
-	}
-
-	private static void initPrototype()
+	private static LUnit initPrototype()
 	{
 		if (prototype == null) synchronized(LUnit.class)
 		{
@@ -424,29 +422,25 @@ public abstract class LUnit
 						@Override
 						public LUnit addParents(LUnit... parents)
 						{
-							unitHasNoMember(this, LAddParents.DESCRIPTOR);
-
-							return LVoid.getInstance();
+							return unitHasNoMember(this, LAddParents.DESCRIPTOR);
 						}
 
 						@Override
 						public LUnit _addParents(LUnit... parents)
 						{
-							unitHasNoMember(this, LAddParents.DESCRIPTOR);
-
-							return LVoid.getInstance();
+							return unitHasNoMember(this, LAddParents.DESCRIPTOR);
 						}
 
 						@Override
-						public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
+						public <TYPE extends LUnit> TYPE asType(LType type)
 						{
-							if (getType().equals(type)) return (TYPE)this;
+							if (getType() == type) return (TYPE)this;
 
 							return null;
 						}
 
 						@Override
-						protected @Nullable ConcurrentLinkedDeque<LUnit> initParents()
+						protected ConcurrentLinkedDeque<LUnit> initParents()
 						{
 							return null;
 						}
@@ -465,5 +459,7 @@ public abstract class LUnit
 						}
 					};
 		}
+
+		return prototype;
 	}
 }
