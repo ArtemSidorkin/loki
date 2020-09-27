@@ -3,7 +3,7 @@ package loki.language.generation.bytecodetemplate
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors}
-import loki.runtime.compilerapi.unit._
+import loki.runtime.marker.compilerapi.unit._
 import loki.runtime.unit.unit.LUnit
 
 private[generation] object UnitBytecodeTemplate

@@ -1,17 +1,21 @@
 package loki.runtime.context;
 
-import loki.runtime.unit.data.array.LArray;
 import loki.runtime.unit.data.LMap;
 import loki.runtime.unit.data.LObject;
 import loki.runtime.unit.data.LString;
+import loki.runtime.unit.data.array.LArray;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LNone;
 import loki.runtime.unit.data.singleton.LVoid;
-import loki.runtime.unit.function.*;
+import loki.runtime.unit.function.LLoop;
+import loki.runtime.unit.function.LPrintln;
+import loki.runtime.unit.function.LTest;
+import loki.runtime.unit.function.LTimeInNanoseconds;
+import loki.runtime.unit.function.LUse;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,14 +83,14 @@ public class LBuiltins
 			initializeInstance(LPrintln.DESCRIPTOR);
 		}
 
-		void initializePrototype(LPrototypeUnitDescriptor<?> prototypeUnitDescriptor)
+		void initializePrototype(LPrototypeDescriptor<?> prototypeUnitDescriptor)
 		{
 			put(prototypeUnitDescriptor.getPrototypeName(), prototypeUnitDescriptor::getPrototype);
 		}
 
-		void initializeInstance(LInstanceUnitDescriptor<?> instanceUnitDescriptor)
+		void initializeInstance(LInstanceDescriptor<?> instanceUnitDescriptor)
 		{
-			put(instanceUnitDescriptor.getName(), instanceUnitDescriptor::getInstance);
+			put(instanceUnitDescriptor.getUnitName(), instanceUnitDescriptor::getInstance);
 		}
 	}
 }

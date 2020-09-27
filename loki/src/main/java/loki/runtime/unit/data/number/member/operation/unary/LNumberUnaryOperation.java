@@ -2,11 +2,13 @@ package loki.runtime.unit.data.number.member.operation.unary;
 
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.member.operation.LUnaryOperation;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
-public abstract class LNumberUnaryOperation extends LUnaryOperation<LNumber>
+public abstract class LNumberUnaryOperation<OPERATION extends LUnit>
+	extends LUnaryOperation<OPERATION, LNumber>
 {
-	protected LNumberUnaryOperation(LInstanceUnitDescriptor<?> instanceUnitDescriptor)
+	protected LNumberUnaryOperation(LInstanceDescriptor<OPERATION> instanceUnitDescriptor)
 	{
 		super(instanceUnitDescriptor, LNumber.DESCRIPTOR);
 	}

@@ -1,6 +1,6 @@
 package loki.runtime.error;
 
-import loki.runtime.LType;
+import loki.runtime.LUnitType;
 import loki.runtime.unit.member.operation.LOperandPosition;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
@@ -22,10 +22,10 @@ public class LErrors
 		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return hostHasWrongType(host, methodDescriptor.getName(), expectedTypeDescriptor.getType());
+		return hostHasWrongType(host, methodDescriptor.getUnitName(), expectedTypeDescriptor.getUnitType());
 	}
 
-	public static LUnit hostHasWrongType(LUnit host, String methodName, LType expectedType)
+	public static LUnit hostHasWrongType(LUnit host, String methodName, LUnitType expectedType)
 	{
 		return
 			throwException(
@@ -54,12 +54,12 @@ public class LErrors
 	{
 		return
 			methodParameterHasWrongType(
-				host, methodDescriptor.getName(), parameterIndex, parameter, expectedTypeDescriptor.getType()
+				host, methodDescriptor.getUnitName(), parameterIndex, parameter, expectedTypeDescriptor.getUnitType()
 			);
 	}
 
 	public static LUnit methodParameterHasWrongType(
-		LUnit host, String methodName, int parameterIndex, LUnit parameter, LType expectedType
+		LUnit host, String methodName, int parameterIndex, LUnit parameter, LUnitType expectedType
 	)
 	{
 		return
@@ -94,12 +94,12 @@ public class LErrors
 	{
 		return
 			callbackResultHasWrongType(
-				host, methodDescriptor.getName(), callbackParameterIndex, result, expectedTypeDescriptor.getType()
+				host, methodDescriptor.getUnitName(), callbackParameterIndex, result, expectedTypeDescriptor.getUnitType()
 			);
 	}
 
 	public static LUnit callbackResultHasWrongType(
-		LUnit host, String methodName, int callbackParameterIndex, LUnit result, LType expectedType
+		LUnit host, String methodName, int callbackParameterIndex, LUnit result, LUnitType expectedType
 	)
 	{
 		return
@@ -126,10 +126,10 @@ public class LErrors
 		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnit result, LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return methodResultHasWrongType(host, methodDescriptor.getName(), result, expectedTypeDescriptor.getType());
+		return methodResultHasWrongType(host, methodDescriptor.getUnitName(), result, expectedTypeDescriptor.getUnitType());
 	}
 
-	public static LUnit methodResultHasWrongType(LUnit host, String methodName, LUnit result, LType expectedType)
+	public static LUnit methodResultHasWrongType(LUnit host, String methodName, LUnit result, LUnitType expectedType)
 	{
 		return
 			throwException(
@@ -160,12 +160,12 @@ public class LErrors
 	{
 		return
 			operandHasWrongType(
-				host, operationDescriptor.getName(), operandPosition, operand, expectedTypeDescriptor.getType()
+				host, operationDescriptor.getUnitName(), operandPosition, operand, expectedTypeDescriptor.getUnitType()
 			);
 	}
 
 	public static LUnit operandHasWrongType(
-		LUnit host, String operationName, LOperandPosition operandPosition, LUnit operand, LType expectedType
+		LUnit host, String operationName, LOperandPosition operandPosition, LUnit operand, LUnitType expectedType
 	)
 	{
 		return
@@ -181,10 +181,10 @@ public class LErrors
 
 	public static LUnit unitHasWrongType(LUnit unit, LUnitDescriptor<?> expectedTypeDescriptor)
 	{
-		return unitHasWrongType(unit, expectedTypeDescriptor.getType());
+		return unitHasWrongType(unit, expectedTypeDescriptor.getUnitType());
 	}
 
-	public static LUnit unitHasWrongType(LUnit unit, LType expectedType)
+	public static LUnit unitHasWrongType(LUnit unit, LUnitType expectedType)
 	{
 		return throwException("Unit has a wrong type", "unit", unit, "expected type", expectedType);
 	}
@@ -196,7 +196,7 @@ public class LErrors
 
 	public static LUnit unitHasNoMember(LUnit unit, LUnitDescriptor<?> memberDescriptor)
 	{
-		return unitHasNoMember(unit, memberDescriptor.getName());
+		return unitHasNoMember(unit, memberDescriptor.getUnitName());
 	}
 
 	public static LUnit unitHasNoMember(LUnit unit, String memberName)

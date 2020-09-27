@@ -1,23 +1,23 @@
 package loki.runtime.unit.data;
 
-import loki.runtime.compilerapi.string.StringConstructor;
+import loki.runtime.marker.Prototype;
+import loki.runtime.marker.compilerapi.string.StringConstructor;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.util.Prototype;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 public class LString extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LString> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("String", "StringPrototype", LString.class, LString::new);
+	public static final LPrototypeDescriptor<LString> DESCRIPTOR =
+		new LPrototypeDescriptor<>("String", "StringPrototype", LString.class, LString::new);
 
 	private final String value;
 
 	@StringConstructor
 	public LString(String value)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -45,7 +45,7 @@ public class LString extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LString string = unit.asType(DESCRIPTOR.getType());
+		LString string = unit.asType(DESCRIPTOR.getUnitType());
 
 		return string != null ? LBoolean.valueOf(value.equals(string.value)) : LBoolean.FALSE.getInstance();
 	}

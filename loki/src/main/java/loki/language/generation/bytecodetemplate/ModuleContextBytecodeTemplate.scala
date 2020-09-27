@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
-import loki.runtime.compilerapi.modulecontext.ModuleContextConstructor
+import loki.runtime.marker.compilerapi.modulecontext.ModuleContextConstructor
 
 private[generation] object ModuleContextBytecodeTemplate
 {

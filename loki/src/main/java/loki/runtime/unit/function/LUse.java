@@ -3,28 +3,34 @@ package loki.runtime.unit.function;
 import loki.Executor;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
 import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LUse extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LUse> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("use", LUse.class, LUse::new);
+	private static final int MODULE_FILE_PATHNAME_PARAMETER_INDEX = 0;
+
+	public static final LInstanceDescriptor<LUse> DESCRIPTOR =
+		new LInstanceDescriptor<>("use", LUse.class, LUse::new);
 
 	private LUse()
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR);
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LUnit moduleFilePathnameAsUnit = getParameter(parameters, 0);
-		LString moduleFilePathnameAsString =
-			moduleFilePathnameAsUnit.asType(LString.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, 0));
+		String moduleFilePathname =
+			getParameter(parameters, MODULE_FILE_PATHNAME_PARAMETER_INDEX)
+				.asType(
+					LString.DESCRIPTOR,
+					methodParameterHasWrongType(host, DESCRIPTOR, MODULE_FILE_PATHNAME_PARAMETER_INDEX)
+				)
+				.getValue();
 
-		LUnit module = Executor.apply(moduleFilePathnameAsString.getValue());
+		LUnit module = Executor.apply(moduleFilePathname);
 
 		if (!host.isType(module.getType())) host.addParents(module);
 

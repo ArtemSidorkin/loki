@@ -1,6 +1,6 @@
 package loki.runtime.context;
 
-import loki.runtime.compilerapi.modulecontext.ModuleContextConstructor;
+import loki.runtime.marker.compilerapi.modulecontext.ModuleContextConstructor;
 import loki.runtime.unit.unit.LUnit;
 
 public class LModuleContext extends LUnitContext

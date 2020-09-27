@@ -1,25 +1,34 @@
 package loki.runtime.unit.data.number;
 
-import loki.runtime.compilerapi.number.NumberConstructor;
+import loki.runtime.marker.Prototype;
+import loki.runtime.marker.compilerapi.number.NumberConstructor;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
-import loki.runtime.unit.data.number.member.operation.binary.*;
-import loki.runtime.unit.data.number.member.operation.unary.LNegationNumberUnaryOperation;
+import loki.runtime.unit.data.number.member.operation.binary.LAddition;
+import loki.runtime.unit.data.number.member.operation.binary.LDivision;
+import loki.runtime.unit.data.number.member.operation.binary.LEquality;
+import loki.runtime.unit.data.number.member.operation.binary.LGreaterThan;
+import loki.runtime.unit.data.number.member.operation.binary.LGreaterThanEquals;
+import loki.runtime.unit.data.number.member.operation.binary.LInequality;
+import loki.runtime.unit.data.number.member.operation.binary.LLessThan;
+import loki.runtime.unit.data.number.member.operation.binary.LLessThanEquals;
+import loki.runtime.unit.data.number.member.operation.binary.LMultiplication;
+import loki.runtime.unit.data.number.member.operation.binary.LSubtraction;
+import loki.runtime.unit.data.number.member.operation.unary.LNegation;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.util.Prototype;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 public class LNumber extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LNumber> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("Number", "NumberPrototype", LNumber.class, LNumber::new);
+	public static final LPrototypeDescriptor<LNumber> DESCRIPTOR =
+		new LPrototypeDescriptor<>("Number", "NumberPrototype", LNumber.class, LNumber::new);
 
 	private final double value;
 
 	@NumberConstructor
 	public LNumber(double value)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		this.value = value;
 
@@ -50,7 +59,7 @@ public class LNumber extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LNumber number = unit.asType(DESCRIPTOR.getType());
+		LNumber number = unit.asType(DESCRIPTOR.getUnitType());
 
 		return LBoolean.valueOf(number != null && value == number.value);
 	}
@@ -63,16 +72,16 @@ public class LNumber extends LUnit
 
 	private void initBuiltins()
 	{
-		addMember(LNegationNumberUnaryOperation.DESCRIPTOR);
-		addMember(LMultiplicationNumberBinaryOperation.DESCRIPTOR);
-		addMember(LDivisionNumberBinaryOperation.DESCRIPTOR);
-		addMember(LAdditionNumberBinaryOperation.DESCRIPTOR);
-		addMember(LSubtractionNumberBinaryOperation.DESCRIPTOR);
-		addMember(LEqualityNumberBinaryOperation.DESCRIPTOR);
-		addMember(LInequalityNumberBinaryOperation.DESCRIPTOR);
-		addMember(LGreaterThanEqualsNumberBinaryOperation.DESCRIPTOR);
-		addMember(LLessThanEqualsNumberBinaryOperation.DESCRIPTOR);
-		addMember(LGreaterThanNumberBinaryOperation.DESCRIPTOR);
-		addMember(LLessThanNumberBinaryOperation.DESCRIPTOR);
+		addMember(LNegation.DESCRIPTOR);
+		addMember(LMultiplication.DESCRIPTOR);
+		addMember(LDivision.DESCRIPTOR);
+		addMember(LAddition.DESCRIPTOR);
+		addMember(LSubtraction.DESCRIPTOR);
+		addMember(LEquality.DESCRIPTOR);
+		addMember(LInequality.DESCRIPTOR);
+		addMember(LGreaterThanEquals.DESCRIPTOR);
+		addMember(LLessThanEquals.DESCRIPTOR);
+		addMember(LGreaterThan.DESCRIPTOR);
+		addMember(LLessThan.DESCRIPTOR);
 	}
 }

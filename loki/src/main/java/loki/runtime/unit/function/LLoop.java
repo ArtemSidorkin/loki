@@ -3,30 +3,36 @@ package loki.runtime.unit.function;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
 import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 
 public class LLoop extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LLoop> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("loop", LLoop.class, LLoop::new);
+	private static final int ITERATION_COUNT_PARAMETER_INDEX = 0;
+	private static final int ACTION_PARAMETER_INDEX = 0;
+
+	public static final LInstanceDescriptor<LLoop> DESCRIPTOR =
+		new LInstanceDescriptor<>("loop", LLoop.class, LLoop::new);
 
 	private LLoop()
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR);
 	}
 
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LUnit iterationCountAsUnit = getParameter(parameters, 0);
-		LNumber iterationCountAsNumber =
-			iterationCountAsUnit.asType(LNumber.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, 0));
+		double iterationCount =
+			getParameter(parameters, ITERATION_COUNT_PARAMETER_INDEX)
+				.asType(
+					LNumber.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, ITERATION_COUNT_PARAMETER_INDEX)
+				)
+				.getValue();
 
-		LUnit action = getParameter(parameters, 1);
+		LUnit action = getParameter(parameters, ACTION_PARAMETER_INDEX);
 
-		for (int i = 0; i < iterationCountAsNumber.getValue(); i++) action.call(host);
+		for (long i = 0; i < iterationCount; i++) action.call(host);
 
 		return LVoid.DESCRIPTOR.getInstance();
 	}

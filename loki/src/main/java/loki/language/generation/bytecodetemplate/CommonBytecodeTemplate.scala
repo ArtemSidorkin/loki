@@ -3,8 +3,8 @@ package loki.language.generation.bytecodetemplate
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
-import loki.runtime.LType
-import loki.runtime.compilerapi.common.VoidGetInstance
+import loki.runtime.LUnitType
+import loki.runtime.marker.compilerapi.common.VoidGetInstance
 import loki.runtime.context.{LModuleContext, LUnitContext}
 import loki.runtime.unit.data.array.LArray
 import loki.runtime.unit.data.number.LNumber
@@ -21,7 +21,7 @@ private[generation] object CommonBytecodeTemplate
 
 		def newModuleContext():methodBuilder.type = methodBuilder `new` classOf[LModuleContext]
 
-		def newType():methodBuilder.type = methodBuilder `new` classOf[LType]
+		def newType():methodBuilder.type = methodBuilder `new` classOf[LUnitType]
 
 		def newNumber():methodBuilder.type = methodBuilder `new` classOf[LNumber]
 

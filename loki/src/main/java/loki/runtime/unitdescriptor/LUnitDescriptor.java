@@ -1,6 +1,6 @@
 package loki.runtime.unitdescriptor;
 
-import loki.runtime.LType;
+import loki.runtime.LUnitType;
 import loki.runtime.unit.unit.LUnit;
 
 import java.util.Objects;
@@ -8,40 +8,37 @@ import java.util.function.Supplier;
 
 public abstract class LUnitDescriptor<UNIT extends LUnit>
 {
-	private final String name;
-	private final LType type;
-	private final Supplier<UNIT> creator;
+	private final LUnitType unitType;
+	private final Supplier<UNIT> unitCreator;
 	private volatile UNIT unit;
 
-	public LUnitDescriptor(String name, Class<UNIT> typeClass, Supplier<UNIT> creator)
+	public LUnitDescriptor(String unitName, Class<UNIT> unitTypeClass, Supplier<UNIT> unitCreator)
 	{
-		this.name = name;
+		this.unitCreator = unitCreator;
 
-		this.creator = creator;
-
-		type = new LType(name, typeClass);
+		unitType = new LUnitType(unitName, unitTypeClass);
 	}
 
-	public String getName()
+	public String getUnitName()
 	{
-		return name;
+		return unitType.getName();
 	}
 
-	public boolean hasName(String name)
+	public boolean hasUnitName(String name)
 	{
-		return Objects.equals(this.name, name);
+		return Objects.equals(unitType.getName(), name);
 	}
 
-	public LType getType()
+	public LUnitType getUnitType()
 	{
-		return type;
+		return unitType;
 	}
 
 	protected UNIT getUnit()
 	{
 		if (unit == null) synchronized (this)
 		{
-			if (unit == null) unit = creator.get();
+			if (unit == null) unit = unitCreator.get();
 		}
 
 		return unit;

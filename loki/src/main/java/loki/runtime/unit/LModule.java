@@ -1,14 +1,14 @@
 package loki.runtime.unit;
 
-import loki.runtime.LType;
-import loki.runtime.compilerapi.module.ModuleConstructor;
+import loki.runtime.LUnitType;
+import loki.runtime.marker.compilerapi.module.ModuleConstructor;
 import loki.runtime.unit.unit.LUnit;
 
 public class LModule extends LUnit
 {
 	@ModuleConstructor
-	public LModule(String moduleTypeName)
+	public LModule(String name)
 	{
-		setType(new LType(String.format("module<%s>", moduleTypeName), getClass()));
+		setType(new LUnitType(String.format("[%s]", name), getClass()));
 	}
 }

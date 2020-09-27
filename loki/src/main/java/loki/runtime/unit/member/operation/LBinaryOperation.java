@@ -1,34 +1,38 @@
 package loki.runtime.unit.member.operation;
 
-import loki.runtime.LType;
-import loki.runtime.unit.member.LMember;
+import loki.runtime.marker.Nullable;
+import loki.runtime.unit.member.LUnitMember;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
-import loki.runtime.util.Nullable;
 
 import static loki.runtime.error.LErrors.operandHasWrongType;
 import static loki.runtime.unit.member.operation.LOperandPosition.LEFT;
 import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
 
-public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit> extends LMember
+public abstract class LBinaryOperation<OPERATION extends LUnit, LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit>
+	extends LUnitMember<OPERATION>
 {
+	private static final int RIGHT_OPERAND_PARAMETER_INDEX = 0;
+
 	protected final @Nullable LUnitDescriptor<LEFT_OPERAND> leftOperandUnitDescriptor;
 	protected final @Nullable LUnitDescriptor<RIGHT_OPERAND> rightOperandUnitDescriptor;
 
-	protected LBinaryOperation(LType type)
+	protected LBinaryOperation(LInstanceDescriptor<OPERATION> instanceDescriptor)
 	{
-		this(type, null, null);
+		this(instanceDescriptor, null, null);
 	}
 
 	protected LBinaryOperation(
-		LType type,
-		@Nullable LUnitDescriptor<LEFT_OPERAND> leftOperandUnitDescriptor,
-		@Nullable LUnitDescriptor<RIGHT_OPERAND> rightOperandUnitDescriptor
+		LInstanceDescriptor<OPERATION> instanceDescriptor,
+		@Nullable LUnitDescriptor<LEFT_OPERAND> leftOperandDescriptor,
+		@Nullable LUnitDescriptor<RIGHT_OPERAND> rightOperandDescriptor
 	)
 	{
-		super(type);
-		this.leftOperandUnitDescriptor = leftOperandUnitDescriptor;
-		this.rightOperandUnitDescriptor = rightOperandUnitDescriptor;
+		super(instanceDescriptor);
+
+		this.leftOperandUnitDescriptor = leftOperandDescriptor;
+		this.rightOperandUnitDescriptor = rightOperandDescriptor;
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public abstract class LBinaryOperation<LEFT_OPERAND extends LUnit, RIGHT_OPERAND
 			host.asType(leftOperandUnitDescriptor, operandHasWrongType(host, leftOperandUnitDescriptor, LEFT));
 
 		RIGHT_OPERAND rightOperand =
-			getParameter(parameters, 0)
+			getParameter(parameters, RIGHT_OPERAND_PARAMETER_INDEX)
 				.asType(rightOperandUnitDescriptor, operandHasWrongType(host, rightOperandUnitDescriptor, RIGHT));
 
 		return execute(leftOperand, rightOperand);

@@ -1,41 +1,40 @@
 package loki.runtime.unit.unit;
 
-import loki.runtime.LType;
-import loki.runtime.compilerapi.unit.UnitAddParents;
-import loki.runtime.compilerapi.unit.UnitCall;
-import loki.runtime.compilerapi.unit.UnitCallMember;
-import loki.runtime.compilerapi.unit.UnitConstructor;
-import loki.runtime.compilerapi.unit.UnitGetCapturedUnitContext;
-import loki.runtime.compilerapi.unit.UnitGetIndexedItem;
-import loki.runtime.compilerapi.unit.UnitGetMember;
-import loki.runtime.compilerapi.unit.UnitGetSuperMember;
-import loki.runtime.compilerapi.unit.UnitSetIndexedItem;
-import loki.runtime.compilerapi.unit.UnitSetMember;
-import loki.runtime.compilerapi.unit.UnitSetParameterDefaultValue;
-import loki.runtime.compilerapi.unit.UnitSetParameterNames;
-import loki.runtime.compilerapi.unit.UnitSetType;
-import loki.runtime.compilerapi.unit.UnitToBoolean;
-import loki.runtime.compilerapi.unit.UnitToString;
+import loki.runtime.LUnitType;
 import loki.runtime.context.LUnitContext;
 import loki.runtime.error.LErrors;
+import loki.runtime.marker.Compiler;
+import loki.runtime.marker.Nullable;
+import loki.runtime.marker.Polymorphic;
+import loki.runtime.marker.compilerapi.unit.UnitAddParents;
+import loki.runtime.marker.compilerapi.unit.UnitCall;
+import loki.runtime.marker.compilerapi.unit.UnitCallMember;
+import loki.runtime.marker.compilerapi.unit.UnitConstructor;
+import loki.runtime.marker.compilerapi.unit.UnitGetCapturedUnitContext;
+import loki.runtime.marker.compilerapi.unit.UnitGetIndexedItem;
+import loki.runtime.marker.compilerapi.unit.UnitGetMember;
+import loki.runtime.marker.compilerapi.unit.UnitGetSuperMember;
+import loki.runtime.marker.compilerapi.unit.UnitSetIndexedItem;
+import loki.runtime.marker.compilerapi.unit.UnitSetMember;
+import loki.runtime.marker.compilerapi.unit.UnitSetParameterDefaultValue;
+import loki.runtime.marker.compilerapi.unit.UnitSetParameterNames;
+import loki.runtime.marker.compilerapi.unit.UnitSetType;
+import loki.runtime.marker.compilerapi.unit.UnitToBoolean;
+import loki.runtime.marker.compilerapi.unit.UnitToString;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
-import loki.runtime.unit.unit.member.LAddParents;
-import loki.runtime.unit.unit.member.LEquals;
-import loki.runtime.unit.unit.member.LGetIndexedItem;
-import loki.runtime.unit.unit.member.LHashCode;
-import loki.runtime.unit.unit.member.LNew;
-import loki.runtime.unit.unit.member.LSetIndexedItem;
-import loki.runtime.unit.unit.member.LToString;
-import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
-import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unit.unit.member.method.LAddParents;
+import loki.runtime.unit.unit.member.method.LGetIndexedItem;
+import loki.runtime.unit.unit.member.method.LHashCode;
+import loki.runtime.unit.unit.member.method.LNew;
+import loki.runtime.unit.unit.member.method.LSetIndexedItem;
+import loki.runtime.unit.unit.member.method.LToString;
+import loki.runtime.unit.unit.member.operation.binary.LEquality;
+import loki.runtime.unit.unit.member.operation.binary.LInequality;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
-import loki.runtime.util.Compiler;
-import loki.runtime.util.Nullable;
-import loki.runtime.util.Polymorphic;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -48,11 +47,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 
 import static loki.runtime.error.LErrors.methodResultHasWrongType;
-import static loki.runtime.error.LErrors.unitHasNoParameter;
 import static loki.runtime.error.LErrors.unitHasNoMember;
-import static loki.runtime.util.Polymorphic.Type.ACCESS;
-import static loki.runtime.util.Polymorphic.Type.COMMON;
-import static loki.runtime.util.Polymorphic.Type.DEFAULT;
+import static loki.runtime.error.LErrors.unitHasNoParameter;
+import static loki.runtime.marker.Polymorphic.Type.ACCESS;
+import static loki.runtime.marker.Polymorphic.Type.COMMON;
+import static loki.runtime.marker.Polymorphic.Type.DEFAULT;
 
 @SuppressWarnings("unchecked")
 public abstract class LUnit
@@ -68,7 +67,7 @@ public abstract class LUnit
 
 	private static volatile LUnit prototype;
 
-	private LType type;
+	private LUnitType type;
 	private volatile @Nullable LUnitContext capturedUnitContext;
 	private volatile @Nullable ConcurrentLinkedDeque<LUnit> parents;
 	private volatile @Nullable ConcurrentMap<String, LUnit> members;
@@ -80,7 +79,12 @@ public abstract class LUnit
 		this(null, null);
 	}
 
-	public LUnit(@Nullable LType type)
+	public LUnit(LUnitDescriptor<?> typeDescriptor)
+	{
+		this(typeDescriptor.getUnitType());
+	}
+
+	public LUnit(@Nullable LUnitType type)
 	{
 		this(type, null);
 	}
@@ -91,7 +95,7 @@ public abstract class LUnit
 		this(null, capturedUnitContext);
 	}
 
-	public LUnit(@Nullable LType type, @Nullable LUnitContext capturedUnitContext)
+	public LUnit(@Nullable LUnitType type, @Nullable LUnitContext capturedUnitContext)
 	{
 		this.type = type;
 		this.capturedUnitContext = capturedUnitContext;
@@ -122,13 +126,13 @@ public abstract class LUnit
 		return initPrototype();
 	}
 
-	public LType getType()
+	public LUnitType getType()
 	{
 		return type;
 	}
 
 	@UnitSetType
-	public void setType(LType type)
+	public void setType(LUnitType type)
 	{
 		this.type = type;
 	}
@@ -149,9 +153,9 @@ public abstract class LUnit
 		return parameterDefaultValues;
 	}
 
-	public void addMember(LInstanceUnitDescriptor<?> memberDescriptor)
+	public void addMember(LInstanceDescriptor<?> memberDescriptor)
 	{
-		setMember(memberDescriptor.getName(), memberDescriptor.getInstance());
+		setMember(memberDescriptor.getUnitName(), memberDescriptor.getInstance());
 	}
 
 	public LUnit getMember(String memberName, BiConsumer<LUnit, String> callbackOnFail)
@@ -217,9 +221,9 @@ public abstract class LUnit
 		return LVoid.getInstance();
 	}
 
-	public LUnit callMember(LInstanceUnitDescriptor<?> memberDescriptor, LUnit... parameters)
+	public LUnit callMember(LInstanceDescriptor<?> memberDescriptor, LUnit... parameters)
 	{
-		return callMember(memberDescriptor.getType().getName(), parameters);
+		return callMember(memberDescriptor.getUnitType().getName(), parameters);
 	}
 
 	@UnitCallMember
@@ -300,8 +304,8 @@ public abstract class LUnit
 		if (!(object instanceof LUnit)) return false;
 
 		return
-			callMember(LEquals.DESCRIPTOR, (LUnit)object)
-				.asType(LBoolean.DESCRIPTOR, methodResultHasWrongType(this, LEquals.DESCRIPTOR))
+			callMember(LEquality.DESCRIPTOR, (LUnit)object)
+				.asType(LBoolean.DESCRIPTOR, methodResultHasWrongType(this, LEquality.DESCRIPTOR))
 				.getValue();
 	}
 
@@ -334,7 +338,7 @@ public abstract class LUnit
 		return asType(LBoolean.DESCRIPTOR, LErrors::unitHasWrongType).getValue();
 	}
 
-	public boolean isType(@Nullable LType type)
+	public boolean isType(@Nullable LUnitType type)
 	{
 		return asType(type) != null;
 	}
@@ -343,16 +347,16 @@ public abstract class LUnit
 		@Nullable LUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
-		TYPE type = asType(typeDescriptor != null ? typeDescriptor.getType() : null);
+		TYPE type = asType(typeDescriptor != null ? typeDescriptor.getUnitType() : null);
 
 		if (type == null) callbackOnFail.accept(this, typeDescriptor);
 
 		return type;
 	}
 
-	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LType type)
+	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LUnitType type)
 	{
-		if (type == null) return (TYPE)this;
+		if (type == null) return (TYPE)this; //TODO: create special descriptor?
 
 		if (getType() == type) return (TYPE)this;
 
@@ -408,7 +412,7 @@ public abstract class LUnit
 					new LUnit()
 					{
 						{
-							setType(new LType(PROTOTYPE_NAME, getClass()));
+							setType(new LUnitType(PROTOTYPE_NAME, getClass()));
 
 							initializeBuiltins();
 						}
@@ -432,7 +436,7 @@ public abstract class LUnit
 						}
 
 						@Override
-						public <TYPE extends LUnit> TYPE asType(LType type)
+						public <TYPE extends LUnit> TYPE asType(LUnitType type)
 						{
 							if (getType() == type) return (TYPE)this;
 
@@ -453,9 +457,8 @@ public abstract class LUnit
 							addMember(LSetIndexedItem.DESCRIPTOR);
 							addMember(LToString.DESCRIPTOR);
 							addMember(LHashCode.DESCRIPTOR);
-							addMember(LEquals.DESCRIPTOR);
-							addMember(LEqualityUnitBinaryOperation.DESCRIPTOR);
-							addMember(LInequalityUnitBinaryOperation.DESCRIPTOR);
+							addMember(LEquality.DESCRIPTOR);
+							addMember(LInequality.DESCRIPTOR);
 						}
 					};
 		}

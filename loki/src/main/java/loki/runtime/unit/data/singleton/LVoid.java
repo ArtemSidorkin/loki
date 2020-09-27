@@ -1,25 +1,25 @@
 package loki.runtime.unit.data.singleton;
 
-import loki.runtime.compilerapi.common.VoidGetInstance;
+import loki.runtime.marker.compilerapi.common.VoidGetInstance;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unit.unit.member.LAddParents;
-import loki.runtime.unit.unit.member.LHashCode;
-import loki.runtime.unit.unit.member.operation.binary.LEqualityUnitBinaryOperation;
-import loki.runtime.unit.unit.member.operation.binary.LInequalityUnitBinaryOperation;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
+import loki.runtime.unit.unit.member.method.LAddParents;
+import loki.runtime.unit.unit.member.method.LHashCode;
+import loki.runtime.unit.unit.member.operation.binary.LEquality;
+import loki.runtime.unit.unit.member.operation.binary.LInequality;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
 import static loki.runtime.error.LErrors.unitHasNoMember;
 
 public class LVoid extends LUnit
 {
-	public static final LInstanceUnitDescriptor<LVoid> DESCRIPTOR =
-		new LInstanceUnitDescriptor<>("void", LVoid.class, LVoid::new);
+	public static final LInstanceDescriptor<LVoid> DESCRIPTOR =
+		new LInstanceDescriptor<>("void", LVoid.class, LVoid::new);
 
 	private LVoid()
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 	}
 
 	@VoidGetInstance
@@ -72,13 +72,13 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit callMember(String memberName, LUnit... parameters)
 	{
-		if (LEqualityUnitBinaryOperation.DESCRIPTOR.hasName(memberName))
+		if (LEquality.DESCRIPTOR.hasUnitName(memberName))
 			return LBoolean.valueOf(hasInstance(getParameter(parameters, 0)));
 
-		if (LInequalityUnitBinaryOperation.DESCRIPTOR.hasName(memberName))
+		if (LInequality.DESCRIPTOR.hasUnitName(memberName))
 			return LBoolean.valueOf(!hasInstance(getParameter(parameters, 0)));
 
-		if (LHashCode.DESCRIPTOR.hasName(memberName)) return new LNumber(hashCode());
+		if (LHashCode.DESCRIPTOR.hasUnitName(memberName)) return new LNumber(hashCode());
 
 		return unitHasNoMember(this, "callMember");
 	}
@@ -98,6 +98,6 @@ public class LVoid extends LUnit
 	@Override
 	public String toString()
 	{
-		return DESCRIPTOR.getName();
+		return DESCRIPTOR.getUnitName();
 	}
 }

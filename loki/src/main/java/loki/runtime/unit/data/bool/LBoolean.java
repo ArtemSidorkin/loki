@@ -1,31 +1,28 @@
 package loki.runtime.unit.data.bool;
 
+import loki.runtime.marker.Prototype;
 import loki.runtime.unit.data.LString;
-import loki.runtime.unit.data.bool.member.operation.binary.LAndBooleanBinaryOperation;
-import loki.runtime.unit.data.bool.member.operation.binary.LOrBooleanBinaryOperation;
-import loki.runtime.unit.data.bool.member.operation.unary.LNegationBooleanUnaryOperation;
+import loki.runtime.unit.data.bool.member.operation.binary.LConjunction;
+import loki.runtime.unit.data.bool.member.operation.binary.LDisjunction;
+import loki.runtime.unit.data.bool.member.operation.unary.LNegation;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unit.unit.member.LEquals;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.unitdescriptor.LInstanceUnitDescriptor;
-import loki.runtime.util.Prototype;
-
-import static loki.runtime.error.LErrors.methodParameterHasWrongType;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 public class LBoolean extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LBoolean> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
+	public static final LPrototypeDescriptor<LBoolean> DESCRIPTOR =
+		new LPrototypeDescriptor<>("Boolean", "BooleanPrototype", LBoolean.class, LBoolean::new);
 
-	public static final LInstanceUnitDescriptor<LBoolean> TRUE = createInstanceUnitDescriptor(true);
-	public static final LInstanceUnitDescriptor<LBoolean> FALSE = createInstanceUnitDescriptor(false);
+	public static final LInstanceDescriptor<LBoolean> TRUE = createInstanceDescriptor(true);
+	public static final LInstanceDescriptor<LBoolean> FALSE = createInstanceDescriptor(false);
 
 	private boolean value;
 
 	private LBoolean(boolean value)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		this.value = value;
 
@@ -45,14 +42,19 @@ public class LBoolean extends LUnit
 		return value ? TRUE.getInstance() : FALSE.getInstance();
 	}
 
-	private static LInstanceUnitDescriptor<LBoolean> createInstanceUnitDescriptor(boolean value)
+	private static LInstanceDescriptor<LBoolean> createInstanceDescriptor(boolean value)
 	{
-		return new LInstanceUnitDescriptor<>(String.valueOf(value), LBoolean.class, () -> new LBoolean(value));
+		return new LInstanceDescriptor<>(String.valueOf(value), LBoolean.class, () -> new LBoolean(value));
 	}
 
 	public boolean getValue()
 	{
 		return value;
+	}
+
+	public LBoolean invert()
+	{
+		return valueOf(!value);
 	}
 
 	@Override
@@ -61,18 +63,9 @@ public class LBoolean extends LUnit
 		return new LNumber(Boolean.hashCode(value));
 	}
 
-	@Override
-	public LBoolean _equals(LUnit object)
+	public LBoolean _equals(LBoolean object)
 	{
-		boolean objectAsBoolean =
-			object
-				.asType(
-					LBoolean.DESCRIPTOR,
-					methodParameterHasWrongType(this, LEquals.DESCRIPTOR, LEquals.INDEX_OF_OBJECT_IN_PARAMETERS)
-				)
-				.getValue();
-
-		return LBoolean.valueOf(value == objectAsBoolean);
+		return LBoolean.valueOf(value == object.getValue());
 	}
 
 	@Override
@@ -83,8 +76,8 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		addMember(LNegationBooleanUnaryOperation.DESCRIPTOR);
-		addMember(LAndBooleanBinaryOperation.DESCRIPTOR);
-		addMember(LOrBooleanBinaryOperation.DESCRIPTOR);
+		addMember(LNegation.DESCRIPTOR);
+		addMember(LConjunction.DESCRIPTOR);
+		addMember(LDisjunction.DESCRIPTOR);
 	}
 }

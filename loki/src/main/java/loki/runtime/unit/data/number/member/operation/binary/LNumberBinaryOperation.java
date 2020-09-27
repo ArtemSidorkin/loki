@@ -1,13 +1,15 @@
 package loki.runtime.unit.data.number.member.operation.binary;
 
-import loki.runtime.LType;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.member.operation.LBinaryOperation;
+import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
-public abstract class LNumberBinaryOperation extends LBinaryOperation<LNumber, LNumber>
+public abstract class LNumberBinaryOperation<OPERATION extends LUnit>
+	extends LBinaryOperation<OPERATION, LNumber, LNumber>
 {
-	protected LNumberBinaryOperation(LType type)
+	protected LNumberBinaryOperation(LInstanceDescriptor<OPERATION> instanceDescriptor)
 	{
-		super(type, LNumber.DESCRIPTOR, LNumber.DESCRIPTOR);
+		super(instanceDescriptor, LNumber.DESCRIPTOR, LNumber.DESCRIPTOR);
 	}
 }

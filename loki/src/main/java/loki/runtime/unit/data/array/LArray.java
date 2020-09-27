@@ -1,17 +1,17 @@
 package loki.runtime.unit.data.array;
 
+import loki.runtime.marker.Compiler;
+import loki.runtime.marker.Prototype;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.array.member.LFilter;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unit.unit.member.LGetIndexedItem;
-import loki.runtime.unit.unit.member.LSetIndexedItem;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
+import loki.runtime.unit.unit.member.method.LGetIndexedItem;
+import loki.runtime.unit.unit.member.method.LSetIndexedItem;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
-import loki.runtime.util.Compiler;
-import loki.runtime.util.Prototype;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,15 +22,15 @@ import static loki.runtime.error.LErrors.unitHasNoIndexedItem;
 
 public class LArray extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LArray> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
+	public static final LPrototypeDescriptor<LArray> DESCRIPTOR =
+		new LPrototypeDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
 
 	private final ArrayList<LUnit> items;
 
 	@Compiler
 	public LArray(LUnit[] items)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -39,7 +39,7 @@ public class LArray extends LUnit
 
 	public LArray(ArrayList<LUnit> items)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -92,7 +92,7 @@ public class LArray extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LArray array = unit.asType(DESCRIPTOR.getType());
+		LArray array = unit.asType(DESCRIPTOR.getUnitType());
 
 		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE.getInstance();
 	}

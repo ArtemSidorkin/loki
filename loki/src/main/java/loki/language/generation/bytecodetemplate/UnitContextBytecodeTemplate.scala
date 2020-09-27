@@ -2,7 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
-import loki.runtime.compilerapi.unitcontext.{UnitContextConstructor, UnitContextGetAnonymousParameter, UnitContextGetVariable, UnitContextSetVariable}
+import loki.runtime.marker.compilerapi.unitcontext.{UnitContextConstructor, UnitContextGetAnonymousParameter, UnitContextGetVariable, UnitContextSetVariable}
 
 private[generation] object UnitContextBytecodeTemplate
 {

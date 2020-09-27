@@ -9,7 +9,7 @@ import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeByteco
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
-import loki.runtime.LType
+import loki.runtime.LUnitType
 import loki.system.SystemSettings
 
 private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit generationContext:GenerationContext)

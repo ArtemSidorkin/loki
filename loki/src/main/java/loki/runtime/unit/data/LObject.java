@@ -1,19 +1,19 @@
 package loki.runtime.unit.data;
 
+import loki.runtime.marker.Compiler;
+import loki.runtime.marker.Prototype;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.util.Compiler;
-import loki.runtime.util.Prototype;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 public class LObject extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LObject> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("Object", "ObjectPrototype", LObject.class, LObject::new);
+	public static final LPrototypeDescriptor<LObject> DESCRIPTOR =
+		new LPrototypeDescriptor<>("Object", "ObjectPrototype", LObject.class, LObject::new);
 
 	@Compiler
 	public LObject(LUnit[] items)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		_addParents(DESCRIPTOR.getPrototype());
 

@@ -3,7 +3,7 @@ package loki.language.generation.bytecodetemplate
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.language.generation.constant.BytecodeLocalVariablesOrParameters
-import loki.runtime.compilerapi.module.ModuleConstructor
+import loki.runtime.marker.compilerapi.module.ModuleConstructor
 
 private[generation] object ModuleBytecodeTemplate
 {

@@ -1,12 +1,12 @@
 package loki.runtime.unit.data;
 
+import loki.runtime.marker.Compiler;
+import loki.runtime.marker.Prototype;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unitdescriptor.LPrototypeUnitDescriptor;
-import loki.runtime.util.Compiler;
-import loki.runtime.util.Prototype;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,15 +14,15 @@ import java.util.StringJoiner;
 
 public class LMap extends LUnit
 {
-	public static final LPrototypeUnitDescriptor<LMap> DESCRIPTOR =
-		new LPrototypeUnitDescriptor<>("Map", "MapPrototype", LMap.class, LMap::new);
+	public static final LPrototypeDescriptor<LMap> DESCRIPTOR =
+		new LPrototypeDescriptor<>("Map", "MapPrototype", LMap.class, LMap::new);
 
 	private final Map<LUnit, LUnit> items = new LinkedHashMap<>();
 
 	@Compiler
 	public LMap(LUnit[] items)
 	{
-		super(DESCRIPTOR.getType());
+		super(DESCRIPTOR.getUnitType());
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -69,7 +69,7 @@ public class LMap extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LMap map = unit.asType(DESCRIPTOR.getType());
+		LMap map = unit.asType(DESCRIPTOR.getUnitType());
 
 		return map != null ? LBoolean.valueOf(items.equals(map.items)) : LBoolean.FALSE.getInstance();
 	}
