@@ -4,6 +4,8 @@ import loki.runtime.marker.compilerapi.type.TypeConstructor;
 
 public class LUnitType
 {
+	public static LUnitType SELF = new LUnitType();
+
 	private final String name;
 	private final String id;
 
@@ -12,6 +14,12 @@ public class LUnitType
 	{
 		this.name = name;
 		this.id = typeClass.getName();
+	}
+
+	private LUnitType()
+	{
+		name = null;
+		id = null;
 	}
 
 	public String getFullName()

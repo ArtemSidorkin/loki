@@ -48,6 +48,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 
+import static loki.runtime.LUnitType.SELF;
 import static loki.runtime.error.LErrors.methodResultHasWrongType;
 import static loki.runtime.error.LErrors.unitHasNoMember;
 import static loki.runtime.error.LErrors.unitHasNoParameter;
@@ -366,24 +367,24 @@ public abstract class LUnit
 	}
 
 	public @Nullable <TYPE extends LUnit> TYPE asType(
-		@Nullable LUnitDescriptor<TYPE> unitDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
+		LUnitDescriptor<TYPE> unitDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
-		TYPE type = asType(unitDescriptor != null ? unitDescriptor.getUnitType() : null);
+		TYPE type = asType(unitDescriptor.getUnitType());
 
 		if (type == null) callbackOnFail.accept(this, unitDescriptor);
 
 		return type;
 	}
 
-	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LUnitDescriptor<TYPE> unitDescriptor)
+	public @Nullable <TYPE extends LUnit> TYPE asType(LUnitDescriptor<TYPE> unitDescriptor)
 	{
 		return asType(unitDescriptor.getUnitType());
 	}
 
-	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LUnitType type)
+	public @Nullable <TYPE extends LUnit> TYPE asType(LUnitType type)
 	{
-		if (type == null) return (TYPE)this;
+		if (type == SELF) return (TYPE)this;
 
 		if (getType() == type) return (TYPE)this;
 

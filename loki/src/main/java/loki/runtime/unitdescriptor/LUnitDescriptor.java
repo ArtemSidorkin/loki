@@ -5,8 +5,12 @@ import loki.runtime.unit.unit.LUnit;
 
 import java.util.function.Supplier;
 
+import static loki.runtime.LUnitType.SELF;
+
 public abstract class LUnitDescriptor<UNIT extends LUnit>
 {
+	public static LUnitDescriptor SELF_TYPE = new LUnitDescriptor() {};
+
 	private final LUnitType unitType;
 	private final Supplier<UNIT> unitFactory;
 	private volatile UNIT unit;
@@ -16,6 +20,13 @@ public abstract class LUnitDescriptor<UNIT extends LUnit>
 		this.unitFactory = unitFactory;
 
 		unitType = new LUnitType(unitName, unitTypeClass);
+	}
+
+	private LUnitDescriptor()
+	{
+		unitType = SELF;
+
+		unitFactory = () -> null;
 	}
 
 	public String getUnitName()
