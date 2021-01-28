@@ -17,6 +17,8 @@ public class LVoid extends LUnit
 	public static final LInstanceDescriptor<LVoid> DESCRIPTOR =
 		new LInstanceDescriptor<>("void", LVoid.class, LVoid::new);
 
+	private static final int EQUALITY_UNIT_PARAMETER_INDEX = 0;
+
 	private LVoid()
 	{
 		super(DESCRIPTOR.getUnitType());
@@ -28,7 +30,12 @@ public class LVoid extends LUnit
 		return DESCRIPTOR.getInstance();
 	}
 
-	public static boolean hasInstance(LUnit unit)
+	public static boolean isNotTypeOf(LUnit unit)
+	{
+		return !isTypeOf(unit);
+	}
+
+	public static boolean isTypeOf(LUnit unit)
 	{
 		return unit == DESCRIPTOR.getInstance();
 	}
@@ -72,15 +79,15 @@ public class LVoid extends LUnit
 	@Override
 	public LUnit callMember(String memberName, LUnit... parameters)
 	{
-		if (LEquality.DESCRIPTOR.hasUnitName(memberName))
-			return LBoolean.valueOf(hasInstance(getParameter(parameters, 0)));
+		if (LEquality.DESCRIPTOR.isUnit(memberName))
+			return LBoolean.valueOf(isTypeOf(getParameter(parameters, EQUALITY_UNIT_PARAMETER_INDEX)));
 
-		if (LInequality.DESCRIPTOR.hasUnitName(memberName))
-			return LBoolean.valueOf(!hasInstance(getParameter(parameters, 0)));
+		if (LInequality.DESCRIPTOR.isUnit(memberName))
+			return LBoolean.valueOf(!isTypeOf(getParameter(parameters, EQUALITY_UNIT_PARAMETER_INDEX)));
 
-		if (LHashCode.DESCRIPTOR.hasUnitName(memberName)) return new LNumber(hashCode());
+		if (LHashCode.DESCRIPTOR.isUnit(memberName)) return new LNumber(hashCode());
 
-		return unitHasNoMember(this, "callMember");
+		return unitHasNoMember(this, memberName);
 	}
 
 	@Override

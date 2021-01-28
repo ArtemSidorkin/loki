@@ -5,10 +5,10 @@ import loki.runtime.marker.compilerapi.unitcontext.UnitContextConstructor;
 import loki.runtime.marker.compilerapi.unitcontext.UnitContextGetAnonymousParameter;
 import loki.runtime.marker.compilerapi.unitcontext.UnitContextGetVariable;
 import loki.runtime.marker.compilerapi.unitcontext.UnitContextSetVariable;
-import loki.runtime.unit.LModule;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,18 +19,17 @@ public class LUnitContext
 	private static final float LOCAL_VARIABLES_LOAD_FACTOR = 0.75f;
 	private static final int LOCAL_VARIABLES_CONCURRENCY_LEVEL = 1;
 
-	private final LUnit frameUnit;
+	private final LUnit frame;
 	private final LUnit host;
 	private final LUnit[] parameters;
 
-	private final AtomicInteger anonymousParameterIndex = new AtomicInteger(0);
-
+	private volatile @Nullable AtomicInteger anonymousParameterIndex;
 	private volatile @Nullable ConcurrentMap<String, LUnit> localVariables;
 
 	@UnitContextConstructor
-	public LUnitContext(LUnit frameUnit, LUnit host, LUnit[] parameters)
+	public LUnitContext(LUnit frame, LUnit host, LUnit[] parameters)
 	{
-		this.frameUnit = frameUnit;
+		this.frame = frame;
 		this.host = host;
 		this.parameters = parameters;
 	}
@@ -38,86 +37,70 @@ public class LUnitContext
 	@UnitContextGetAnonymousParameter
 	public LUnit getAnonymousParameter()
 	{
-		LUnit anonymousParameter = checkParameter(anonymousParameterIndex.getAndIncrement());
-
-		return anonymousParameter != null ? anonymousParameter : LVoid.DESCRIPTOR.getInstance();
+		return getParameter(initAnonymousParameterIndex().getAndIncrement()).orElseGet(LVoid::getInstance);
 	}
 
 	@UnitContextGetVariable
 	public LUnit getVariable(String variableName)
 	{
-		LUnit variable;
-
-		variable = getLocalVariable(variableName);
-		if (variable != null) return variable;
-
-		variable = getParameter(variableName);
-		if (variable != null) return variable;
-
-		variable = getHostMember(variableName);
-		if (variable != null) return variable;
-
-		return getSuperVariable(variableName);
+		return getLocalVariable(variableName)
+			.or(() -> getParameter(variableName))
+			.or(() -> getHostMember(variableName))
+			.or(() -> getSuperVariable(variableName))
+			.orElseGet(LVoid::getInstance);
 	}
 
 	@UnitContextSetVariable
 	public LUnit setVariable(String variableName, LUnit variableValue)
 	{
-		initVariablesIfNecessary().put(variableName, variableValue);
+		initLocalVariables().put(variableName, variableValue);
 
 		return variableValue;
 	}
 
-	public LUnit getSuperVariable(String superVariableName)
+	private Optional<LUnit> getSuperVariable(String superVariableName)
 	{
-		if (frameUnit.getCapturedUnitContext() != null)
-			return frameUnit.getCapturedUnitContext().getVariable(superVariableName);
-		else if (LBuiltins.contain(superVariableName)) return LBuiltins.get(superVariableName);
-
-		return LVoid.DESCRIPTOR.getInstance();
+		return frame
+			.getOptionalCapturedUnitContext()
+			.map(context -> context.getVariable(superVariableName))
+			.or(() -> LBuiltins.get(superVariableName));
 	}
 
-	private @Nullable LUnit getLocalVariable(String localVariableName)
+	private Optional<LUnit> getLocalVariable(String localVariableName)
 	{
-		if (localVariables == null) return null;
-
-		return localVariables.get(localVariableName);
+		return getLocalVariables().map(localVariables -> localVariables.get(localVariableName));
 	}
 
-	private @Nullable LUnit getParameter(String parameterName)
+	private Optional<LUnit> getParameter(String parameterName)
 	{
-		if (frameUnit.getParameterIndexes() == null) return null;
-
-		return checkParameter(frameUnit.getParameterIndexes().get(parameterName));
+		return Optional.ofNullable(frame.getParameterIndexes().get(parameterName)).flatMap(this::getParameter);
 	}
 
-	private @Nullable LUnit getHostMember(String hostMemberName)
+	private Optional<LUnit> getHostMember(String hostMemberName)
 	{
-		if (host instanceof LModule && host != frameUnit) return null;
-
-		LUnit variable = host.getMember(hostMemberName);
-
-		if (variable == LVoid.DESCRIPTOR.getInstance()) return null;
-
-		return variable;
+		return Optional.of(host).map(host -> host.getMember(hostMemberName)).filter(LVoid::isNotTypeOf);
 	}
 
-	private @Nullable LUnit checkParameter(@Nullable Integer parameterIndex)
+	private Optional<LUnit> getParameter(int parameterIndex)
 	{
-		if (parameterIndex == null || parameterIndex < 0) return null;
-
-		if (parameterIndex < parameters.length)	return parameters[parameterIndex];
-
-		if (
-			frameUnit.getParameterDefaultValues() != null &&
-			parameterIndex < frameUnit.getParameterDefaultValues().length
-		)
-			return frameUnit.getParameterDefaultValues()[parameterIndex];
-
-		return null;
+		return parameterIndex < parameters.length
+			? Optional.of(parameters[parameterIndex])
+			: getDefaultParameter(parameterIndex);
 	}
 
-	private ConcurrentMap<String, LUnit> initVariablesIfNecessary()
+	private Optional<LUnit> getDefaultParameter(int parameterIndex)
+	{
+		if (parameterIndex >= frame.getParameterDefaultValues().length) return Optional.empty();
+
+		return Optional.ofNullable(frame.getParameterDefaultValues()[parameterIndex]);
+	}
+
+	private Optional<ConcurrentMap<String, LUnit>> getLocalVariables()
+	{
+		return Optional.ofNullable(localVariables);
+	}
+
+	private ConcurrentMap<String, LUnit> initLocalVariables()
 	{
 		if (localVariables == null) synchronized(this)
 		{
@@ -129,5 +112,15 @@ public class LUnitContext
 		}
 
 		return localVariables;
+	}
+
+	private AtomicInteger initAnonymousParameterIndex()
+	{
+		if (anonymousParameterIndex == null) synchronized(this)
+		{
+			if (anonymousParameterIndex == null) anonymousParameterIndex = new AtomicInteger();
+		}
+
+		return anonymousParameterIndex;
 	}
 }

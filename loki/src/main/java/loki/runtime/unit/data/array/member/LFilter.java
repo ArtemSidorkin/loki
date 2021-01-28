@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static loki.runtime.error.LErrors.callbackResultHasWrongType;
 import static loki.runtime.error.LErrors.hostHasWrongType;
 
-public class LFilter extends LUnitMember
+public class LFilter extends LUnitMember<LFilter>
 {
 	public static final LInstanceDescriptor<LFilter> DESCRIPTOR =
 		new LInstanceDescriptor<>("filter", LFilter.class, LFilter::new);

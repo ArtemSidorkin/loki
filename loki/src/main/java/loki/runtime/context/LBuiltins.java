@@ -17,23 +17,20 @@ import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LBuiltins
 {
 	private static final Map<String, Supplier<LUnit>> VALUES = Collections.unmodifiableMap(new Container());
 
-	public static boolean contain(String name)
+	public static Optional<LUnit> get(String name)
 	{
-		return VALUES.containsKey(name);
-	}
-
-	public static LUnit get(String name)
-	{
-		return VALUES.get(name).get();
+		return Optional.ofNullable(VALUES.get(name)).map(Supplier::get);
 	}
 
 	private static class Container extends HashMap<String, Supplier<LUnit>>
@@ -47,12 +44,14 @@ public class LBuiltins
 		{
 			put(LUnit.PROTOTYPE_NAME, LUnit::getPrototype);
 
-			initializePrototype(LBoolean.DESCRIPTOR);
-			initializePrototype(LNumber.DESCRIPTOR);
-			initializePrototype(LString.DESCRIPTOR);
-			initializePrototype(LArray.DESCRIPTOR);
-			initializePrototype(LMap.DESCRIPTOR);
-			initializePrototype(LObject.DESCRIPTOR);
+			initializePrototypes(
+				LBoolean.DESCRIPTOR,
+				LNumber.DESCRIPTOR,
+				LString.DESCRIPTOR,
+				LArray.DESCRIPTOR,
+				LMap.DESCRIPTOR,
+				LObject.DESCRIPTOR
+			);
 		}
 
 		void initializeInstances()
@@ -64,33 +63,49 @@ public class LBuiltins
 
 		void initializeSingletons()
 		{
-			initializeInstance(LVoid.DESCRIPTOR);
-			initializeInstance(LNone.DESCRIPTOR);
+			initializeInstances(
+				LVoid.DESCRIPTOR,
+				LNone.DESCRIPTOR
+			);
 		}
 
 		void initializeEnumerations()
 		{
-			initializeInstance(LBoolean.TRUE);
-			initializeInstance(LBoolean.FALSE);
+			initializeInstances(
+				LBoolean.TRUE,
+				LBoolean.FALSE
+			);
 		}
 
 		void initializeFunctions()
 		{
-			initializeInstance(LTest.DESCRIPTOR);
-			initializeInstance(LUse.DESCRIPTOR);
-			initializeInstance(LLoop.DESCRIPTOR);
-			initializeInstance(LTimeInNanoseconds.DESCRIPTOR);
-			initializeInstance(LPrintln.DESCRIPTOR);
+			initializeInstances(
+				LTest.DESCRIPTOR,
+				LUse.DESCRIPTOR,
+				LLoop.DESCRIPTOR,
+				LTimeInNanoseconds.DESCRIPTOR,
+				LPrintln.DESCRIPTOR
+			);
 		}
 
-		void initializePrototype(LPrototypeDescriptor<?> prototypeUnitDescriptor)
+		void initializePrototypes(LPrototypeDescriptor<?>... prototypeDescriptors)
 		{
-			put(prototypeUnitDescriptor.getPrototypeName(), prototypeUnitDescriptor::getPrototype);
+			Arrays.stream(prototypeDescriptors).forEach(this::initializePrototype);
 		}
 
-		void initializeInstance(LInstanceDescriptor<?> instanceUnitDescriptor)
+		void initializePrototype(LPrototypeDescriptor<?> prototypeDescriptor)
 		{
-			put(instanceUnitDescriptor.getUnitName(), instanceUnitDescriptor::getInstance);
+			put(prototypeDescriptor.getPrototypeName(), prototypeDescriptor::getPrototype);
+		}
+
+		void initializeInstances(LInstanceDescriptor<?>... instanceDescriptor)
+		{
+			Arrays.stream(instanceDescriptor).forEach(this::initializeInstance);
+		}
+
+		void initializeInstance(LInstanceDescriptor<?> instanceDescriptor)
+		{
+			put(instanceDescriptor.getUnitName(), instanceDescriptor::getInstance);
 		}
 	}
 }

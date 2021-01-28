@@ -7,8 +7,12 @@ import loki.runtime.unit.data.bool.member.operation.binary.LDisjunction;
 import loki.runtime.unit.data.bool.member.operation.unary.LNegation;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.unit.member.operation.binary.LEquality;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
+
+import static loki.runtime.error.LErrors.operandHasWrongType;
+import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
 
 public class LBoolean extends LUnit
 {
@@ -37,6 +41,16 @@ public class LBoolean extends LUnit
 		initializeBuiltins();
 	}
 
+	public static LBoolean trueInstance()
+	{
+		return TRUE.getInstance();
+	}
+
+	public static LBoolean falseInstance()
+	{
+		return FALSE.getInstance();
+	}
+
 	public static LBoolean valueOf(boolean value)
 	{
 		return value ? TRUE.getInstance() : FALSE.getInstance();
@@ -63,9 +77,12 @@ public class LBoolean extends LUnit
 		return new LNumber(Boolean.hashCode(value));
 	}
 
-	public LBoolean _equals(LBoolean object)
+	@Override
+	public LBoolean _equals(LUnit unit)
 	{
-		return LBoolean.valueOf(value == object.getValue());
+		boolean value = unit.asType(DESCRIPTOR, operandHasWrongType(this, LEquality.DESCRIPTOR, RIGHT)).value;
+
+		return LBoolean.valueOf(this.value == value);
 	}
 
 	@Override

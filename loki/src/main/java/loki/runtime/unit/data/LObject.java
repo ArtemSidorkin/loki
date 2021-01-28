@@ -13,7 +13,7 @@ public class LObject extends LUnit
 	@Compiler
 	public LObject(LUnit[] items)
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -25,4 +25,6 @@ public class LObject extends LUnit
 	{
 		super(DESCRIPTOR.getPrototypeType());
 	}
+
+	//TODO: hashcode, toString, equals?
 }

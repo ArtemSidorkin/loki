@@ -1,21 +1,23 @@
 package loki.runtime.unit.data.array;
 
+import loki.runtime.error.LErrors;
 import loki.runtime.marker.Compiler;
 import loki.runtime.marker.Prototype;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.array.member.LFilter;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
-import loki.runtime.unit.data.singleton.LVoid;
+import loki.runtime.unit.member.operation.LOperandPosition;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unit.unit.member.method.LGetIndexedItem;
 import loki.runtime.unit.unit.member.method.LSetIndexedItem;
+import loki.runtime.unit.unit.member.operation.binary.LEquality;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import static loki.runtime.error.LErrors.methodParameterHasWrongType;
 import static loki.runtime.error.LErrors.unitHasNoIndexedItem;
@@ -24,6 +26,10 @@ public class LArray extends LUnit
 {
 	public static final LPrototypeDescriptor<LArray> DESCRIPTOR =
 		new LPrototypeDescriptor<>("Array", "ArrayPrototype", LArray.class, LArray::new);
+
+	private static final int PROTOTYPE_ITEMS_INITIAL_CAPACITY = 0;
+
+	private static final int INDEX_PARAMETER_INDEX = 0;
 
 	private final ArrayList<LUnit> items;
 
@@ -51,7 +57,7 @@ public class LArray extends LUnit
 	{
 		super(DESCRIPTOR.getPrototypeType());
 
-		items = new ArrayList<>(0);
+		items = new ArrayList<>(PROTOTYPE_ITEMS_INITIAL_CAPACITY);
 
 		initBuiltins();
 	}
@@ -66,15 +72,13 @@ public class LArray extends LUnit
 	{
 		int index = getIndexFromCallParameters(parameters, LGetIndexedItem.DESCRIPTOR);
 
-		return index >= 0 && index < items.size() ? items.get(index) : LVoid.DESCRIPTOR.getInstance();
+		return items.get(index);
 	}
 
 	@Override
 	public LUnit _setIndexedItem(LUnit[] parameters)
 	{
 		int index = getIndexFromCallParameters(parameters, LSetIndexedItem.DESCRIPTOR);
-
-		if (index < 0 || index >= items.size()) unitHasNoIndexedItem(this, parameters[0]);
 
 		LUnit item = getParameter(parameters, 1);
 
@@ -90,11 +94,13 @@ public class LArray extends LUnit
 	}
 
 	@Override
-	public LBoolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit otherUnit)
 	{
-		LArray array = unit.asType(DESCRIPTOR.getUnitType());
+		LArray array =
+			otherUnit
+				.asType(DESCRIPTOR, LErrors.operandHasWrongType(this, LEquality.DESCRIPTOR, LOperandPosition.RIGHT));
 
-		return array != null ? LBoolean.valueOf(items.equals(array.items)) : LBoolean.FALSE.getInstance();
+		return LBoolean.valueOf(items.equals(array.items));
 	}
 
 	@Override
@@ -102,23 +108,21 @@ public class LArray extends LUnit
 	{
 		if (items.size() == 0) return new LString("[]");
 
-		StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
+		String value = items.stream().map(LUnit::toString).collect(Collectors.joining(", ", "[", "]"));
 
-		for (LUnit item : items) stringJoiner.add(item.toString());
-
-		return new LString(stringJoiner.toString());
+		return new LString(value);
 	}
 
-	private int getIndexFromCallParameters(LUnit[] parameters, LUnitDescriptor methodDescriptor)
+	private int getIndexFromCallParameters(LUnit[] parameters, LUnitDescriptor<?> methodDescriptor)
 	{
-		LUnit unitIndex = getParameter(parameters, 0);
-
-		LNumber numberIndex =
-			unitIndex.asType(LNumber.DESCRIPTOR, methodParameterHasWrongType(this, methodDescriptor, 0));
-
-		int index = (int)numberIndex.getValue();
+		int index =
+			getParameter(parameters, INDEX_PARAMETER_INDEX)
+				.asType(LNumber.DESCRIPTOR, methodParameterHasWrongType(this, methodDescriptor, INDEX_PARAMETER_INDEX))
+				.intValue();
 
 		if (index < 0) index = items.size() - Math.abs(index);
+
+		if (index < 0 || index >= items.size()) unitHasNoIndexedItem(this, parameters[INDEX_PARAMETER_INDEX]);
 
 		return index;
 	}

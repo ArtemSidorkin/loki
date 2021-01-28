@@ -5,7 +5,11 @@ import loki.runtime.marker.compilerapi.string.StringConstructor;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.unit.LUnit;
+import loki.runtime.unit.unit.member.operation.binary.LEquality;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
+
+import static loki.runtime.error.LErrors.operandHasWrongType;
+import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
 
 public class LString extends LUnit
 {
@@ -17,7 +21,7 @@ public class LString extends LUnit
 	@StringConstructor
 	public LString(String value)
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 
 		_addParents(DESCRIPTOR.getPrototype());
 
@@ -28,6 +32,7 @@ public class LString extends LUnit
 	private LString()
 	{
 		super(DESCRIPTOR.getPrototypeType());
+
 		value = "";
 	}
 
@@ -45,9 +50,9 @@ public class LString extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LString string = unit.asType(DESCRIPTOR.getUnitType());
+		String unitValue = unit.asType(DESCRIPTOR, operandHasWrongType(this, LEquality.DESCRIPTOR, RIGHT)).value;
 
-		return string != null ? LBoolean.valueOf(value.equals(string.value)) : LBoolean.FALSE.getInstance();
+		return LBoolean.valueOf(value.equals(unitValue));
 	}
 
 	@Override

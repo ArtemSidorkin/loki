@@ -6,7 +6,6 @@ import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.member.operation.binary.LAddition;
 import loki.runtime.unit.data.number.member.operation.binary.LDivision;
-import loki.runtime.unit.data.number.member.operation.binary.LEquality;
 import loki.runtime.unit.data.number.member.operation.binary.LGreaterThan;
 import loki.runtime.unit.data.number.member.operation.binary.LGreaterThanEquals;
 import loki.runtime.unit.data.number.member.operation.binary.LInequality;
@@ -28,7 +27,7 @@ public class LNumber extends LUnit
 	@NumberConstructor
 	public LNumber(double value)
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 
 		this.value = value;
 
@@ -50,6 +49,11 @@ public class LNumber extends LUnit
 		return value;
 	}
 
+	public int intValue()
+	{
+		return (int)value;
+	}
+
 	@Override
 	public LNumber _hashCode()
 	{
@@ -59,9 +63,9 @@ public class LNumber extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LNumber number = unit.asType(DESCRIPTOR.getUnitType());
+		LNumber unitValue = unit.asType(DESCRIPTOR.getUnitType());
 
-		return LBoolean.valueOf(number != null && value == number.value);
+		return LBoolean.valueOf(unitValue != null && value == unitValue.value);
 	}
 
 	@Override
@@ -77,7 +81,6 @@ public class LNumber extends LUnit
 		addMember(LDivision.DESCRIPTOR);
 		addMember(LAddition.DESCRIPTOR);
 		addMember(LSubtraction.DESCRIPTOR);
-		addMember(LEquality.DESCRIPTOR);
 		addMember(LInequality.DESCRIPTOR);
 		addMember(LGreaterThanEquals.DESCRIPTOR);
 		addMember(LLessThanEquals.DESCRIPTOR);

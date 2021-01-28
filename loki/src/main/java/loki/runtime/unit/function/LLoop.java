@@ -23,17 +23,20 @@ public class LLoop extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		double iterationCount =
+		LUnit action = getParameter(parameters, ACTION_PARAMETER_INDEX);
+
+		for (long i = 0; i < getIterationCount(host, parameters); i++) action.call(host);
+
+		return LVoid.DESCRIPTOR.getInstance();
+	}
+
+	private double getIterationCount(LUnit host, LUnit... parameters)
+	{
+		return
 			getParameter(parameters, ITERATION_COUNT_PARAMETER_INDEX)
 				.asType(
 					LNumber.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, ITERATION_COUNT_PARAMETER_INDEX)
 				)
 				.getValue();
-
-		LUnit action = getParameter(parameters, ACTION_PARAMETER_INDEX);
-
-		for (long i = 0; i < iterationCount; i++) action.call(host);
-
-		return LVoid.DESCRIPTOR.getInstance();
 	}
 }

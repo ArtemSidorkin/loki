@@ -1,10 +1,10 @@
 package loki.runtime.unit.member.operation;
 
-import loki.runtime.marker.Nullable;
 import loki.runtime.unit.member.LUnitMember;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
+import loki.runtime.marker.Nullable;
 
 import static loki.runtime.error.LErrors.operandHasWrongType;
 import static loki.runtime.unit.member.operation.LOperandPosition.LEFT;

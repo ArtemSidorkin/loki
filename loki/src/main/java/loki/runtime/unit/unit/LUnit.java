@@ -21,6 +21,7 @@ import loki.runtime.marker.compilerapi.unit.UnitSetParameterNames;
 import loki.runtime.marker.compilerapi.unit.UnitSetType;
 import loki.runtime.marker.compilerapi.unit.UnitToBoolean;
 import loki.runtime.marker.compilerapi.unit.UnitToString;
+import loki.runtime.unit.LModule;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
@@ -38,6 +39,7 @@ import loki.runtime.unitdescriptor.LUnitDescriptor;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
@@ -79,9 +81,9 @@ public abstract class LUnit
 		this(null, null);
 	}
 
-	public LUnit(LUnitDescriptor<?> typeDescriptor)
+	public LUnit(LUnitDescriptor<?> unitDescriptor)
 	{
-		this(typeDescriptor.getUnitType());
+		this(unitDescriptor.getUnitType());
 	}
 
 	public LUnit(@Nullable LUnitType type)
@@ -126,6 +128,16 @@ public abstract class LUnit
 		return initPrototype();
 	}
 
+	public boolean isModule()
+	{
+		return this instanceof LModule;
+	}
+
+	public boolean hasCapturedUnitContext()
+	{
+		return getCapturedUnitContext() != null;
+	}
+
 	public LUnitType getType()
 	{
 		return type;
@@ -137,20 +149,25 @@ public abstract class LUnit
 		this.type = type;
 	}
 
+	public Optional<LUnitContext> getOptionalCapturedUnitContext()
+	{
+		return Optional.ofNullable(capturedUnitContext);
+	}
+
 	@UnitGetCapturedUnitContext
 	public @Nullable LUnitContext getCapturedUnitContext()
 	{
 		return capturedUnitContext;
 	}
 
-	public @Nullable Map<String, Integer> getParameterIndexes()
+	public Map<String, Integer> getParameterIndexes()
 	{
-		return parameterIndexes;
+		return parameterIndexes != null ? parameterIndexes : Collections.emptyMap();
 	}
 
-	public @Nullable LUnit[] getParameterDefaultValues()
+	public LUnit[] getParameterDefaultValues()
 	{
-		return parameterDefaultValues;
+		return parameterDefaultValues != null ? parameterDefaultValues : EMPTY_UNIT_ARRAY;
 	}
 
 	public void addMember(LInstanceDescriptor<?> memberDescriptor)
@@ -162,7 +179,7 @@ public abstract class LUnit
 	{
 		LUnit member = getMember(memberName);
 
-		if (LVoid.hasInstance(member)) callbackOnFail.accept(this, memberName);
+		if (LVoid.isTypeOf(member)) callbackOnFail.accept(this, memberName);
 
 		return member;
 	}
@@ -192,7 +209,7 @@ public abstract class LUnit
 		{
 			LUnit member = parentIterator.next().getMember(superMemberName);
 
-			if (!LVoid.hasInstance(member)) return member;
+			if (!LVoid.isTypeOf(member)) return member;
 		}
 
 		return LVoid.getInstance();
@@ -310,9 +327,9 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(DEFAULT)
-	public LBoolean _equals(LUnit unit)
+	public LBoolean _equals(LUnit otherUnit)
 	{
-		return LBoolean.valueOf(super.equals(unit));
+		return LBoolean.valueOf(super.equals(otherUnit));
 	}
 
 	@Override
@@ -338,25 +355,35 @@ public abstract class LUnit
 		return asType(LBoolean.DESCRIPTOR, LErrors::unitHasWrongType).getValue();
 	}
 
+	public boolean isType(@Nullable LUnitDescriptor<?> unitDescriptor)
+	{
+		return isType(unitDescriptor.getUnitType());
+	}
+
 	public boolean isType(@Nullable LUnitType type)
 	{
 		return asType(type) != null;
 	}
 
 	public @Nullable <TYPE extends LUnit> TYPE asType(
-		@Nullable LUnitDescriptor<TYPE> typeDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
+		@Nullable LUnitDescriptor<TYPE> unitDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
-		TYPE type = asType(typeDescriptor != null ? typeDescriptor.getUnitType() : null);
+		TYPE type = asType(unitDescriptor != null ? unitDescriptor.getUnitType() : null);
 
-		if (type == null) callbackOnFail.accept(this, typeDescriptor);
+		if (type == null) callbackOnFail.accept(this, unitDescriptor);
 
 		return type;
 	}
 
+	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LUnitDescriptor<TYPE> unitDescriptor)
+	{
+		return asType(unitDescriptor.getUnitType());
+	}
+
 	public @Nullable <TYPE extends LUnit> TYPE asType(@Nullable LUnitType type)
 	{
-		if (type == null) return (TYPE)this; //TODO: create special descriptor?
+		if (type == null) return (TYPE)this;
 
 		if (getType() == type) return (TYPE)this;
 
@@ -384,6 +411,7 @@ public abstract class LUnit
 			if (parents == null)
 			{
 				parents = new ConcurrentLinkedDeque<>();
+
 				_addParents(initPrototype());
 			}
 		}

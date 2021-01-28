@@ -6,9 +6,9 @@ import java.util.function.Supplier;
 
 public class LInstanceDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UNIT>
 {
-	public LInstanceDescriptor(String instanceName, Class<UNIT> instanceTypeClass, Supplier<UNIT> instanceCreator)
+	public LInstanceDescriptor(String instanceName, Class<UNIT> instanceTypeClass, Supplier<UNIT> instanceFactory)
 	{
-		super(instanceName, instanceTypeClass, instanceCreator);
+		super(instanceName, instanceTypeClass, instanceFactory);
 	}
 
 	public UNIT getInstance()

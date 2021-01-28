@@ -94,7 +94,11 @@ public class LErrors
 	{
 		return
 			callbackResultHasWrongType(
-				host, methodDescriptor.getUnitName(), callbackParameterIndex, result, expectedTypeDescriptor.getUnitType()
+				host,
+				methodDescriptor.getUnitName(),
+				callbackParameterIndex,
+				result,
+				expectedTypeDescriptor.getUnitType()
 			);
 	}
 
@@ -126,7 +130,10 @@ public class LErrors
 		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnit result, LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return methodResultHasWrongType(host, methodDescriptor.getUnitName(), result, expectedTypeDescriptor.getUnitType());
+		return
+			methodResultHasWrongType(
+				host, methodDescriptor.getUnitName(), result, expectedTypeDescriptor.getUnitType()
+			);
 	}
 
 	public static LUnit methodResultHasWrongType(LUnit host, String methodName, LUnit result, LUnitType expectedType)

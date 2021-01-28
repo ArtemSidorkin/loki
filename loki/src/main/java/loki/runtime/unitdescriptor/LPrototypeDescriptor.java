@@ -11,14 +11,14 @@ public class LPrototypeDescriptor<UNIT extends LUnit> extends LUnitDescriptor<UN
 	private final LUnitType prototypeType;
 
 	public LPrototypeDescriptor(
-		String unitName, String prototypeName, Class<UNIT> unitTypeClass, Supplier<UNIT> prototypeCreator
+		String unitName, String prototypeName, Class<UNIT> prototypeTypeClass, Supplier<UNIT> prototypeFactory
 	)
 	{
-		super(unitName, unitTypeClass, prototypeCreator);
+		super(unitName, prototypeTypeClass, prototypeFactory);
 
 		this.prototypeName = prototypeName;
 
-		prototypeType = new LUnitType(prototypeName, unitTypeClass);
+		prototypeType = new LUnitType(prototypeName, prototypeTypeClass);
 	}
 
 	public String getPrototypeName()
