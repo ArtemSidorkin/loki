@@ -1,5 +1,6 @@
 package loki.runtime.context;
 
+import loki.runtime.LBuiltins;
 import loki.runtime.marker.Nullable;
 import loki.runtime.marker.compilerapi.unitcontext.UnitContextConstructor;
 import loki.runtime.marker.compilerapi.unitcontext.UnitContextGetAnonymousParameter;

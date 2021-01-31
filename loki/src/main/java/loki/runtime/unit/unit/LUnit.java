@@ -56,7 +56,6 @@ import static loki.runtime.marker.Polymorphic.Type.ACCESS;
 import static loki.runtime.marker.Polymorphic.Type.COMMON;
 import static loki.runtime.marker.Polymorphic.Type.DEFAULT;
 
-@SuppressWarnings("unchecked")
 public abstract class LUnit
 {
 	public static final String PROTOTYPE_NAME = "UnitPrototype";
@@ -107,26 +106,25 @@ public abstract class LUnit
 	@Polymorphic(COMMON)
 	public LUnit newInstance(LUnit[] parameters)
 	{
-		return
-			new LUnit(getCapturedUnitContext())
+		return new LUnit(getCapturedUnitContext())
+		{
 			{
-				{
-					setType(LUnit.this.getType());
-					addParents(LUnit.this);
-					call(this, parameters);
-				}
+				setType(LUnit.this.getType());
+				addParents(LUnit.this);
+				call(this, parameters);
+			}
 
-				@Override
-				public LUnit call(LUnit host, LUnit... parameters)
-				{
-					return LUnit.this.call(host, parameters);
-				}
-			};
+			@Override
+			public LUnit call(LUnit host, LUnit... parameters)
+			{
+				return LUnit.this.call(host, parameters);
+			}
+		};
 	}
 
 	public static LUnit getPrototype()
 	{
-		return initPrototype();
+		return initializePrototype();
 	}
 
 	public boolean isModule()
@@ -198,7 +196,7 @@ public abstract class LUnit
 	@UnitSetMember
 	public LUnit setMember(String memberName, LUnit member)
 	{
-		initMembers().put(memberName, member);
+		initializeMembers().put(memberName, member);
 
 		return member;
 	}
@@ -206,7 +204,7 @@ public abstract class LUnit
 	@UnitGetSuperMember
 	public LUnit getSuperMember(String superMemberName)
 	{
-		for (Iterator<LUnit> parentIterator = initParents().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initializeParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit member = parentIterator.next().getMember(superMemberName);
 
@@ -228,7 +226,7 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public LUnit _addParents(LUnit... parents)
 	{
-		initParents().addAll(Arrays.asList(parents));
+		initializeParents().addAll(Arrays.asList(parents));
 
 		return this;
 	}
@@ -388,7 +386,7 @@ public abstract class LUnit
 
 		if (getType() == type) return (TYPE)this;
 
-		for (Iterator<LUnit> parentIterator = initParents().descendingIterator(); parentIterator.hasNext();)
+		for (Iterator<LUnit> parentIterator = initializeParents().descendingIterator(); parentIterator.hasNext();)
 		{
 			LUnit parentAsType = parentIterator.next().asType(type);
 
@@ -405,7 +403,7 @@ public abstract class LUnit
 		return parameters[parameterIndex];
 	}
 
-	protected ConcurrentLinkedDeque<LUnit> initParents()
+	protected ConcurrentLinkedDeque<LUnit> initializeParents()
 	{
 		if (parents == null) synchronized(this)
 		{
@@ -413,14 +411,19 @@ public abstract class LUnit
 			{
 				parents = new ConcurrentLinkedDeque<>();
 
-				_addParents(initPrototype());
+				_addParents(initializePrototype());
 			}
 		}
 
 		return parents;
 	}
 
-	private ConcurrentMap<String, LUnit> initMembers()
+	protected void initializeBuiltins(LInstanceDescriptor<?>... instanceDescriptors)
+	{
+		Arrays.stream(instanceDescriptors).forEach(this::addMember);
+	}
+
+	private ConcurrentMap<String, LUnit> initializeMembers()
 	{
 		if (members == null) synchronized(this)
 		{
@@ -432,7 +435,7 @@ public abstract class LUnit
 		return members;
 	}
 
-	private static LUnit initPrototype()
+	private static LUnit initializePrototype()
 	{
 		if (prototype == null) synchronized(LUnit.class)
 		{
@@ -473,21 +476,23 @@ public abstract class LUnit
 						}
 
 						@Override
-						protected ConcurrentLinkedDeque<LUnit> initParents()
+						protected ConcurrentLinkedDeque<LUnit> initializeParents()
 						{
 							return null;
 						}
 
 						private void initializeBuiltins()
 						{
-							addMember(LNew.DESCRIPTOR);
-							addMember(LAddParents.DESCRIPTOR);
-							addMember(LGetIndexedItem.DESCRIPTOR);
-							addMember(LSetIndexedItem.DESCRIPTOR);
-							addMember(LToString.DESCRIPTOR);
-							addMember(LHashCode.DESCRIPTOR);
-							addMember(LEquality.DESCRIPTOR);
-							addMember(LInequality.DESCRIPTOR);
+							initializeBuiltins(
+								LNew.DESCRIPTOR,
+								LAddParents.DESCRIPTOR,
+								LGetIndexedItem.DESCRIPTOR,
+								LSetIndexedItem.DESCRIPTOR,
+								LToString.DESCRIPTOR,
+								LHashCode.DESCRIPTOR,
+								LEquality.DESCRIPTOR,
+								LInequality.DESCRIPTOR
+							);
 						}
 					};
 		}

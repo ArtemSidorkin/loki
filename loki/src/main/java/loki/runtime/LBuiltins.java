@@ -1,4 +1,4 @@
-package loki.runtime.context;
+package loki.runtime;
 
 import loki.runtime.unit.data.LMap;
 import loki.runtime.unit.data.LObject;
@@ -90,22 +90,18 @@ public class LBuiltins
 
 		void initializePrototypes(LPrototypeDescriptor<?>... prototypeDescriptors)
 		{
-			Arrays.stream(prototypeDescriptors).forEach(this::initializePrototype);
+			Arrays
+				.stream(prototypeDescriptors)
+				.forEach(prototypeDescriptor ->
+					put(prototypeDescriptor.getPrototypeName(), prototypeDescriptor::getPrototype)
+				);
 		}
 
-		void initializePrototype(LPrototypeDescriptor<?> prototypeDescriptor)
+		void initializeInstances(LInstanceDescriptor<?>... instanceDescriptors)
 		{
-			put(prototypeDescriptor.getPrototypeName(), prototypeDescriptor::getPrototype);
-		}
-
-		void initializeInstances(LInstanceDescriptor<?>... instanceDescriptor)
-		{
-			Arrays.stream(instanceDescriptor).forEach(this::initializeInstance);
-		}
-
-		void initializeInstance(LInstanceDescriptor<?> instanceDescriptor)
-		{
-			put(instanceDescriptor.getUnitName(), instanceDescriptor::getInstance);
+			Arrays
+				.stream(instanceDescriptors)
+				.forEach(instanceDescriptor -> put(instanceDescriptor.getUnitName(), instanceDescriptor::getInstance));
 		}
 	}
 }

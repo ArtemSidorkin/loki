@@ -26,7 +26,7 @@ public abstract class LUnitDescriptor<UNIT extends LUnit>
 	{
 		unitType = SELF;
 
-		unitFactory = () -> null;
+		unitFactory = () -> {throw new UnsupportedOperationException();};
 	}
 
 	public String getUnitName()

@@ -27,21 +27,17 @@ public class LErrors
 
 	public static LUnit hostHasWrongType(LUnit host, String methodName, LUnitType expectedType)
 	{
-		return
-			throwException(
-				"Host has a wrong type", "host", host, "method name", methodName, "expected type", expectedType
-			);
+		return throwException(
+			"Host has a wrong type", "host", host, "method name", methodName, "expected type", expectedType
+		);
 	}
 
 	public static <T extends LUnit> BiConsumer<LUnit, LUnitDescriptor<T>> methodParameterHasWrongType(
 		LUnit host, LUnitDescriptor<?> methodDescriptor, int parameterIndex
 	)
 	{
-		return
-			(parameterValue, expectedTypeDescriptor) ->
-				methodParameterHasWrongType(
-					host, methodDescriptor, parameterIndex, parameterValue, expectedTypeDescriptor
-				);
+		return (parameterValue, expectedTypeDescriptor) ->
+			methodParameterHasWrongType(host, methodDescriptor, parameterIndex, parameterValue, expectedTypeDescriptor);
 	}
 
 	public static LUnit methodParameterHasWrongType(
@@ -52,36 +48,31 @@ public class LErrors
 		LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return
-			methodParameterHasWrongType(
-				host, methodDescriptor.getUnitName(), parameterIndex, parameter, expectedTypeDescriptor.getUnitType()
-			);
+		return methodParameterHasWrongType(
+			host, methodDescriptor.getUnitName(), parameterIndex, parameter, expectedTypeDescriptor.getUnitType()
+		);
 	}
 
 	public static LUnit methodParameterHasWrongType(
 		LUnit host, String methodName, int parameterIndex, LUnit parameter, LUnitType expectedType
 	)
 	{
-		return
-			throwException(
-				"Method parameter has a wrong type",
-				"host", host,
-				"method name", methodName,
-				"parameter index", parameterIndex,
-				"parameter", parameter,
-				"expected type", expectedType
-			);
+		return throwException(
+			"Method parameter has a wrong type",
+			"host", host,
+			"method name", methodName,
+			"parameter index", parameterIndex,
+			"parameter", parameter,
+			"expected type", expectedType
+		);
 	}
 
 	public static <T extends LUnit> BiConsumer<LUnit, LUnitDescriptor<T>> callbackResultHasWrongType(
 		LUnit host, LUnitDescriptor<?> methodDescriptor, int callbackParameterIndex
 	)
 	{
-		return
-			(result, expectedTypeDescriptor) ->
-				callbackResultHasWrongType(
-					host, methodDescriptor, callbackParameterIndex, result, expectedTypeDescriptor
-				);
+		return (result, expectedTypeDescriptor) ->
+			callbackResultHasWrongType(host, methodDescriptor, callbackParameterIndex, result, expectedTypeDescriptor);
 	}
 
 	public static LUnit callbackResultHasWrongType(
@@ -92,69 +83,59 @@ public class LErrors
 		LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return
-			callbackResultHasWrongType(
-				host,
-				methodDescriptor.getUnitName(),
-				callbackParameterIndex,
-				result,
-				expectedTypeDescriptor.getUnitType()
-			);
+		return callbackResultHasWrongType(
+			host, methodDescriptor.getUnitName(), callbackParameterIndex, result, expectedTypeDescriptor.getUnitType()
+		);
 	}
 
 	public static LUnit callbackResultHasWrongType(
 		LUnit host, String methodName, int callbackParameterIndex, LUnit result, LUnitType expectedType
 	)
 	{
-		return
-			throwException(
-				"Callback result has a wrong type",
-				"host", host,
-				"method name", methodName,
-				"callback parameter index", callbackParameterIndex,
-				"result", result,
-				"expected type", expectedType
-			);
+		return throwException(
+			"Callback result has a wrong type",
+			"host", host,
+			"method name", methodName,
+			"callback parameter index", callbackParameterIndex,
+			"result", result,
+			"expected type", expectedType
+		);
 	}
 
 	public static <T extends LUnit> BiConsumer<LUnit, LUnitDescriptor<T>> methodResultHasWrongType(
 		LUnit host, LUnitDescriptor<?> methodDescriptor
 	)
 	{
-		return
-			(methodResult, expectedTypeDescriptor) ->
-				methodResultHasWrongType(host, methodDescriptor, methodResult, expectedTypeDescriptor);
+		return (methodResult, expectedTypeDescriptor) ->
+			methodResultHasWrongType(host, methodDescriptor, methodResult, expectedTypeDescriptor);
 	}
 
 	public static LUnit methodResultHasWrongType(
 		LUnit host, LUnitDescriptor<?> methodDescriptor, LUnit result, LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return
-			methodResultHasWrongType(
-				host, methodDescriptor.getUnitName(), result, expectedTypeDescriptor.getUnitType()
-			);
+		return methodResultHasWrongType(
+			host, methodDescriptor.getUnitName(), result, expectedTypeDescriptor.getUnitType()
+		);
 	}
 
 	public static LUnit methodResultHasWrongType(LUnit host, String methodName, LUnit result, LUnitType expectedType)
 	{
-		return
-			throwException(
-				"Method result has a wrong type",
-				"host", host,
-				"method name", methodName,
-				"result", result,
-				"expected type", expectedType
-			);
+		return throwException(
+			"Method result has a wrong type",
+			"host", host,
+			"method name", methodName,
+			"result", result,
+			"expected type", expectedType
+		);
 	}
 
 	public static <T extends LUnit> BiConsumer<LUnit, LUnitDescriptor<T>> operandHasWrongType(
 		LUnit host, LUnitDescriptor<?> operationDescriptor, LOperandPosition operandPosition
 	)
 	{
-		return
-			(operandValue, expectedTypeDescriptor) ->
-				operandHasWrongType(host, operationDescriptor, operandPosition, operandValue, expectedTypeDescriptor);
+		return (operandValue, expectedTypeDescriptor) ->
+			operandHasWrongType(host, operationDescriptor, operandPosition, operandValue, expectedTypeDescriptor);
 	}
 
 	public static LUnit operandHasWrongType(
@@ -165,25 +146,23 @@ public class LErrors
 		LUnitDescriptor<?> expectedTypeDescriptor
 	)
 	{
-		return
-			operandHasWrongType(
-				host, operationDescriptor.getUnitName(), operandPosition, operand, expectedTypeDescriptor.getUnitType()
-			);
+		return operandHasWrongType(
+			host, operationDescriptor.getUnitName(), operandPosition, operand, expectedTypeDescriptor.getUnitType()
+		);
 	}
 
 	public static LUnit operandHasWrongType(
 		LUnit host, String operationName, LOperandPosition operandPosition, LUnit operand, LUnitType expectedType
 	)
 	{
-		return
-			throwException(
-				"Operand has a wrong type",
-				"host", host,
-				"operation name", operationName,
-				"operand position", operandPosition,
-				"operand", operand,
-				"expected type", expectedType
-			);
+		return throwException(
+			"Operand has a wrong type",
+			"host", host,
+			"operation name", operationName,
+			"operand position", operandPosition,
+			"operand", operand,
+			"expected type", expectedType
+		);
 	}
 
 	public static LUnit unitHasWrongType(LUnit unit, LUnitDescriptor<?> expectedTypeDescriptor)
