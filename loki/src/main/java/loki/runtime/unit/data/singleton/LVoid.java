@@ -30,11 +30,6 @@ public class LVoid extends LUnit
 		return DESCRIPTOR.getInstance();
 	}
 
-	public static boolean isNotTypeOf(LUnit unit)
-	{
-		return !isTypeOf(unit);
-	}
-
 	public static boolean isTypeOf(LUnit unit)
 	{
 		return unit == DESCRIPTOR.getInstance();

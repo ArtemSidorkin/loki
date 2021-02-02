@@ -9,7 +9,6 @@ import loki.runtime.marker.compilerapi.unitcontext.UnitContextSetVariable;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,17 +37,33 @@ public class LUnitContext
 	@UnitContextGetAnonymousParameter
 	public LUnit getAnonymousParameter()
 	{
-		return getParameter(initAnonymousParameterIndex().getAndIncrement()).orElseGet(LVoid::getInstance);
+		LUnit parameter = getParameter(initAnonymousParameterIndex().getAndIncrement());
+
+		if (parameter != null) return parameter;
+
+		return LVoid.getInstance();
 	}
 
 	@UnitContextGetVariable
 	public LUnit getVariable(String variableName)
 	{
-		return getLocalVariable(variableName)
-			.or(() -> getParameter(variableName))
-			.or(() -> getHostMember(variableName))
-			.or(() -> getSuperVariable(variableName))
-			.orElseGet(LVoid::getInstance);
+		LUnit variable = getLocalVariable(variableName);
+
+		if (variable != null) return variable;
+
+		variable = getParameter(variableName);
+
+		if (variable != null) return variable;
+
+		variable = getHostMember(variableName);
+
+		if (variable != null) return variable;
+
+		variable = getSuperVariable(variableName);
+
+		if (variable != null) return variable;
+
+		return LVoid.getInstance();
 	}
 
 	@UnitContextSetVariable
@@ -59,46 +74,53 @@ public class LUnitContext
 		return variableValue;
 	}
 
-	private Optional<LUnit> getSuperVariable(String superVariableName)
+	private @Nullable LUnit getSuperVariable(String superVariableName)
 	{
-		return frame
-			.getOptionalCapturedUnitContext()
-			.map(context -> context.getVariable(superVariableName))
-			.or(() -> LBuiltins.get(superVariableName));
+		if (frame.getCapturedUnitContext() != null)
+		{
+			LUnit superVariable = frame.getCapturedUnitContext().getVariable(superVariableName);
+
+			if (superVariable != null) return superVariable;
+		}
+
+		return LBuiltins.get(superVariableName);
 	}
 
-	private Optional<LUnit> getLocalVariable(String localVariableName)
+	private @Nullable LUnit getLocalVariable(String localVariableName)
 	{
-		return getLocalVariables().map(localVariables -> localVariables.get(localVariableName));
+		if (localVariables == null) return null;
+
+		return localVariables.get(localVariableName);
 	}
 
-	private Optional<LUnit> getParameter(String parameterName)
+	private @Nullable LUnit getParameter(String parameterName)
 	{
-		return Optional.ofNullable(frame.getParameterIndexes().get(parameterName)).flatMap(this::getParameter);
+		Integer parameterIndex = frame.getParameterIndexes().get(parameterName);
+
+		if (parameterIndex != null) return getParameter(parameterIndex);
+
+		return null;
 	}
 
-	private Optional<LUnit> getHostMember(String hostMemberName)
+	private @Nullable LUnit getHostMember(String hostMemberName)
 	{
-		return Optional.of(host).map(host -> host.getMember(hostMemberName)).filter(LVoid::isNotTypeOf);
+		LUnit hostMember = host.getMember(hostMemberName);
+
+		if (!LVoid.isTypeOf(hostMember)) return hostMember;
+
+		return null;
 	}
 
-	private Optional<LUnit> getParameter(int parameterIndex)
+	private @Nullable LUnit getParameter(int parameterIndex)
 	{
-		return parameterIndex < parameters.length
-			? Optional.of(parameters[parameterIndex])
-			: getDefaultParameter(parameterIndex);
+		return parameterIndex < parameters.length ? parameters[parameterIndex] : getDefaultParameter(parameterIndex);
 	}
 
-	private Optional<LUnit> getDefaultParameter(int parameterIndex)
+	private @Nullable LUnit getDefaultParameter(int parameterIndex)
 	{
-		if (parameterIndex >= frame.getParameterDefaultValues().length) return Optional.empty();
+		if (parameterIndex >= frame.getParameterDefaultValues().length) return null;
 
-		return Optional.ofNullable(frame.getParameterDefaultValues()[parameterIndex]);
-	}
-
-	private Optional<ConcurrentMap<String, LUnit>> getLocalVariables()
-	{
-		return Optional.ofNullable(localVariables);
+		return frame.getParameterDefaultValues()[parameterIndex];
 	}
 
 	private ConcurrentMap<String, LUnit> initLocalVariables()
@@ -107,7 +129,7 @@ public class LUnitContext
 		{
 			if (localVariables == null)
 				localVariables =
-					new ConcurrentHashMap<> (
+					new ConcurrentHashMap<>(
 						LOCAL_VARIABLES_INITIAL_CAPACITY, LOCAL_VARIABLES_LOAD_FACTOR, LOCAL_VARIABLES_CONCURRENCY_LEVEL
 					);
 		}

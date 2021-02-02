@@ -4,7 +4,33 @@ import loki.runtime.marker.compilerapi.type.TypeConstructor;
 
 public class LUnitType
 {
-	public static LUnitType SELF = new LUnitType();
+	public static final LUnitType SELF =
+		new LUnitType()
+		{
+			@Override
+			public String getFullName()
+			{
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String getName()
+			{
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String getId()
+			{
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String toString()
+			{
+				throw new UnsupportedOperationException();
+			}
+		};
 
 	private final String name;
 	private final String id;

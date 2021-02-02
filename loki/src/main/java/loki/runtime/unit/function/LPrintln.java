@@ -23,6 +23,6 @@ public class LPrintln extends LUnit
 			for (LUnit parameter : parameters) out.println(parameter);
 		else out.println();
 
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
 	}
 }

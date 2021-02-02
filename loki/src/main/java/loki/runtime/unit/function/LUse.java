@@ -5,8 +5,6 @@ import loki.runtime.unit.data.LString;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
-import static loki.runtime.error.LErrors.methodParameterHasWrongType;
-
 public class LUse extends LUnit
 {
 	private static final int MODULE_FILE_PATHNAME_PARAMETER_INDEX = 0;
@@ -21,21 +19,14 @@ public class LUse extends LUnit
 	@Override
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
-		LUnit module = Executor.apply(getModuleFilePathname(host, parameters));
+		String moduleFilePathname =
+			getParameter(host, parameters, MODULE_FILE_PATHNAME_PARAMETER_INDEX, DESCRIPTOR, LString.DESCRIPTOR)
+				.getValue();
+
+		LUnit module = Executor.apply(moduleFilePathname);
 
 		if (!host.isType(module.getType())) host.addParents(module);
 
 		return module;
-	}
-
-	private String getModuleFilePathname(LUnit host, LUnit... parameters)
-	{
-		return
-			getParameter(parameters, MODULE_FILE_PATHNAME_PARAMETER_INDEX)
-				.asType(
-					LString.DESCRIPTOR,
-					methodParameterHasWrongType(host, DESCRIPTOR, MODULE_FILE_PATHNAME_PARAMETER_INDEX)
-				)
-				.getValue();
 	}
 }

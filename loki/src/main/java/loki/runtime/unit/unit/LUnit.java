@@ -21,7 +21,6 @@ import loki.runtime.marker.compilerapi.unit.UnitSetParameterNames;
 import loki.runtime.marker.compilerapi.unit.UnitSetType;
 import loki.runtime.marker.compilerapi.unit.UnitToBoolean;
 import loki.runtime.marker.compilerapi.unit.UnitToString;
-import loki.runtime.unit.LModule;
 import loki.runtime.unit.data.LString;
 import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
@@ -42,16 +41,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiConsumer;
 
 import static loki.runtime.LUnitType.SELF;
-import static loki.runtime.error.LErrors.methodResultHasWrongType;
-import static loki.runtime.error.LErrors.unitHasNoMember;
-import static loki.runtime.error.LErrors.unitHasNoParameter;
+import static loki.runtime.error.LErrors.*;
 import static loki.runtime.marker.Polymorphic.Type.ACCESS;
 import static loki.runtime.marker.Polymorphic.Type.COMMON;
 import static loki.runtime.marker.Polymorphic.Type.DEFAULT;
@@ -127,16 +123,6 @@ public abstract class LUnit
 		return initializePrototype();
 	}
 
-	public boolean isModule()
-	{
-		return this instanceof LModule;
-	}
-
-	public boolean hasCapturedUnitContext()
-	{
-		return getCapturedUnitContext() != null;
-	}
-
 	public LUnitType getType()
 	{
 		return type;
@@ -146,11 +132,6 @@ public abstract class LUnit
 	public void setType(LUnitType type)
 	{
 		this.type = type;
-	}
-
-	public Optional<LUnitContext> getOptionalCapturedUnitContext()
-	{
-		return Optional.ofNullable(capturedUnitContext);
 	}
 
 	@UnitGetCapturedUnitContext
@@ -186,11 +167,14 @@ public abstract class LUnit
 	@UnitGetMember
 	public LUnit getMember(String memberName)
 	{
-		return
-			Optional
-				.ofNullable(members)
-				.flatMap(members -> Optional.ofNullable(members.get(memberName)))
-				.orElseGet(() -> getSuperMember(memberName));
+		if (members != null)
+		{
+			LUnit member = members.get(memberName);
+
+			if (member != null) return member;
+		}
+
+		return getSuperMember(memberName);
 	}
 
 	@UnitSetMember
@@ -206,9 +190,9 @@ public abstract class LUnit
 	{
 		for (Iterator<LUnit> parentIterator = initializeParents().descendingIterator(); parentIterator.hasNext();)
 		{
-			LUnit member = parentIterator.next().getMember(superMemberName);
+			LUnit superMember = parentIterator.next().getMember(superMemberName);
 
-			if (!LVoid.isTypeOf(member)) return member;
+			if (!LVoid.isTypeOf(superMember)) return superMember;
 		}
 
 		return LVoid.getInstance();
@@ -232,7 +216,7 @@ public abstract class LUnit
 	}
 
 	@UnitCall
-	public LUnit call(@Compiler LUnit host, @Compiler LUnit... parameters)
+	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		return LVoid.getInstance();
 	}
@@ -279,12 +263,12 @@ public abstract class LUnit
 	@UnitSetParameterNames
 	public LUnit setParameterNames(String[] parameterNames)
 	{
-		Map.Entry<String, Integer>[] entries = new Map.Entry[parameterNames.length];
+		Map.Entry<String, Integer>[] parameterNameIndexEntries = new Map.Entry[parameterNames.length];
 
 		for (int i = 0; i < parameterNames.length; i++)
-			entries[i] = new AbstractMap.SimpleImmutableEntry<>(parameterNames[i], i);
+			parameterNameIndexEntries[i] = new AbstractMap.SimpleImmutableEntry<>(parameterNames[i], i);
 
-		this.parameterIndexes = Map.ofEntries(entries);
+		this.parameterIndexes = Map.ofEntries(parameterNameIndexEntries);
 
 		return this;
 	}
@@ -301,10 +285,9 @@ public abstract class LUnit
 	@Polymorphic(DEFAULT)
 	public int hashCode()
 	{
-		return (int)
-			callMember(LHashCode.DESCRIPTOR)
-				.asType(LNumber.DESCRIPTOR, methodResultHasWrongType(this, LHashCode.DESCRIPTOR))
-				.getValue();
+		return (int)callMember(LHashCode.DESCRIPTOR)
+			.asType(LNumber.DESCRIPTOR, methodResultHasWrongType(this, LHashCode.DESCRIPTOR))
+			.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
@@ -319,10 +302,9 @@ public abstract class LUnit
 	{
 		if (!(object instanceof LUnit)) return false;
 
-		return
-			callMember(LEquality.DESCRIPTOR, (LUnit)object)
-				.asType(LBoolean.DESCRIPTOR, methodResultHasWrongType(this, LEquality.DESCRIPTOR))
-				.getValue();
+		return callMember(LEquality.DESCRIPTOR, (LUnit)object)
+			.asType(LBoolean.DESCRIPTOR, methodResultHasWrongType(this, LEquality.DESCRIPTOR))
+			.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
@@ -336,10 +318,9 @@ public abstract class LUnit
 	@UnitToString
 	public String toString()
 	{
-		return
-			callMember(LToString.DESCRIPTOR)
-				.asType(LString.DESCRIPTOR, methodResultHasWrongType(this, LToString.DESCRIPTOR))
-				.getValue();
+		return callMember(LToString.DESCRIPTOR)
+			.asType(LString.DESCRIPTOR, methodResultHasWrongType(this, LToString.DESCRIPTOR))
+			.getValue();
 	}
 
 	@Polymorphic(DEFAULT)
@@ -354,17 +335,17 @@ public abstract class LUnit
 		return asType(LBoolean.DESCRIPTOR, LErrors::unitHasWrongType).getValue();
 	}
 
-	public boolean isType(@Nullable LUnitDescriptor<?> unitDescriptor)
+	public boolean isType(LUnitDescriptor<?> unitDescriptor)
 	{
 		return isType(unitDescriptor.getUnitType());
 	}
 
-	public boolean isType(@Nullable LUnitType type)
+	public boolean isType(LUnitType type)
 	{
 		return asType(type) != null;
 	}
 
-	public @Nullable <TYPE extends LUnit> TYPE asType(
+	public <TYPE extends LUnit> TYPE asType(
 		LUnitDescriptor<TYPE> unitDescriptor, BiConsumer<LUnit, LUnitDescriptor<TYPE>> callbackOnFail
 	)
 	{
@@ -386,19 +367,32 @@ public abstract class LUnit
 
 		if (getType() == type) return (TYPE)this;
 
-		for (Iterator<LUnit> parentIterator = initializeParents().descendingIterator(); parentIterator.hasNext();)
-		{
-			LUnit parentAsType = parentIterator.next().asType(type);
+		if (parents != null)
+			for (Iterator<LUnit> parentIterator = initializeParents().descendingIterator(); parentIterator.hasNext();)
+			{
+				LUnit parentAsType = parentIterator.next().asType(type);
 
-			if (parentAsType != null) return (TYPE)parentAsType;
-		}
+				if (parentAsType != null) return (TYPE)parentAsType;
+			}
 
 		return null;
 	}
 
+	protected <UNIT extends LUnit> UNIT getParameter(
+		LUnit host,
+		LUnit[] parameters,
+		int parameterIndex,
+		LUnitDescriptor<?> methodDescriptor,
+		LUnitDescriptor<UNIT> typeDescriptor
+	)
+	{
+		return getParameter(parameters, parameterIndex)
+			.asType(typeDescriptor, methodParameterHasWrongType(host, methodDescriptor, parameterIndex));
+	}
+
 	protected LUnit getParameter(LUnit[] parameters, int parameterIndex)
 	{
-		if (parameterIndex < 0 || parameterIndex >= parameters.length) unitHasNoParameter(this, parameterIndex);
+		if (parameterIndex >= parameters.length) unitHasNoParameter(this, parameterIndex);
 
 		return parameters[parameterIndex];
 	}
@@ -420,7 +414,7 @@ public abstract class LUnit
 
 	protected void initializeBuiltins(LInstanceDescriptor<?>... instanceDescriptors)
 	{
-		Arrays.stream(instanceDescriptors).forEach(this::addMember);
+		for (LInstanceDescriptor<?> instanceDescriptor : instanceDescriptors) addMember(instanceDescriptor);
 	}
 
 	private ConcurrentMap<String, LUnit> initializeMembers()
@@ -462,22 +456,10 @@ public abstract class LUnit
 						}
 
 						@Override
-						public LUnit _addParents(LUnit... parents)
-						{
-							return unitHasNoMember(this, LAddParents.DESCRIPTOR);
-						}
-
-						@Override
 						public <TYPE extends LUnit> TYPE asType(LUnitType type)
 						{
 							if (getType() == type) return (TYPE)this;
 
-							return null;
-						}
-
-						@Override
-						protected ConcurrentLinkedDeque<LUnit> initializeParents()
-						{
 							return null;
 						}
 

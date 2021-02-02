@@ -9,7 +9,7 @@ import loki.runtime.marker.Nullable;
 import static loki.runtime.error.LErrors.operandHasWrongType;
 import static loki.runtime.unit.member.operation.LOperandPosition.LEFT;
 import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
-import static loki.runtime.unitdescriptor.LUnitDescriptor.SELF_TYPE;
+import static loki.runtime.unitdescriptor.LUnitDescriptor.selfType;
 
 public abstract class LBinaryOperation<OPERATION extends LUnit, LEFT_OPERAND extends LUnit, RIGHT_OPERAND extends LUnit>
 	extends LUnitMember<OPERATION>
@@ -21,7 +21,7 @@ public abstract class LBinaryOperation<OPERATION extends LUnit, LEFT_OPERAND ext
 
 	protected LBinaryOperation(LInstanceDescriptor<OPERATION> instanceDescriptor)
 	{
-		this(instanceDescriptor, SELF_TYPE, SELF_TYPE);
+		this(instanceDescriptor, selfType(), selfType());
 	}
 
 	protected LBinaryOperation(

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.synchronizedList;
+
 public class LTest extends LUnit
 {
 	private static final int VALUE_PARAMETER_INDEX = 0;
@@ -15,7 +17,7 @@ public class LTest extends LUnit
 	public static final LInstanceDescriptor<LTest> DESCRIPTOR =
 		new LInstanceDescriptor<>("test", LTest.class, LTest::new);
 
-	private static final List<LUnit> values = Collections.synchronizedList(new ArrayList<>());
+	private static final List<LUnit> values = synchronizedList(new ArrayList<>());
 
 	private LTest()
 	{
@@ -27,7 +29,7 @@ public class LTest extends LUnit
 	{
 		values.add(getParameter(parameters, VALUE_PARAMETER_INDEX));
 
-		return LVoid.DESCRIPTOR.getInstance();
+		return LVoid.getInstance();
 	}
 
 	public static List<LUnit> getValues()

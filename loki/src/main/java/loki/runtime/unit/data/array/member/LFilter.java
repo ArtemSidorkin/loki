@@ -32,20 +32,20 @@ public class LFilter extends LUnitMember<LFilter>
 
 	private ArrayList<LUnit> filterItems(LUnit host, ArrayList<LUnit> items, LUnit predicate)
 	{
-		return
-			items
-				.stream()
-				.filter(item -> testItem(host, predicate, item))
-				.collect(Collectors.toCollection(ArrayList::new));
+		ArrayList<LUnit> filteredItems = new ArrayList<>();
+
+		for (LUnit item : items)
+			if (testItem(host, predicate, item)) filteredItems.add(item);
+
+		return filteredItems;
 	}
 
 	private boolean testItem(LUnit host, LUnit predicate, LUnit item)
 	{
-		return
-			predicate
-				.call(host, item)
-				.asType(LBoolean.DESCRIPTOR, callbackResultHasWrongType(host, DESCRIPTOR, PREDICATE_PARAMETER_INDEX))
-				.getValue();
+		return predicate
+			.call(host, item)
+			.asType(LBoolean.DESCRIPTOR, callbackResultHasWrongType(host, DESCRIPTOR, PREDICATE_PARAMETER_INDEX))
+			.getValue();
 	}
 
 	private ArrayList<LUnit> hostToItems(LUnit host)

@@ -63,7 +63,7 @@ public class LNumber extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LNumber unitValue = unit.asType(DESCRIPTOR.getUnitType());
+		LNumber unitValue = unit.asType(DESCRIPTOR);
 
 		return LBoolean.valueOf(unitValue != null && value == unitValue.value);
 	}

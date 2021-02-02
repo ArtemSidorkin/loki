@@ -1,5 +1,6 @@
 package loki.runtime;
 
+import loki.runtime.marker.Nullable;
 import loki.runtime.unit.data.LMap;
 import loki.runtime.unit.data.LObject;
 import loki.runtime.unit.data.LString;
@@ -17,20 +18,22 @@ import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LBuiltins
 {
 	private static final Map<String, Supplier<LUnit>> VALUES = Collections.unmodifiableMap(new Container());
 
-	public static Optional<LUnit> get(String name)
+	public static @Nullable	LUnit get(String name)
 	{
-		return Optional.ofNullable(VALUES.get(name)).map(Supplier::get);
+		Supplier<LUnit> builtin = VALUES.get(name);
+
+		if (builtin != null) return builtin.get();
+
+		return null;
 	}
 
 	private static class Container extends HashMap<String, Supplier<LUnit>>
@@ -90,18 +93,14 @@ public class LBuiltins
 
 		void initializePrototypes(LPrototypeDescriptor<?>... prototypeDescriptors)
 		{
-			Arrays
-				.stream(prototypeDescriptors)
-				.forEach(prototypeDescriptor ->
-					put(prototypeDescriptor.getPrototypeName(), prototypeDescriptor::getPrototype)
-				);
+			for (LPrototypeDescriptor<?> prototypeDescriptor : prototypeDescriptors)
+				put(prototypeDescriptor.getPrototypeName(), prototypeDescriptor::getPrototype);
 		}
 
 		void initializeInstances(LInstanceDescriptor<?>... instanceDescriptors)
 		{
-			Arrays
-				.stream(instanceDescriptors)
-				.forEach(instanceDescriptor -> put(instanceDescriptor.getUnitName(), instanceDescriptor::getInstance));
+			for (LInstanceDescriptor<?> instanceDescriptor : instanceDescriptors)
+				put(instanceDescriptor.getUnitName(), instanceDescriptor::getInstance);
 		}
 	}
 }

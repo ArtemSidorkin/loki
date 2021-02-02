@@ -5,8 +5,6 @@ import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
 
-import static loki.runtime.error.LErrors.methodParameterHasWrongType;
-
 public class LLoop extends LUnit
 {
 	private static final int ITERATION_COUNT_PARAMETER_INDEX = 0;
@@ -25,18 +23,11 @@ public class LLoop extends LUnit
 	{
 		LUnit action = getParameter(parameters, ACTION_PARAMETER_INDEX);
 
-		for (long i = 0; i < getIterationCount(host, parameters); i++) action.call(host);
+		double iterationCount =
+			getParameter(host, parameters, ITERATION_COUNT_PARAMETER_INDEX, DESCRIPTOR, LNumber.DESCRIPTOR).getValue();
+
+		for (long i = 0; i < iterationCount; i++) action.call(host);
 
 		return LVoid.DESCRIPTOR.getInstance();
-	}
-
-	private double getIterationCount(LUnit host, LUnit... parameters)
-	{
-		return
-			getParameter(parameters, ITERATION_COUNT_PARAMETER_INDEX)
-				.asType(
-					LNumber.DESCRIPTOR, methodParameterHasWrongType(host, DESCRIPTOR, ITERATION_COUNT_PARAMETER_INDEX)
-				)
-				.getValue();
 	}
 }

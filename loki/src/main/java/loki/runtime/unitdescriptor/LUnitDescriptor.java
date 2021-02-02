@@ -9,7 +9,27 @@ import static loki.runtime.LUnitType.SELF;
 
 public abstract class LUnitDescriptor<UNIT extends LUnit>
 {
-	public static LUnitDescriptor SELF_TYPE = new LUnitDescriptor() {};
+	private static final LUnitDescriptor<? extends LUnit> SELF_TYPE =
+		new LUnitDescriptor<>()
+		{
+			@Override
+			public String getUnitName()
+			{
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isUnit(String unitName)
+			{
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			protected LUnit getUnit()
+			{
+				throw new UnsupportedOperationException();
+			}
+		};
 
 	private final LUnitType unitType;
 	private final Supplier<UNIT> unitFactory;
@@ -26,7 +46,12 @@ public abstract class LUnitDescriptor<UNIT extends LUnit>
 	{
 		unitType = SELF;
 
-		unitFactory = () -> {throw new UnsupportedOperationException();};
+		unitFactory = null;
+	}
+
+	public static <UNIT> UNIT selfType()
+	{
+		return (UNIT) SELF_TYPE;
 	}
 
 	public String getUnitName()
