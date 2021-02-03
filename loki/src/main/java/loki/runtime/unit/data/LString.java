@@ -23,7 +23,7 @@ public class LString extends LUnit
 	{
 		super(DESCRIPTOR);
 
-		_addParents(DESCRIPTOR.getPrototype());
+		_addParents(DESCRIPTOR);
 
 		this.value = value;
 	}
@@ -50,9 +50,9 @@ public class LString extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		String unitValue = unit.asType(DESCRIPTOR, operandHasWrongType(this, LEquality.DESCRIPTOR, RIGHT)).value;
+		LString string = unit.asType(DESCRIPTOR);
 
-		return LBoolean.valueOf(value.equals(unitValue));
+		return LBoolean.valueOf(string != null && value.equals(string.value));
 	}
 
 	@Override

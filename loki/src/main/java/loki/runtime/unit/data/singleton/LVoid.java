@@ -21,7 +21,7 @@ public class LVoid extends LUnit
 
 	private LVoid()
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 	}
 
 	@VoidGetInstance

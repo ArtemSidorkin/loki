@@ -20,7 +20,7 @@ public class LUse extends LUnit
 	public LUnit call(LUnit host, LUnit... parameters)
 	{
 		String moduleFilePathname =
-			getParameter(host, parameters, MODULE_FILE_PATHNAME_PARAMETER_INDEX, DESCRIPTOR, LString.DESCRIPTOR)
+			getMethodParameter(DESCRIPTOR, LString.DESCRIPTOR, host, parameters, MODULE_FILE_PATHNAME_PARAMETER_INDEX)
 				.getValue();
 
 		LUnit module = Executor.apply(moduleFilePathname);

@@ -15,7 +15,7 @@ public class LObject extends LUnit
 	{
 		super(DESCRIPTOR);
 
-		_addParents(DESCRIPTOR.getPrototype());
+		_addParents(DESCRIPTOR);
 
 		for (int i = 0; i < items.length; i += 2) setMember(items[i].toString(), items[i + 1]);
 	}

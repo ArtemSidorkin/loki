@@ -26,11 +26,11 @@ public class LBoolean extends LUnit
 
 	private LBoolean(boolean value)
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 
 		this.value = value;
 
-		_addParents(DESCRIPTOR.getPrototype());
+		_addParents(DESCRIPTOR);
 	}
 
 	@Prototype
@@ -80,9 +80,9 @@ public class LBoolean extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		boolean value = unit.asType(DESCRIPTOR, operandHasWrongType(this, LEquality.DESCRIPTOR, RIGHT)).value;
+		LBoolean _boolean = unit.asType(DESCRIPTOR);
 
-		return LBoolean.valueOf(this.value == value);
+		return LBoolean.valueOf(_boolean != null && this.value == _boolean.getValue());
 	}
 
 	@Override
@@ -93,8 +93,10 @@ public class LBoolean extends LUnit
 
 	private void initializeBuiltins()
 	{
-		addMember(LNegation.DESCRIPTOR);
-		addMember(LConjunction.DESCRIPTOR);
-		addMember(LDisjunction.DESCRIPTOR);
+		initializeBuiltins(
+			LNegation.DESCRIPTOR,
+			LConjunction.DESCRIPTOR,
+			LDisjunction.DESCRIPTOR
+		);
 	}
 }

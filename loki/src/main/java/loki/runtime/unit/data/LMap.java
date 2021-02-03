@@ -6,17 +6,10 @@ import loki.runtime.unit.data.bool.LBoolean;
 import loki.runtime.unit.data.number.LNumber;
 import loki.runtime.unit.data.singleton.LVoid;
 import loki.runtime.unit.unit.LUnit;
-import loki.runtime.unit.unit.member.operation.binary.LEquality;
 import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static loki.runtime.error.LErrors.operandHasWrongType;
-import static loki.runtime.unit.member.operation.LOperandPosition.RIGHT;
 
 public class LMap extends LUnit
 {
@@ -37,7 +30,7 @@ public class LMap extends LUnit
 
 		this.items = new LinkedHashMap<>();
 
-		_addParents(DESCRIPTOR.getPrototype());
+		_addParents(DESCRIPTOR);
 
 		for (int i = 0; i < items.length; i += 2) this.items.put(items[i], items[i + 1]);
 	}
@@ -79,9 +72,9 @@ public class LMap extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		Map<LUnit, LUnit> value = unit.asType(DESCRIPTOR, operandHasWrongType(this, LEquality.DESCRIPTOR, RIGHT)).items;
+		LMap map = unit.asType(DESCRIPTOR);
 
-		return LBoolean.valueOf(items.equals(value));
+		return LBoolean.valueOf(map != null && items.equals(map.items));
 	}
 
 	@Override

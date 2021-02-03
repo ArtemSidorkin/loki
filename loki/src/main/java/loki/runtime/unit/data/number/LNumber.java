@@ -31,7 +31,7 @@ public class LNumber extends LUnit
 
 		this.value = value;
 
-		_addParents(DESCRIPTOR.getPrototype());
+		_addParents(DESCRIPTOR);
 	}
 
 	@Prototype
@@ -63,9 +63,9 @@ public class LNumber extends LUnit
 	@Override
 	public LBoolean _equals(LUnit unit)
 	{
-		LNumber unitValue = unit.asType(DESCRIPTOR);
+		LNumber number = unit.asType(DESCRIPTOR);
 
-		return LBoolean.valueOf(unitValue != null && value == unitValue.value);
+		return LBoolean.valueOf(number != null && value == number.value);
 	}
 
 	@Override
@@ -76,15 +76,17 @@ public class LNumber extends LUnit
 
 	private void initBuiltins()
 	{
-		addMember(LNegation.DESCRIPTOR);
-		addMember(LMultiplication.DESCRIPTOR);
-		addMember(LDivision.DESCRIPTOR);
-		addMember(LAddition.DESCRIPTOR);
-		addMember(LSubtraction.DESCRIPTOR);
-		addMember(LInequality.DESCRIPTOR);
-		addMember(LGreaterThanEquals.DESCRIPTOR);
-		addMember(LLessThanEquals.DESCRIPTOR);
-		addMember(LGreaterThan.DESCRIPTOR);
-		addMember(LLessThan.DESCRIPTOR);
+		initializeBuiltins(
+			LNegation.DESCRIPTOR,
+			LMultiplication.DESCRIPTOR,
+			LDivision.DESCRIPTOR,
+			LAddition.DESCRIPTOR,
+			LSubtraction.DESCRIPTOR,
+			LInequality.DESCRIPTOR,
+			LGreaterThanEquals.DESCRIPTOR,
+			LLessThanEquals.DESCRIPTOR,
+			LGreaterThan.DESCRIPTOR,
+			LLessThan.DESCRIPTOR
+		);
 	}
 }

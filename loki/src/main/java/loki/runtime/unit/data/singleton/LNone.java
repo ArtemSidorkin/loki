@@ -10,6 +10,6 @@ public class LNone extends LUnit
 
 	private LNone()
 	{
-		super(DESCRIPTOR.getUnitType());
+		super(DESCRIPTOR);
 	}
 }

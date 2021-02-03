@@ -34,6 +34,7 @@ import loki.runtime.unit.unit.member.method.LToString;
 import loki.runtime.unit.unit.member.operation.binary.LEquality;
 import loki.runtime.unit.unit.member.operation.binary.LInequality;
 import loki.runtime.unitdescriptor.LInstanceDescriptor;
+import loki.runtime.unitdescriptor.LPrototypeDescriptor;
 import loki.runtime.unitdescriptor.LUnitDescriptor;
 
 import java.util.AbstractMap;
@@ -82,7 +83,7 @@ public abstract class LUnit
 		this(unitDescriptor.getUnitType());
 	}
 
-	public LUnit(@Nullable LUnitType type)
+	public LUnit(LUnitType type)
 	{
 		this(type, null);
 	}
@@ -100,7 +101,7 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(COMMON)
-	public LUnit newInstance(LUnit[] parameters)
+	public LUnit newInstance(LUnit... parameters)
 	{
 		return new LUnit(getCapturedUnitContext())
 		{
@@ -207,6 +208,14 @@ public abstract class LUnit
 		return this;
 	}
 
+	public LUnit _addParents(LPrototypeDescriptor<?>... parentDescriptors)
+	{
+		for (LPrototypeDescriptor<?> parentDescriptor : parentDescriptors)
+			initializeParents().add(parentDescriptor.getPrototype());
+
+		return this;
+	}
+
 	@Polymorphic(DEFAULT)
 	public LUnit _addParents(LUnit... parents)
 	{
@@ -240,7 +249,7 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(DEFAULT)
-	public LUnit _getIndexedItem(LUnit[] parameters)
+	public LUnit _getIndexedItem(LUnit... parameters)
 	{
 		return LVoid.getInstance();
 	}
@@ -255,13 +264,13 @@ public abstract class LUnit
 	}
 
 	@Polymorphic(DEFAULT)
-	public LUnit _setIndexedItem(LUnit[] parameters)
+	public LUnit _setIndexedItem(LUnit... parameters)
 	{
 		return LVoid.getInstance();
 	}
 
 	@UnitSetParameterNames
-	public LUnit setParameterNames(String[] parameterNames)
+	public LUnit setParameterNames(String... parameterNames)
 	{
 		Map.Entry<String, Integer>[] parameterNameIndexEntries = new Map.Entry[parameterNames.length];
 
@@ -378,16 +387,16 @@ public abstract class LUnit
 		return null;
 	}
 
-	protected <UNIT extends LUnit> UNIT getParameter(
+	protected <UNIT extends LUnit> UNIT getMethodParameter(
+		LInstanceDescriptor<?> methodDescriptor,
+		LPrototypeDescriptor<UNIT> parameterTypeDescriptor,
 		LUnit host,
 		LUnit[] parameters,
-		int parameterIndex,
-		LUnitDescriptor<?> methodDescriptor,
-		LUnitDescriptor<UNIT> typeDescriptor
+		int parameterIndex
 	)
 	{
 		return getParameter(parameters, parameterIndex)
-			.asType(typeDescriptor, methodParameterHasWrongType(host, methodDescriptor, parameterIndex));
+			.asType(parameterTypeDescriptor, methodParameterHasWrongType(host, methodDescriptor, parameterIndex));
 	}
 
 	protected LUnit getParameter(LUnit[] parameters, int parameterIndex)

@@ -24,7 +24,8 @@ public class LLoop extends LUnit
 		LUnit action = getParameter(parameters, ACTION_PARAMETER_INDEX);
 
 		double iterationCount =
-			getParameter(host, parameters, ITERATION_COUNT_PARAMETER_INDEX, DESCRIPTOR, LNumber.DESCRIPTOR).getValue();
+			getMethodParameter(DESCRIPTOR, LNumber.DESCRIPTOR, host, parameters, ITERATION_COUNT_PARAMETER_INDEX)
+				.getValue();
 
 		for (long i = 0; i < iterationCount; i++) action.call(host);
 

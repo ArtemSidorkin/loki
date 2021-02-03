@@ -27,7 +27,7 @@ public class LUnitContext
 	private volatile @Nullable ConcurrentMap<String, LUnit> localVariables;
 
 	@UnitContextConstructor
-	public LUnitContext(LUnit frame, LUnit host, LUnit[] parameters)
+	public LUnitContext(LUnit frame, LUnit host, LUnit... parameters)
 	{
 		this.frame = frame;
 		this.host = host;
