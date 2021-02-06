@@ -9,49 +9,23 @@ import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeByteco
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.{InstructionContext, UnitContext}
-import loki.runtime.LUnitType
 import loki.system.SystemSettings
 
-private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit generationContext:GenerationContext)
+private[generation] class UnitRule(unitContext:UnitContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(unitContext)
 {
-	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.member != null
-	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.member != null
-
-	private def unitName:String =
-	{
+	private val unitName:String =
 		Option(unitContext.name)
 			.map(_.getText)
 			.orElse(
-				Option(unitContext.UNDERSCORE())
-					.map(_.getText)
-					.orElse(Option(unitContext.BACKSLASH()).map(_.getText))
+				Option(unitContext.UNDERSCORE()).map(_.getText).orElse(Option(unitContext.BACKSLASH()).map(_.getText))
 			)
 			.get
-	}
-
-	private def isAnonymous:Boolean = unitContext.UNDERSCORE != null || unitContext.BACKSLASH != null
-
-	private def unitParameters = for (i <- 0 until unitContext.unitParameter.size) yield unitContext.unitParameter(i)
 
 	override protected def enterAction():Unit =
 	{
-		pushUnitFrame()
-
-		createUnitConstructor()
-		createAndSaveUnitClassInstance()
-		createUnitCallPrelude()
-
-		decrementObjectCounterForLastUnitInstruction()
-
 		def createUnitConstructor():Unit =
 		{
-			topClassFrame
-				.addMethodInit(PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(None))
-				.callSuperConstructor()
-				.setUnitType()
-				.`return`()
-
 			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
 				def callSuperConstructor():methodBuilder.type =
@@ -87,22 +61,22 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 				}
 			}
+
+			topClassFrame
+				.addMethodInit(PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(None))
+				.callSuperConstructor()
+				.setUnitType()
+				.`return`()
 		}
 
 		def createAndSaveUnitClassInstance():Unit =
 		{
-			preTopMethodCall
-				.createUnitSavingTarget()
-				.createUnitClassInstance()
-				.saveUnitCallParameterNames()
-				.saveUnitClassInstance()
-
 			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
 				def createUnitSavingTarget():methodBuilder.type =
 				{
 					if (!isAnonymous)
-						if (isUnitModuleMember || isUnitUnitMember) methodBuilder.aloadUnitMethodCallParameterHost()
+						if (isUnitModuleMember || isUnitUnitMember) methodBuilder.aloadHostParameterOfUnitCallMethod()
 						else methodBuilder.aloadUnitMethodCallVariableUnitContext()
 
 					methodBuilder
@@ -153,7 +127,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 							.ldc(unitName)
 							.swap()
 
-						if (isUnitUnitMember || isUnitModuleMember) methodBuilder.invokeVirtualUnitMethodSetMember()
+						if (isUnitUnitMember || isUnitModuleMember) methodBuilder.invokeVirtualUnitSetMemberMethod()
 						else methodBuilder.invokeVirtualUnitContextMethodSetVariable()
 					}
 
@@ -161,16 +135,16 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 					methodBuilder
 				}
 			}
+
+			preTopMethodCall
+				.createUnitSavingTarget()
+				.createUnitClassInstance()
+				.saveUnitCallParameterNames()
+				.saveUnitClassInstance()
 		}
 
 		def createUnitCallPrelude():Unit =
 		{
-			topMethodCall
-				.createUnitCallMethodUnitContext()
-				.createUnitBody()
-				.createDefaultUnitParameters()
-				.createEmbeddedUnitMembers()
-
 			implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
 			{
 				def createUnitCallMethodUnitContext():methodBuilder.type =
@@ -179,7 +153,7 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 						.newUnitContext()
 						.dup()
 						.aloadthis()
-						.aloadUnitMethodCallParameterHost()
+						.aloadHostParameterOfUnitCallMethod()
 						.aloadUnitMethodCallParameterParameters()
 						.invokeInitUnitContext()
 						.astoreUnitMethodCallVariableUnitContext()
@@ -236,7 +210,8 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 						.map(unitDefaultParameterValue =>
 							generationContext
 								.addPostExitRuleTask(
-									unitDefaultParameterValue.expression, methodBuilder.getAndSaveEmbeddedUnitMember
+									unitDefaultParameterValue.expression,
+									() => methodBuilder.getAndSaveEmbeddedUnitMember()
 								)
 						)
 						.getOrElse(methodBuilder.getAndSaveEmbeddedUnitMember())
@@ -252,18 +227,24 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 						.foreach(identifier =>
 						{
 							methodBuilder
-								.aloadUnitMethodCallParameterHost()
+								.aloadHostParameterOfUnitCallMethod()
 								.ldc(identifier)
 								.aloadUnitMethodCallVariableUnitContext()
 								.ldc(identifier)
 								.invokeVirtualUnitContextMethodGetVariable()
-								.invokeVirtualUnitMethodSetMember()
+								.invokeVirtualUnitSetMemberMethod()
 								.pop()
 						})
 
 					methodBuilder
 				}
 			}
+
+			topMethodCall
+				.createUnitCallMethodUnitContext()
+				.createUnitBody()
+				.createDefaultUnitParameters()
+				.createEmbeddedUnitMembers()
 		}
 
 		def decrementObjectCounterForLastUnitInstruction():Unit =
@@ -275,6 +256,14 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 				generationContext
 					.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectStackCounter())
 			}
+
+		pushUnitFrame()
+
+		createUnitConstructor()
+		createAndSaveUnitClassInstance()
+		createUnitCallPrelude()
+
+		decrementObjectCounterForLastUnitInstruction()
 	}
 
 	override protected def exitAction():Unit =
@@ -289,13 +278,9 @@ private[generation] class UnitGenerationRule(unitContext:UnitContext)(implicit g
 
 		popFrame()
 	}
-}
 
-private[generation] object UnitGenerationRule
-{
-	def enter(unitContext:UnitContext)(implicit generationContext:GenerationContext):Unit =
-		new UnitGenerationRule(unitContext).enter()
-
-	def exit(unitContext:UnitContext)(implicit generationContext:GenerationContext):Unit =
-		new UnitGenerationRule(unitContext).exit()
+	private def isUnitModuleMember:Boolean = generationContext.frameStack.size <= 2 && unitContext.member != null
+	private def isUnitUnitMember:Boolean = generationContext.frameStack.size > 2 && unitContext.member != null
+	private def isAnonymous:Boolean = unitContext.UNDERSCORE != null || unitContext.BACKSLASH != null
+	private def unitParameters = for (i <- 0 until unitContext.unitParameter.size) yield unitContext.unitParameter(i)
 }

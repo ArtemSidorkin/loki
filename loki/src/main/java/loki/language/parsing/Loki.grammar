@@ -89,11 +89,11 @@ expression:
 
 
 
-	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #Index |
+	expression LEFT_BRACKET (BEGIN)? expression (SEMICOLON)? (END)? RIGHT_BRACKET #IndexItem |
 
 
 
-	expression DOLLAR LEFT_BRACKET ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACKET #MemberAccessor |
+	expression DOLLAR LEFT_BRACKET ((BEGIN expression SEMICOLON END) | expression) RIGHT_BRACKET #DynamicMember |
 
 
 
@@ -127,11 +127,11 @@ expression:
 
 
 
-	expression LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignIndex |
+	expression LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignIndexItem |
 
 
 
-	expression DOLLAR LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignMemberAccessor |
+	expression DOLLAR LEFT_BRACKET expression RIGHT_BRACKET EQUALS expression #AssignDynamicMember |
 
 
 

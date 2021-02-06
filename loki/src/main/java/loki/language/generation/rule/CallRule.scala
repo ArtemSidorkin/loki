@@ -5,29 +5,24 @@ import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBy
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.parsing.LokiParser.{CallContext, ExpressionContext}
 
-import scala.language.postfixOps
-
-private[generation] class CallGenerationRule(callContext:CallContext)(implicit generationContext:GenerationContext)
+private[generation] class CallRule(callContext:CallContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(callContext)
 {
-	private def callParameterCount:Int = callContext.expression.size - 1 //TODO: think is it worth to declare field for this, or maybe cast to scala and save thecollection
-	private def callExpression:ExpressionContext = callContext expression 0
+	private val callParameterCount:Int = callContext.expression.size - 1
+	private val callExpression:ExpressionContext = callContext expression 0
 
 	override protected def enterAction():Unit =
 	{
-		loadHostAndCreateParameterArray()
-		storeParametersInParameterArray()
-
 		def loadHostAndCreateParameterArray():Unit =
 			generationContext
 				.addPostExitRuleTask(
 					callExpression,
 					() =>
 					{
-						topMethodCall aloadUnitMethodCallParameterHost
+						topMethodCall.aloadHostParameterOfUnitCallMethod()
 
-						if (callParameterCount == 0) topMethodCall emptyUnitArray
-						else topMethodCall anewarrayUnit callParameterCount
+						if (callParameterCount == 0) topMethodCall.emptyUnitArray()
+						else topMethodCall.anewarrayUnit(callParameterCount)
 					}
 				)
 
@@ -50,21 +45,14 @@ private[generation] class CallGenerationRule(callContext:CallContext)(implicit g
 							topMethodCall
 								.aastore()
 								.decrementObjectStackCounter()
-
 					)
 			}
+
+		loadHostAndCreateParameterArray()
+		storeParametersInParameterArray()
 	}
 
 	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodCall()
 
-	private def getCallParameterExpression(parameterIndex:Int) = callContext expression parameterIndex
-}
-
-private[generation] object CallGenerationRule
-{
-	def enter(callContext:CallContext)(implicit generationContext:GenerationContext):Unit =
-		new CallGenerationRule(callContext).enter()
-
-	def exit(callContext:CallContext)(implicit generationContext:GenerationContext):Unit =
-		new CallGenerationRule(callContext).exit()
+	private def getCallParameterExpression(parameterIndex:Int) = callContext.expression(parameterIndex)
 }

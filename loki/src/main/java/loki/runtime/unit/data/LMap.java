@@ -80,7 +80,7 @@ public class LMap extends LUnit
 	@Override
 	public LString _toString()
 	{
-		if (items.size() == 0) return new LString("[:]");
+		if (items.size() == 0) return new LString("[-]");
 
 		String value =
 			items

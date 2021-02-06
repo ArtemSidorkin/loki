@@ -13,7 +13,7 @@ private[generation] object UnitBytecodeTemplate
 		def emptyUnitArray():methodBuilder.type =
 			methodBuilder getstatic (classOf[LUnit], "EMPTY_UNIT_ARRAY", classOf[Array[LUnit]])
 
-		def aloadUnitMethodCallParameterHost():methodBuilder.type =
+		def aloadHostParameterOfUnitCallMethod():methodBuilder.type =
 			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__HOST
 
 		def aloadUnitMethodCallParameterParameters():methodBuilder.type =
@@ -41,19 +41,19 @@ private[generation] object UnitBytecodeTemplate
 		def invokeVirtualUnitMethodAddParents():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitAddParents]))
 
-		def invokeVirtualUnitMethodGetSuperMember():methodBuilder.type =
+		def invokeVirtualUnitGetSuperMemberMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetSuperMember]))
 
 		def invokeVirtualUnitMethodGetMember():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetMember]))
 
-		def invokeVirtualUnitMethodSetMember():methodBuilder.type =
+		def invokeVirtualUnitSetMemberMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetMember]))
 
 		def invokeVirtualUnitMethodGetIndexedItem():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitGetIndexedItem]))
 
-		def invokeVirtualUnitMethodSetIndexedItem():methodBuilder.type =
+		def invokeVirtualUnitSetIndexedItemMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetIndexedItem]))
 
 		def invokeVirtualUnitMethodSetParameterNames():methodBuilder.type =
@@ -71,7 +71,7 @@ private[generation] object UnitBytecodeTemplate
 		def invokeVirtualUnitMethodToBoolean():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitToBoolean]))
 
-		def invokeVirtualUnitMethodToString():methodBuilder.type =
+		def invokeVirtualUnitToStringMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitToString]))
 
 		def invokeInitUnit():methodBuilder.type =

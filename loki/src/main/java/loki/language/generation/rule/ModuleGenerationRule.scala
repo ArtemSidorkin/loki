@@ -36,7 +36,7 @@ private[generation] class ModuleGenerationRule
 				.newModuleContext()
 				.dup()
 				.aloadthis()
-				.aloadUnitMethodCallParameterHost()
+				.aloadHostParameterOfUnitCallMethod()
 				.aloadUnitMethodCallParameterParameters()
 				.invokeInitModuleContext()
 				.astoreUnitMethodCallVariableUnitContext()

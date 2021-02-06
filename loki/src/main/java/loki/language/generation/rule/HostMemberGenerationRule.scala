@@ -8,12 +8,12 @@ private[generation] class HostMemberGenerationRule
 	(hostMemberContext:HostMemberContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(hostMemberContext)
 {
-	private def hostMemberName = hostMemberContext.IDENTIFIER.getText
+	private val hostMemberName = hostMemberContext.IDENTIFIER.getText
 
 	override protected def enterAction():Unit =
 	(
 		topMethodCall
-			.aloadUnitMethodCallParameterHost()
+			.aloadHostParameterOfUnitCallMethod()
 			.ldc(hostMemberName)
 			.invokeVirtualUnitMethodGetMember()
 			.incrementObjectStackCounter()

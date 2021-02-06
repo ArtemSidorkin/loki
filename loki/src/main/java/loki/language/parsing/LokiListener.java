@@ -66,18 +66,6 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitBinaryOperation(LokiParser.BinaryOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Index}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterIndex(LokiParser.IndexContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Index}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitIndex(LokiParser.IndexContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code String}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -114,17 +102,17 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitNumber(LokiParser.NumberContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MemberAccessor}
+	 * Enter a parse tree produced by the {@code DynamicMember}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterMemberAccessor(LokiParser.MemberAccessorContext ctx);
+	void enterDynamicMember(LokiParser.DynamicMemberContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code MemberAccessor}
+	 * Exit a parse tree produced by the {@code DynamicMember}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitMemberAccessor(LokiParser.MemberAccessorContext ctx);
+	void exitDynamicMember(LokiParser.DynamicMemberContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code VariableOrParameter}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -137,6 +125,18 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariableOrParameter(LokiParser.VariableOrParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignIndexItem}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignIndexItem(LokiParser.AssignIndexItemContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignIndexItem}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignIndexItem(LokiParser.AssignIndexItemContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code This}
 	 * labeled alternative in {@link LokiParser#expression}.
@@ -198,6 +198,18 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitCall(LokiParser.CallContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AssignDynamicMember}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignDynamicMember(LokiParser.AssignDynamicMemberContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignDynamicMember}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignDynamicMember(LokiParser.AssignDynamicMemberContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExpressionGroup}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -246,6 +258,18 @@ public interface LokiListener extends ParseTreeListener {
 	 */
 	void exitWhile(LokiParser.WhileContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code IndexItem}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndexItem(LokiParser.IndexItemContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IndexItem}
+	 * labeled alternative in {@link LokiParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndexItem(LokiParser.IndexItemContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Array}
 	 * labeled alternative in {@link LokiParser#expression}.
 	 * @param ctx the parse tree
@@ -269,30 +293,6 @@ public interface LokiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssignVariable(LokiParser.AssignVariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code AssignMemberAccessor}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code AssignMemberAccessor}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code AssignIndex}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignIndex(LokiParser.AssignIndexContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code AssignIndex}
-	 * labeled alternative in {@link LokiParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignIndex(LokiParser.AssignIndexContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code HostMember}
 	 * labeled alternative in {@link LokiParser#expression}.

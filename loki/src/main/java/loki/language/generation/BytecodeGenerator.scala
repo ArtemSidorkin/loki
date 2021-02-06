@@ -1,6 +1,6 @@
 package loki.language.generation
 
-import loki.language.generation.rule._
+import loki.language.generation.rule.{IndexItemRule, _}
 import loki.language.generation.rule.mixin._
 import loki.language.generation.rule.template.{ContainerGenerationRuleTemplate, MemberCallGenerationRuleTemplate}
 import loki.language.parsing.LokiBaseListener
@@ -25,13 +25,13 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 		InstructionGenerationRule.exit(instructionContext)
 
 	override def enterExpressionGroup(expressionGroupContext:ExpressionGroupContext):Unit =
-		GenerationRule.enter( expressionGroupContext)
+		GenerationRule.enter(expressionGroupContext)
 
 	override def exitExpressionGroup(expressionGroupContext:ExpressionGroupContext):Unit =
 		GenerationRule.exit(expressionGroupContext)
 
-	override def enterUnit(unitContext:UnitContext):Unit = UnitGenerationRule.enter(unitContext)
-	override def exitUnit(unitContext:UnitContext):Unit = UnitGenerationRule.exit(unitContext)
+	override def enterUnit(unitContext:UnitContext):Unit = new UnitRule(unitContext).enter()
+	override def exitUnit(unitContext:UnitContext):Unit = new UnitRule(unitContext).exit()
 
 	override def enterArray(arrayContext:ArrayContext):Unit =
 		(new ContainerGenerationRuleTemplate(arrayContext) with ArrayGenerationRuleMixin).enter()
@@ -51,29 +51,29 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 	override def exitObject(objectContext:ObjectContext):Unit =
 		(new ContainerGenerationRuleTemplate(objectContext) with ObjectGenerationRuleMixin).exit()
 
-	override def enterIndex(indexContext:IndexContext):Unit = IndexGenerationRule.enter(indexContext)
-	override def exitIndex(indexContext:IndexContext):Unit = IndexGenerationRule.exit(indexContext)
+	override def enterIndexItem(indexContext:IndexItemContext):Unit = new IndexItemRule(indexContext).enter()
+	override def exitIndexItem(indexContext:IndexItemContext):Unit = new IndexItemRule(indexContext).exit()
 
-	override def enterAssignIndex(assignIndexContext:AssignIndexContext):Unit =
-		AssignIndexGenerationRule.exit(assignIndexContext)
+	override def enterAssignIndexItem(assignIndexItemContext:AssignIndexItemContext):Unit =
+		new AssignIndexItemRule(assignIndexItemContext).enter()
 
-	override def exitAssignIndex(assignIndexContext:AssignIndexContext):Unit =
-		AssignIndexGenerationRule.exit(assignIndexContext)
+	override def exitAssignIndexItem(assignIndexItemContext:AssignIndexItemContext):Unit =
+		new AssignIndexItemRule(assignIndexItemContext).exit()
 
-	override def enterMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
-		MemberAccessorGenerationRule.enter(memberAccessorContext)
+	override def enterDynamicMember(dynamicMemberContext:DynamicMemberContext):Unit =
+		new DynamicMemberRule(dynamicMemberContext).enter()
 
-	override def exitMemberAccessor(memberAccessorContext:MemberAccessorContext):Unit =
-		MemberAccessorGenerationRule.exit(memberAccessorContext)
+	override def exitDynamicMember(dynamicMemberContext:DynamicMemberContext):Unit =
+		new DynamicMemberRule(dynamicMemberContext).exit()
 
-	override def enterAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		AssignMemberAccessorGenerationRule.enter(assignMemberAccessorContext)
+	override def enterAssignDynamicMember(assignDynamicMemberContext:AssignDynamicMemberContext):Unit =
+		new AssignDynamicMemberRule(assignDynamicMemberContext).enter()
 
-	override def exitAssignMemberAccessor(assignMemberAccessorContext:AssignMemberAccessorContext):Unit =
-		AssignMemberAccessorGenerationRule.exit(assignMemberAccessorContext)
+	override def exitAssignDynamicMember(assignDynamicMemberContext:AssignDynamicMemberContext):Unit =
+		new AssignDynamicMemberRule(assignDynamicMemberContext).exit()
 
-	override def enterCall(callContext:CallContext):Unit = CallGenerationRule.enter(callContext)
-	override def exitCall(callContext:CallContext):Unit = CallGenerationRule.exit(callContext)
+	override def enterCall(callContext:CallContext):Unit = new CallRule(callContext).enter()
+	override def exitCall(callContext:CallContext):Unit = new CallRule(callContext).exit()
 
 	override def enterMemberCall(memberCallContext:MemberCallContext):Unit =
 		(new MemberCallGenerationRuleTemplate(memberCallContext) with MemberCallGenerationRuleMixin).enter()
@@ -88,10 +88,10 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 		VariableOrParameterGenerationRule.exit(variableOrParameterContext)
 
 	override def enterSuperHostMember(superHostMemberContext:SuperHostMemberContext):Unit =
-		SuperHostMemberGenerationRule.enter(superHostMemberContext)
+		new SuperHostMemberRule(superHostMemberContext).enter()
 
 	override def exitSuperHostMember(superHostMemberContext:SuperHostMemberContext):Unit =
-		SuperHostMemberGenerationRule.exit(superHostMemberContext)
+		new SuperHostMemberRule(superHostMemberContext).exit()
 
 	override def enterHostMember(hostMemberContext:HostMemberContext):Unit =
 		HostMemberGenerationRule.enter(hostMemberContext)
@@ -109,19 +109,19 @@ class BytecodeGenerator(moduleName:String) extends LokiBaseListener
 		AssignVariableGenerationRule.exit(assignVariableContext)
 
 	override def enterAssignHostMember(assignHostMemberContext:AssignHostMemberContext):Unit =
-		AssignHostMemberGenerationRule.enter(assignHostMemberContext)
+		new AssignHostMemberRule(assignHostMemberContext).enter()
 
 	override def exitAssignHostMember(assignHostMemberContext:AssignHostMemberContext):Unit =
-		AssignHostMemberGenerationRule.exit(assignHostMemberContext)
+		new AssignHostMemberRule(assignHostMemberContext).exit()
 
 	override def enterAssignMember(assignMemberContext:AssignMemberContext):Unit =
-		AssignMemberGenerationRule.enter(assignMemberContext)
+		new AssignMemberRule(assignMemberContext).enter()
 
 	override def exitAssignMember(assignMemberContext:AssignMemberContext):Unit =
-		AssignMemberGenerationRule.exit(assignMemberContext)
+		new AssignMemberRule(assignMemberContext).exit()
 
-	override def enterHost(hostContext:HostContext):Unit = HostGenerationRule.enter(hostContext)
-	override def exitHost(hostContext:HostContext):Unit = HostGenerationRule.exit(hostContext)
+	override def enterHost(hostContext:HostContext):Unit = new HostRule(hostContext).enter()
+	override def exitHost(hostContext:HostContext):Unit = new HostRule(hostContext).exit()
 
 	override def enterThis(thisContext:ThisContext):Unit = ThisGenerationRule.enter(thisContext)
 	override def exitThis(thisContext:ThisContext):Unit = ThisGenerationRule.exit(thisContext)

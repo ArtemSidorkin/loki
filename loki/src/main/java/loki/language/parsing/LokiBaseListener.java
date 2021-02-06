@@ -78,18 +78,6 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIndex(LokiParser.IndexContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIndex(LokiParser.IndexContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterString(LokiParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -126,13 +114,13 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMemberAccessor(LokiParser.MemberAccessorContext ctx) { }
+	@Override public void enterDynamicMember(LokiParser.DynamicMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMemberAccessor(LokiParser.MemberAccessorContext ctx) { }
+	@Override public void exitDynamicMember(LokiParser.DynamicMemberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -145,6 +133,18 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariableOrParameter(LokiParser.VariableOrParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignIndexItem(LokiParser.AssignIndexItemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignIndexItem(LokiParser.AssignIndexItemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -210,6 +210,18 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAssignDynamicMember(LokiParser.AssignDynamicMemberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignDynamicMember(LokiParser.AssignDynamicMemberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpressionGroup(LokiParser.ExpressionGroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -258,6 +270,18 @@ public class LokiBaseListener implements LokiListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIndexItem(LokiParser.IndexItemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndexItem(LokiParser.IndexItemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterArray(LokiParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -277,30 +301,6 @@ public class LokiBaseListener implements LokiListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAssignVariable(LokiParser.AssignVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssignMemberAccessor(LokiParser.AssignMemberAccessorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAssignIndex(LokiParser.AssignIndexContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssignIndex(LokiParser.AssignIndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

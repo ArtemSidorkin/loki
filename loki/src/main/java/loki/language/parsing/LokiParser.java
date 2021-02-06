@@ -301,28 +301,6 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitBinaryOperation(this);
 		}
 	}
-	public static class IndexContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
-		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
-		public TerminalNode END() { return getToken(LokiParser.END, 0); }
-		public IndexContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitIndex(this);
-		}
-	}
 	public static class StringContext extends ExpressionContext {
 		public TerminalNode CHARACTERS() { return getToken(LokiParser.CHARACTERS, 0); }
 		public TerminalNode ACUTE() { return getToken(LokiParser.ACUTE, 0); }
@@ -380,7 +358,7 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitNumber(this);
 		}
 	}
-	public static class MemberAccessorContext extends ExpressionContext {
+	public static class DynamicMemberContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -393,14 +371,14 @@ public class LokiParser extends Parser {
 		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
 		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
 		public TerminalNode END() { return getToken(LokiParser.END, 0); }
-		public MemberAccessorContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public DynamicMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterMemberAccessor(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterDynamicMember(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitMemberAccessor(this);
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitDynamicMember(this);
 		}
 	}
 	public static class VariableOrParameterContext extends ExpressionContext {
@@ -414,6 +392,26 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitVariableOrParameter(this);
+		}
+	}
+	public static class AssignIndexItemContext extends ExpressionContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
+		public AssignIndexItemContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignIndexItem(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignIndexItem(this);
 		}
 	}
 	public static class ThisContext extends ExpressionContext {
@@ -512,6 +510,27 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitCall(this);
 		}
 	}
+	public static class AssignDynamicMemberContext extends ExpressionContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
+		public AssignDynamicMemberContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignDynamicMember(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignDynamicMember(this);
+		}
+	}
 	public static class ExpressionGroupContext extends ExpressionContext {
 		public TerminalNode LEFT_PARENTHESIS() { return getToken(LokiParser.LEFT_PARENTHESIS, 0); }
 		public ExpressionContext expression() {
@@ -584,6 +603,28 @@ public class LokiParser extends Parser {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitWhile(this);
 		}
 	}
+	public static class IndexItemContext extends ExpressionContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
+		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
+		public TerminalNode BEGIN() { return getToken(LokiParser.BEGIN, 0); }
+		public TerminalNode SEMICOLON() { return getToken(LokiParser.SEMICOLON, 0); }
+		public TerminalNode END() { return getToken(LokiParser.END, 0); }
+		public IndexItemContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterIndexItem(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitIndexItem(this);
+		}
+	}
 	public static class ArrayContext extends ExpressionContext {
 		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
 		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
@@ -621,47 +662,6 @@ public class LokiParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignVariable(this);
-		}
-	}
-	public static class AssignMemberAccessorContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode DOLLAR() { return getToken(LokiParser.DOLLAR, 0); }
-		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
-		public AssignMemberAccessorContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignMemberAccessor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignMemberAccessor(this);
-		}
-	}
-	public static class AssignIndexContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode LEFT_BRACKET() { return getToken(LokiParser.LEFT_BRACKET, 0); }
-		public TerminalNode RIGHT_BRACKET() { return getToken(LokiParser.RIGHT_BRACKET, 0); }
-		public TerminalNode EQUALS() { return getToken(LokiParser.EQUALS, 0); }
-		public AssignIndexContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).enterAssignIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LokiListener ) ((LokiListener)listener).exitAssignIndex(this);
 		}
 	}
 	public static class HostMemberContext extends ExpressionContext {
@@ -1555,7 +1555,7 @@ public class LokiParser extends Parser {
 						break;
 					case 8:
 						{
-						_localctx = new AssignIndexContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new AssignIndexItemContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(202);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
@@ -1573,7 +1573,7 @@ public class LokiParser extends Parser {
 						break;
 					case 9:
 						{
-						_localctx = new AssignMemberAccessorContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new AssignDynamicMemberContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(209);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -1647,7 +1647,7 @@ public class LokiParser extends Parser {
 						break;
 					case 12:
 						{
-						_localctx = new IndexContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new IndexItemContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(235);
 						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
@@ -1691,7 +1691,7 @@ public class LokiParser extends Parser {
 						break;
 					case 13:
 						{
-						_localctx = new MemberAccessorContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new DynamicMemberContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(249);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");

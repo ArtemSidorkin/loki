@@ -2,7 +2,7 @@ package assembler.constant
 
 import org.objectweb.asm.Opcodes
 
-private[assembler] sealed class JavaVersion(private[assembler] val javaVersionCode:Int)
+sealed class JavaVersion(private[assembler] val javaVersionCode:Int)
 
 object JAVA1 extends JavaVersion(Opcodes.V1_1)
 object JAVA2 extends JavaVersion(Opcodes.V1_2)
