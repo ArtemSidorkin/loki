@@ -10,6 +10,6 @@ private[generation] object TypeBytecodeTemplate
 	implicit class TypeBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
 		def invokeInitType():methodBuilder.type =
-			methodBuilder.invokeinit(MethodDescriptorResolver.apply(classOf[TypeConstructor]))
+			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[TypeConstructor]))
 	}
 }

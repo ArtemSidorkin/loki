@@ -71,7 +71,7 @@ class ClassBuilder(
 		methodBuilder
 	}
 
-	def addMethodInit(modifier:Modifier, methodDescriptor:MethodDescriptor):InitMethodBuilder =
+	def addInitMethod(modifier:Modifier, methodDescriptor:MethodDescriptor):InitMethodBuilder =
 	{
 		val initMethodBuilder = new InitMethodBuilder(modifier, methodDescriptor)
 		classNode.methods.asInstanceOf[java.util.List[MethodNode]].add(initMethodBuilder.methodNode)

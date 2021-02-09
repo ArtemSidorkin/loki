@@ -23,7 +23,7 @@ private[generation] class ModuleGenerationRule
 		def generateInit():Unit =
 		(
 			topClassFrame
-				.addMethodInit (PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBMODULE_CONSTRUCTOR)
+				.addInitMethod (PUBLIC, DynamicallyUnresolvableMethodDescriptors.SUBMODULE_INIT_METHOD_DESCRIPTOR)
 				.aloadthis()
 				.ldc(moduleName)
 				.invokeInitModule()
@@ -37,9 +37,9 @@ private[generation] class ModuleGenerationRule
 				.dup()
 				.aloadthis()
 				.aloadHostParameterOfUnitCallMethod()
-				.aloadUnitMethodCallParameterParameters()
+				.aloadParametersParameterOfUnitCallMethod()
 				.invokeInitModuleContext()
-				.astoreUnitMethodCallVariableUnitContext()
+				.astoreUnitContextVariableOfUnitCallMethod()
 		)
 	}
 

@@ -1,7 +1,8 @@
 package loki.language.generation.rule.mixin
 
 import loki.language.generation.{GenerationClassLoader, GenerationContext}
-import org.antlr.v4.runtime.RuleContext
+import org.antlr.v4.runtime.{RuleContext, Token}
+import org.antlr.v4.runtime.tree.TerminalNode
 
 trait GenerationRuleMixin[RULE_CONTEXT <: RuleContext]
 {
@@ -24,4 +25,8 @@ trait GenerationRuleMixin[RULE_CONTEXT <: RuleContext]
 	protected def frameStackSize:Int = generationContext.frameStack.size
 
 	protected def popFrame():Unit = generationContext.frameStack.pop()
+
+	protected def extractText(terminalNode:TerminalNode):Option[String] = Option(terminalNode).map(_.getText)
+
+	protected def extractText(token: Token):Option[String] = Option(token).map(_.getText)
 }

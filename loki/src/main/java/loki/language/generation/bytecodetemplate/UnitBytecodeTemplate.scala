@@ -2,6 +2,7 @@ package loki.language.generation.bytecodetemplate
 
 import assembler.builder.MethodBuilder
 import assembler.methoddescriptor.MethodDescriptorResolver
+import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors.SUBUNIT_INIT_METHOD_INVOCATION_DESCRIPTOR
 import loki.language.generation.constant.{BytecodeLocalVariablesOrParameters, DynamicallyUnresolvableMethodDescriptors}
 import loki.runtime.marker.compilerapi.unit._
 import loki.runtime.unit.unit.LUnit
@@ -11,31 +12,31 @@ private[generation] object UnitBytecodeTemplate
 	implicit class UnitBytecodeTemplate(val methodBuilder:MethodBuilder)
 	{
 		def emptyUnitArray():methodBuilder.type =
-			methodBuilder getstatic (classOf[LUnit], "EMPTY_UNIT_ARRAY", classOf[Array[LUnit]])
+			methodBuilder.getstatic (classOf[LUnit], "EMPTY_UNIT_ARRAY", classOf[Array[LUnit]])
 
 		def aloadHostParameterOfUnitCallMethod():methodBuilder.type =
-			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__HOST
+			methodBuilder.aload(BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__HOST)
 
-		def aloadUnitMethodCallParameterParameters():methodBuilder.type =
-			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__PARAMETERS
+		def aloadParametersParameterOfUnitCallMethod():methodBuilder.type =
+			methodBuilder.aload(BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__PARAMETER__PARAMETERS)
 
-		def aloadUnitMethodCallVariableUnitContext():methodBuilder.type =
-			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__VARIABLE__UNIT_CONTEXT
+		def aloadUnitContextVariableOfUnitCallMethod():methodBuilder.type =
+			methodBuilder.aload(BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__VARIABLE__UNIT_CONTEXT)
 
-		def astoreUnitMethodCallVariableUnitContext():methodBuilder.type =
-			methodBuilder astore BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__VARIABLE__UNIT_CONTEXT
+		def astoreUnitContextVariableOfUnitCallMethod():methodBuilder.type =
+			methodBuilder.astore(BytecodeLocalVariablesOrParameters.UNIT__METHOD__CALL__VARIABLE__UNIT_CONTEXT)
 
-		def aloadUnitHeirMethodInitParameterUnitContext():methodBuilder.type =
-			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT
+		def aloadUnitContextParameterOfSubunitInitMethod():methodBuilder.type =
+			methodBuilder.aload(BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT)
 
 		def aloadUnitHeirMethodInitParameterParameters():methodBuilder.type =
-			methodBuilder aload BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__PARAMETERS
+			methodBuilder.aload(BytecodeLocalVariablesOrParameters.UNIT_HEIR__METHOD__INIT__PARAMETER__PARAMETERS)
 
 		def invokeVirtualUnitMethodGetCapturedUnitContext(classInternalName:String):methodBuilder.type =
 			methodBuilder
 				.invokevirtual(MethodDescriptorResolver(classOf[UnitGetCapturedUnitContext]))
 
-		def invokeVirtualUnitMethodSetType():methodBuilder.type =
+		def invokeVirtualUnitSetTypeMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetType]))
 
 		def invokeVirtualUnitMethodAddParents():methodBuilder.type =
@@ -56,10 +57,10 @@ private[generation] object UnitBytecodeTemplate
 		def invokeVirtualUnitSetIndexedItemMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetIndexedItem]))
 
-		def invokeVirtualUnitMethodSetParameterNames():methodBuilder.type =
+		def invokeVirtualUnitSetParameterNamesMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetParameterNames]))
 
-		def invokeVirtualUnitMethodSetParameterDefaultValue():methodBuilder.type =
+		def invokeVirtualUnitSetParameterDefaultValueMethod():methodBuilder.type =
 			methodBuilder.invokevirtual(MethodDescriptorResolver(classOf[UnitSetParameterDefaultValue]))
 
 		def invokeVirtualUnitMethodCall():methodBuilder.type =
@@ -77,8 +78,8 @@ private[generation] object UnitBytecodeTemplate
 		def invokeInitUnit():methodBuilder.type =
 			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[UnitConstructor]))
 
-		def invokeInit2UnitHeir(initOwnerClassInternalName:String):methodBuilder.type =
+		def invokeInitSubunit(initOwnerClassInternalName:String):methodBuilder.type =
 			methodBuilder
-				.invokeinit(DynamicallyUnresolvableMethodDescriptors.SUBUNIT_CONSTRUCTOR(Some(Left(initOwnerClassInternalName))))
+				.invokeinit(SUBUNIT_INIT_METHOD_INVOCATION_DESCRIPTOR(Left(initOwnerClassInternalName)))
 	}
 }

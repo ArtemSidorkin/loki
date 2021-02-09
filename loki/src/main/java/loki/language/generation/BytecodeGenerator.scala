@@ -1,6 +1,6 @@
 package loki.language.generation
 
-import loki.language.generation.rule.{IndexItemRule, _}
+import loki.language.generation.rule.{IndexItemRule, UnitRule, _}
 import loki.language.generation.rule.mixin._
 import loki.language.generation.rule.template.{ContainerGenerationRuleTemplate, MemberCallGenerationRuleTemplate}
 import loki.language.parsing.LokiBaseListener

@@ -44,7 +44,7 @@ private[generation] object CommonBytecodeTemplate
 
 		def void():methodBuilder.type = methodBuilder.invokestatic(MethodDescriptorResolver(classOf[VoidGetInstance]))
 
-		def invokeVirtualJavaObjectMethodGetClass():methodBuilder.type =
-			methodBuilder.invokevirtual(DynamicallyUnresolvableMethodDescriptors.JAVA_OBJECT_GET_CLASS)
+		def invokeVirtualJavaObjectGetClassMethod():methodBuilder.type =
+			methodBuilder.invokevirtual(DynamicallyUnresolvableMethodDescriptors.JAVA_OBJECT_GET_CLASS_INVOCATION_METHOD_DESCRIPTOR)
 	}
 }

@@ -15,11 +15,11 @@ private[generation] object UnitContextBytecodeTemplate
 		def invokeInitUnitContext():methodBuilder.type =
 			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[UnitContextConstructor]))
 
-		def invokeVirtualUnitContextMethodGetVariable():methodBuilder.type =
+		def invokeVirtualUnitContextGetVariableMethod():methodBuilder.type =
 			methodBuilder
 				.invokevirtual(MethodDescriptorResolver(classOf[UnitContextGetVariable]))
 
-		def invokeVirtualUnitContextMethodSetVariable():methodBuilder.type =
+		def invokeVirtualUnitContextSetVariableMethod():methodBuilder.type =
 			methodBuilder
 				.invokevirtual(MethodDescriptorResolver(classOf[UnitContextSetVariable]))
 	}

@@ -14,18 +14,18 @@ private[generation] class VariableOrParameterGenerationRule
 
 	override protected def enterAction():Unit =
 		topMethodCall
-			.aloadUnitMethodCallVariableUnitContext()
+			.aloadUnitContextVariableOfUnitCallMethod()
 			.loadVariableOrParameter()
 			.incrementObjectStackCounter()
 
-	private implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
+	private implicit class LocalVariableOrParameterBuilder(val methodBuilder:MethodBuilder)
 	{
 		def loadVariableOrParameter():methodBuilder.type =
 		{
 			if (variableOrParameterName.isDefined)
 				topMethodCall
 					.ldc(variableOrParameterName.get)
-					.invokeVirtualUnitContextMethodGetVariable()
+					.invokeVirtualUnitContextGetVariableMethod()
 			else topMethodCall.invokeVirtualUnitContextMethodGetAnonymousParameter()
 
 			methodBuilder

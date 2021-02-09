@@ -1,17 +1,18 @@
 package assembler.methoddescriptor
 
+import assembler.methoddescriptor.MethodDescriptors.methodInvocationDescriptor
+
 import java.lang.annotation.Annotation
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentHashMap
-
 import scala.jdk.CollectionConverters._
 
 object MethodDescriptorResolver
 {
-	private val methodDescriptors:collection.concurrent.Map[(Class[_], Class[_]), MethodDescriptor] =
-		new ConcurrentHashMap[(Class[_], Class[_]), MethodDescriptor]().asScala
+	private val methodDescriptors:collection.concurrent.Map[(Class[_], Class[_]), MethodInvocationDescriptor] =
+		new ConcurrentHashMap[(Class[_], Class[_]), MethodInvocationDescriptor]().asScala
 
-	def apply(describingMethodAnnotationClass:Class[_ <: Annotation]):MethodDescriptor =
+	def apply(describingMethodAnnotationClass:Class[_ <: Annotation]):MethodInvocationDescriptor =
 	{
 		val describingMethodClass = getDescribingMethodClass(describingMethodAnnotationClass)
 
@@ -34,7 +35,7 @@ object MethodDescriptorResolver
 
 	private def createMethodDescriptor(
 		describingMethodClass:Class[_], describingMethodAnnotationClass:Class[_ <: Annotation]
-	):MethodDescriptor =
+	):MethodInvocationDescriptor =
 	{
 		val suitableExecutables =
 			(describingMethodClass.getConstructors ++ describingMethodClass.getMethods)
@@ -51,8 +52,8 @@ object MethodDescriptorResolver
 		val returnClass =
 			Some(suitableExecutable).filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method].getReturnType)
 
-		MethodDescriptor(
-			parameterClasses.toSeq -> returnClass, Some(Right(describingMethodClass)), Some(suitableExecutable.getName)
+		methodInvocationDescriptor(
+			parameterClasses.toSeq -> returnClass, suitableExecutable.getName, Right(describingMethodClass)
 		)
 	}
 }

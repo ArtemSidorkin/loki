@@ -20,7 +20,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 
 	override protected def exitAction():Unit = topMethodCall.initContainer()
 
-	implicit class MethodBuilderExtension(val methodBuilder:MethodBuilder)
+	private implicit class ContainerBuilder(val methodBuilder:MethodBuilder)
 	{
 		def createContainerInstance():methodBuilder.type =
 		{

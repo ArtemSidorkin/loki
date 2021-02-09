@@ -13,6 +13,7 @@ private[generation] object ModuleBytecodeTemplate
 			methodBuilder.aload(BytecodeLocalVariablesOrParameters.MODULE_HEIR__METHOD__INIT__PARAMETER__UNIT_CONTEXT)
 
 		def invokeInitModule():methodBuilder.type =
-			methodBuilder.invokeinit(MethodDescriptorResolver(classOf[ModuleConstructor]))
+			methodBuilder
+				.invokeinit(MethodDescriptorResolver(classOf[ModuleConstructor]))
 	}
 }
