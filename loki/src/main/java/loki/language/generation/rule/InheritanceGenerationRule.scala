@@ -32,7 +32,6 @@ private[generation] class InheritanceGenerationRule
 							topMethodCall
 								.dup()
 								.ldc(parentIndex)
-								.decrementObjectStackCounter()
 					)
 
 				generationContext

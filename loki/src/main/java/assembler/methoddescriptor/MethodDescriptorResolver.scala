@@ -1,9 +1,7 @@
 package assembler.methoddescriptor
 
-import assembler.methoddescriptor.MethodDescriptors.methodInvocationDescriptor
-
 import java.lang.annotation.Annotation
-import java.lang.reflect.Method
+import java.lang.reflect.{Method, Modifier}
 import java.util.concurrent.ConcurrentHashMap
 import scala.jdk.CollectionConverters._
 
@@ -52,8 +50,14 @@ object MethodDescriptorResolver
 		val returnClass =
 			Some(suitableExecutable).filter(_.isInstanceOf[Method]).map(_.asInstanceOf[Method].getReturnType)
 
-		methodInvocationDescriptor(
-			parameterClasses.toSeq -> returnClass, suitableExecutable.getName, Right(describingMethodClass)
+		val static = Option(suitableExecutable)
+			.filter(_.isInstanceOf[Method])
+			.map(_.asInstanceOf[Method])
+			.map(_.getModifiers)
+			.exists(Modifier.isStatic)
+
+		new MethodInvocationDescriptor(
+			parameterClasses.toSeq -> returnClass, suitableExecutable.getName, static, Right(describingMethodClass)
 		)
 	}
 }

@@ -182,8 +182,6 @@ private[generation] class UnitRule(unitContext:UnitContext)(implicit generationC
 				else methodBuilder.invokeVirtualUnitContextSetVariableMethod()
 			}
 
-			methodBuilder.incrementObjectStackCounter()
-
 			methodBuilder
 		}
 	}
@@ -230,12 +228,7 @@ private[generation] class UnitRule(unitContext:UnitContext)(implicit generationC
 					generationContext
 						.addPostExitRuleTask(
 							unitContext.unitParameter(i).unitDefaultParameterValue.expression,
-							() =>
-							{
-								methodBuilder
-									.invokeVirtualUnitSetParameterDefaultValueMethod()
-									.decrementObjectStackCounter()
-							}
+							() => methodBuilder.invokeVirtualUnitSetParameterDefaultValueMethod()
 						)
 				}
 
@@ -273,7 +266,6 @@ private[generation] class UnitRule(unitContext:UnitContext)(implicit generationC
 						.ldc(identifier)
 						.invokeVirtualUnitContextGetVariableMethod()
 						.invokeVirtualUnitSetMemberMethod()
-						.pop()
 				})
 
 			methodBuilder

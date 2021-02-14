@@ -11,8 +11,5 @@ private[generation] class AssignIndexItemRule(
 )
 	extends GenerationRule(assignIndexContext)
 {
-	override protected def exitAction():Unit =
-		topMethodCall
-			.invokeVirtualUnitSetIndexedItemMethod()
-			.decreaseObjectStackCounter(2)
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitSetIndexedItemMethod()
 }

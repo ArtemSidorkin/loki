@@ -18,8 +18,5 @@ private[generation] class AssignDynamicMemberRule
 		generationContext
 			.addPostExitRuleTask(memberNameExpressionContext, () => topMethodCall.invokeVirtualUnitToStringMethod())
 
-	override protected def exitAction():Unit =
-		topMethodCall
-			.invokeVirtualUnitSetMemberMethod()
-			.decreaseObjectStackCounter(2)
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitSetMemberMethod()
 }

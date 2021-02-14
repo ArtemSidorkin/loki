@@ -19,8 +19,5 @@ private[generation] class AssignHostMemberRule(
 			.aloadHostParameterOfUnitCallMethod()
 			.ldc(hostMemberName)
 
-	override protected def exitAction():Unit =
-		topMethodCall
-			.invokeVirtualUnitSetMemberMethod()
-			.decrementObjectStackCounter()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitSetMemberMethod()
 }

@@ -17,8 +17,5 @@ private[generation] class AssignMemberRule(
 	override protected def enterAction():Unit =
 		generationContext.addPostExitRuleTask(assignExpressionContext, () => topMethodCall.ldc(memberName))
 
-	override protected def exitAction():Unit =
-		topMethodCall
-			.invokeVirtualUnitSetMemberMethod()
-			.decrementObjectStackCounter()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitSetMemberMethod()
 }

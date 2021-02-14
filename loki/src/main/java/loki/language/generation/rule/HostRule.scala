@@ -7,8 +7,5 @@ import loki.language.parsing.LokiParser.HostContext
 private[generation] class HostRule(hostContext:HostContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(hostContext)
 {
-	override protected def enterAction():Unit =
-		topMethodCall
-			.aloadHostParameterOfUnitCallMethod()
-			.incrementObjectStackCounter()
+	override protected def enterAction():Unit = topMethodCall.aloadHostParameterOfUnitCallMethod()
 }

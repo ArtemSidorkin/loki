@@ -7,8 +7,5 @@ import loki.language.parsing.LokiParser.IndexItemContext
 private[generation] class IndexItemRule(indexItemContext:IndexItemContext)(implicit generationContext:GenerationContext)
 	extends GenerationRule(indexItemContext)
 {
-	override protected def exitAction():Unit =
-		topMethodCall
-			.invokeVirtualUnitMethodGetIndexedItem()
-			.decrementObjectStackCounter()
+	override protected def exitAction():Unit = topMethodCall.invokeVirtualUnitMethodGetIndexedItem()
 }

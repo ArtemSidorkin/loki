@@ -45,13 +45,13 @@ private[generation] class ModuleGenerationRule
 
 	override protected def exitAction():Unit =
 	{
-			topMethodCall
-				.aloadthis()
-				.aReturn()
+		topMethodCall
+			.aloadthis()
+			.aReturn()
 
 		classLoader.setClassCode(
 			topClassFrame.internalName,
-			topClassFrame toBytecode (if (SystemSettings.TRACE_BYTECODE) Some(System.out) else None)
+			topClassFrame.toBytecode(if (SystemSettings.TRACE_BYTECODE) Some(System.out) else None)
 		)
 
 		popFrame()

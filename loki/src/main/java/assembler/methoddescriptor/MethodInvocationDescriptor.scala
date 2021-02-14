@@ -1,13 +1,15 @@
 package assembler.methoddescriptor
 
 import assembler.Utils
+import assembler.constant.InternalDescriptors
 
-class MethodInvocationDescriptor private[methoddescriptor](
+class MethodInvocationDescriptor(
 	typedSignature:(Seq[Class[_]], Option[Class[_]]),
 	name:String,
-	private[assembler] val ownerClassOrOwnerClassInternalName:Either[String, Class[_]]
+	static:Boolean,
+	val ownerClassOrOwnerClassInternalName:Either[String, Class[_]]
 )
-	extends MethodDescriptor(typedSignature, name)
+	extends MethodDescriptor(typedSignature, name, static)
 {
 	val ownerClassInternalName:String =
 		ownerClassOrOwnerClassInternalName match
@@ -15,4 +17,14 @@ class MethodInvocationDescriptor private[methoddescriptor](
 			case Right(ownerClass) => Utils.getClassInternalName(ownerClass)
 			case Left(ownerClassInternalName) => ownerClassInternalName
 		}
+}
+
+object MethodInvocationDescriptor
+{
+	def init(
+		typedSignature:(Seq[Class[_]], Option[Class[_]]), ownerClassOrOwnerClassInternalName:Either[String, Class[_]]
+	):MethodInvocationDescriptor =
+		new MethodInvocationDescriptor(
+			typedSignature, InternalDescriptors.INIT_METHOD, false, ownerClassOrOwnerClassInternalName
+		)
 }

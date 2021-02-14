@@ -22,7 +22,6 @@ private[generation] class StringGenerationRule
 				.dup()
 				.ldc(preparedString)
 				.invokeInitString()
-				.incrementObjectStackCounter()
 		)
 
 		def preparedString = (if (isAcuteString) rawString else rawString split "\n" map (_ init) mkString "\n") tail

@@ -38,7 +38,6 @@ private[generation] class IfElseGenerationRule
 						topMethodCall
 							.invokeVirtualUnitMethodToBoolean ()
 							.ifeq(falseConditionLabelNode)
-							.decrementObjectStackCounter ()
 					)
 				)
 
@@ -62,6 +61,7 @@ private[generation] class IfElseGenerationRule
 					topMethodCall
 						.label(falseConditionLabelNode)
 						.void()
+						.decrementObjectStackCounter()
 						.label(trueConditionLabelNode)
 
 			def saveLastIfValue():Unit =

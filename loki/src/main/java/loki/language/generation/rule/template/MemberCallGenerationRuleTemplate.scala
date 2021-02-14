@@ -57,11 +57,7 @@ private[generation] abstract class MemberCallGenerationRuleTemplate
 			def storeCallParameterAfterExitCallParameterExpressionContext(callParameterIndex:Int):Unit =
 				generationContext
 					.addPostExitRuleTask(
-						callParameterExpressionContexts(callParameterIndex),
-						() =>
-							topMethodCall
-								.aastore()
-								.decrementObjectStackCounter()
+						callParameterExpressionContexts(callParameterIndex), () => topMethodCall.aastore()
 					)
 		}
 	}

@@ -17,28 +17,10 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	private[assembler] def this(modifier:Modifier, methodDescriptor:MethodDescriptor) =
 		this(modifier, methodDescriptor.name, methodDescriptor.untypedSignature)
 
-	def aconstnull():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.ACONST_NULL))
-		this
-	}
-
-	def iconsttrue():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.ICONST_1))
-		this
-	}
-
-	def lconst1():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.LCONST_1))
-		this
-	}
-
-	/*Push item from run-time constant pool*/
 	def ldc(any:Any):this.type =
 	{
 		methodNode.instructions.add(new LdcInsnNode(any))
+		incrementObjectStackCounter()
 		this
 	}
 
@@ -46,42 +28,42 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	def aload(variableIndex:Int):this.type =
 	{
 		methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, variableIndex))
+		incrementObjectStackCounter()
 		this
 	}
 
 	def aloadthis():this.type =
 	{
 		methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0))
-		this
-	}
-
-	def aaload():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.AALOAD))
+		incrementObjectStackCounter()
 		this
 	}
 
 	def aastore():this.type =
 	{
 		methodNode.instructions.add(new InsnNode(Opcodes.AASTORE))
+		decreaseObjectStackCounter(3)
 		this
 	}
 
 	def astore(variableIndex:Int):this.type =
 	{
 		methodNode.instructions.add(new VarInsnNode(Opcodes.ASTORE, variableIndex))
+		decrementObjectStackCounter()
 		this
 	}
 
 	def pop():this.type =
 	{
 		methodNode.instructions.add(new InsnNode(Opcodes.POP))
+		decrementObjectStackCounter()
 		this
 	}
 
 	def dup():this.type =
 	{
 		methodNode.instructions.add(new InsnNode(Opcodes.DUP))
+		incrementObjectStackCounter()
 		this
 	}
 
@@ -94,12 +76,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 	def ifeq(labelNode:LabelNode):this.type =
 	{
 		methodNode.instructions.add(new JumpInsnNode(Opcodes.IFEQ, labelNode))
-		this
-	}
-
-	def ifne(labelNode:LabelNode):this.type =
-	{
-		methodNode.instructions.add(new JumpInsnNode(Opcodes.IFNE, labelNode))
+		decrementObjectStackCounter()
 		this
 	}
 
@@ -115,39 +92,8 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
-	def getfield(ownerClass:Class[_], name:String, `class`:Class[_]):this.type =
-		getfield(Utils getClassInternalName ownerClass, name, Utils getClassInternalName `class`)
-
-	def getfield(ownerClass:Class[_], name:String, classInternalName:String):this.type =
-		getfield(Utils getClassInternalName ownerClass, name, classInternalName)
-
-	def getfield(ownerClassInternalName:String, name:String, `class`:Class[_]):this.type =
-		getfield(ownerClassInternalName, name, Utils getClassInternalName `class`)
-
-	def getfield(ownerClassInternalName:String, name:String, classInternalName:String):this.type =
-	{
-		methodNode
-			.instructions
-			.add(
-				new FieldInsnNode(
-					Opcodes.GETFIELD,
-					ownerClassInternalName,
-					name,
-					Utils getClassDescriptor classInternalName
-				)
-			)
-
-		this
-	}
-
 	def getstatic(ownerClass:Class[_], name:String, `class`:Class[_]):this.type =
 		getstatic(Utils getClassInternalName ownerClass, name, Utils getClassInternalName `class`)
-
-	def getstatic(ownerClass:Class[_], name:String, classInternalName:String):this.type =
-		getstatic(Utils getClassInternalName ownerClass, name, classInternalName)
-
-	def getstatic(ownerClassInternalName:String, name:String, `class`:Class[_]):this.type =
-		getstatic(ownerClassInternalName, name, Utils getClassInternalName `class`)
 
 	def getstatic(ownerClassInternalName:String, name:String, classInternalName:String):this.type =
 	{
@@ -159,21 +105,8 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 				)
 			)
 
-		this
-	}
+		incrementObjectStackCounter()
 
-	def putfield(ownerClass:Class[_], name:String, `class`:Class[_]):this.type =
-		putfield(Utils getClassInternalName ownerClass, name, Utils getClassDescriptor `class`)
-
-	def putfield(ownerClass:Class[_], name:String, descriptor:String):this.type =
-		putfield(Utils getClassInternalName ownerClass, name, descriptor)
-
-	def putfield(ownerClassInternalName:String, name:String, `class`:Class[_]):this.type =
-		putfield(ownerClassInternalName, name, Utils getClassDescriptor `class`)
-
-	def putfield(ownerClassInternalName:String, name:String, descriptor:String):this.type =
-	{
-		methodNode.instructions.add(new FieldInsnNode(Opcodes.PUTFIELD, ownerClassInternalName, name, descriptor))
 		this
 	}
 
@@ -182,6 +115,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 			methodInvocationDescriptor.ownerClassInternalName,
 			methodInvocationDescriptor.name,
 			methodInvocationDescriptor.untypedSignature,
+			methodInvocationDescriptor.consumedStackObjectCount,
 			isInterfaceMethod = false
 		)
 
@@ -189,6 +123,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		methodOwnerClassInternalName:String,
 		methodName:String,
 		methodSignature:String,
+		consumedStackObjectCount:Int,
 		isInterfaceMethod:Boolean
 	):this.type =
 	{
@@ -200,13 +135,22 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 				)
 			)
 
+		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
+		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+
 		this
 	}
 
 	def invokeinit(methodInvocationDescriptor:MethodInvocationDescriptor):this.type =
-		invokeinit(methodInvocationDescriptor.ownerClassInternalName, methodInvocationDescriptor.untypedSignature)
+		invokeinit(
+			methodInvocationDescriptor.ownerClassInternalName,
+			methodInvocationDescriptor.untypedSignature,
+			methodInvocationDescriptor.consumedStackObjectCount
+		)
 
-	def invokeinit(initMethodOwnerClassInternalName:String, initMethodSignature:String):this.type =
+	def invokeinit(
+		initMethodOwnerClassInternalName:String, initMethodSignature:String, consumedStackObjectCount:Int
+	):this.type =
 	{
 		methodNode
 			.instructions
@@ -220,6 +164,9 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 				)
 			)
 
+		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
+		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+
 		this
 	}
 
@@ -227,10 +174,16 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		invokestatic(
 			methodInvocationDescriptor.ownerClassInternalName,
 			methodInvocationDescriptor.name,
-			methodInvocationDescriptor.untypedSignature
+			methodInvocationDescriptor.untypedSignature,
+			methodInvocationDescriptor.consumedStackObjectCount
 		)
 
-	def invokestatic(methodOwnerClassInternalName:String, methodName:String, methodSignature:String):this.type =
+	def invokestatic(
+		methodOwnerClassInternalName:String,
+		methodName:String,
+		methodSignature:String,
+		consumedStackObjectCount:Int
+	):this.type =
 	{
 		methodNode
 			.instructions
@@ -240,30 +193,46 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 				)
 			)
 
+		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
+		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+
+		this
+	}
+
+	def `new`(`class`:Class[_]):this.type =
+	{
+		`new`(Utils.getClassInternalName(`class`))
+
 		this
 	}
 
 	def `new`(classInternalName:String):this.type =
 	{
 		methodNode.instructions.add(new TypeInsnNode(Opcodes.NEW, classInternalName))
-		this
-	}
 
-	def `new`(`class`:Class[_]):this.type =
-	{
-		methodNode.instructions.add(new TypeInsnNode(Opcodes.NEW, Utils getClassInternalName `class`))
+		incrementObjectStackCounter()
+
 		this
 	}
 
 	def anewarray(arrayClass:Class[_]):this.type =
 	{
-		methodNode.instructions.add(new TypeInsnNode(Opcodes.ANEWARRAY, Utils getClassInternalName arrayClass))
+		anewarray(Utils.getClassInternalName(arrayClass))
+
+		this
+	}
+
+	def anewarray(arrayClassInternalName:String):this.type =
+	{
+		methodNode.instructions.add(new TypeInsnNode(Opcodes.ANEWARRAY, arrayClassInternalName))
+
 		this
 	}
 
 	def aReturn():this.type =
 	{
 		methodNode.instructions.add(new InsnNode(Opcodes.ARETURN))
+
 		this
 	}
 
@@ -303,9 +272,9 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		this
 	}
 
-	def popFrame(rest:Int = 0):this.type =
+	def popFrame():this.type =
 	{
-		objectStackCounter.pop(rest)
+		objectStackCounter.pop()
 		this
 	}
 }
@@ -316,14 +285,14 @@ private class ObjectStackCounter(method:MethodBuilder)
 
 	def increment():Unit = increase(1)
 	def decrement():Unit = decrease(1)
-	def decrease(count:Int) = counters(0) -= count
-	def increase(count:Int) = counters(0) += count
-
+	def decrease(count:Int):Unit = counters(0) -= count
+	def increase(count:Int):Unit = counters(0) += count
 	def push():Unit = counters.push(0)
 
-	def pop(rest:Int):Int =
+	def pop()
 	{
-		for (i <- 0 until counters.head - rest) method.pop()
+		while (counters.head > 0) method.pop()
+
 		counters.pop()
 	}
 }

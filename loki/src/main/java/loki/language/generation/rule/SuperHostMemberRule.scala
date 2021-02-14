@@ -18,5 +18,4 @@ private[generation] class SuperHostMemberRule(
 			.aloadHostParameterOfUnitCallMethod()
 			.ldc(superMemberName)
 			.invokeVirtualUnitGetSuperMemberMethod()
-			.incrementObjectStackCounter()
 }

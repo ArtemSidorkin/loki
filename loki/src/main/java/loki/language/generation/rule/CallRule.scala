@@ -41,10 +41,7 @@ private[generation] class CallRule(callContext:CallContext)(implicit generationC
 				generationContext
 					.addPostExitRuleTask(
 						getCallParameterExpression(parameterIndex),
-						() =>
-							topMethodCall
-								.aastore()
-								.decrementObjectStackCounter()
+						() => topMethodCall.aastore()
 					)
 			}
 

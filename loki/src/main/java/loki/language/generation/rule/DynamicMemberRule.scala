@@ -15,5 +15,4 @@ private[generation] class DynamicMemberRule(
 		topMethodCall
 			.invokeVirtualUnitToStringMethod()
 			.invokeVirtualUnitMethodGetMember()
-			.decrementObjectStackCounter()
 }

@@ -27,7 +27,6 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 			methodBuilder
 				.`new`(containerClass)
 				.dup()
-				.incrementObjectStackCounter()
 
 			methodBuilder
 		}
@@ -73,12 +72,7 @@ private[generation] abstract class ContainerGenerationRuleTemplate
 		def storeContainerItem(containerItemIndex:Int):methodBuilder.type =
 		{
 			generationContext
-				.addPostExitRuleTask(
-					containerItemExpressionContexts(containerItemIndex), () =>
-						methodBuilder
-							.aastore()
-							.decrementObjectStackCounter()
-				)
+				.addPostExitRuleTask(containerItemExpressionContexts(containerItemIndex), () => methodBuilder.aastore())
 
 			methodBuilder
 		}

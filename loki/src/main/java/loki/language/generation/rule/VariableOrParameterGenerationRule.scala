@@ -16,7 +16,6 @@ private[generation] class VariableOrParameterGenerationRule
 		topMethodCall
 			.aloadUnitContextVariableOfUnitCallMethod()
 			.loadVariableOrParameter()
-			.incrementObjectStackCounter()
 
 	private implicit class LocalVariableOrParameterBuilder(val methodBuilder:MethodBuilder)
 	{
