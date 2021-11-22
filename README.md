@@ -15,6 +15,10 @@ For currently implemented capabilities see [tests](loki/src/test/resources/tests
 
 ## Compilation
 
+Minimal java version: 8
+
+Tested on openjdk 15.0.2
+
     ./gradlew assemble
 
 ## Run
