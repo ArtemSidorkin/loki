@@ -10,33 +10,33 @@ List:
 	$size: $__size
 
 	$add value:
-		nwNd = Node.new(value, none)
-		if ($__root == none) $__root = nwNd
+		newNode = Node.new(value, none)
+		if $__root == none: $__root = newNode
 		else
-			itrtrNd = $__root
-			while(itrtrNd.next != none) itrtrNd = itrtrNd.next
-			itrtrNd.next = nwNd
+			iteratorNode = $__root
+			while iteratorNode.next != none : iteratorNode = iteratorNode.next
+			iteratorNode.next = newNode
 		$__size = $__size + 1
 
 	$removeByIndex index:
-		if (index >= 0 && index < $__size)
-			if (index == 0) $__root = $__root.next
+		if index >= 0 && index < $__size :
+			if index == 0 : $__root = $__root.next
 			else
-				itrtrNd = $__root
+				iteratorNode = $__root
 				i = 0
-				while(i < index - 1)
-					itrtrNd = itrtrNd.next
+				while i < index - 1:
+					iteratorNode = iteratorNode.next
 					i = i + 1
-				itrtrNd.next = itrtrNd.next.next
+				iteratorNode.next = iteratorNode.next.next
 			$__size = $__size - 1
 
 	$get index:
-		itrtrNd = $__root
+		iteratorNode = $__root
 		i = 0
-		while(i < index)
-			itrtrNd = itrtrNd.next
+		while i < index :
+			iteratorNode = iteratorNode.next
 			i = i + 1
-		itrtrNd.value
+		iteratorNode.value
 
 
 list = List.new()

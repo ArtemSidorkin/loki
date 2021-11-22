@@ -9,6 +9,10 @@
 
  - [LinkedList.loki](examples/LinkedList.loki)
 
+ - [Factorial.loki](examples/Factorial.loki)
+
+For currently implemented capabilities see [tests](loki/src/test/resources/tests/)
+
 ## Compilation
 
     ./gradlew assemble
@@ -22,3 +26,5 @@
     java -jar ./loki/build/libs/loki-all.jar ./examples/Class.loki
 
     java -jar ./loki/build/libs/loki-all.jar ./examples/LinkedList.loki
+
+    java -jar ./loki/build/libs/loki-all.jar ./examples/Factorial.loki
