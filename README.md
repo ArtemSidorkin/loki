@@ -32,3 +32,5 @@ Tested on openjdk 15.0.2
     java -jar ./loki/build/libs/loki-all.jar ./examples/LinkedList.loki
 
     java -jar ./loki/build/libs/loki-all.jar ./examples/Factorial.loki
+
+For any questions: ArtemSidorkin1@gmail.com
