@@ -1,4 +1,4 @@
-package assembler.constant
+package assembler
 
 object InternalDescriptors
 {
@@ -8,5 +8,5 @@ object InternalDescriptors
 	val PRIMITIVE_LONG = "J"
 	val PRIMITIVE_DOUBLE = "D"
 
-    val INIT_METHOD = "<init>"
+	val INIT_METHOD = "<init>"
 }

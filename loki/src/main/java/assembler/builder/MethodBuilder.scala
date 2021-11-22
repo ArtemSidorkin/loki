@@ -1,111 +1,158 @@
 package assembler.builder
 
+import assembler.InternalDescriptors.INIT_METHOD
 import assembler.Utils
-import assembler.constant.{InternalDescriptors, Modifier}
+import assembler.Utils.{getClassDescriptor, getClassInternalName}
 import assembler.methoddescriptor.{MethodDescriptor, MethodInvocationDescriptor}
-import org.objectweb.asm.Opcodes
-import org.objectweb.asm.tree._
+import org.objectweb.asm.Opcodes.{AASTORE, ALOAD, ANEWARRAY, ARETURN, ASTORE, DUP, GETSTATIC, GOTO, IFEQ, INVOKESPECIAL, INVOKESTATIC, INVOKEVIRTUAL, NEW, POP, RETURN, SWAP}
+import org.objectweb.asm.tree.{AbstractInsnNode, FieldInsnNode, InsnNode, JumpInsnNode, LabelNode, LdcInsnNode, MethodInsnNode, MethodNode, TypeInsnNode, VarInsnNode}
 
 import scala.collection.mutable
 
-class MethodBuilder private[builder](modifier:Modifier, val name:String, descriptor:String)
+class MethodBuilder private[builder](val modifier:Modifier, val descriptor:MethodDescriptor)
 {
-	private[builder] val methodNode = new MethodNode(modifier.code, name, descriptor, null, null)
+	private[builder] val methodNode =
+		new MethodNode(modifier.code, descriptor.name, descriptor.untypedSignature, null, null)
 
-	private val objectStackCounter = new ObjectStackCounter(this)
-
-	private[assembler] def this(modifier:Modifier, methodDescriptor:MethodDescriptor) =
-		this(modifier, methodDescriptor.name, methodDescriptor.untypedSignature)
+	private val operandStackCounter = new OperandStackCounter(this)
 
 	def ldc(any:Any):this.type =
 	{
-		methodNode.instructions.add(new LdcInsnNode(any))
-		incrementObjectStackCounter()
+		addInstructionNode(new LdcInsnNode(any))
+
+		incrementOperandStackCounter()
+
 		this
 	}
 
-
 	def aload(variableIndex:Int):this.type =
 	{
-		methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, variableIndex))
-		incrementObjectStackCounter()
+		addInstructionNode(new VarInsnNode(ALOAD, variableIndex))
+
+		incrementOperandStackCounter()
+
 		this
 	}
 
 	def aloadthis():this.type =
 	{
-		methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0))
-		incrementObjectStackCounter()
+		addInstructionNode(new VarInsnNode(ALOAD, 0))
+
+		incrementOperandStackCounter()
+
 		this
 	}
 
 	def aastore():this.type =
 	{
-		methodNode.instructions.add(new InsnNode(Opcodes.AASTORE))
-		decreaseObjectStackCounter(3)
+		addInstructionNode(new InsnNode(AASTORE))
+
+		decreaseOperandStackCounter(3)
+
 		this
 	}
 
 	def astore(variableIndex:Int):this.type =
 	{
-		methodNode.instructions.add(new VarInsnNode(Opcodes.ASTORE, variableIndex))
-		decrementObjectStackCounter()
+		addInstructionNode(new VarInsnNode(ASTORE, variableIndex))
+
+		decrementOperandStackCounter()
+
+		this
+	}
+
+	def `new`(`class`:Class[_]):this.type =
+	{
+		`new`(getClassInternalName(`class`))
+
+		this
+	}
+
+	def `new`(classInternalName:String):this.type =
+	{
+		addInstructionNode(new TypeInsnNode(NEW, classInternalName))
+
+		incrementOperandStackCounter()
+
+		this
+	}
+
+	def anewarray(arrayClass:Class[_]):this.type =
+	{
+		anewarray(getClassInternalName(arrayClass))
+
+		this
+	}
+
+	def anewarray(arrayClassInternalName:String):this.type =
+	{
+		addInstructionNode(new TypeInsnNode(ANEWARRAY, arrayClassInternalName))
+
 		this
 	}
 
 	def pop():this.type =
 	{
-		methodNode.instructions.add(new InsnNode(Opcodes.POP))
-		decrementObjectStackCounter()
+		addInstructionNode(new InsnNode(POP))
+		decrementOperandStackCounter()
 		this
 	}
 
 	def dup():this.type =
 	{
-		methodNode.instructions.add(new InsnNode(Opcodes.DUP))
-		incrementObjectStackCounter()
+		addInstructionNode(new InsnNode(DUP))
+		incrementOperandStackCounter()
 		this
 	}
 
 	def swap():this.type =
 	{
-		methodNode.instructions.add(new InsnNode(Opcodes.SWAP))
+		addInstructionNode(new InsnNode(SWAP))
 		this
 	}
 
 	def ifeq(labelNode:LabelNode):this.type =
 	{
-		methodNode.instructions.add(new JumpInsnNode(Opcodes.IFEQ, labelNode))
-		decrementObjectStackCounter()
+		addInstructionNode(new JumpInsnNode(IFEQ, labelNode))
+		decrementOperandStackCounter()
 		this
 	}
 
 	def goto(labelNode:LabelNode):this.type =
 	{
-		methodNode.instructions.add(new JumpInsnNode(Opcodes.GOTO, labelNode))
+		addInstructionNode(new JumpInsnNode(GOTO, labelNode))
 		this
 	}
 
 	def label(labelNode:LabelNode):this.type =
 	{
-		methodNode.instructions.add(labelNode)
+		addInstructionNode(labelNode)
+		this
+	}
+
+	def aReturn():this.type =
+	{
+		addInstructionNode(new InsnNode(ARETURN))
+
+		this
+	}
+
+	def `return`():this.type =
+	{
+		addInstructionNode(new InsnNode(RETURN))
 		this
 	}
 
 	def getstatic(ownerClass:Class[_], name:String, `class`:Class[_]):this.type =
-		getstatic(Utils getClassInternalName ownerClass, name, Utils getClassInternalName `class`)
+		getstatic(getClassInternalName(ownerClass), name, getClassInternalName(`class`))
 
 	def getstatic(ownerClassInternalName:String, name:String, classInternalName:String):this.type =
 	{
-		methodNode
-			.instructions
-			.add(
-				new FieldInsnNode(
-					Opcodes.GETSTATIC, ownerClassInternalName, name, Utils getClassDescriptor classInternalName
-				)
-			)
+		addInstructionNode(
+			new FieldInsnNode(GETSTATIC, ownerClassInternalName, name, getClassDescriptor(classInternalName))
+		)
 
-		incrementObjectStackCounter()
+		incrementOperandStackCounter()
 
 		this
 	}
@@ -115,7 +162,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 			methodInvocationDescriptor.ownerClassInternalName,
 			methodInvocationDescriptor.name,
 			methodInvocationDescriptor.untypedSignature,
-			methodInvocationDescriptor.consumedStackObjectCount,
+			methodInvocationDescriptor.consumedStackOperandCount,
 			isInterfaceMethod = false
 		)
 
@@ -127,16 +174,13 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		isInterfaceMethod:Boolean
 	):this.type =
 	{
-		methodNode
-			.instructions
-			.add(
-				new MethodInsnNode(
-					Opcodes.INVOKEVIRTUAL, methodOwnerClassInternalName, methodName, methodSignature, isInterfaceMethod
-				)
+		addInstructionNode(
+			new MethodInsnNode(
+				INVOKEVIRTUAL, methodOwnerClassInternalName, methodName, methodSignature, isInterfaceMethod
 			)
+		)
 
-		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
-		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+		decreaseOperandStackCounter(consumedStackObjectCount)
 
 		this
 	}
@@ -145,27 +189,18 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		invokeinit(
 			methodInvocationDescriptor.ownerClassInternalName,
 			methodInvocationDescriptor.untypedSignature,
-			methodInvocationDescriptor.consumedStackObjectCount
+			methodInvocationDescriptor.consumedStackOperandCount
 		)
 
 	def invokeinit(
 		initMethodOwnerClassInternalName:String, initMethodSignature:String, consumedStackObjectCount:Int
 	):this.type =
 	{
-		methodNode
-			.instructions
-			.add(
-				new MethodInsnNode(
-					Opcodes.INVOKESPECIAL,
-					initMethodOwnerClassInternalName,
-					InternalDescriptors.INIT_METHOD,
-					initMethodSignature,
-					false
-				)
-			)
+		addInstructionNode(
+			new MethodInsnNode(INVOKESPECIAL, initMethodOwnerClassInternalName, INIT_METHOD, initMethodSignature, false)
+		)
 
-		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
-		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+		decreaseOperandStackCounter(consumedStackObjectCount)
 
 		this
 	}
@@ -175,7 +210,7 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 			methodInvocationDescriptor.ownerClassInternalName,
 			methodInvocationDescriptor.name,
 			methodInvocationDescriptor.untypedSignature,
-			methodInvocationDescriptor.consumedStackObjectCount
+			methodInvocationDescriptor.consumedStackOperandCount
 		)
 
 	def invokestatic(
@@ -185,111 +220,75 @@ class MethodBuilder private[builder](modifier:Modifier, val name:String, descrip
 		consumedStackObjectCount:Int
 	):this.type =
 	{
-		methodNode
-			.instructions
-			.add(
-				new MethodInsnNode(
-					Opcodes.INVOKESTATIC, methodOwnerClassInternalName, methodName, methodSignature, false
-				)
-			)
+		addInstructionNode(
+			new MethodInsnNode(INVOKESTATIC, methodOwnerClassInternalName, methodName, methodSignature, false)
+		)
 
-		if (consumedStackObjectCount > 0) decreaseObjectStackCounter(consumedStackObjectCount)
-		else if (consumedStackObjectCount < 0) increaseObjectStackCounter(-consumedStackObjectCount)
+		decreaseOperandStackCounter(consumedStackObjectCount)
 
 		this
 	}
 
-	def `new`(`class`:Class[_]):this.type =
+	def incrementOperandStackCounter():this.type =
 	{
-		`new`(Utils.getClassInternalName(`class`))
-
+		operandStackCounter.increment()
 		this
 	}
 
-	def `new`(classInternalName:String):this.type =
+	def decrementOperandStackCounter():this.type =
 	{
-		methodNode.instructions.add(new TypeInsnNode(Opcodes.NEW, classInternalName))
-
-		incrementObjectStackCounter()
-
+		operandStackCounter.decrement()
 		this
 	}
 
-	def anewarray(arrayClass:Class[_]):this.type =
+	def increaseOperandStackCounter(count:Int):this.type =
 	{
-		anewarray(Utils.getClassInternalName(arrayClass))
-
+		operandStackCounter.increase(count)
 		this
 	}
 
-	def anewarray(arrayClassInternalName:String):this.type =
+	def decreaseOperandStackCounter(count:Int):this.type =
 	{
-		methodNode.instructions.add(new TypeInsnNode(Opcodes.ANEWARRAY, arrayClassInternalName))
-
-		this
-	}
-
-	def aReturn():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.ARETURN))
-
-		this
-	}
-
-	def `return`():this.type =
-	{
-		methodNode.instructions.add(new InsnNode(Opcodes.RETURN))
-		this
-	}
-
-	def incrementObjectStackCounter():this.type =
-	{
-		objectStackCounter.increment()
-		this
-	}
-
-	def decrementObjectStackCounter():this.type =
-	{
-		objectStackCounter.decrement()
-		this
-	}
-
-	def increaseObjectStackCounter(count:Int):this.type =
-	{
-		objectStackCounter.increase(count)
-		this
-	}
-
-	def decreaseObjectStackCounter(count:Int):this.type =
-	{
-		objectStackCounter.decrease(count)
+		operandStackCounter.decrease(count)
 		this
 	}
 
 	def pushFrame():this.type =
 	{
-		objectStackCounter.push()
+		operandStackCounter.push()
 		this
 	}
 
 	def popFrame():this.type =
 	{
-		objectStackCounter.pop()
+		operandStackCounter.pop()
 		this
 	}
+
+	private def addInstructionNode(instruction:AbstractInsnNode):Unit = methodNode.instructions.add(instruction)
 }
 
-private class ObjectStackCounter(method:MethodBuilder)
+object MethodBuilder
+{
+	def initMethodBuilder(modifier:Modifier, descriptor:MethodDescriptor):MethodBuilder =
+		new MethodBuilder(modifier, descriptor)
+}
+
+private class OperandStackCounter(method:MethodBuilder)
 {
 	private val counters = mutable.Stack[Int](0)
 
 	def increment():Unit = increase(1)
+
 	def decrement():Unit = decrease(1)
+
 	def decrease(count:Int):Unit = counters(0) -= count
+
 	def increase(count:Int):Unit = counters(0) += count
+
 	def push():Unit = counters.push(0)
 
-	def pop()
+	def pop():Unit =
 	{
 		while (counters.head > 0) method.pop()
 

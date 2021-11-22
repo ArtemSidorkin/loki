@@ -1,11 +1,8 @@
 package loki.language.generation.classbuilder
 
-import assembler.builder.{ClassBuilder, MethodBuilder}
-import assembler.constant.PUBLIC
-import loki.language.generation.constant.BytecodeCommon
+import assembler.builder.{ClassBuilder, MethodBuilder, PUBLIC}
 
-abstract class FrameClassBuilder(name:String, parentClass:Class[_])
-	extends ClassBuilder(BytecodeCommon.JAVA_VERSION, PUBLIC, name, parentClass)
+abstract class FrameClassBuilder(name:String, parentClass:Class[_]) extends ClassBuilder(PUBLIC, name, parentClass)
 {
 	val methodCall:MethodBuilder
 }

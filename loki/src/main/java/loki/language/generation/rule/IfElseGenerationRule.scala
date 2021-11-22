@@ -61,12 +61,12 @@ private[generation] class IfElseGenerationRule
 					topMethodCall
 						.label(falseConditionLabelNode)
 						.void()
-						.decrementObjectStackCounter()
+						.decrementOperandStackCounter()
 						.label(trueConditionLabelNode)
 
 			def saveLastIfValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementObjectStackCounter())
+					.addPreExitRuleTask(lastIfInstructionContext, () => topMethodCall.decrementOperandStackCounter())
 		}
 
 		def handleElseBranchIfPresent():Unit =
@@ -88,10 +88,10 @@ private[generation] class IfElseGenerationRule
 
 			def saveLastElseValue():Unit =
 				generationContext
-					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall.decrementObjectStackCounter())
+					.addPreExitRuleTask(lastElseInstructionContext, () => topMethodCall.decrementOperandStackCounter())
 		}
 
-		def unsaveConditionResult():Unit = topMethodCall.incrementObjectStackCounter()
+		def unsaveConditionResult():Unit = topMethodCall.incrementOperandStackCounter()
 	}
 }
 

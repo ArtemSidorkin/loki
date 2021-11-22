@@ -1,10 +1,10 @@
 package loki.language.generation.rule
 
-import assembler.constant.PUBLIC
+import assembler.builder.PUBLIC
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
-import loki.language.generation.bytecodetemplate.ModuleContextBytecodeTemplate.ModuleContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.ModuleBytecodeTemplate.ModuleBytecodeTemplate
+import loki.language.generation.bytecodetemplate.ModuleContextBytecodeTemplate.ModuleContextBytecodeTemplate
 import loki.language.generation.bytecodetemplate.UnitBytecodeTemplate.UnitBytecodeTemplate
 import loki.language.generation.constant.DynamicallyUnresolvableMethodDescriptors
 import loki.language.parsing.LokiParser.ModuleContext

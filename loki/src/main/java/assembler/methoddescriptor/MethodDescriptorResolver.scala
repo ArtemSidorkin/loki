@@ -57,7 +57,7 @@ object MethodDescriptorResolver
 			.exists(Modifier.isStatic)
 
 		new MethodInvocationDescriptor(
-			parameterClasses.toSeq -> returnClass, suitableExecutable.getName, static, Right(describingMethodClass)
+			parameterClasses.toSeq -> returnClass, suitableExecutable.getName, static, describingMethodClass
 		)
 	}
 }

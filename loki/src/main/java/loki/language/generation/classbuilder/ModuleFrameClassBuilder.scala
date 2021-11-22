@@ -1,7 +1,6 @@
 package loki.language.generation.classbuilder
 
-import assembler.builder.MethodBuilder
-import assembler.constant.PUBLIC
+import assembler.builder.{MethodBuilder, PUBLIC}
 import assembler.methoddescriptor.MethodDescriptorResolver
 import loki.runtime.marker.compilerapi.unit.UnitCall
 import loki.runtime.unit.LModule

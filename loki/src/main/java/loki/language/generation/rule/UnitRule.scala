@@ -1,7 +1,6 @@
 package loki.language.generation.rule
 
-import assembler.builder.MethodBuilder
-import assembler.constant.PUBLIC
+import assembler.builder.{MethodBuilder, PUBLIC}
 import loki.language.generation.GenerationContext
 import loki.language.generation.bytecodetemplate.CommonBytecodeTemplate.CommonBytecodeTemplate
 import loki.language.generation.bytecodetemplate.TypeBytecodeTemplate.TypeBytecodeTemplate
@@ -56,7 +55,7 @@ private[generation] class UnitRule(unitContext:UnitContext)(implicit generationC
 					unitContext.unitBody().instruction(unitContext.unitBody().instruction().size - 1)
 
 				generationContext
-					.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementObjectStackCounter())
+					.addPreExitRuleTask(unitLastInstruction, () => topMethodCall.decrementOperandStackCounter())
 			}
 
 		pushUnitFrame()
